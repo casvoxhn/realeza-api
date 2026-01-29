@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors({ origin: '*' }));
 app.use(express.json({ limit: '50mb' }));
 
-// Inicializar Google AI con tu API Key
+// FORMA CORRECTA:
 const genAI = new GoogleGenerativeAI(process.env.AIzaSyA6XfF1FIwQXMRXq_szxaztv-XNf5QMAsA);
 
 app.post('/generate', async (req, res) => {
@@ -91,3 +91,4 @@ app.post('/generate', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor listo en puerto ${PORT}`);
 });
+
