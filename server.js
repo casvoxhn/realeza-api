@@ -22,7 +22,7 @@ app.post('/generate', async (req, res) => {
 
         // SELECCIÓN DEL MODELO
         // Usamos 'gemini-2.5-flash-image' que es el código oficial para Nano Banana
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-image" });
+        const model = genAI.getGenerativeModel({ model: "gemini-3-pro-image-preview" });
 
         // PROMPTS MAESTROS (Instrucciones de edición directa)
         let prompt = "";
@@ -91,5 +91,6 @@ app.post('/generate', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor listo en puerto ${PORT}`);
 });
+
 
 
