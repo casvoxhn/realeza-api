@@ -7,7 +7,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({ origin: '*' }));
-// Límite alto para soportar 5 imágenes en alta calidad
 app.use(express.json({ limit: '100mb' })); 
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
@@ -15,12 +14,10 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 app.post('/generate', async (req, res) => {
     try {
         const { images, style } = req.body;
-        console.log(`🍌 PROCESANDO ESCENA COMPLEXA: ${images.length} sujetos. Estilo: ${style}`);
+        console.log(`🍌 V11 PROCESANDO: ${images.length} sujetos. Estilo: ${style} (Modo Natural)`);
 
-        // Usamos el modelo más capaz para seguir instrucciones complejas
         const model = genAI.getGenerativeModel({ model: "gemini-3-pro-image-preview" });
 
-        // Preparamos las imágenes
         const imageParts = images.map(img => ({
             inlineData: {
                 data: img.replace(/^data:image\/\w+;base64,/, ""),
@@ -28,53 +25,52 @@ app.post('/generate', async (req, res) => {
             }
         }));
 
-        // --- DEFINICIÓN DE ESTILOS ---
-        let styleDetails = "";
+        // --- DEFINICIÓN DE ESTILOS (Entorno) ---
+        let styleEnvironment = "";
+        let humanCostume = "";
         if (style === 'rey') {
-            styleDetails = "Renaissance Royal Portrait. Luxurious red velvet robes, gold crowns, heavy jewelry, palace background.";
+            styleEnvironment = "in a luxurious renaissance palace throne room, surrounded by heavy red velvet, gold ornaments, and ancient tapestries.";
+            humanCostume = "wearing elaborate renaissance royal robes and crowns.";
         } else if (style === 'astronauta') {
-            styleDetails = "NASA Space Portrait. Realistic high-tech space suits, helmet under arm (if human), dramatic galaxy background.";
+            styleEnvironment = "on the bridge of a high-tech spaceship with a galaxy view window.";
+            humanCostume = "wearing realistic NASA space suits.";
         } else if (style === 'renacimiento') {
-            styleDetails = "Classic Rembrandt/Baroque Portrait. Dark background, dramatic chiaroscuro lighting, oil painting texture.";
+            styleEnvironment = "in a classic baroque studio with dramatic chiaroscuro lighting and dark, rich background tones.";
+            humanCostume = "wearing dark, historical Rembrandt-style clothing.";
         }
 
-        // --- EL PROMPT "DIRECTOR DE ESCENA" ---
+        // --- EL PROMPT "DIRECTOR NATURAL" V11 ---
         const masterPrompt = `
-        You are a Master Painter composing a complex group portrait based on the provided reference images.
-        
-        **CRITICAL INSTRUCTION: YOU MUST INCLUDE EVERY SINGLE SUBJECT FROM THE UPLOADED PHOTOS. COUNT THEM AND PLACE THEM ALL.**
-        
-        ### STEP 1: ANALYZE THE SUBJECTS
-        Look at all the uploaded images. Determine:
-        1. Are there humans?
-        2. Are there animals?
-        
-        ### STEP 2: APPLY THE HIERARCHY RULE (Strict Logic)
-        
+        You are a Master Painter composed a group portrait based on the reference images.
+        **CRITICAL: INCLUDE EVERY SINGLE SUBJECT FROM THE PHOTOS.**
+
+        ### STEP 1: ANALYZE SUBJECTS
+        - Count humans.
+        - Count animals.
+
+        ### STEP 2: APPLY STRICT HIERARCHY & POSE RULES
+
         **SCENARIO A: MIXED GROUP (Humans + Animals)**
-        * **The Human(s):** They are the Royalty/Main Character. They MUST wear the costume defined in the style. They should be sitting on a throne or standing proudly.
-        * **The Animal(s):** They are LOYAL PETS. 
-            * **DO NOT HUMANIZES ANIMALS** in this scenario. 
-            * Keep them distinctively animals (on four legs, sitting naturally).
-            * **Placement:** Place them logically—on the human's lap, sitting at their feet, or peeking from behind the throne.
-            * **No clothes for animals** in this scenario (unless it's a simple collar).
-        
+        * **Humans:** They are the Royalty/Leaders. They MUST be ${humanCostume}. They are the main focus.
+        * **Animals:** They are LOYAL COMPANIONS.
+            * **NO HUMANIZATION.** Keep them as natural animals (on four legs, sitting naturally).
+            * **NO CLOTHES** for animals.
+            * **Placement:** On the human's lap, at their feet, or sitting on a cushion next to them.
+
         **SCENARIO B: ONLY ANIMALS (No Humans)**
-        * **The Animals:** They are the Royalty.
-        * **ACTION:** ANTHROPOMORPHIZE THEM. Give them human-like posture (bust or half-body) and dress them in the royal/space costumes.
-        * **Placement:** Arrange them as a noble family portrait.
-        
-        ### STEP 3: EXECUTE STYLE: ${styleDetails}
-        
-        **FINAL REQUIREMENTS:**
-        * **Likeness:** Preserve the exact faces/identity of all subjects (humans and pets).
-        * **Composition:** Ensure no one is hidden. Balance the composition.
-        * **Quality:** High-end oil painting finish. Timeless masterpiece.
+        * **The Animals:** They are the subjects of a noble portrait.
+        * **CRITICAL: NO HUMANIZATION. DO NOT put them on two legs or give them human bodies.**
+        * **ACTION:** Keep them as natural animals, retaining their exact breed and pose from the photos.
+        * **Placement:** Place them sitting or lying regally on ornate royal furniture (thrones, velvet sofas, silk cushions) within the environment described below. They should look comfortable and noble in their natural state.
+
+        ### STEP 3: EXECUTE STYLE
+        * **Environment:** The scene is set ${styleEnvironment}
+        * **Medium:** High-end oil painting masterpiece.
+        * **Likeness:** Perfect preservation of all faces.
         `;
 
-        // Generación
         const result = await model.generateContent([
-            ...imageParts, // Pasamos las 1, 2, 3, 4 o 5 fotos
+            ...imageParts,
             masterPrompt
         ]);
 
@@ -87,7 +83,7 @@ app.post('/generate', async (req, res) => {
             
             const rawBase64 = response.candidates[0].content.parts[0].inlineData.data;
             const finalImage = `data:image/jpeg;base64,${rawBase64}`;
-            console.log("✅ Obra Maestra Multi-Sujeto generada.");
+            console.log("✅ Obra Maestra V11 generada.");
             res.json({ success: true, imageUrl: finalImage });
 
         } else {
@@ -95,11 +91,11 @@ app.post('/generate', async (req, res) => {
         }
 
     } catch (error) {
-        console.error('⚠️ Error Fatal:', error.message);
+        console.error('⚠️ Error V11:', error.message);
         res.status(500).json({ success: false, error: error.message });
     }
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V10 (Lógica Director) listo en puerto ${PORT}`);
+    console.log(`🚀 Servidor V11 (Natural Royal) listo en puerto ${PORT}`);
 });
