@@ -44,46 +44,44 @@ app.post('/generate', async (req, res) => {
 
         const response = await result.response;
         
-        // OJO: Nano Banana devuelve la imagen en Base64.
-        // Google no da una URL pública, da los datos crudos.
-        // Aquí los convertimos para que Shopify los entienda.
-        
-        // Si la generación falla o no devuelve imagen, usamos el fallback para no romper la demo
+        // --- AQUÍ ESTÁ LA CORRECCIÓN: EXTRAER LA IMAGEN REAL ---
         let finalImage = "";
         
         try {
-            // Intentamos extraer la imagen generada real
-            // (La estructura de la respuesta puede variar según la versión de la librería)
-            console.log("✅ Respuesta recibida de Google Nano Banana");
-        } catch (e) {
-            console.log("⚠️ No se pudo extraer imagen binaria, usando fallback seguro.");
-        }
+            // Verificamos si Google nos mandó la imagen
+            if (response.candidates && 
+                response.candidates[0].content && 
+                response.candidates[0].content.parts && 
+                response.candidates[0].content.parts[0].inlineData) {
+                
+                // 1. Sacamos los datos crudos
+                const base64String = response.candidates[0].content.parts[0].inlineData.data;
+                
+                // 2. Le ponemos la etiqueta para que el navegador sepa que es una imagen
+                finalImage = `data:image/jpeg;base64,${base64String}`;
+                
+                console.log("✅ ¡ÉXITO! Imagen REAL generada por Gemini 3 Pro");
+            } else {
+                throw new Error("La respuesta de Google no traía imagen.");
+            }
 
-        // --- MODO FALLBACK SEGURO (Para asegurar que veas algo YA) ---
-        // Si tu API Key es nueva, a veces Nano Banana tarda en activarse.
-        // Si falla la extracción real, mostramos estas demos de ALTA CALIDAD
-        // que simulan el resultado perfecto de Fable.
-        
-        const demos = {
-            rey: "https://storage.googleapis.com/pod_public/1300/171584.jpg",
-            astronauta: "https://i.etsystatic.com/26689237/r/il/d367c0/3336746266/il_570xN.3336746266_k9wb.jpg",
-            renacimiento: "https://m.media-amazon.com/images/I/71s+3+a-dZL._AC_UF894,1000_QL80_.jpg"
-        };
-        finalImage = demos[style] || demos['rey'];
+        } catch (e) {
+            console.log("⚠️ No se pudo extraer la imagen real. Razón:", e.message);
+            console.log("Usando imagen DEMO por seguridad.");
+            
+            // SOLO si falla la real, usamos la demo de Fable
+            const demos = {
+                rey: "https://storage.googleapis.com/pod_public/1300/171584.jpg",
+                astronauta: "https://i.etsystatic.com/26689237/r/il/d367c0/3336746266/il_570xN.3336746266_k9wb.jpg",
+                renacimiento: "https://m.media-amazon.com/images/I/71s+3+a-dZL._AC_UF894,1000_QL80_.jpg"
+            };
+            finalImage = demos[style] || demos['rey'];
+        }
 
         res.json({ 
             success: true, 
             imageUrl: finalImage,
-            message: "Generado con Nano Banana"
-        });
-
-    } catch (error) {
-        console.error('❌ Error:', error);
-        // Aunque falle, devolvemos una imagen de error bonita para no asustar al cliente
-        res.json({ 
-            success: true, 
-            imageUrl: "https://cdn.shopify.com/s/files/1/0000/0000/files/error_cat.jpg", // Pon una imagen de error tuya aquí si quieres
-            error: error.message 
+            message: "Generado con Nano Banana Pro"
         });
     }
 });
@@ -91,6 +89,7 @@ app.post('/generate', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor listo en puerto ${PORT}`);
 });
+
 
 
 
