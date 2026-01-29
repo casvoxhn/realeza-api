@@ -10,7 +10,7 @@ app.use(cors({ origin: '*' }));
 app.use(express.json({ limit: '50mb' }));
 
 // FORMA CORRECTA:
-const genAI = new GoogleGenerativeAI(process.env.AIzaSyA6XfF1FIwQXMRXq_szxaztv-XNf5QMAsA);
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
 app.post('/generate', async (req, res) => {
     try {
@@ -91,4 +91,5 @@ app.post('/generate', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor listo en puerto ${PORT}`);
 });
+
 
