@@ -27,7 +27,7 @@ app.post('/generate', async (req, res) => {
         // PROMPTS (Instrucciones de edición)
         let prompt = "";
         if (style === 'rey') {
-            prompt = "Edit this image to transform the pet into a majestic renaissance king. Put on a red velvet royal robe with gold embroidery and a jeweled crown. Maintain the pet's face, identity and expression exactly as they are. High quality oil painting style.";
+            prompt = "Un retrato al estilo de pintura al óleo renacentista de una mascota [PERRO/GATO] sentado majestuosamente sobre un cojín de brocado rojo y dorado. El animal lleva una elaborada capa real de terciopelo rojo con bordados dorados, un cuello alto de encaje y una cadena de joyas. El fondo es oscuro y atmosférico, con una iluminación dramática y suave que resalta las texturas del pelaje, las telas y las joyas.";
         } else if (style === 'astronauta') {
             prompt = "Edit this image to put the pet in a realistic NASA astronaut suit floating in space. Maintain the pet's face and expression exactly as is. Cinematic lighting, 8k resolution.";
         } else if (style === 'renacimiento') {
@@ -94,3 +94,4 @@ app.post('/generate', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor Realeza listo en puerto ${PORT}`);
 });
+
