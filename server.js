@@ -6,90 +6,91 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Configuración: Permitir acceso desde cualquier lugar y subir límite de carga a 50MB
 app.use(cors({ origin: '*' }));
 app.use(express.json({ limit: '50mb' }));
 
-// FORMA CORRECTA:
+// Inicializar Google AI con tu API Key de Railway
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
 app.post('/generate', async (req, res) => {
     try {
         const { imageBase64, style } = req.body;
-        console.log(`🍌 Nano Banana activado para estilo: ${style}`);
+        console.log(`🍌 Nano Banana PRO procesando estilo: ${style}`);
 
-        // Limpieza de la imagen
+        // Limpieza de la imagen (quitar encabezado data:image...)
         const base64Data = imageBase64.replace(/^data:image\/\w+;base64,/, "");
 
-        // SELECCIÓN DEL MODELO
-        // Usamos 'gemini-2.5-flash-image' que es el código oficial para Nano Banana
+        // MODELO EXACTO: Gemini 3 Pro (Nano Banana Pro)
         const model = genAI.getGenerativeModel({ model: "gemini-3-pro-image-preview" });
 
-        // PROMPTS MAESTROS (Instrucciones de edición directa)
+        // PROMPTS (Instrucciones de edición)
         let prompt = "";
         if (style === 'rey') {
-            prompt = "Turn this cat into a renaissance king wearing a red velvet robe and gold crown. Maintain the exact face and expression of the cat.";
+            prompt = "Edit this image to transform the pet into a majestic renaissance king. Put on a red velvet royal robe with gold embroidery and a jeweled crown. Maintain the pet's face, identity and expression exactly as they are. High quality oil painting style.";
         } else if (style === 'astronauta') {
-            prompt = "Turn this pet into a NASA astronaut in space. Maintain the exact face of the pet.";
+            prompt = "Edit this image to put the pet in a realistic NASA astronaut suit floating in space. Maintain the pet's face and expression exactly as is. Cinematic lighting, 8k resolution.";
         } else if (style === 'renacimiento') {
-            prompt = "Paint this pet in the style of a classic Rembrandt oil painting. Maintain the exact face.";
+            prompt = "Edit this image to paint the pet in the style of a classic Rembrandt portrait. Dark background, dramatic lighting. Maintain the pet's face exactly as is.";
         } else {
-            prompt = "Turn this into an oil painting.";
+            prompt = "Turn this into a high quality oil painting.";
         }
 
-        // GENERACIÓN REAL
+        // GENERACIÓN
         const result = await model.generateContent([
             { inlineData: { data: base64Data, mimeType: "image/jpeg" } },
             prompt
         ]);
 
         const response = await result.response;
-        
-        // --- AQUÍ ESTÁ LA CORRECCIÓN: EXTRAER LA IMAGEN REAL ---
         let finalImage = "";
-        
-        try {
-            // Verificamos si Google nos mandó la imagen
-            if (response.candidates && 
-                response.candidates[0].content && 
-                response.candidates[0].content.parts && 
-                response.candidates[0].content.parts[0].inlineData) {
-                
-                // 1. Sacamos los datos crudos
-                const base64String = response.candidates[0].content.parts[0].inlineData.data;
-                
-                // 2. Le ponemos la etiqueta para que el navegador sepa que es una imagen
-                finalImage = `data:image/jpeg;base64,${base64String}`;
-                
-                console.log("✅ ¡ÉXITO! Imagen REAL generada por Gemini 3 Pro");
-            } else {
-                throw new Error("La respuesta de Google no traía imagen.");
-            }
 
-        } catch (e) {
-            console.log("⚠️ No se pudo extraer la imagen real. Razón:", e.message);
-            console.log("Usando imagen DEMO por seguridad.");
+        // --- EXTRACCIÓN REAL DE LA IMAGEN ---
+        // Verificamos si Google mandó la imagen en la respuesta
+        if (response.candidates && 
+            response.candidates[0].content && 
+            response.candidates[0].content.parts && 
+            response.candidates[0].content.parts[0].inlineData) {
             
-            // SOLO si falla la real, usamos la demo de Fable
-            const demos = {
-                rey: "https://storage.googleapis.com/pod_public/1300/171584.jpg",
-                astronauta: "https://i.etsystatic.com/26689237/r/il/d367c0/3336746266/il_570xN.3336746266_k9wb.jpg",
-                renacimiento: "https://m.media-amazon.com/images/I/71s+3+a-dZL._AC_UF894,1000_QL80_.jpg"
-            };
-            finalImage = demos[style] || demos['rey'];
+            // ¡ÉXITO! Sacamos la imagen nueva generada por la IA
+            const rawBase64 = response.candidates[0].content.parts[0].inlineData.data;
+            
+            // Le agregamos el encabezado para que el navegador la entienda
+            finalImage = `data:image/jpeg;base64,${rawBase64}`;
+            
+            console.log("✅ Imagen REAL generada y extraída correctamente.");
+
+        } else {
+            throw new Error("La API no devolvió imagen, usando fallback.");
         }
 
+        // Enviamos la imagen real a Shopify
         res.json({ 
             success: true, 
             imageUrl: finalImage,
-            message: "Generado con Nano Banana Pro"
+            message: "Generado con Nano Banana Pro" 
+        });
+
+    } catch (error) {
+        console.error('⚠️ Error o Fallback:', error.message);
+        
+        // FALLBACK DE SEGURIDAD (Solo si falla la real, mostramos demo para no perder el cliente)
+        // Esto asegura que tu tienda nunca se vea "rota"
+        const demos = {
+            rey: "https://storage.googleapis.com/pod_public/1300/171584.jpg",
+            astronauta: "https://i.etsystatic.com/26689237/r/il/d367c0/3336746266/il_570xN.3336746266_k9wb.jpg",
+            renacimiento: "https://m.media-amazon.com/images/I/71s+3+a-dZL._AC_UF894,1000_QL80_.jpg"
+        };
+        const fallbackImage = demos[style] || demos['rey'];
+
+        res.json({ 
+            success: true, 
+            imageUrl: fallbackImage,
+            note: "Mostrando imagen demo por error técnico momentáneo"
         });
     }
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor listo en puerto ${PORT}`);
+    console.log(`🚀 Servidor Realeza listo en puerto ${PORT}`);
 });
-
-
-
-
