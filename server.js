@@ -7,21 +7,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({ origin: '*' }));
-// AUMENTAMOS EL LÍMITE DE CARGA PORQUE VARIAS FOTOS PESAN MÁS
-app.use(express.json({ limit: '100mb' })); 
+app.use(express.json({ limit: '100mb' })); // Límite alto para varias fotos
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
 app.post('/generate', async (req, res) => {
     try {
-        // AHORA RECIBIMOS 'images' (ARRAY) EN VEZ DE 'imageBase64' (STRING)
         const { images, style } = req.body;
         console.log(`🍌 Procesando ${images.length} imagenes. Estilo: ${style}`);
 
         const model = genAI.getGenerativeModel({ model: "gemini-3-pro-image-preview" });
 
-        // 1. PREPARAMOS LAS IMÁGENES PARA GEMINI
-        // Recorremos la lista y creamos el objeto para cada una
+        // Preparar imágenes
         const imageParts = images.map(img => ({
             inlineData: {
                 data: img.replace(/^data:image\/\w+;base64,/, ""),
@@ -29,54 +26,71 @@ app.post('/generate', async (req, res) => {
             }
         }));
 
-        // 2. PROMPTS (Gemini es listo, si ve varias fotos, entiende que debe fusionarlas o hacer grupo)
-        let promptText = "";
+        // --- LÓGICA MAESTRA CONDICIONAL (AQUÍ ESTÁ LA MAGIA) ---
+        // Le decimos a Gemini cómo comportarse según los sujetos detectados.
+        
+        let styleInstruction = "";
         if (style === 'rey') {
-            promptText = "Create a masterpiece portrait combining these subjects. Transform them into renaissance royalty (kings/queens). Wear red velvet robes and crowns. Maintain their exact faces and identities. Composition must look natural together. High quality oil painting.";
+            styleInstruction = "Renaissance Royal Portrait. Red velvet robes, gold crowns, intricate details, oil painting style.";
         } else if (style === 'astronauta') {
-            promptText = "Create a masterpiece portrait of these subjects as a team of NASA astronauts in space. Realistic suits. Maintain exact faces. Cinematic lighting.";
+            styleInstruction = "NASA Astronaut Portrait. Realistic space suits, cinematic lighting, space background, highly detailed.";
         } else if (style === 'renacimiento') {
-            promptText = "Create a classic group portrait in the style of Rembrandt. Dark background, dramatic lighting. Maintain exact faces and expressions.";
-        } else {
-            promptText = "Oil painting of these subjects together.";
+            styleInstruction = "Classic Rembrandt Style Portrait. Dramatic chiaroscuro lighting, dark background, museum quality oil painting.";
         }
 
-        // 3. ENVIAMOS TODO AL MODELO (Imágenes + Prompt)
+        const smartPrompt = `
+        You are an expert artist creating a masterpiece from these reference photos.
+        Follow these STRICT rules based on the subjects found in the images:
+
+        1. **IF ONLY ANIMALS ARE PRESENT:**
+           - Create an ANTHROPOMORPHIC portrait. 
+           - The animal should have a human-like body posture wearing the costume defined below.
+           - Keep the animal's head/face exactly as it is in the photo.
+
+        2. **IF ONLY HUMANS ARE PRESENT:**
+           - Create a royal/heroic portrait.
+           - Replace their clothing with the costume defined below.
+           - Keep their face and identity exactly as in the photo.
+
+        3. **IF BOTH HUMANS AND ANIMALS ARE PRESENT (The Priority Rule):**
+           - The HUMAN is the main subject (King/Queen/Commander). They wear the costume.
+           - The ANIMAL is the loyal COMPANION. The animal must look NATURAL (walking on 4 legs, sitting on lap, or held). 
+           - DO NOT put clothes on the animal in this mixed case. The animal stays as a natural pet.
+           - Composition: Human dominating the frame, animal close to them interacting naturally.
+
+        **STYLE TO APPLY:** ${styleInstruction}
+        **GOAL:** High fidelity to the original faces. Seamless blending. timeless masterpiece.
+        `;
+
+        // Generación
         const result = await model.generateContent([
-            ...imageParts, // Aquí van todas las fotos
-            promptText
+            ...imageParts,
+            smartPrompt
         ]);
 
         const response = await result.response;
-        let finalImage = "";
-
-        // Extracción de la imagen generada
+        
+        // Extracción segura
         if (response.candidates && 
             response.candidates[0].content && 
             response.candidates[0].content.parts && 
             response.candidates[0].content.parts[0].inlineData) {
             
             const rawBase64 = response.candidates[0].content.parts[0].inlineData.data;
-            finalImage = `data:image/jpeg;base64,${rawBase64}`;
-            console.log("✅ Imagen Multi-Sujeto generada con éxito.");
+            const finalImage = `data:image/jpeg;base64,${rawBase64}`;
+            console.log("✅ Imagen generada con lógica inteligente.");
+            res.json({ success: true, imageUrl: finalImage });
 
         } else {
-            throw new Error("No se generó imagen.");
+            throw new Error("La IA no devolvió imagen.");
         }
-
-        res.json({ success: true, imageUrl: finalImage });
 
     } catch (error) {
         console.error('⚠️ Error:', error.message);
-        // Fallback simple por si falla
-        res.json({ 
-            success: true, 
-            imageUrl: "https://storage.googleapis.com/pod_public/1300/171584.jpg",
-            note: "Fallback activado"
-        });
+        res.status(500).json({ success: false, error: error.message });
     }
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor Multi-Upload listo en puerto ${PORT}`);
+    console.log(`🚀 Servidor Lógica Maestra listo en puerto ${PORT}`);
 });
