@@ -45,7 +45,8 @@ app.post('/generate', async (req, res) => {
             **COMPOSITION GOAL:** A powerful, closer-cropped noble portrait with dramatic lighting.
 
             **1. THE SUBJECT (IDENTITY LOCK):**
-            - Keep the EXACT facial features and expression from the input photo.
+            - Capture the unique characteristics and overall likeness of the subject from the input photo, including key features like fur color and patterns, eye shape and color, breed-specific traits, markings, and body proportions.
+Maintain a strong resemblance to the original subject to make it recognizable as the same pet/person, but allow for artistic variations in facial expression, pose, and subtle details to fit the Renaissance style.
 
             **2. THE POSE & SETTING (CLOSER FRAMING):**
             - **POSE:** The animal is sitting or lying regally.
@@ -106,3 +107,4 @@ app.post('/generate', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor V56 (Presencia y Formato 4:5) listo en ${PORT}`);
 });
+
