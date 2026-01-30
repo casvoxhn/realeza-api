@@ -24,89 +24,85 @@ async function uploadBufferToSupabase(buffer, prefix) {
 app.post('/generate', async (req, res) => {
     try {
         const { images, style } = req.body;
-        console.log(`🎨 Generando V43 (Lógica Híbrida). Estilo: ${style} | Sujetos: ${images.length}`);
+        // LOG PARA CONFIRMAR QUE USAMOS EL MODELO CORRECTO
+        const MODEL_ID = "gemini-3-pro-image-preview"; 
+        console.log(`🎨 INICIANDO NANO BANANA PRO (${MODEL_ID}). Estilo: ${style}`);
 
-        // 1. GUARDAR ORIGINALES
+        // 1. SUBIR REFERENCIAS
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
             return await uploadBufferToSupabase(buffer, `ref_${i}`);
         }));
 
-        // 2. CONFIGURACIÓN DEL PROMPT SEGÚN TUS REGLAS
-        let styleEnvironment = "";
-        let humanCostume = "";
-        let animalInstruction = "";
+        // 2. CONEXIÓN AL MODELO SUPREMO
+        // Usamos exactamente el ID de tu captura
+        const model = genAI.getGenerativeModel({ model: MODEL_ID });
 
+        let promptStyle = "";
+        // TUS REGLAS DE ESTILO + CALIDAD MUSEO
         if (style === 'rey') {
-             // Lógica: Natural pero Real
-             styleEnvironment = "**STYLE:** Northern Renaissance (Holbein style). Soft, diffused studio light. Background: Blurred palace interior with heavy drapes.";
-             humanCostume = "wearing elegant renaissance royal robes, velvet and fur.";
-             animalInstruction = "**NO HUMAN CLOTHES.** The animal must be in a NATURAL POSE (sitting/standing) on a luxurious rug or velvet cushion. Majestic but realistic.";
-        
+            promptStyle = `
+            **STYLE:** Northern Renaissance (Holbein).
+            **OUTFIT:** Royal velvet robes, fur collar.
+            **RULE:** Keep animal's face realistic. NO human skin.
+            **VIBE:** Majestic, museum lighting.
+            `;
         } else if (style === 'renacimiento') {
-             // Lógica: Rembrandt Oscuro y Natural
-             styleEnvironment = "**STYLE:** Baroque Oil Painting (Rembrandt style). Dramatic Chiaroscuro lighting (light face, dark edges). Background: Dark, moody, abstract brown/black.";
-             humanCostume = "wearing dark, historical period clothing (black doublet, white ruff collar).";
-             animalInstruction = "**NO HUMAN CLOTHES.** The animal must be in a NATURAL POSE. Focus on the lighting hitting the animal's face and fur texture. Soulful look.";
-        
+            promptStyle = `
+            **STYLE:** Baroque Oil Painting (Rembrandt).
+            **OUTFIT:** Dark historical clothing (black doublet, ruff).
+            **RULE:** Dramatic lighting (chiaroscuro). Natural animal pose.
+            **VIBE:** Soulful, master painter technique.
+            `;
         } else if (style === 'barroco') {
-             // Lógica: Fantasía Total (Tu regla de Corona y Capa)
-             styleEnvironment = "**STYLE:** Maximum Opulence Baroque (Rigaud style). Theatrical glowing lighting. Background: Dark atmospheric with floating gold sparkles.";
-             humanCostume = "wearing massive golden crowns and heavy red velvet royal capes.";
-             animalInstruction = "**HUMANIZATION:** The animal MUST wear a ROYAL GOLD CROWN on its head and a DEEP RED VELVET CAPE on its shoulders. Pose: Proud and dominant.";
+            promptStyle = `
+            **STYLE:** High Baroque Opulence (Rigaud).
+            **OUTFIT:** Massive GOLD CROWN and RED VELVET CAPE.
+            **RULE:** Animal looks like a wealthy King/Queen.
+            **VIBE:** Gold sparkles, dark expensive background.
+            `;
         }
 
-        // 3. EL SUPER PROMPT FUSIONADO
         const masterPrompt = `
-        You are a Master Painter composing a high-resolution group portrait.
-        
-        **CORE INSTRUCTION: INCLUDE EVERY SINGLE SUBJECT FROM THE SOURCE IMAGES.**
-        If there are multiple animals/people, paint them ALL together in a cohesive composition.
-
-        **SCENARIO A: IF HUMANS ARE PRESENT**
-        * Humans: ${humanCostume}
-        * Animals: ${animalInstruction} (Accompaning the human).
-
-        **SCENARIO B: IF ONLY ANIMALS ARE PRESENT**
-        * Treat them as the Absolute Monarchs of the painting.
-        * **CLOTHING RULE:** ${animalInstruction}
-
-        ${styleEnvironment}
-
-        **TECHNICAL CONSTRAINTS:**
-        * **Format:** Vertical Portrait (High Resolution).
-        * **Technique:** Oil painting, visible brushstrokes, glazing.
-        * **Identity:** Keep the faces recognizable.
-        * **Negative Prompt:** NO text, NO watermarks, NO distortions, NO extra limbs, NO cartoon 3D render.
+        Generate a state-of-the-art photorealistic oil painting.
+        **MODEL:** Use full Gemini 3 capabilities for texture and lighting.
+        **INPUT:** Use the provided image for the Subject's Identity.
+        **INSTRUCTION:** Paint the subject into this setting: ${promptStyle}
+        **FORMAT:** Vertical Portrait. 
+        **QUALITY:** Ultra-high resolution, visible brushstrokes.
         `;
-
-        // 4. GENERAR
-        // Intentamos usar el modelo Gemini 3 (Nano Banana Pro)
-// Si este falla, significa que Google aún no lo habilita para tu API Key específica.
-const model = genAI.getGenerativeModel({ model: "gemini-3-pro-preview" });
+        
         const imageParts = images.map(img => ({ inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }}));
         
         const result = await model.generateContent([ ...imageParts, masterPrompt ]);
         const response = await result.response;
-        const base64Gemini = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
         
-        if (!base64Gemini) throw new Error("Error en generación.");
+        if (!response.candidates || !response.candidates[0].content) {
+             throw new Error("El modelo Gemini 3 no devolvió datos.");
+        }
 
-        // 5. GUARDAR
+        const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_ART');
         
-        console.log("✅ Arte Generado:", finalUrl);
+        // 3. SUBIR RESULTADO
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_GEMINI3');
+        
+        console.log("✅ ÉXITO CON NANO BANANA:", finalUrl);
 
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, error: "Error de arte." });
+        console.error('⚠️ ERROR NANO BANANA:', error);
+        
+        // Si falla por permisos (404/403), el log nos dirá por qué.
+        // Posible causa: Tu API Key necesita tener facturación habilitada para usar este modelo "Paid".
+        res.status(500).json({ 
+            success: false, 
+            error: error.message || "Error al conectar con Gemini 3 Pro." 
+        });
     }
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V43 (Reglas Ariel + Calidad Museo) listo en puerto ${PORT}`);
+    console.log(`🚀 Servidor V47 (Nano Banana Pro / Gemini 3) listo en puerto ${PORT}`);
 });
-
