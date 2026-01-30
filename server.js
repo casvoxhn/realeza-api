@@ -24,16 +24,14 @@ async function uploadBufferToSupabase(buffer, prefix) {
 
 app.post('/generate', async (req, res) => {
     try {
-        // AHORA RECIBIMOS "CATEGORY"
         const { images, style, category } = req.body;
         const numSubjects = images.length;
         const isGroup = numSubjects > 1;
-        const isLargeGroup = numSubjects > 2;
 
         // Default a mascota si no se especifica
         const currentCategory = category || 'mascota'; 
 
-        console.log(`🎨 V66 (MULTI-MODULE). Cat: ${currentCategory} | Estilo: ${style} | Sujetos: ${numSubjects}`);
+        console.log(`🎨 V67 (FAMILY HIERARCHY FIX). Cat: ${currentCategory} | Estilo: ${style} | Sujetos: ${numSubjects}`);
 
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -43,17 +41,28 @@ app.post('/generate', async (req, res) => {
         const model = genAI.getGenerativeModel({ model: MODEL_ID });
 
         let promptStyle = "";
+        // Variable para permitir que el Barroco tenga un encuadre diferente
+        let framingOverride = ""; 
         
         // ==========================================================================================
-        // 👨‍👩‍👧‍👦 LÓGICA MÓDULO FAMILIA (NUEVO)
+        // 👨‍👩‍👧‍👦 LÓGICA MÓDULO FAMILIA (MEJORADO V67)
         // ==========================================================================================
         if (currentCategory === 'familia') {
             
+            // BASE COMÚN CON JERARQUÍA Y ROLES DEFINIDOS
             const familyBase = `
-            **SUBJECTS:** A cohesive FAMILY Group Portrait.
-            **INTERACTION:** The subjects must look connected. Use visual language of family bonds: gentle hands on shoulders, parents holding babies, siblings leaning towards each other, or sitting close.
-            **PETS:** If a pet is present, it is a beloved family member. Place it at the feet, on a lap, or sitting faithfully beside the humans.
-            **FACES:** Keep the exact likeness of all humans and pets.
+            **SUBJECTS:** A cohesive historical FAMILY Group Portrait.
+            
+            **HIERARCHY & AGE ROLES (CRITICAL):**
+            - Analyze ages intelligently to assign roles.
+            - **ADULT MEN (Fathers/Patriarchs):** Must appear **powerful, masculine, and dominant**. Strong, upright posture, commanding presence. They are the clear head of the family composition.
+            - **ADULT WOMEN (Mothers/Matriarchs):** Graceful, maternal, often seated centrally.
+            - **TEENAGERS:** Distinctly youthful, not adults. They stand near parents but **do not assume parental authority poses**.
+            - **BABIES & TODDLERS:** **MUST be held securely in the arms of an adult** (usually the mother or grandmother). They should not be placed alone on furniture.
+
+            **INTERACTION:** Strong family bonds. Men standing protectively over seated women/children. Gentle hands on shoulders. Parents holding babies firmly.
+            **PETS:** If present, beloved family member at feet or on a lap.
+            **FACES:** Keep exact likeness of all subjects.
             `;
 
             if (style === 'renacimiento') {
@@ -81,23 +90,24 @@ app.post('/generate', async (req, res) => {
                 promptStyle = `
                 ${familyBase}
                 **STYLE:** High Baroque / Dutch Golden Age (Rembrandt/Velázquez).
-                **VIBE:** Dramatic, Intense, Painterly, "The Godfather" of historical portraits.
-                **ATTIRE:** dark velvets, stiff lace collars (ruffs), rich black/gold/red fabrics.
-                **SETTING:** Dark atmospheric interior, shadowy background.
-                **LIGHTING:** Strong Chiaroscuro (Contrast between light faces and dark background).
+                **VIBE:** Dramatic, Intense, Painterly, Deep shadows, serious mood.
+                **ATTIRE:** Rich dark velvets, stiff ruffs, heavy brocades.
+                **SETTING:** Dark, atmospheric oak-paneled interior.
+                **LIGHTING:** Strong Chiaroscuro (dramatic contrast).
                 `;
+                // CAMBIO 4: ENCUADRE MÁS CERCANO PARA BARROCO
+                framingOverride = "**FRAMING:** **Medium Shot (Waist Up).** Tighter framing to emphasize dramatic facial expressions, textures, and the intense bond. Closer than usual portraits.";
             }
         } 
         
         // ==========================================================================================
-        // 🐶 LÓGICA MÓDULO MASCOTAS (EL CLÁSICO V65)
+        // 🐶 LÓGICA MÓDULO MASCOTAS (CLÁSICO)
         // ==========================================================================================
         else {
             const identityInstruction = isGroup
                 ? `Capture the unique characteristics and likeness of **EVERY SINGLE ONE of the ${numSubjects} SUBJECTS**.`
                 : "Capture the unique characteristics and overall likeness of the subject.";
 
-            // --- RENACIMIENTO (MASCOTAS) ---
             if (style === 'renacimiento') {
                 promptStyle = `
                 **STYLE:** 18th/19th Century Romantic Royal Portrait. VIBE: Luxurious, Soft.
@@ -108,9 +118,7 @@ app.post('/generate', async (req, res) => {
                 - **GROUP:** Family portrait, human anchored, pets around.
                 **3. SETTING:** Palace interior, soft lighting.
                 `;
-            } 
-            // --- REY (MASCOTAS) ---
-            else if (style === 'rey') {
+            } else if (style === 'rey') {
                 promptStyle = `
                 **STYLE:** High Renaissance & Baroque Royal Coronation. VIBE: Majestic, Gold-drenched.
                 **1. IDENTITY:** ${identityInstruction}
@@ -119,9 +127,7 @@ app.post('/generate', async (req, res) => {
                 - **HUMANS:** **Imperial Crown MANDATORY**. Coronation robes, scepter, orb.
                 **3. SETTING:** Throne Room. Bright glorious light.
                 `;
-            } 
-            // --- BARROCO (MASCOTAS) ---
-            else if (style === 'barroco') {
+            } else if (style === 'barroco') {
                  promptStyle = `
                 **STYLE:** High Baroque Opulence. VIBE: Dramatic, "More is More".
                 **1. IDENTITY:** ${identityInstruction}
@@ -132,6 +138,10 @@ app.post('/generate', async (req, res) => {
                 `;
             }
         }
+
+        // DEFINIR EL ENCUADRE FINAL (Usar el override si existe, si no, el default)
+        const defaultFraming = "**FRAMING:** **Three-Quarter Shot (Knees Up or Full Seated Body).** Open the frame to show attire and interaction. Do NOT crop too tight.";
+        const finalFramingInstruction = framingOverride || defaultFraming;
 
         const masterPrompt = `
         You are a Master Painter creating a museum-quality oil painting.
@@ -144,7 +154,7 @@ app.post('/generate', async (req, res) => {
         
         **CRITICAL TECHNICAL SPECS:**
         **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
-        **FRAMING:** **Three-Quarter Shot (Knees Up or Full Seated Body).** Open the frame to show attire and interaction. Do NOT crop too tight.
+        ${finalFramingInstruction}
 
         **NEGATIVE CONSTRAINTS (WHAT NOT TO DRAW):**
         - **DO NOT INCLUDE A PICTURE FRAME.** The image must be the painting itself, edge-to-edge canvas, with NO external border, mount, or gold frame generated around it.
@@ -159,9 +169,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, `MASTER_V66_${currentCategory.toUpperCase()}`);
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, `MASTER_V67_${currentCategory.toUpperCase()}`);
         
-        console.log("✅ Resultado V66:", finalUrl);
+        console.log("✅ Resultado V67:", finalUrl);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -171,5 +181,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V66 (Multi-Módulo: Familia + Mascotas) listo en ${PORT}`);
+    console.log(`🚀 Servidor V67 (Familia: Jerarquía Masculina + Bebés en brazos + Barroco Cercano) listo en ${PORT}`);
 });
