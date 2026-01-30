@@ -1,32 +1,54 @@
 const express = require('express');
 const cors = require('cors');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const { createClient } = require('@supabase/supabase-js'); // Importamos Supabase
+const { createClient } = require('@supabase/supabase-js'); 
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({ origin: '*' }));
-// Aumentamos límite para recibir varias fotos
 app.use(express.json({ limit: '100mb' })); 
 
-// 1. CONFIGURACIÓN DE SUPABASE
+// CONFIGURACIÓN SUPABASE
 const supabaseUrl = process.env.SUPABASE_URL; 
 const supabaseKey = process.env.SUPABASE_ANON_KEY; 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Configuración de Gemini AI
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+
+// FUNCIÓN AUXILIAR PARA SUBIR A SUPABASE
+async function uploadToSupabase(base64Image, prefix) {
+    const cleanBase64 = base64Image.replace(/^data:image\/\w+;base64,/, "");
+    const buffer = Buffer.from(cleanBase64, 'base64');
+    const fileName = `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.jpg`;
+
+    const { error } = await supabase
+        .storage
+        .from('generated-art')
+        .upload(fileName, buffer, { contentType: 'image/jpeg' });
+
+    if (error) throw error;
+
+    const { data } = supabase.storage.from('generated-art').getPublicUrl(fileName);
+    return data.publicUrl;
+}
 
 app.post('/generate', async (req, res) => {
     try {
         const { images, style } = req.body;
         console.log(`🎨 Procesando ${images.length} imagenes. Estilo: ${style}`);
 
-        const model = genAI.getGenerativeModel({ model: "gemini-3-pro-image-preview" });
+        // 1. SUBIR FOTOS ORIGINALES A SUPABASE (AUDITORÍA)
+        // Usamos Promise.all para subirlas todas en paralelo
+        const originalUrls = await Promise.all(
+            images.map((img, index) => uploadToSupabase(img, `original_${index + 1}`))
+        );
+        console.log("✅ Fotos originales guardadas:", originalUrls);
 
-        // Preparar imágenes para Gemini
+        // 2. GENERAR CON GEMINI
+        const model = genAI.getGenerativeModel({ model: "gemini-3-pro-image-preview" });
+        
         const imageParts = images.map(img => ({
             inlineData: {
                 data: img.replace(/^data:image\/\w+;base64,/, ""),
@@ -34,7 +56,6 @@ app.post('/generate', async (req, res) => {
             }
         }));
 
-        // --- DEFINICIÓN DE ESTILOS ---
         let styleEnvironment = "";
         let humanCostume = "";
         let animalInstruction = "";
@@ -53,63 +74,36 @@ app.post('/generate', async (req, res) => {
              animalInstruction = "The animal MUST wear a ROYAL GOLD CROWN and a DEEP RED VELVET CAPE. BUT keep the body NATURAL (quadruped/sitting).";
         }
 
-        // --- PROMPT DIRECTOR ---
         const masterPrompt = `
         You are a Master Painter composing a group portrait.
         **CRITICAL: INCLUDE EVERY SINGLE SUBJECT.**
-        
         **SCENARIO A: HUMANS + ANIMALS**
         * Humans: ${humanCostume}
         * Animals: ${animalInstruction}
-
         **SCENARIO B: ONLY ANIMALS**
         * Animals are Absolute Monarchs.
         * ${style === 'barroco' ? 'Give them a GOLD CROWN and RED CAPE.' : 'NO HUMANIZATION.'}
-        
         **STYLE:** ${styleEnvironment}
         **FORMAT:** High Resolution, Vertical Portrait.
         `;
 
-        // Generar con IA
         const result = await model.generateContent([ ...imageParts, masterPrompt ]);
         const response = await result.response;
         
         if (response.candidates && response.candidates[0].content && response.candidates[0].content.parts) {
             
-            // 2. OBTENER LA IMAGEN BASE64 DE GEMINI
+            // 3. SUBIR OBRA MAESTRA A SUPABASE
             const rawBase64 = response.candidates[0].content.parts[0].inlineData.data;
+            const finalUrl = await uploadToSupabase(rawBase64, 'MASTERPIECE');
             
-            // 3. SUBIR A SUPABASE STORAGE
-            // Convertimos base64 a buffer (archivo real)
-            const buffer = Buffer.from(rawBase64, 'base64');
-            // Creamos un nombre único
-            const fileName = `art_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.jpg`;
+            console.log("✅ Obra Maestra guardada:", finalUrl);
 
-            // Subida al bucket 'generated-art'
-            const { data, error } = await supabase
-                .storage
-                .from('generated-art') // ¡Asegúrate de haber creado este bucket en Supabase!
-                .upload(fileName, buffer, {
-                    contentType: 'image/jpeg',
-                    upsert: false
-                });
-
-            if (error) {
-                console.error("Error subiendo a Supabase:", error);
-                throw error;
-            }
-
-            // 4. OBTENER URL PÚBLICA PARA SHOPIFY
-            const { data: publicUrlData } = supabase
-                .storage
-                .from('generated-art')
-                .getPublicUrl(fileName);
-
-            const finalUrl = publicUrlData.publicUrl;
-            console.log("✅ Imagen guardada y link generado:", finalUrl);
-
-            // 5. DEVOLVER LA URL (LINK) AL WIDGET
-            res.json({ success: true, imageUrl: finalUrl });
+            // 4. DEVOLVER TODO AL FRONTEND (Link Final + Links Originales)
+            res.json({ 
+                success: true, 
+                imageUrl: finalUrl,
+                originalUrls: originalUrls // <--- Aquí enviamos la lista de originales
+            });
 
         } else {
             throw new Error("La IA no generó imagen válida.");
@@ -122,5 +116,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor listo en puerto ${PORT}`);
+    console.log(`🚀 Servidor V34 (Auditoría Completa) listo en puerto ${PORT}`);
 });
