@@ -24,12 +24,16 @@ async function uploadBufferToSupabase(buffer, prefix) {
 
 app.post('/generate', async (req, res) => {
     try {
-        const { images, style } = req.body;
+        // AHORA RECIBIMOS "CATEGORY"
+        const { images, style, category } = req.body;
         const numSubjects = images.length;
         const isGroup = numSubjects > 1;
         const isLargeGroup = numSubjects > 2;
 
-        console.log(`🎨 V65 (NO FRAMES FIX). Estilo: ${style} | Sujetos: ${numSubjects}`);
+        // Default a mascota si no se especifica
+        const currentCategory = category || 'mascota'; 
+
+        console.log(`🎨 V66 (MULTI-MODULE). Cat: ${currentCategory} | Estilo: ${style} | Sujetos: ${numSubjects}`);
 
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -39,108 +43,108 @@ app.post('/generate', async (req, res) => {
         const model = genAI.getGenerativeModel({ model: MODEL_ID });
 
         let promptStyle = "";
-
-        // --- VARIABLES DINÁMICAS ---
-        const identityInstruction = isGroup
-            ? `Capture the unique characteristics and likeness of **EVERY SINGLE ONE of the ${numSubjects} SUBJECTS** (humans and/or animals) provided.`
-            : "Capture the unique characteristics and overall likeness of the subject.";
-
-        // --- ESTILO 1: RENACIMIENTO (ROMÁNTICO/ELEGANTE) ---
-        if (style === 'renacimiento') {
-            promptStyle = `
-            **STYLE:** 18th/19th Century Romantic Royal Portrait (Winterhalter/Sargent style).
-            **VIBE:** Luxurious, Soft, Elegant, Majestic.
-
-            **1. IDENTITY (CRITICAL):**
-            - ${identityInstruction}
-            - Maintain exact facial features for humans and breed/markings for pets.
-
-            **2. INTELLIGENT SUBJECT HANDLING:**
-            --- **IF SUBJECT IS A PET:** ---
-            - **POSE:** Reclining or sitting regally on a massive antique velvet cushion.
-            - **ATTIRE:** Heavy brocade mantle/capelet **draped open at the front** (V-shape) to reveal neck fur.
-            - **FASTENING:** Connected by an opulent jeweled clasp/chain across the chest.
-
-            --- **IF SUBJECT IS A HUMAN:** ---
-            - **POSE:** Seated gracefully on a luxurious sofa, throne, or standing elegantly.
-            - **ATTIRE (GOWNS NOT BLACK):** Use **Opulent Royal Gowns/Robes**. Colors: Royal Blue, Deep Emerald, Rich Burgundy, Gold, or Rose.
-            - **Vibe:** A queen or princess in her palace.
-
-            --- **IF MIXED GROUP (Humans + Pets):** ---
-            - **COMPOSITION:** A wider "Family Portrait" scene. The Human is the anchor. Pets are arranged naturally (lap, feet, stool).
-
-            **3. SETTING & LIGHTING:**
-            - **BACKGROUND:** A palace interior with depth (drapery, columns).
-            - **LIGHTING:** Soft, flattering, golden-hour museum light.
+        
+        // ==========================================================================================
+        // 👨‍👩‍👧‍👦 LÓGICA MÓDULO FAMILIA (NUEVO)
+        // ==========================================================================================
+        if (currentCategory === 'familia') {
+            
+            const familyBase = `
+            **SUBJECTS:** A cohesive FAMILY Group Portrait.
+            **INTERACTION:** The subjects must look connected. Use visual language of family bonds: gentle hands on shoulders, parents holding babies, siblings leaning towards each other, or sitting close.
+            **PETS:** If a pet is present, it is a beloved family member. Place it at the feet, on a lap, or sitting faithfully beside the humans.
+            **FACES:** Keep the exact likeness of all humans and pets.
             `;
+
+            if (style === 'renacimiento') {
+                promptStyle = `
+                ${familyBase}
+                **STYLE:** 19th Century Romantic Portrait / Neoclassical (Ingres, Winterhalter, Sargent).
+                **VIBE:** Elegant, Soft, Aristocratic, Sentimental.
+                **ATTIRE:** - **Men:** Fine tailcoats, cravats, waistcoats (Regency/Victorian style).
+                - **Women:** Elegant silk or satin gowns (Empire waist or Victorian), lace details, shawls.
+                - **Children:** Velvet suits for boys, white muslin dresses for girls.
+                **SETTING:** A drawing room with a view of a garden, or a landscaped park with classical ruins.
+                **LIGHTING:** Soft, diffused natural daylight.
+                `;
+            } else if (style === 'rey') {
+                promptStyle = `
+                ${familyBase}
+                **STYLE:** Royal Family Coronation Portrait.
+                **VIBE:** Majestic, Powerful, The Ruling Dynasty.
+                **ATTIRE:** - **MANDATORY:** **Crowns or Tiaras** for adult humans.
+                - **Clothing:** Heavy coronation robes, ermine fur, sashes of knighthood, military uniforms for men, excessive jewelry.
+                **SETTING:** The Throne Room or a Palace Balcony with red velvet drapes.
+                **LIGHTING:** Bright, golden, glorious light.
+                `;
+            } else if (style === 'barroco') {
+                promptStyle = `
+                ${familyBase}
+                **STYLE:** High Baroque / Dutch Golden Age (Rembrandt/Velázquez).
+                **VIBE:** Dramatic, Intense, Painterly, "The Godfather" of historical portraits.
+                **ATTIRE:** dark velvets, stiff lace collars (ruffs), rich black/gold/red fabrics.
+                **SETTING:** Dark atmospheric interior, shadowy background.
+                **LIGHTING:** Strong Chiaroscuro (Contrast between light faces and dark background).
+                `;
+            }
         } 
-        // --- ESTILO 2: REY / REINA (OPULENCIA REAL) ---
-        else if (style === 'rey') {
-            promptStyle = `
-            **STYLE:** High Renaissance & Baroque Royal Coronation Portrait.
-            **VIBE:** Majestic, Opulent, Imposing, Luxurious, Gold-drenched.
+        
+        // ==========================================================================================
+        // 🐶 LÓGICA MÓDULO MASCOTAS (EL CLÁSICO V65)
+        // ==========================================================================================
+        else {
+            const identityInstruction = isGroup
+                ? `Capture the unique characteristics and likeness of **EVERY SINGLE ONE of the ${numSubjects} SUBJECTS**.`
+                : "Capture the unique characteristics and overall likeness of the subject.";
 
-            **1. IDENTITY (CRITICAL):**
-            - ${identityInstruction}
-            - Maintain exact facial features/markings. Expression should be dignified.
-
-            **2. INTELLIGENT SUBJECT HANDLING:**
-            --- **IF SUBJECT IS A PET:** ---
-            - **POSE:** Reclining on a gilded royal dais or cushion with gold tassels.
-            - **ATTIRE:** Deep royal velvet mantles trimmed with ermine fur. Massive jeweled clasps.
-
-            --- **IF SUBJECT IS A HUMAN:** ---
-            - **POSE:** Seated imposingly on a Golden Throne under a canopy.
-            - **ATTIRE (MANDATORY CROWNS):** A grand **Imperial Crown** is MUST. Heavily embroidered coronation robes, goldwork, ermine collars. Holding scepter and orb. Color palette: Purple, Crimson, Gold.
-
-            --- **IF MIXED GROUP:** ---
-            - **COMPOSITION:** Formal Royal Family portrait. Monarch on throne, pets acting as guardians at the feet.
-
-            **3. SETTING & LIGHTING:**
-            - **BACKGROUND:** Throne Room. Gilded columns, heraldic tapestries.
-            - **LIGHTING:** Bright, glorious, majestic light.
-            `;
-        } 
-        // --- ESTILO 3: BARROCO (DRAMA Y LUJO EXTREMO) ---
-        else if (style === 'barroco') {
-             promptStyle = `
-            **STYLE:** High Baroque Opulence & Theatricality.
-            **VIBE:** Dramatic, Intense, "More is More", Deep shadows meets blinding gold.
-
-            **1. IDENTITY (CRITICAL):**
-            - ${identityInstruction}
-            - Maintain exact facial features. Expressions should be intense or noble.
-
-            **2. INTELLIGENT SUBJECT HANDLING:**
-            --- **IF SUBJECT IS A PET:** ---
-            - **POSE:** Dynamic pose on a dark velvet cushion.
-            - **ATTIRE:** **A Gold Crown is MANDATORY.** Flowing Deep Red or Black Velvet Capes. Excessive gold ornamentation.
-
-            --- **IF SUBJECT IS A HUMAN:** ---
-            - **POSE:** Dramatic, theatrical stance or seated with overflowing fabric.
-            - **ATTIRE:** **Gold Baroque Crowns**. Armor with gold filigree or corset gowns with massive hips. A massive **Red or Black velvet drape** flowing around them.
-
-            --- **IF MIXED GROUP:** ---
-            - **COMPOSITION:** Opera scene. Highly staged. Human is center, pets are part of the scenery. Unifying colors: Deep Red, Gold, Black.
-
-            **3. SETTING & LIGHTING:**
-            - **BACKGROUND:** Dark palace interiors, heavy curtains, storm clouds.
-            - **LIGHTING:** Extreme Chiaroscuro (Caravaggio style) - Deep darkness vs bright golden light.
-            `;
+            // --- RENACIMIENTO (MASCOTAS) ---
+            if (style === 'renacimiento') {
+                promptStyle = `
+                **STYLE:** 18th/19th Century Romantic Royal Portrait. VIBE: Luxurious, Soft.
+                **1. IDENTITY:** ${identityInstruction}
+                **2. HANDLING:**
+                - **PETS:** Reclining on antique velvet cushion. Mantle draped open at front (V-shape). Jeweled clasp.
+                - **HUMANS:** Royal Gowns/Robes (Blue/Emerald/Gold). Seated gracefully.
+                - **GROUP:** Family portrait, human anchored, pets around.
+                **3. SETTING:** Palace interior, soft lighting.
+                `;
+            } 
+            // --- REY (MASCOTAS) ---
+            else if (style === 'rey') {
+                promptStyle = `
+                **STYLE:** High Renaissance & Baroque Royal Coronation. VIBE: Majestic, Gold-drenched.
+                **1. IDENTITY:** ${identityInstruction}
+                **2. HANDLING:**
+                - **PETS:** Gilded royal dais. Royal velvet mantles with ermine.
+                - **HUMANS:** **Imperial Crown MANDATORY**. Coronation robes, scepter, orb.
+                **3. SETTING:** Throne Room. Bright glorious light.
+                `;
+            } 
+            // --- BARROCO (MASCOTAS) ---
+            else if (style === 'barroco') {
+                 promptStyle = `
+                **STYLE:** High Baroque Opulence. VIBE: Dramatic, "More is More".
+                **1. IDENTITY:** ${identityInstruction}
+                **2. HANDLING:**
+                - **PETS:** **Gold Crown MANDATORY**. Deep Red/Black Velvet Capes.
+                - **HUMANS:** Gold Baroque Crowns. Red/Black velvet drapes. Theatrical pose.
+                **3. SETTING:** Dark palace, Chiaroscuro lighting.
+                `;
+            }
         }
 
         const masterPrompt = `
         You are a Master Painter creating a museum-quality oil painting.
         **INSTRUCTIONS:**
-        1. Analyze the ${numSubjects} input image(s) to determine if they are humans, pets, or a mix.
-        2. Create a cohesive composition applying the "INTELLIGENT SUBJECT HANDLING" rules below.
+        1. Analyze the ${numSubjects} input image(s).
+        2. Create a cohesive composition applying the rules below.
         3. Apply a rich oil painting texture.
         
         ${promptStyle}
         
         **CRITICAL TECHNICAL SPECS:**
         **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
-        **FRAMING:** **Three-Quarter Shot (Knees Up or Full Seated Body).** Open the frame to show the beautiful attire and full arrangement. Do NOT crop too tight on the face.
+        **FRAMING:** **Three-Quarter Shot (Knees Up or Full Seated Body).** Open the frame to show attire and interaction. Do NOT crop too tight.
 
         **NEGATIVE CONSTRAINTS (WHAT NOT TO DRAW):**
         - **DO NOT INCLUDE A PICTURE FRAME.** The image must be the painting itself, edge-to-edge canvas, with NO external border, mount, or gold frame generated around it.
@@ -155,9 +159,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V65_NO_FRAME');
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, `MASTER_V66_${currentCategory.toUpperCase()}`);
         
-        console.log("✅ Resultado V65:", finalUrl);
+        console.log("✅ Resultado V66:", finalUrl);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -167,5 +171,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V65 (No Frames Fix) listo en ${PORT}`);
+    console.log(`🚀 Servidor V66 (Multi-Módulo: Familia + Mascotas) listo en ${PORT}`);
 });
