@@ -54,8 +54,10 @@ app.post('/generate', async (req, res) => {
             - **BACKGROUND:** The clean, uncluttered, textured plaster wall in neutral, deep tones is closer behind the subject, creating depth.
 
             **3. THE "ROPITA" (NOBLE DRAPERY - More prominent now):**
-            - Because of the closer shot, the heavy brocade/velvet mantle draped over the back and the jeweled collar are more visible and important for the "quality" feel.
-            - **NO human jackets or pants.**
+            Dress the subject in full Renaissance noble finery adapted for a majestic pet/person: heavy layered drapery, rich velvet mantles cascading over the shoulders and back for royal prestige. Place one or several necklaces loaded with jewels—pearls, rubies, emeralds, and gold—adding pendants, chains, or brooches to provide extra sparkle and a sense of grandeur.
+Use heavy fabrics: deep crimson velvet, midnight-blue brocade, emerald green with metallic threads, black with golden accents—mix textures to add depth (the sheen of velvet vs. the matte of brocade vs. glossy satin).
+Include subtle royal accessories such as a small crown, jeweled headpiece, or a gem-studded feather if it fits naturally into the composition.
+Emphasize pomp and variety: make the attire feel extravagant, with multiple layers and an extremely rich level of detail to enhance the “noble portrait” quality, especially visible in close-up shots.
 
             **4. LIGHTING (DRAMATIC CHIAROSCURO):**
             - Strong, dramatic light from the upper left, spotlighting the face and textures, letting the background fall into rich shadow.
@@ -106,3 +108,4 @@ app.post('/generate', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor V56 (Presencia y Formato 4:5) listo en ${PORT}`);
 });
+
