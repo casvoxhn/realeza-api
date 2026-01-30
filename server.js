@@ -27,11 +27,9 @@ app.post('/generate', async (req, res) => {
         const { images, style, category } = req.body;
         const numSubjects = images.length;
         const isGroup = numSubjects > 1;
-
-        // Default a mascota si no se especifica
         const currentCategory = category || 'mascota'; 
 
-        console.log(`🎨 V67 (FAMILY HIERARCHY FIX). Cat: ${currentCategory} | Estilo: ${style} | Sujetos: ${numSubjects}`);
+        console.log(`👑 V69 (FIX: POWERFUL REALISTIC KING + CLOSE RENAISSANCE). Cat: ${currentCategory} | Estilo: ${style}`);
 
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -39,69 +37,66 @@ app.post('/generate', async (req, res) => {
         }));
 
         const model = genAI.getGenerativeModel({ model: MODEL_ID });
-
         let promptStyle = "";
-        // Variable para permitir que el Barroco tenga un encuadre diferente
         let framingOverride = ""; 
         
         // ==========================================================================================
-        // 👨‍👩‍👧‍👦 LÓGICA MÓDULO FAMILIA (MEJORADO V67)
+        // 👨‍👩‍👧‍👦 LÓGICA MÓDULO FAMILIA (V69)
         // ==========================================================================================
         if (currentCategory === 'familia') {
             
-            // BASE COMÚN CON JERARQUÍA Y ROLES DEFINIDOS
+            // BASE: IDENTIDAD Y JERARQUÍA
             const familyBase = `
-            **SUBJECTS:** A cohesive historical FAMILY Group Portrait.
-            
-            **HIERARCHY & AGE ROLES (CRITICAL):**
-            - Analyze ages intelligently to assign roles.
-            - **ADULT MEN (Fathers/Patriarchs):** Must appear **powerful, masculine, and dominant**. Strong, upright posture, commanding presence. They are the clear head of the family composition.
-            - **ADULT WOMEN (Mothers/Matriarchs):** Graceful, maternal, often seated centrally.
-            - **TEENAGERS:** Distinctly youthful, not adults. They stand near parents but **do not assume parental authority poses**.
-            - **BABIES & TODDLERS:** **MUST be held securely in the arms of an adult** (usually the mother or grandmother). They should not be placed alone on furniture.
+            **IDENTITY (THE MOST CRITICAL INSTRUCTION):** - You MUST maintain the exact facial features and likeness of EVERY person from the input photos. Do NOT generate generic faces.
 
-            **INTERACTION:** Strong family bonds. Men standing protectively over seated women/children. Gentle hands on shoulders. Parents holding babies firmly.
-            **PETS:** If present, beloved family member at feet or on a lap.
-            **FACES:** Keep exact likeness of all subjects.
+            **SUBJECTS & HIERARCHY:** A cohesive historical FAMILY Group Portrait.
+            - **ADULT MEN (Fathers):** Dominant, masculine, powerful posture. The anchor of the composition.
+            - **ADULT WOMEN (Mothers):** Graceful, maternal, often seated.
+            - **TEENAGERS:** Youthful, subordinate roles.
+            - **BABIES:** MUST be held securely by an adult.
+
+            **INTERACTION:** Strong family bonds. Gentle physical contact appropriate for the era.
             `;
 
             if (style === 'renacimiento') {
                 promptStyle = `
                 ${familyBase}
-                **STYLE:** 19th Century Romantic Portrait / Neoclassical (Ingres, Winterhalter, Sargent).
-                **VIBE:** Elegant, Soft, Aristocratic, Sentimental.
-                **ATTIRE:** - **Men:** Fine tailcoats, cravats, waistcoats (Regency/Victorian style).
-                - **Women:** Elegant silk or satin gowns (Empire waist or Victorian), lace details, shawls.
-                - **Children:** Velvet suits for boys, white muslin dresses for girls.
-                **SETTING:** A drawing room with a view of a garden, or a landscaped park with classical ruins.
-                **LIGHTING:** Soft, diffused natural daylight.
+                **STYLE:** 19th Century Romantic Portrait (Neoclassical elegance).
+                **VIBE:** Aristocratic, Sophisticated, Sentimental but realistic.
+                **ATTIRE:** High-society fashion. Tailcoats for men, elegant silk gowns for women.
+                **SETTING:** Drawing room or manor garden.
+                **LIGHTING:** Soft, flattering natural light.
                 `;
             } else if (style === 'rey') {
+                // CAMBIO V69: REY PODEROSO Y REALISTA (NO CARICATURA)
                 promptStyle = `
                 ${familyBase}
-                **STYLE:** Royal Family Coronation Portrait.
-                **VIBE:** Majestic, Powerful, The Ruling Dynasty.
-                **ATTIRE:** - **MANDATORY:** **Crowns or Tiaras** for adult humans.
-                - **Clothing:** Heavy coronation robes, ermine fur, sashes of knighthood, military uniforms for men, excessive jewelry.
-                **SETTING:** The Throne Room or a Palace Balcony with red velvet drapes.
-                **LIGHTING:** Bright, golden, glorious light.
+                **STYLE:** **Museum-Quality Hyper-Realistic Oil Painting** of Royal Power (e.g., Velázquez royal portraits).
+                **VIBE:** Imposing, Majestic, Serious, Somber Opulence. **Not cartoonish or overly colorful.**
+                **THE KING (Man):** Must look **powerful, imposing, and dominant**. A stern, majestic expression. He is the central pillar of power.
+                **ATTIRE:** Heavy gold IMPERIAL CROWNS. Deep, rich velvet robes (crimson, navy) with heavy ermine. Recreate the weight and texture of real gold and fur.
+                **SETTING:** Grand Palace Throne Room. Dark wood, heavy tapestries.
+                **LIGHTING:** Dramatic, directional indoor light (chiaroscuro) emphasizing textures. Not evenly bright.
                 `;
             } else if (style === 'barroco') {
                 promptStyle = `
                 ${familyBase}
-                **STYLE:** High Baroque / Dutch Golden Age (Rembrandt/Velázquez).
+                **STYLE:** High Baroque / Dutch Golden Age (Rembrandt).
                 **VIBE:** Dramatic, Intense, Painterly, Deep shadows, serious mood.
                 **ATTIRE:** Rich dark velvets, stiff ruffs, heavy brocades.
-                **SETTING:** Dark, atmospheric oak-paneled interior.
+                **SETTING:** Dark, atmospheric interior.
                 **LIGHTING:** Strong Chiaroscuro (dramatic contrast).
                 `;
-                // CAMBIO 4: ENCUADRE MÁS CERCANO PARA BARROCO
-                framingOverride = "**FRAMING:** **Medium Shot (Waist Up).** Tighter framing to emphasize dramatic facial expressions, textures, and the intense bond. Closer than usual portraits.";
+            }
+
+            // CAMBIO V69: ENCUADRE MÁS CERCANO PARA BARROCO Y RENACIMIENTO
+            if (style === 'barroco' || style === 'renacimiento') {
+                 framingOverride = "**FRAMING:** **Medium Shot (Waist Up).** Tighter framing (closer than usual) to emphasize facial likeness, expressions, and family interaction.";
             }
         } 
         
         // ==========================================================================================
-        // 🐶 LÓGICA MÓDULO MASCOTAS (CLÁSICO)
+        // 🐶 LÓGICA MÓDULO MASCOTAS (CLÁSICO - SIN CAMBIOS)
         // ==========================================================================================
         else {
             const identityInstruction = isGroup
@@ -109,46 +104,24 @@ app.post('/generate', async (req, res) => {
                 : "Capture the unique characteristics and overall likeness of the subject.";
 
             if (style === 'renacimiento') {
-                promptStyle = `
-                **STYLE:** 18th/19th Century Romantic Royal Portrait. VIBE: Luxurious, Soft.
-                **1. IDENTITY:** ${identityInstruction}
-                **2. HANDLING:**
-                - **PETS:** Reclining on antique velvet cushion. Mantle draped open at front (V-shape). Jeweled clasp.
-                - **HUMANS:** Royal Gowns/Robes (Blue/Emerald/Gold). Seated gracefully.
-                - **GROUP:** Family portrait, human anchored, pets around.
-                **3. SETTING:** Palace interior, soft lighting.
-                `;
+                promptStyle = `**STYLE:** 18th/19th Century Romantic Royal Portrait. VIBE: Luxurious, Soft. **1. IDENTITY:** ${identityInstruction} **2. HANDLING:** Pets on cushion, humans in gowns. **3. SETTING:** Palace interior, soft light.`;
             } else if (style === 'rey') {
-                promptStyle = `
-                **STYLE:** High Renaissance & Baroque Royal Coronation. VIBE: Majestic, Gold-drenched.
-                **1. IDENTITY:** ${identityInstruction}
-                **2. HANDLING:**
-                - **PETS:** Gilded royal dais. Royal velvet mantles with ermine.
-                - **HUMANS:** **Imperial Crown MANDATORY**. Coronation robes, scepter, orb.
-                **3. SETTING:** Throne Room. Bright glorious light.
-                `;
+                promptStyle = `**STYLE:** High Renaissance & Baroque Royal Coronation. VIBE: Majestic, Gold-drenched. **1. IDENTITY:** ${identityInstruction} **2. HANDLING:** **Imperial Crown MANDATORY**. Coronation robes. **3. SETTING:** Throne Room. Bright light.`;
             } else if (style === 'barroco') {
-                 promptStyle = `
-                **STYLE:** High Baroque Opulence. VIBE: Dramatic, "More is More".
-                **1. IDENTITY:** ${identityInstruction}
-                **2. HANDLING:**
-                - **PETS:** **Gold Crown MANDATORY**. Deep Red/Black Velvet Capes.
-                - **HUMANS:** Gold Baroque Crowns. Red/Black velvet drapes. Theatrical pose.
-                **3. SETTING:** Dark palace, Chiaroscuro lighting.
-                `;
+                 promptStyle = `**STYLE:** High Baroque Opulence. VIBE: Dramatic. **1. IDENTITY:** ${identityInstruction} **2. HANDLING:** **Gold Crown MANDATORY**. Dark Velvet Capes. **3. SETTING:** Dark palace, Chiaroscuro.`;
             }
         }
 
-        // DEFINIR EL ENCUADRE FINAL (Usar el override si existe, si no, el default)
+        // DEFINIR EL ENCUADRE FINAL
         const defaultFraming = "**FRAMING:** **Three-Quarter Shot (Knees Up or Full Seated Body).** Open the frame to show attire and interaction. Do NOT crop too tight.";
         const finalFramingInstruction = framingOverride || defaultFraming;
 
         const masterPrompt = `
-        You are a Master Painter creating a museum-quality oil painting.
+        You are a Master Painter creating a **museum-quality oil painting**.
         **INSTRUCTIONS:**
-        1. Analyze the ${numSubjects} input image(s).
-        2. Create a cohesive composition applying the rules below.
-        3. Apply a rich oil painting texture.
+        1. Analyze the ${numSubjects} input image(s) focusing on FACIAL IDENTITY.
+        2. Create a cohesive composition applying the style rules below.
+        3. Apply a rich, realistic oil painting texture.
         
         ${promptStyle}
         
@@ -156,8 +129,10 @@ app.post('/generate', async (req, res) => {
         **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
         ${finalFramingInstruction}
 
-        **NEGATIVE CONSTRAINTS (WHAT NOT TO DRAW):**
-        - **DO NOT INCLUDE A PICTURE FRAME.** The image must be the painting itself, edge-to-edge canvas, with NO external border, mount, or gold frame generated around it.
+        **NEGATIVE CONSTRAINTS:**
+        - **DO NOT generate generic faces. Likeness is paramount.**
+        - DO NOT INCLUDE A PICTURE FRAME around the canvas.
+        - (For King style): DO NOT look like a cartoon or fantasy illustration. Must be serious, heavy oil painting.
         `;
         
         const imageParts = images.map(img => ({ inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }}));
@@ -169,9 +144,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, `MASTER_V67_${currentCategory.toUpperCase()}`);
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, `MASTER_V69_${currentCategory.toUpperCase()}`);
         
-        console.log("✅ Resultado V67:", finalUrl);
+        console.log(`✅ Resultado V69 (${currentCategory}):`, finalUrl);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -181,5 +156,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V67 (Familia: Jerarquía Masculina + Bebés en brazos + Barroco Cercano) listo en ${PORT}`);
+    console.log(`🚀 Servidor V69 (Fix: Rey Poderoso Realista + Renacimiento Plano Medio) listo en ${PORT}`);
 });
