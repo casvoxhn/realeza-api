@@ -26,7 +26,7 @@ async function uploadBufferToSupabase(buffer, prefix) {
 app.post('/generate', async (req, res) => {
     try {
         const { images, style } = req.body;
-        console.log(`🎨 V52 (EMULAR COMPOSICIÓN). Estilo: ${style} | Modelo: ${MODEL_ID}`);
+        console.log(`🎨 V53 (LIMPIEZA Y LUZ). Estilo: ${style} | Modelo: ${MODEL_ID}`);
 
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -37,44 +37,44 @@ app.post('/generate', async (req, res) => {
 
         let promptStyle = "";
 
-        // --- ESTILO 1: RENACIMIENTO (EMULACIÓN DE COMPOSICIÓN CLÁSICA) ---
+        // --- ESTILO 1: RENACIMIENTO (VERSIÓN LIMPIA Y LUMINOSA) ---
         if (style === 'renacimiento') {
             promptStyle = `
-            **STYLE:** 17th Century Dutch/Flemish Baroque Oil Painting (Titian/Van Dyck style). Rich, deep colors.
+            **STYLE:** 17th Century Dutch Baroque Oil Painting (Van Dyck style). Rich colors but clearer illumination.
 
-            **COMPOSITION GOAL:** Emulate a classic, noble pet portrait painting composition.
+            **COMPOSITION GOAL:** A clean, noble, and well-illuminated pet portrait on the floor.
 
             **1. THE SUBJECT (IDENTITY LOCK):**
             - Keep the EXACT facial features and expression from the input photo.
 
-            **2. THE POSE & SETTING (THE EMULATION):**
-            - **POSE:** The animal is posed with immense dignity, sitting or lying regally on a large, plush antique velvet cushion (e.g., deep crimson, gold, or dark blue).
-            - **FURNITURE:** The cushion rests on a heavy, carved dark wood table or pedestal.
-            - **BACKGROUND:** Dark, rich, atmospheric background with hints of heavy drapery or old library shelves, barely visible in the shadows.
+            **2. THE POSE & SETTING (FLOOR & CLEAN WALL):**
+            - **POSE:** The animal is sitting or lying regally on a large, plush antique velvet cushion (e.g., deep crimson or gold).
+            - **PLACEMENT:** The cushion rests directly on a **polished antique stone floor or dark wooden planks**. NO TABLES.
+            - **BACKGROUND:** A **clean, uncluttered, textured plaster wall** in neutral, warm tones (e.g., aged beige, soft grey). NO busy elements like shelves or heavy furniture in the background. Keep it simple to focus on the subject.
 
             **3. THE "ROPITA" (NOBLE DRAPERY):**
-            - A heavy, richly embroidered brocade or velvet mantle/capelet is draped artfully *over* the animal's back and shoulders. It should look heavy and expensive.
-            - A prominent jeweled collar is visible.
+            - A heavy, richly embroidered brocade or velvet mantle/capelet is draped artfully *over* the animal's back.
+            - A prominent jeweled collar.
             - **NO human jackets or pants.**
 
-            **4. LIGHTING:**
-            - Dramatic Chiaroscuro light coming strongly from the upper left, spotlighting the face and the rich texture of the mantle and cushion.
+            **4. LIGHTING (BRIGHTER & SOFTER):**
+            - **Soft, diffused daylight** coming from a large window on the left. The scene should be **well-illuminated and clear**, avoiding excessively dark shadows, while still maintaining a painterly texture.
             `;
         } 
-        // --- OTROS ESTILOS ---
+        // --- OTROS ESTILOS (Pendientes de pulir) ---
         else if (style === 'rey') {
-            promptStyle = `**STYLE:** Northern Renaissance Royal Portrait. **IDENTITY:** Keep exact face. **COMPOSITION:** Dignified sitting pose on a throne-like chair, wearing royal velvet robes and a crown nearby. Soft light.`;
+            promptStyle = `**STYLE:** Northern Renaissance Royal Portrait. **IDENTITY:** Keep exact face. **COMPOSITION:** Dignified sitting pose on a throne-like chair, wearing royal velvet robes. Soft, bright light.`;
         } 
         else if (style === 'barroco') {
-             promptStyle = `**STYLE:** High Baroque Opulence. **IDENTITY:** Keep exact face. **COMPOSITION:** Dramatic, powerful pose wearing a massive GOLD CROWN and flowing RED VELVET CAPE. **VIBE:** "The King of the World".`;
+             promptStyle = `**STYLE:** High Baroque Opulence. **IDENTITY:** Keep exact face. **COMPOSITION:** Dramatic pose wearing a massive GOLD CROWN and RED VELVET CAPE. **VIBE:** "The King".`;
         }
 
         const masterPrompt = `
         You are a Master Painter creating a museum-quality oil portrait.
         **INSTRUCTIONS:**
         1. Take the subject's head/face from the image and paint it exactly as it is (Identity Lock).
-        2. Create the specific composition described below, integrating the subject seamlessly.
-        3. Apply a rich oil painting texture with visible brushstrokes.
+        2. Create the specific composition described below.
+        3. Apply a rich oil painting texture.
         
         ${promptStyle}
         
@@ -90,9 +90,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V52_COMPOSITION');
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V53_CLEAN');
         
-        console.log("✅ Resultado V52:", finalUrl);
+        console.log("✅ Resultado V53:", finalUrl);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -102,5 +102,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V52 (Emular Composición) listo en ${PORT}`);
+    console.log(`🚀 Servidor V53 (Limpieza y Luz) listo en ${PORT}`);
 });
