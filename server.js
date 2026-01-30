@@ -53,12 +53,10 @@ app.post('/generate', async (req, res) => {
             - **VARIETY RULE (CUSHION COLOR):** The AI must choose a different rich historical color for the cushion in every generation (e.g., forest green, deep blue, old gold, crimson).
             - **BACKGROUND:** The clean, uncluttered, textured plaster wall in neutral, deep tones is closer behind the subject, creating depth.
 
-           **3. THE "ROPITA" (NOBLE DRAPERY - More prominent now):**
-- Because of the closer shot, the heavy brocade/velvet mantle draped over the back and the jeweled collar are more visible and important for the "quality" feel.
+            **3. THE "ROPITA" (NOBLE DRAPERY - More prominent now):**
+            - Because of the closer shot, the heavy brocade/velvet mantle draped over the back and the jeweled collar are more visible and important for the "quality" feel.
             - **NO human jackets or pants.**
-            Dress the subject in full Renaissance noble finery adapted for a majestic pet/person: heavy layered drapery, rich velvet mantles cascading over the shoulders and back for royal prestige. Coloca uno o varios collares lleno de joyas, perlas, rubies esmeraldas, y oro añade colgantes, cadenas o broches para aportar brillo extra y sensación de grandeza.
-  - **NO human jackets or pants.**
-  
+
             **4. LIGHTING (DRAMATIC CHIAROSCURO):**
             - Strong, dramatic light from the upper left, spotlighting the face and textures, letting the background fall into rich shadow.
             `;
@@ -108,5 +106,3 @@ app.post('/generate', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor V56 (Presencia y Formato 4:5) listo en ${PORT}`);
 });
-
-
