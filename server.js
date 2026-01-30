@@ -55,14 +55,7 @@ Maintain a strong resemblance to the original subject to make it recognizable as
             - **BACKGROUND:** The clean, uncluttered, textured plaster wall in neutral, deep tones is closer behind the subject, creating depth.
 
             **3. THE "ROPITA" (NOBLE DRAPERY - More prominent now):**
-            Dress the subject in full Renaissance noble finery adapted for a majestic pet/person: heavy layered drapery, rich velvet mantles cascading over the shoulders and back, embroidered brocade panels with intricate gold/silver thread patterns, fur trims (ermine, sable or luxurious faux-fur accents) for royal prestige.
-Prominent large jeweled collar or ornate gorget encrusted with pearls, rubies, emeralds and gold filigree; add dangling pendants, chains or brooches for extra sparkle and grandeur.
-Incorporate voluminous ruffs or lace collars (pleated, starched, white or gold-trimmed) framing the neck and face dramatically, enhancing the aristocratic feel without restricting movement.
-Add cascading sleeves with wide cuffs, slashed or puffed elements revealing contrasting luxurious under-layers (silk, satin or more brocade).
-Heavy fabrics: deep crimson velvet, midnight blue brocade, emerald green with metallic threads, black with gold accents — vary textures for depth (velvet sheen vs. matte brocade vs. glossy satin).
-Include subtle regal accessories like a small coronet, jeweled headpiece, or feathered plume if it fits the composition naturally.
-Strictly NO modern human clothing: no jackets, pants, shirts, hoodies, belts or contemporary items — only period-appropriate noble drapery, mantles, robes, collars and adornments that evoke 15th-16th century European aristocracy.
-Emphasize pomposity and variety: make the clothing feel extravagant, multi-layered and richly detailed to heighten the "noble portrait" quality, especially visible in closer shots.
+            Dress the subject in full Renaissance noble finery adapted for a majestic pet/person: heavy layered drapery, rich velvet mantles cascading over the shoulders and back, embroidered brocade panels with intricate gold/silver thread patterns. Prominent large jeweled collar or ornate gorget encrusted with pearls, rubies, emeralds and gold filigree; add dangling pendants, chains or brooches for extra sparkle and grandeur.
 
             **4. LIGHTING (DRAMATIC CHIAROSCURO):**
             - Strong, dramatic light from the upper left, spotlighting the face and textures, letting the background fall into rich shadow.
@@ -113,5 +106,6 @@ Emphasize pomposity and variety: make the clothing feel extravagant, multi-layer
 app.listen(PORT, () => {
     console.log(`🚀 Servidor V56 (Presencia y Formato 4:5) listo en ${PORT}`);
 });
+
 
 
