@@ -29,7 +29,7 @@ app.post('/generate', async (req, res) => {
         const isGroup = numSubjects > 1;
         const isLargeGroup = numSubjects > 2;
 
-        console.log(`🎨 V61 (POSTURAS VARIADAS/ACOSTADOS). Estilo: ${style} | Sujetos: ${numSubjects}`);
+        console.log(`🎨 V63 (CORRECCIÓN CIERRE/COLLAR). Estilo: ${style} | Sujetos: ${numSubjects}`);
 
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -40,67 +40,57 @@ app.post('/generate', async (req, res) => {
 
         let promptStyle = "";
 
-        // --- VARIABLES DINÁMICAS AVANZADAS ---
-        const subjectText = isGroup ? "subjects" : "subject";
-        
-        // Lógica de Pose Diferenciada (V61 - ÉNFASIS EN ACOSTADOS/VARIEDAD)
-        let poseText = "";
-        if (!isGroup) {
-            // 1 Mascota: Damos opciones explícitas de acostado para que no solo siente
-            poseText = `**POSE VARIETY:** The animal is posed regally on the cushion. It should NOT always be sitting straight up. **Encourage varied noble postures:** reclining elegantly, lying down in a sphinx-like pose, or rested comfortably looking dignified.`;
-        } else if (!isLargeGroup) {
-            // 2 Mascotas (Dúo): Mezcla de posturas
-            poseText = `**DUO POSE:** The two animals are posed TOGETHER on the cushion. They should display a **mix of natural noble postures**: for example, one sitting upright watching over the other who is lying down or reclining next to it.`;
-        } else {
-            // 3+ Mascotas (Grupo Grande): Mezcla orgánica
-            poseText = `**LARGE GROUP COMPOSITION:** The animals are arranged in a cohesive, clustered group portrait on the large surface. **Crucial: Allow for a variety of natural postures.** Some subjects should be sitting, while others are lying down or reclining naturally among the group. Each must have distinct body space.`;
-        }
-        
+        // --- VARIABLES DINÁMICAS ---
         const identityInstruction = isGroup
-            ? `Capture the unique characteristics and likeness of **EVERY SINGLE ONE of the ${numSubjects} SUBJECTS** provided. Do not leave anyone out.`
+            ? `Capture the unique characteristics and likeness of **EVERY SINGLE ONE of the ${numSubjects} SUBJECTS** (humans and/or animals) provided.`
             : "Capture the unique characteristics and overall likeness of the subject.";
 
-        // --- ESTILO 1: RENACIMIENTO (ADAPTADO) ---
+        // --- ESTILO 1: RENACIMIENTO (VERSIÓN HÍBRIDA + CORRECCIÓN DE CIERRE) ---
         if (style === 'renacimiento') {
             promptStyle = `
-            **STYLE:** 17th Century Dutch/Flemish Baroque Oil Painting (Titian/Van Dyck style).
+            **STYLE:** 17th Century Dutch/Flemish Baroque Oil Painting (Titian/Van Dyck/Rembrandt style).
+            **COMPOSITION GOAL:** A powerful, museum-quality portrait with dramatic lighting.
 
-            **COMPOSITION GOAL:** A powerful ${isGroup ? "GROUP portrait" : "portrait"} with dramatic lighting.
-
-            **1. THE SUBJECTS (IDENTITY & ADAPTATION):**
+            **1. IDENTITY (CRITICAL):**
             - ${identityInstruction}
-            - Maintain a strong resemblance, allowing for artistic variations to fit the style.
+            - Maintain exact facial features for humans. Maintain exact breed/markings for pets.
 
-            **2. THE POSE & SETTING:**
-            - ${poseText}
-            - **SETTING:** They rest on a massive, luxurious antique velvet structure (cushion or dais).
-            - **VARIETY RULE (COLOR):** Choose a different rich historical color for the velvet in every generation.
-            - **BACKGROUND:** Clean, textured plaster wall in neutral, deep tones.
+            **2. INTELLIGENT SUBJECT HANDLING (THE CORE RULES):**
+            *Analyze each subject and apply the correct rules based on what they are.*
 
-            **3. THE "ROPITA" (OPEN NECKLINE):**
-            - **CRITICAL: OPEN NECK STYLE.** Do NOT use high, closed collars.
-            - Heavy velvet/brocade mantles/capelets must be **draped open at the front**, revealing the neck fur/chest of EACH animal.
-            - Prominent jeweled collars on each.
+            --- **IF SUBJECT IS A PET (Dog, Cat, etc.):** ---
+            - **POSE:** Reclining or sitting regally on a massive antique velvet cushion on the floor or a low dais. Encourage varied natural postures (lying down, sphinx pose).
+            - **ATTIRE (THE FIX):** **NO HUMAN CLOTHES** (no jackets, no pants). Use a heavy, richly embroidered brocade mantle/capelet **draped open at the front** to reveal neck fur.
+            - **FASTENING:** The open front of the mantle is connected across the chest by an **opulent jeweled clasp, chain, or ornate embroidered band**, serving as the fastening for the garment rather than a separate collar.
 
-            **4. LIGHTING:**
-            - Strong, dramatic Chiaroscuro light from the upper left.
+            --- **IF SUBJECT IS A HUMAN:** ---
+            - **POSE:** Seated with immense dignity on a carved wooden armchair or throne-like seat. Posture is noble and upright.
+            - **ATTIRE:** Full historical period clothing appropriate for high nobility. Examples: Dark velvet doublets, elaborate gowns, ruff collars (gorgueras) or rich lace collars, heavy gold chains, fine fabrics with historical patterns.
+
+            --- **IF MIXED GROUP (Humans + Pets):** ---
+            - **INTERACTION:** Humans are seated on chairs/thrones. Pets are placed naturally near them—either sitting on a large cushion at the human's feet, or resting elegantly on the human's lap or on a table beside them. They should look like a cohesive noble family.
+
+            **3. SETTING & LIGHTING:**
+            - **BACKGROUND:** A deep, atmospheric, textured plaster wall or dark oak paneling. Minimal clutter to focus on the subjects.
+            - **LIGHTING:** Strong, dramatic Chiaroscuro light from the upper left, spotlighting faces and rich textures.
             `;
         } 
-        else if (style === 'rey') { promptStyle = `**STYLE:** Royal Portrait. **IDENTITY:** Keep likeness. **POSE:** Varied noble poses (sitting or reclining) on throne/cushion. **ATTIRE:** Open robes.`; } 
-        else if (style === 'barroco') { promptStyle = `**STYLE:** High Baroque. **IDENTITY:** Keep likeness. **POSE:** Dramatic varied poses. **ATTIRE:** Crowns & open red capes.`; }
+        // (Otros estilos pendientes)
+        else if (style === 'rey') { promptStyle = `**STYLE:** Royal Portrait. IDENTITY: Keep likeness. ATTIRE: Appropriate Royal robes.`; } 
+        else if (style === 'barroco') { promptStyle = `**STYLE:** High Baroque. ATTIRE: Massive Crowns and Red Capes.`; }
 
         const masterPrompt = `
         You are a Master Painter creating a museum-quality oil painting.
         **INSTRUCTIONS:**
-        1. Analyze the ${numSubjects} input image(s).
-        2. Create a cohesive composition including **ALL ${numSubjects} SUBJECTS**.
+        1. Analyze the ${numSubjects} input image(s) to determine if they are humans, pets, or a mix.
+        2. Create a cohesive composition applying the "INTELLIGENT SUBJECT HANDLING" rules below.
         3. Apply a rich oil painting texture.
         
         ${promptStyle}
         
         **CRITICAL TECHNICAL SPECS:**
         **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
-        **FRAMING:** ${isLargeGroup ? "Medium Shot (wider to fit all)." : "Medium Close-Up (Chest Up)."}
+        **FRAMING:** ${isLargeGroup ? "Medium Shot (wider to fit group)." : "Medium Close-Up (Chest Up to Waist Up for humans)."}
         `;
         
         const imageParts = images.map(img => ({ inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }}));
@@ -112,9 +102,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V61_LYING_DOWN_FIX');
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V63_CLASP_FIX');
         
-        console.log("✅ Resultado V61:", finalUrl);
+        console.log("✅ Resultado V63:", finalUrl);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -124,5 +114,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V61 (Posturas Variadas/Acostados) listo en ${PORT}`);
+    console.log(`🚀 Servidor V63 (Corrección de Cierre/Collar) listo en ${PORT}`);
 });
