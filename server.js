@@ -26,7 +26,7 @@ async function uploadBufferToSupabase(buffer, prefix) {
 app.post('/generate', async (req, res) => {
     try {
         const { images, style } = req.body;
-        console.log(`🎨 V55 (VARIEDAD DE COLORES). Estilo: ${style} | Modelo: ${MODEL_ID}`);
+        console.log(`🎨 V56 (PRESENCIA Y 4:5). Estilo: ${style} | Modelo: ${MODEL_ID}`);
 
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -37,38 +37,36 @@ app.post('/generate', async (req, res) => {
 
         let promptStyle = "";
 
-        // --- ESTILO 1: RENACIMIENTO (VERSIÓN FINAL CON VARIEDAD) ---
+        // --- ESTILO 1: RENACIMIENTO (VERSIÓN FINAL CON PRESENCIA) ---
         if (style === 'renacimiento') {
             promptStyle = `
-            **STYLE:** 17th Century Dutch/Flemish Baroque Oil Painting (Titian/Van Dyck style). Rich, deep colors, master texture.
+            **STYLE:** 17th Century Dutch/Flemish Baroque Oil Painting (Titian/Van Dyck style).
 
-            **COMPOSITION GOAL:** A noble pet portrait on the floor with a clean background and dramatic lighting.
+            **COMPOSITION GOAL:** A powerful, closer-cropped noble portrait with dramatic lighting.
 
             **1. THE SUBJECT (IDENTITY LOCK):**
             - Keep the EXACT facial features and expression from the input photo.
 
-            **2. THE POSE & SETTING (CLEAN FLOOR + VARIETY):**
-            - **POSE:** The animal is sitting or lying regally on a large, plush antique velvet cushion.
-            - **VARIETY RULE (CUSHION COLOR):** The AI must choose a different rich, deep historical color for the cushion in every generation to ensure variety (e.g., forest green, royal blue, old gold, burnt orange, or deep crimson). Do not always use red.
-            - **PLACEMENT:** The cushion rests directly on a polished antique stone floor or dark wooden planks. NO TABLES.
-            - **BACKGROUND:** A clean, uncluttered, textured plaster wall in neutral, deep tones. Keep it simple.
+            **2. THE POSE & SETTING (CLOSER FRAMING):**
+            - **POSE:** The animal is sitting or lying regally.
+            - **FRAMING ADAPTATION:** Since the shot is closer, focus on the subject resting on the *top part* of a massive, luxurious antique velvet cushion. We see less floor, more subject.
+            - **VARIETY RULE (CUSHION COLOR):** The AI must choose a different rich historical color for the cushion in every generation (e.g., forest green, deep blue, old gold, crimson).
+            - **BACKGROUND:** The clean, uncluttered, textured plaster wall in neutral, deep tones is closer behind the subject, creating depth.
 
-            **3. THE "ROPITA" (NOBLE DRAPERY):**
-            - A heavy, richly embroidered brocade or velvet mantle/capelet is draped artfully *over* the animal's back. **COLOR: Complementary to the cushion but different.**
-            - A prominent jeweled collar.
+            **3. THE "ROPITA" (NOBLE DRAPERY - More prominent now):**
+            - Because of the closer shot, the heavy brocade/velvet mantle draped over the back and the jeweled collar are more visible and important for the "quality" feel.
             - **NO human jackets or pants.**
 
             **4. LIGHTING (DRAMATIC CHIAROSCURO):**
-            - Dramatic, strong Chiaroscuro light coming from the upper left.
-            - The subject is spotlighted; the background fades into shadow.
+            - Strong, dramatic light from the upper left, spotlighting the face and textures, letting the background fall into rich shadow.
             `;
         } 
         // --- OTROS ESTILOS (Pendientes) ---
         else if (style === 'rey') {
-            promptStyle = `**STYLE:** Northern Renaissance Royal Portrait. **IDENTITY:** Keep exact face. **COMPOSITION:** Dignified sitting pose on a throne-like chair, wearing royal velvet robes. Soft, bright light.`;
+            promptStyle = `**STYLE:** Northern Renaissance Royal Portrait. **IDENTITY:** Keep exact face. **COMPOSITION:** Dignified sitting pose on a throne-like chair. Soft, bright light.`;
         } 
         else if (style === 'barroco') {
-             promptStyle = `**STYLE:** High Baroque Opulence. **IDENTITY:** Keep exact face. **COMPOSITION:** Dramatic pose wearing a massive GOLD CROWN and RED VELVET CAPE. **VIBE:** "The King".`;
+             promptStyle = `**STYLE:** High Baroque Opulence. **IDENTITY:** Keep exact face. **COMPOSITION:** Dramatic pose with GOLD CROWN and RED CAPE.`;
         }
 
         const masterPrompt = `
@@ -80,7 +78,9 @@ app.post('/generate', async (req, res) => {
         
         ${promptStyle}
         
-        **FORMAT:** Vertical Portrait.
+        **CRITICAL TECHNICAL SPECS:**
+        **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
+        **FRAMING:** Medium Close-Up (Chest Up). Fill the frame with the subject to create presence and importance.
         `;
         
         const imageParts = images.map(img => ({ inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }}));
@@ -92,9 +92,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V55_VARIETY');
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V56_4x5_PRESENCE');
         
-        console.log("✅ Resultado V55:", finalUrl);
+        console.log("✅ Resultado V56 (4:5):", finalUrl);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -104,5 +104,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V55 (Variedad de Colores) listo en ${PORT}`);
+    console.log(`🚀 Servidor V56 (Presencia y Formato 4:5) listo en ${PORT}`);
 });
