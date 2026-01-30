@@ -84,7 +84,40 @@ app.post('/generate', async (req, res) => {
             `;
         } 
         // (Otros estilos pendientes)
-        else if (style === 'rey') { promptStyle = `**STYLE:** Royal Portrait. IDENTITY: Keep likeness. ATTIRE: Royal robes.`; } 
+        // --- ESTILO 2: REY / REINA (OPULENCIA REAL) ---
+        else if (style === 'rey') {
+            promptStyle = `
+            **STYLE:** High Renaissance & Baroque Royal Coronation Portrait.
+            **VIBE:** Majestic, Opulent, Imposing, Luxurious, Gold-drenched. Think Henry VIII or Elizabeth I coronation splendor.
+
+            **1. IDENTITY (CRITICAL):**
+            - ${identityInstruction}
+            - Maintain exact facial features for humans and breed/markings for pets. Expression should be dignified and commanding.
+
+            **2. INTELLIGENT SUBJECT HANDLING (THE ROYAL RULES):**
+
+            --- **IF SUBJECT IS A PET:** ---
+            - **POSE:** Reclining regally on a **gilded royal dais or a cushion with heavy gold tassels and embroidery**.
+            - **ATTIRE:** Deep royal velvet mantles (Purple, Crimson, Royal Blue) trimmed with **white ermine fur with black spots** (the fur of royalty).
+            - **FASTENING:** Massive, imposing jeweled clasps featuring motifs like crowns or lions.
+
+            --- **IF SUBJECT IS A HUMAN:** ---
+            - **POSE:** Seated imposingly on a **Golden Throne** under a velvet canopy, or standing with absolute authority holding royal regalia.
+            - **ATTIRE (MANDATORY CROWNS):**
+                - **HEAD:** A grand, jeweled **Imperial Crown** is MUST for every human subject.
+                - **BODY:** Heavily embroidered coronation robes, layers of goldwork, massive ermine collars, heavy gold chains. Holding a **scepter and orb** is encouraged.
+                - **COLORS:** Royal Purple, Deep Crimson Red, Heavy Gold.
+
+            --- **IF MIXED GROUP (The Royal House):** ---
+            - **COMPOSITION:** A formal Royal Family portrait.
+            - **ARRANGEMENT:** The Human Monarch sits on the throne as the centerpiece.
+            - **PET PLACEMENT:** The pets are positioned at the foot of the throne on velvet cushions, acting as royal guardians, or seated proudly on a velvet-covered pedestal next to the monarch.
+
+            **3. SETTING & LIGHTING:**
+            - **BACKGROUND:** Inside a palace Throne Room. Gilded columns, heavy heraldic tapestries, marble floors, grand architecture.
+            - **LIGHTING:** Bright, glorious, majestic light that makes gold and jewels sparkle. Less shadowy than the Renacimiento style.
+            `;
+        }
         else if (style === 'barroco') { promptStyle = `**STYLE:** High Baroque. ATTIRE: Crowns and Red Capes.`; }
 
         const masterPrompt = `
@@ -126,3 +159,4 @@ app.post('/generate', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor V64 (Estilo Surrealism/Romántico) listo en ${PORT}`);
 });
+
