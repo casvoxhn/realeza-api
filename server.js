@@ -27,9 +27,9 @@ app.post('/generate', async (req, res) => {
         const { images, style } = req.body;
         const numSubjects = images.length;
         const isGroup = numSubjects > 1;
-        const isLargeGroup = numSubjects > 2; // DETECTOR DE GRUPO GRANDE (3+)
+        const isLargeGroup = numSubjects > 2;
 
-        console.log(`🎨 V60 (FIX 3+ MASCOTAS). Estilo: ${style} | Sujetos: ${numSubjects}`);
+        console.log(`🎨 V61 (POSTURAS VARIADAS/ACOSTADOS). Estilo: ${style} | Sujetos: ${numSubjects}`);
 
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -43,17 +43,17 @@ app.post('/generate', async (req, res) => {
         // --- VARIABLES DINÁMICAS AVANZADAS ---
         const subjectText = isGroup ? "subjects" : "subject";
         
-        // Lógica de Pose Diferenciada
+        // Lógica de Pose Diferenciada (V61 - ÉNFASIS EN ACOSTADOS/VARIEDAD)
         let poseText = "";
         if (!isGroup) {
-            // 1 Mascota
-            poseText = "**POSE:** The animal is sitting or lying regally.";
+            // 1 Mascota: Damos opciones explícitas de acostado para que no solo siente
+            poseText = `**POSE VARIETY:** The animal is posed regally on the cushion. It should NOT always be sitting straight up. **Encourage varied noble postures:** reclining elegantly, lying down in a sphinx-like pose, or rested comfortably looking dignified.`;
         } else if (!isLargeGroup) {
-            // 2 Mascotas (Dúo)
-            poseText = "**DUO POSE:** The two animals must be posed TOGETHER, side-by-side or slightly overlapping, interacting naturally like a noble pair. They share the same space.";
+            // 2 Mascotas (Dúo): Mezcla de posturas
+            poseText = `**DUO POSE:** The two animals are posed TOGETHER on the cushion. They should display a **mix of natural noble postures**: for example, one sitting upright watching over the other who is lying down or reclining next to it.`;
         } else {
-            // 3+ Mascotas (Grupo Grande - FIX CRÍTICO)
-            poseText = "**LARGE GROUP COMPOSITION:** The animals must be arranged in a cohesive, clustered group portrait. **CRITICAL: EACH subject must have a clear, distinct body and head space.** They can be touching, but DO NOT merge their bodies unnaturally into a blob. Respect their relative natural sizes (e.g., a dog might be larger than a cat). They share a very large expansive area.";
+            // 3+ Mascotas (Grupo Grande): Mezcla orgánica
+            poseText = `**LARGE GROUP COMPOSITION:** The animals are arranged in a cohesive, clustered group portrait on the large surface. **Crucial: Allow for a variety of natural postures.** Some subjects should be sitting, while others are lying down or reclining naturally among the group. Each must have distinct body space.`;
         }
         
         const identityInstruction = isGroup
@@ -74,7 +74,7 @@ app.post('/generate', async (req, res) => {
             **2. THE POSE & SETTING:**
             - ${poseText}
             - **SETTING:** They rest on a massive, luxurious antique velvet structure (cushion or dais).
-            - **VARIETY RULE:** Choose a different rich historical color for the velvet in every generation.
+            - **VARIETY RULE (COLOR):** Choose a different rich historical color for the velvet in every generation.
             - **BACKGROUND:** Clean, textured plaster wall in neutral, deep tones.
 
             **3. THE "ROPITA" (OPEN NECKLINE):**
@@ -86,9 +86,8 @@ app.post('/generate', async (req, res) => {
             - Strong, dramatic Chiaroscuro light from the upper left.
             `;
         } 
-        // (Otros estilos se mantienen igual por ahora)
-        else if (style === 'rey') { promptStyle = `**STYLE:** Northern Renaissance Royal Portrait. **IDENTITY:** Maintain strong likeness for ALL subjects. **ATTIRE:** Open royal robes. Soft light.`; } 
-        else if (style === 'barroco') { promptStyle = `**STYLE:** High Baroque Opulence. **IDENTITY:** Maintain strong likeness. **ATTIRE:** GOLD CROWNS and open RED CAPES.`; }
+        else if (style === 'rey') { promptStyle = `**STYLE:** Royal Portrait. **IDENTITY:** Keep likeness. **POSE:** Varied noble poses (sitting or reclining) on throne/cushion. **ATTIRE:** Open robes.`; } 
+        else if (style === 'barroco') { promptStyle = `**STYLE:** High Baroque. **IDENTITY:** Keep likeness. **POSE:** Dramatic varied poses. **ATTIRE:** Crowns & open red capes.`; }
 
         const masterPrompt = `
         You are a Master Painter creating a museum-quality oil painting.
@@ -101,8 +100,7 @@ app.post('/generate', async (req, res) => {
         
         **CRITICAL TECHNICAL SPECS:**
         **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
-        // FIX DE ENCUADRE PARA GRUPOS GRANDES: Alejamos un poco la cámara si son 3+
-        **FRAMING:** ${isLargeGroup ? "Medium Shot (slightly wider to fit all subjects comfortably without overcrowding)." : "Medium Close-Up (Chest Up)."}
+        **FRAMING:** ${isLargeGroup ? "Medium Shot (wider to fit all)." : "Medium Close-Up (Chest Up)."}
         `;
         
         const imageParts = images.map(img => ({ inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }}));
@@ -114,9 +112,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V60_LARGE_GROUP_FIX');
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V61_LYING_DOWN_FIX');
         
-        console.log("✅ Resultado V60:", finalUrl);
+        console.log("✅ Resultado V61:", finalUrl);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -126,5 +124,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V60 (Fix 3+ Mascotas) listo en ${PORT}`);
+    console.log(`🚀 Servidor V61 (Posturas Variadas/Acostados) listo en ${PORT}`);
 });
