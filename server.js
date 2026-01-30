@@ -11,7 +11,7 @@ app.use(cors({ origin: '*' }));
 app.use(express.json({ limit: '100mb' }));
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-// Modelo Supremo (Nano Banana Pro)
+// Usamos el Modelo Supremo (Nano Banana Pro / Gemini 3)
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const MODEL_ID = "gemini-3-pro-image-preview";
 
@@ -26,7 +26,7 @@ async function uploadBufferToSupabase(buffer, prefix) {
 app.post('/generate', async (req, res) => {
     try {
         const { images, style } = req.body;
-        console.log(`🎨 V50 (IDENTITY LOCK). Estilo: ${style} | Modelo: ${MODEL_ID}`);
+        console.log(`🎨 V51 (EQUILIBRIO MAESTRO). Estilo: ${style} | Modelo: ${MODEL_ID}`);
 
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -37,51 +37,47 @@ app.post('/generate', async (req, res) => {
 
         let promptStyle = "";
 
-        // --- ESTILO 1: RENACIMIENTO (ÓLEO NATURAL) ---
+        // --- ESTILO 1: RENACIMIENTO (ÓLEO MEJORADO) ---
         if (style === 'renacimiento') {
             promptStyle = `
-            **ARTISTIC STYLE:** Dutch Golden Age / Baroque Oil Painting (Rembrandt style). Deep, rich tones.
+            **ARTISTIC STYLE:** Dutch Golden Age Oil Painting (Rembrandt/Vermeer style). Rich tones, master brushwork.
 
-            **CRITICAL PRIORITY: FACIAL IDENTITY LOCK**
-            - **The face, eyes, and EXACT expression from the input image MUST be preserved perfectly.**
-            - If the pet has its mouth open, the painting MUST show the mouth open exactly the same way.
-            - Do not alter facial structure or markings. Apply oil texture *over* the features, don't change them.
+            **1. THE FACE (IDENTITY LOCK - CRITICAL):**
+            - **Keep the EXACT facial features, eyes, and unique expression from the input photo.** The owner must instantly recognize their pet.
 
-            **SETTING (NATURAL & NOBLE):**
-            - **NO CLOTHING:** The animal is sitting or lying naturally (naked fur).
-            - **PROPS:** Resting regally on a luxurious antique velvet cushion or heavy brocade rug.
-            - **BACKGROUND:** Dark, moody, atmospheric museum background (abstract shadows, rich wood).
-            - **LIGHTING:** Dramatic "Rembrandt lighting" focusing solely on the face and eyes to highlight the likeness.
+            **2. THE POSE & BODY (ARTISTIC IMPROVEMENT):**
+            - **REPOSE THE ANIMAL:** Do NOT just copy the photo pose if it's awkward. Place the animal in a **dignified, natural, and elegant sitting or lying pose** suitable for a high-end portrait.
+            - The body should look relaxed and noble, not rigid.
+
+            **3. THE "ROPITA" (NOBLE ACCESSORIES):**
+            - **Add rich, period-appropriate accessories.** Examples: A heavy velvet mantle or capelet draped elegantly over its shoulders, a decorative historical collar, or a fine chain.
+            - **NO HUMAN SUITS:** Do not put them in full human standing clothes like jackets or pants. Keep it natural but noble.
+
+            **4. SETTING & LIGHTING:**
+            - **SETTING:** Placed on luxurious antique furniture (carved wood, heavy brocade fabrics) in a moody, atmospheric room.
+            - **LIGHTING:** Dramatic, soft directional light (Chiaroscuro) that sculpts the face, fur texture, and fabric folds.
             `;
         } 
-        // --- ESTILO 2: REY (CLÁSICO) ---
+        // --- OTROS ESTILOS (Misma lógica de equilibrio) ---
         else if (style === 'rey') {
-            promptStyle = `
-            **STYLE:** Northern Renaissance Royal Portrait.
-            **IDENTITY:** Preserve exact facial features and expression.
-            **OUTFIT:** Animal is in a natural pose, perhaps with a rich royal mantle draped loosely over the body (not fitted clothing), surrounded by royal artifacts.
-            `;
+            promptStyle = `**STYLE:** Northern Renaissance Royal Portrait. **IDENTITY:** Keep exact face. **POSE & ATTIRE:** Dignified sitting pose wearing a rich velvet royal mantle with fur trim and a jeweled collar. **SETTING:** Palace interior.`;
         } 
-        // --- ESTILO 3: BARROCO (FANTASÍA) ---
         else if (style === 'barroco') {
-             promptStyle = `
-             **STYLE:** High Baroque Opulence.
-             **IDENTITY:** Preserve exact facial features.
-             **OUTFIT:** Massive GOLD CROWN on head and RED VELVET CAPE. The animal looks powerful.
-             `;
+             promptStyle = `**STYLE:** High Baroque Opulence. **IDENTITY:** Keep exact face. **POSE & ATTIRE:** Dramatic, powerful pose wearing a massive GOLD CROWN and flowing RED VELVET CAPE. **VIBE:** "The King".`;
         }
 
         const masterPrompt = `
-        You are a Master Painter creating a commissioned portrait.
+        You are a Master Painter creating a museum-quality oil portrait.
         
-        **THE MOST IMPORTANT RULE: The likeness must be perfect.** The client needs to recognize their specific pet's face and expression instantly.
+        **MISSION:** Create a beautiful composition. The subject's face must be perfectly recognizable, but the pose, lighting, and attire should be artistically elevated.
 
         **INSTRUCTIONS:**
-        1. Take the subject's face/head from the image and paint it exactly as it is.
-        2. Integrate that head seamlessly into the following scene:
+        1. Take the subject's head/face from the image and paint it exactly as it is.
+        2. Create a new, elegant body and pose for it.
+        3. Integrate it into this scene:
         ${promptStyle}
         
-        **FORMAT:** Vertical Portrait, Museum Quality Oil Painting.
+        **FORMAT:** Vertical Portrait, Highly Detailed Oil Painting.
         `;
         
         const imageParts = images.map(img => ({ inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }}));
@@ -93,9 +89,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V50_IDENTITY');
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V51_BALANCE');
         
-        console.log("✅ Resultado V50:", finalUrl);
+        console.log("✅ Resultado V51:", finalUrl);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -105,5 +101,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V50 (Identity Lock) listo en ${PORT}`);
+    console.log(`🚀 Servidor V51 (Equilibrio Maestro) listo en ${PORT}`);
 });
