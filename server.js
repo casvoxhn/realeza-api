@@ -25,8 +25,8 @@ async function uploadBufferToSupabase(buffer, prefix) {
 app.post('/generate', async (req, res) => {
     try {
         const { images, style } = req.body;
-        const isGroup = images.length > 1; // DETECTOR DE GRUPO
-        console.log(`🎨 V58 (MULTI-PET: ${isGroup}). Estilo: ${style} | Fotos: ${images.length}`);
+        const isGroup = images.length > 1;
+        console.log(`🎨 V59 (CUELLO ABIERTO). Estilo: ${style} | Fotos: ${images.length}`);
 
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -37,7 +37,7 @@ app.post('/generate', async (req, res) => {
 
         let promptStyle = "";
 
-        // --- DEFINICIÓN DE VARIABLES DINÁMICAS (SINGULAR vs PLURAL) ---
+        // --- VARIABLES DINÁMICAS (SINGULAR vs PLURAL) ---
         const subjectText = isGroup ? "subjects" : "subject";
         const poseText = isGroup 
             ? "**GROUP POSE:** The animals must be posed TOGETHER, side-by-side or slightly overlapping, interacting naturally like a noble family portrait. They share the same space/cushion." 
@@ -47,7 +47,7 @@ app.post('/generate', async (req, res) => {
             ? "Capture the unique characteristics and likeness of **EVERY SINGLE SUBJECT** provided. Do not leave anyone out."
             : "Capture the unique characteristics and overall likeness of the subject.";
 
-        // --- ESTILO 1: RENACIMIENTO (ADAPTADO A GRUPO) ---
+        // --- ESTILO 1: RENACIMIENTO (CON CUELLO ABIERTO) ---
         if (style === 'renacimiento') {
             promptStyle = `
             **STYLE:** 17th Century Dutch/Flemish Baroque Oil Painting (Titian/Van Dyck style).
@@ -64,9 +64,10 @@ app.post('/generate', async (req, res) => {
             - **VARIETY RULE:** Choose a different rich historical color for the cushion in every generation.
             - **BACKGROUND:** Clean, textured plaster wall in neutral, deep tones. No clutter.
 
-            **3. THE "ROPITA" (NOBLE DRAPERY):**
-            - Heavy, richly embroidered brocade or velvet mantles/capelets are draped artfully over the **${subjectText}'s** backs/shoulders.
-            - Prominent jeweled collars on **each** subject.
+            **3. THE "ROPITA" (OPEN NECKLINE & NOBLE DRAPERY):**
+            - **CRITICAL: OPEN NECK STYLE.** Do NOT use high, closed collars or tight ruffs that hide the neck.
+            - The heavy velvet/brocade mantle or capelet must be **draped open at the front**, creating a wide V-shape or U-shape opening that **reveals the animal's neck fur** and chest.
+            - A prominent jeweled collar sits directly on the visible neck fur.
             - **NO human jackets or pants.**
 
             **4. LIGHTING:**
@@ -74,10 +75,10 @@ app.post('/generate', async (req, res) => {
             `;
         } 
         else if (style === 'rey') {
-            promptStyle = `**STYLE:** Northern Renaissance Royal Portrait. **IDENTITY:** Maintain strong likeness for ALL subjects. **COMPOSITION:** Dignified sitting pose on a throne-like chair (or shared throne). Soft, bright light.`;
+            promptStyle = `**STYLE:** Northern Renaissance Royal Portrait. **IDENTITY:** Maintain strong likeness for ALL subjects. **COMPOSITION:** Dignified sitting pose on a throne-like chair. **ATTIRE:** Open royal robes revealing neck fur. Soft, bright light.`;
         } 
         else if (style === 'barroco') {
-             promptStyle = `**STYLE:** High Baroque Opulence. **IDENTITY:** Maintain strong likeness. **COMPOSITION:** Dramatic group pose with GOLD CROWNS and RED CAPES.`;
+             promptStyle = `**STYLE:** High Baroque Opulence. **IDENTITY:** Maintain strong likeness. **COMPOSITION:** Dramatic group pose with GOLD CROWNS and flowing RED CAPES (open front).`;
         }
 
         const masterPrompt = `
@@ -103,9 +104,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V58_MULTIPET');
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V59_OPEN_NECK');
         
-        console.log("✅ Resultado V58:", finalUrl);
+        console.log("✅ Resultado V59:", finalUrl);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -115,5 +116,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V58 (Multi-Mascota) listo en ${PORT}`);
+    console.log(`🚀 Servidor V59 (Estilo Cuello Abierto) listo en ${PORT}`);
 });
