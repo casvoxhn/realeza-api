@@ -29,7 +29,7 @@ app.post('/generate', async (req, res) => {
         const isGroup = numSubjects > 1;
         const isLargeGroup = numSubjects > 2;
 
-        console.log(`🎨 V64 (ESTILO SURREALISM/ROMÁNTICO). Estilo: ${style} | Sujetos: ${numSubjects}`);
+        console.log(`🎨 V65 (NO FRAMES FIX). Estilo: ${style} | Sujetos: ${numSubjects}`);
 
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -45,7 +45,7 @@ app.post('/generate', async (req, res) => {
             ? `Capture the unique characteristics and likeness of **EVERY SINGLE ONE of the ${numSubjects} SUBJECTS** (humans and/or animals) provided.`
             : "Capture the unique characteristics and overall likeness of the subject.";
 
-        // --- ESTILO 1: RENACIMIENTO (AHORA CON "VIBE" ROMÁNTICO/SURREALISTA) ---
+        // --- ESTILO 1: RENACIMIENTO (ROMÁNTICO/ELEGANTE) ---
         if (style === 'renacimiento') {
             promptStyle = `
             **STYLE:** 18th/19th Century Romantic Royal Portrait (Winterhalter/Sargent style).
@@ -53,107 +53,82 @@ app.post('/generate', async (req, res) => {
 
             **1. IDENTITY (CRITICAL):**
             - ${identityInstruction}
-            - Maintain exact facial features for humans. Maintain exact breed/markings for pets.
+            - Maintain exact facial features for humans and breed/markings for pets.
 
-            **2. INTELLIGENT SUBJECT HANDLING (THE NEW RULES):**
-
-            --- **IF SUBJECT IS A PET (Dog, Cat, etc.):** ---
+            **2. INTELLIGENT SUBJECT HANDLING:**
+            --- **IF SUBJECT IS A PET:** ---
             - **POSE:** Reclining or sitting regally on a massive antique velvet cushion.
             - **ATTIRE:** Heavy brocade mantle/capelet **draped open at the front** (V-shape) to reveal neck fur.
             - **FASTENING:** Connected by an opulent jeweled clasp/chain across the chest.
 
-            --- **IF SUBJECT IS A HUMAN (THE FIX):** ---
+            --- **IF SUBJECT IS A HUMAN:** ---
             - **POSE:** Seated gracefully on a luxurious sofa, throne, or standing elegantly.
-            - **ATTIRE (GOWNS NOT BLACK):** Use **Opulent Royal Gowns/Robes**.
-                - **Colors:** Royal Blue, Deep Emerald, Rich Burgundy, Gold, or Rose. **AVOID PLAIN BLACK.**
-                - **Style:** Off-shoulder or lace necklines, silk fabrics, ermine trim. **NO STIFF RUFFS.**
-                - **Vibe:** A queen or princess in her palace.
+            - **ATTIRE (GOWNS NOT BLACK):** Use **Opulent Royal Gowns/Robes**. Colors: Royal Blue, Deep Emerald, Rich Burgundy, Gold, or Rose.
+            - **Vibe:** A queen or princess in her palace.
 
-            --- **IF MIXED GROUP (Humans + Pets) - THE SURREALISM STYLE:** ---
-            - **COMPOSITION:** A wider "Family Portrait" scene.
-            - **ARRANGEMENT:** The Human is the center anchor (seated on a sofa/throne).
-            - **PET PLACEMENT:** The pets are arranged naturally around the human:
-                - Sitting on the human's lap.
-                - Sitting on the floor at the human's feet (on a rug).
-                - Sitting on a velvet stool beside the human.
-            - **INTERACTION:** Gentle touching (hand on the pet) or close proximity.
+            --- **IF MIXED GROUP (Humans + Pets):** ---
+            - **COMPOSITION:** A wider "Family Portrait" scene. The Human is the anchor. Pets are arranged naturally (lap, feet, stool).
 
             **3. SETTING & LIGHTING:**
-            - **BACKGROUND:** A palace interior with depth (drapery, columns, or a painted landscape in the distance).
-            - **LIGHTING:** Soft, flattering, golden-hour museum light. Not too dark.
+            - **BACKGROUND:** A palace interior with depth (drapery, columns).
+            - **LIGHTING:** Soft, flattering, golden-hour museum light.
             `;
         } 
-        // (Otros estilos pendientes)
         // --- ESTILO 2: REY / REINA (OPULENCIA REAL) ---
         else if (style === 'rey') {
             promptStyle = `
             **STYLE:** High Renaissance & Baroque Royal Coronation Portrait.
-            **VIBE:** Majestic, Opulent, Imposing, Luxurious, Gold-drenched. Think Henry VIII or Elizabeth I coronation splendor.
+            **VIBE:** Majestic, Opulent, Imposing, Luxurious, Gold-drenched.
 
             **1. IDENTITY (CRITICAL):**
             - ${identityInstruction}
-            - Maintain exact facial features for humans and breed/markings for pets. Expression should be dignified and commanding.
+            - Maintain exact facial features/markings. Expression should be dignified.
 
-            **2. INTELLIGENT SUBJECT HANDLING (THE ROYAL RULES):**
-
+            **2. INTELLIGENT SUBJECT HANDLING:**
             --- **IF SUBJECT IS A PET:** ---
-            - **POSE:** Reclining regally on a **gilded royal dais or a cushion with heavy gold tassels and embroidery**.
-            - **ATTIRE:** Deep royal velvet mantles (Purple, Crimson, Royal Blue) trimmed with **white ermine fur with black spots** (the fur of royalty).
-            - **FASTENING:** Massive, imposing jeweled clasps featuring motifs like crowns or lions.
+            - **POSE:** Reclining on a gilded royal dais or cushion with gold tassels.
+            - **ATTIRE:** Deep royal velvet mantles trimmed with ermine fur. Massive jeweled clasps.
 
             --- **IF SUBJECT IS A HUMAN:** ---
-            - **POSE:** Seated imposingly on a **Golden Throne** under a velvet canopy, or standing with absolute authority holding royal regalia.
-            - **ATTIRE (MANDATORY CROWNS):**
-                - **HEAD:** A grand, jeweled **Imperial Crown** is MUST for every human subject.
-                - **BODY:** Heavily embroidered coronation robes, layers of goldwork, massive ermine collars, heavy gold chains. Holding a **scepter and orb** is encouraged.
-                - **COLORS:** Royal Purple, Deep Crimson Red, Heavy Gold.
+            - **POSE:** Seated imposingly on a Golden Throne under a canopy.
+            - **ATTIRE (MANDATORY CROWNS):** A grand **Imperial Crown** is MUST. Heavily embroidered coronation robes, goldwork, ermine collars. Holding scepter and orb. Color palette: Purple, Crimson, Gold.
 
-            --- **IF MIXED GROUP (The Royal House):** ---
-            - **COMPOSITION:** A formal Royal Family portrait.
-            - **ARRANGEMENT:** The Human Monarch sits on the throne as the centerpiece.
-            - **PET PLACEMENT:** The pets are positioned at the foot of the throne on velvet cushions, acting as royal guardians, or seated proudly on a velvet-covered pedestal next to the monarch.
+            --- **IF MIXED GROUP:** ---
+            - **COMPOSITION:** Formal Royal Family portrait. Monarch on throne, pets acting as guardians at the feet.
 
             **3. SETTING & LIGHTING:**
-            - **BACKGROUND:** Inside a palace Throne Room. Gilded columns, heavy heraldic tapestries, marble floors, grand architecture.
-            - **LIGHTING:** Bright, glorious, majestic light that makes gold and jewels sparkle. Less shadowy than the Renacimiento style.
+            - **BACKGROUND:** Throne Room. Gilded columns, heraldic tapestries.
+            - **LIGHTING:** Bright, glorious, majestic light.
             `;
-        }
+        } 
         // --- ESTILO 3: BARROCO (DRAMA Y LUJO EXTREMO) ---
         else if (style === 'barroco') {
              promptStyle = `
-            **STYLE:** High Baroque Opulence & Theatricality (Rubens/Velázquez/Bernini influence).
-            **VIBE:** Dramatic, Intense, "More is More", Deep shadows meets blinding gold, Emotional & Grandiose.
+            **STYLE:** High Baroque Opulence & Theatricality.
+            **VIBE:** Dramatic, Intense, "More is More", Deep shadows meets blinding gold.
 
             **1. IDENTITY (CRITICAL):**
             - ${identityInstruction}
-            - Maintain exact facial features. Expressions should be intense or haughtily noble.
+            - Maintain exact facial features. Expressions should be intense or noble.
 
-            **2. INTELLIGENT SUBJECT HANDLING (THE DRAMATIC RULES):**
-
+            **2. INTELLIGENT SUBJECT HANDLING:**
             --- **IF SUBJECT IS A PET:** ---
-            - **POSE:** Striking dynamic pose on a dark velvet cushion with gold tassels.
-            - **ATTIRE:** **A Gold Crown is MANDATORY.**
-            - **CLOTHING:** Flowing **Deep Red or Black Velvet Capes** with massive gold embroidery. The fabric should look heavy and expensive.
-            - **DETAILS:** Pearls, rubies, and excessive gold ornamentation.
+            - **POSE:** Dynamic pose on a dark velvet cushion.
+            - **ATTIRE:** **A Gold Crown is MANDATORY.** Flowing Deep Red or Black Velvet Capes. Excessive gold ornamentation.
 
             --- **IF SUBJECT IS A HUMAN:** ---
-            - **POSE:** Dramatic, theatrical stance or seated with overflowing fabric. Not stiff, but commanding.
-            - **ATTIRE:**
-                - **HEAD:** **Gold Laurel Wreaths or Baroque Crowns**.
-                - **BODY:** Armor with gold filigree (for men) or corset gowns with massive hips and lace (for women).
-                - **KEY ELEMENT:** A massive **Red or Black velvet drape** flowing around them like a theatrical curtain.
+            - **POSE:** Dramatic, theatrical stance or seated with overflowing fabric.
+            - **ATTIRE:** **Gold Baroque Crowns**. Armor with gold filigree or corset gowns with massive hips. A massive **Red or Black velvet drape** flowing around them.
 
-            --- **IF MIXED GROUP (The Baroque Dynasty):** ---
-            - **COMPOSITION:** A painting that looks like a scene from an opera.
-            - **ARRANGEMENT:** Highly staged. The Human is the dramatic center.
-            - **PET PLACEMENT:** The pets are part of the scenery, perhaps one sitting on a table looking at the viewer, another at the feet.
-            - **UNIFYING ELEMENT:** All subjects (human and pet) share the same palette of **Deep Red, Gold, and Black**.
+            --- **IF MIXED GROUP:** ---
+            - **COMPOSITION:** Opera scene. Highly staged. Human is center, pets are part of the scenery. Unifying colors: Deep Red, Gold, Black.
 
             **3. SETTING & LIGHTING:**
-            - **BACKGROUND:** Dark, moody palace interiors, heavy curtains, storm clouds in a window, or dark oak shadows.
-            - **LIGHTING:** Extreme Chiaroscuro (Caravaggio style) - Deep darkness contrasted with bright golden light hitting the faces and the gold jewelry.
+            - **BACKGROUND:** Dark palace interiors, heavy curtains, storm clouds.
+            - **LIGHTING:** Extreme Chiaroscuro (Caravaggio style) - Deep darkness vs bright golden light.
             `;
         }
+
         const masterPrompt = `
         You are a Master Painter creating a museum-quality oil painting.
         **INSTRUCTIONS:**
@@ -165,9 +140,10 @@ app.post('/generate', async (req, res) => {
         
         **CRITICAL TECHNICAL SPECS:**
         **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
-        **FRAMING (THE FIX):** **Three-Quarter Shot (Knees Up or Full Seated Body).**
-        - Open the frame to show the beautiful dresses and the full arrangement of pets on the floor/lap.
-        - Do NOT crop too tight on the face.
+        **FRAMING:** **Three-Quarter Shot (Knees Up or Full Seated Body).** Open the frame to show the beautiful attire and full arrangement. Do NOT crop too tight on the face.
+
+        **NEGATIVE CONSTRAINTS (WHAT NOT TO DRAW):**
+        - **DO NOT INCLUDE A PICTURE FRAME.** The image must be the painting itself, edge-to-edge canvas, with NO external border, mount, or gold frame generated around it.
         `;
         
         const imageParts = images.map(img => ({ inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }}));
@@ -179,9 +155,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V64_SURREALISM_STYLE');
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V65_NO_FRAME');
         
-        console.log("✅ Resultado V64:", finalUrl);
+        console.log("✅ Resultado V65:", finalUrl);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -191,7 +167,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V64 (Estilo Surrealism/Romántico) listo en ${PORT}`);
+    console.log(`🚀 Servidor V65 (No Frames Fix) listo en ${PORT}`);
 });
-
-
