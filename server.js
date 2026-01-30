@@ -29,7 +29,7 @@ app.post('/generate', async (req, res) => {
         const isGroup = numSubjects > 1;
         const isLargeGroup = numSubjects > 2;
 
-        console.log(`🎨 V63 (CORRECCIÓN CIERRE/COLLAR). Estilo: ${style} | Sujetos: ${numSubjects}`);
+        console.log(`🎨 V64 (ESTILO SURREALISM/ROMÁNTICO). Estilo: ${style} | Sujetos: ${numSubjects}`);
 
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -45,39 +45,47 @@ app.post('/generate', async (req, res) => {
             ? `Capture the unique characteristics and likeness of **EVERY SINGLE ONE of the ${numSubjects} SUBJECTS** (humans and/or animals) provided.`
             : "Capture the unique characteristics and overall likeness of the subject.";
 
-        // --- ESTILO 1: RENACIMIENTO (VERSIÓN HÍBRIDA + CORRECCIÓN DE CIERRE) ---
+        // --- ESTILO 1: RENACIMIENTO (AHORA CON "VIBE" ROMÁNTICO/SURREALISTA) ---
         if (style === 'renacimiento') {
             promptStyle = `
-            **STYLE:** 17th Century Dutch/Flemish Baroque Oil Painting (Titian/Van Dyck/Rembrandt style).
-            **COMPOSITION GOAL:** A powerful, museum-quality portrait with dramatic lighting.
+            **STYLE:** 18th/19th Century Romantic Royal Portrait (Winterhalter/Sargent style).
+            **VIBE:** Luxurious, Soft, Elegant, Majestic.
 
             **1. IDENTITY (CRITICAL):**
             - ${identityInstruction}
             - Maintain exact facial features for humans. Maintain exact breed/markings for pets.
 
-            **2. INTELLIGENT SUBJECT HANDLING (THE CORE RULES):**
-            *Analyze each subject and apply the correct rules based on what they are.*
+            **2. INTELLIGENT SUBJECT HANDLING (THE NEW RULES):**
 
             --- **IF SUBJECT IS A PET (Dog, Cat, etc.):** ---
-            - **POSE:** Reclining or sitting regally on a massive antique velvet cushion on the floor or a low dais. Encourage varied natural postures (lying down, sphinx pose).
-            - **ATTIRE (THE FIX):** **NO HUMAN CLOTHES** (no jackets, no pants). Use a heavy, richly embroidered brocade mantle/capelet **draped open at the front** to reveal neck fur.
-            - **FASTENING:** The open front of the mantle is connected across the chest by an **opulent jeweled clasp, chain, or ornate embroidered band**, serving as the fastening for the garment rather than a separate collar.
+            - **POSE:** Reclining or sitting regally on a massive antique velvet cushion.
+            - **ATTIRE:** Heavy brocade mantle/capelet **draped open at the front** (V-shape) to reveal neck fur.
+            - **FASTENING:** Connected by an opulent jeweled clasp/chain across the chest.
 
-            --- **IF SUBJECT IS A HUMAN:** ---
-            - **POSE:** Seated with immense dignity on a carved wooden armchair or throne-like seat. Posture is noble and upright.
-            - **ATTIRE:** Full historical period clothing appropriate for high nobility. Examples: Dark velvet doublets, elaborate gowns, ruff collars (gorgueras) or rich lace collars, heavy gold chains, fine fabrics with historical patterns.
+            --- **IF SUBJECT IS A HUMAN (THE FIX):** ---
+            - **POSE:** Seated gracefully on a luxurious sofa, throne, or standing elegantly.
+            - **ATTIRE (GOWNS NOT BLACK):** Use **Opulent Royal Gowns/Robes**.
+                - **Colors:** Royal Blue, Deep Emerald, Rich Burgundy, Gold, or Rose. **AVOID PLAIN BLACK.**
+                - **Style:** Off-shoulder or lace necklines, silk fabrics, ermine trim. **NO STIFF RUFFS.**
+                - **Vibe:** A queen or princess in her palace.
 
-            --- **IF MIXED GROUP (Humans + Pets):** ---
-            - **INTERACTION:** Humans are seated on chairs/thrones. Pets are placed naturally near them—either sitting on a large cushion at the human's feet, or resting elegantly on the human's lap or on a table beside them. They should look like a cohesive noble family.
+            --- **IF MIXED GROUP (Humans + Pets) - THE SURREALISM STYLE:** ---
+            - **COMPOSITION:** A wider "Family Portrait" scene.
+            - **ARRANGEMENT:** The Human is the center anchor (seated on a sofa/throne).
+            - **PET PLACEMENT:** The pets are arranged naturally around the human:
+                - Sitting on the human's lap.
+                - Sitting on the floor at the human's feet (on a rug).
+                - Sitting on a velvet stool beside the human.
+            - **INTERACTION:** Gentle touching (hand on the pet) or close proximity.
 
             **3. SETTING & LIGHTING:**
-            - **BACKGROUND:** A deep, atmospheric, textured plaster wall or dark oak paneling. Minimal clutter to focus on the subjects.
-            - **LIGHTING:** Strong, dramatic Chiaroscuro light from the upper left, spotlighting faces and rich textures.
+            - **BACKGROUND:** A palace interior with depth (drapery, columns, or a painted landscape in the distance).
+            - **LIGHTING:** Soft, flattering, golden-hour museum light. Not too dark.
             `;
         } 
         // (Otros estilos pendientes)
-        else if (style === 'rey') { promptStyle = `**STYLE:** Royal Portrait. IDENTITY: Keep likeness. ATTIRE: Appropriate Royal robes.`; } 
-        else if (style === 'barroco') { promptStyle = `**STYLE:** High Baroque. ATTIRE: Massive Crowns and Red Capes.`; }
+        else if (style === 'rey') { promptStyle = `**STYLE:** Royal Portrait. IDENTITY: Keep likeness. ATTIRE: Royal robes.`; } 
+        else if (style === 'barroco') { promptStyle = `**STYLE:** High Baroque. ATTIRE: Crowns and Red Capes.`; }
 
         const masterPrompt = `
         You are a Master Painter creating a museum-quality oil painting.
@@ -90,7 +98,9 @@ app.post('/generate', async (req, res) => {
         
         **CRITICAL TECHNICAL SPECS:**
         **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
-        **FRAMING:** ${isLargeGroup ? "Medium Shot (wider to fit group)." : "Medium Close-Up (Chest Up to Waist Up for humans)."}
+        **FRAMING (THE FIX):** **Three-Quarter Shot (Knees Up or Full Seated Body).**
+        - Open the frame to show the beautiful dresses and the full arrangement of pets on the floor/lap.
+        - Do NOT crop too tight on the face.
         `;
         
         const imageParts = images.map(img => ({ inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }}));
@@ -102,9 +112,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V63_CLASP_FIX');
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V64_SURREALISM_STYLE');
         
-        console.log("✅ Resultado V63:", finalUrl);
+        console.log("✅ Resultado V64:", finalUrl);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -114,5 +124,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V63 (Corrección de Cierre/Collar) listo en ${PORT}`);
+    console.log(`🚀 Servidor V64 (Estilo Surrealism/Romántico) listo en ${PORT}`);
 });
