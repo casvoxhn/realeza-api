@@ -26,7 +26,7 @@ async function uploadBufferToSupabase(buffer, prefix) {
 app.post('/generate', async (req, res) => {
     try {
         const { images, style } = req.body;
-        console.log(`🎨 V51 (EQUILIBRIO MAESTRO). Estilo: ${style} | Modelo: ${MODEL_ID}`);
+        console.log(`🎨 V52 (EMULAR COMPOSICIÓN). Estilo: ${style} | Modelo: ${MODEL_ID}`);
 
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -37,47 +37,48 @@ app.post('/generate', async (req, res) => {
 
         let promptStyle = "";
 
-        // --- ESTILO 1: RENACIMIENTO (ÓLEO MEJORADO) ---
+        // --- ESTILO 1: RENACIMIENTO (EMULACIÓN DE COMPOSICIÓN CLÁSICA) ---
         if (style === 'renacimiento') {
             promptStyle = `
-            **ARTISTIC STYLE:** Dutch Golden Age Oil Painting (Rembrandt/Vermeer style). Rich tones, master brushwork.
+            **STYLE:** 17th Century Dutch/Flemish Baroque Oil Painting (Titian/Van Dyck style). Rich, deep colors.
 
-            **1. THE FACE (IDENTITY LOCK - CRITICAL):**
-            - **Keep the EXACT facial features, eyes, and unique expression from the input photo.** The owner must instantly recognize their pet.
+            **COMPOSITION GOAL:** Emulate a classic, noble pet portrait painting composition.
 
-            **2. THE POSE & BODY (ARTISTIC IMPROVEMENT):**
-            - **REPOSE THE ANIMAL:** Do NOT just copy the photo pose if it's awkward. Place the animal in a **dignified, natural, and elegant sitting or lying pose** suitable for a high-end portrait.
-            - The body should look relaxed and noble, not rigid.
+            **1. THE SUBJECT (IDENTITY LOCK):**
+            - Keep the EXACT facial features and expression from the input photo.
 
-            **3. THE "ROPITA" (NOBLE ACCESSORIES):**
-            - **Add rich, period-appropriate accessories.** Examples: A heavy velvet mantle or capelet draped elegantly over its shoulders, a decorative historical collar, or a fine chain.
-            - **NO HUMAN SUITS:** Do not put them in full human standing clothes like jackets or pants. Keep it natural but noble.
+            **2. THE POSE & SETTING (THE EMULATION):**
+            - **POSE:** The animal is posed with immense dignity, sitting or lying regally on a large, plush antique velvet cushion (e.g., deep crimson, gold, or dark blue).
+            - **FURNITURE:** The cushion rests on a heavy, carved dark wood table or pedestal.
+            - **BACKGROUND:** Dark, rich, atmospheric background with hints of heavy drapery or old library shelves, barely visible in the shadows.
 
-            **4. SETTING & LIGHTING:**
-            - **SETTING:** Placed on luxurious antique furniture (carved wood, heavy brocade fabrics) in a moody, atmospheric room.
-            - **LIGHTING:** Dramatic, soft directional light (Chiaroscuro) that sculpts the face, fur texture, and fabric folds.
+            **3. THE "ROPITA" (NOBLE DRAPERY):**
+            - A heavy, richly embroidered brocade or velvet mantle/capelet is draped artfully *over* the animal's back and shoulders. It should look heavy and expensive.
+            - A prominent jeweled collar is visible.
+            - **NO human jackets or pants.**
+
+            **4. LIGHTING:**
+            - Dramatic Chiaroscuro light coming strongly from the upper left, spotlighting the face and the rich texture of the mantle and cushion.
             `;
         } 
-        // --- OTROS ESTILOS (Misma lógica de equilibrio) ---
+        // --- OTROS ESTILOS ---
         else if (style === 'rey') {
-            promptStyle = `**STYLE:** Northern Renaissance Royal Portrait. **IDENTITY:** Keep exact face. **POSE & ATTIRE:** Dignified sitting pose wearing a rich velvet royal mantle with fur trim and a jeweled collar. **SETTING:** Palace interior.`;
+            promptStyle = `**STYLE:** Northern Renaissance Royal Portrait. **IDENTITY:** Keep exact face. **COMPOSITION:** Dignified sitting pose on a throne-like chair, wearing royal velvet robes and a crown nearby. Soft light.`;
         } 
         else if (style === 'barroco') {
-             promptStyle = `**STYLE:** High Baroque Opulence. **IDENTITY:** Keep exact face. **POSE & ATTIRE:** Dramatic, powerful pose wearing a massive GOLD CROWN and flowing RED VELVET CAPE. **VIBE:** "The King".`;
+             promptStyle = `**STYLE:** High Baroque Opulence. **IDENTITY:** Keep exact face. **COMPOSITION:** Dramatic, powerful pose wearing a massive GOLD CROWN and flowing RED VELVET CAPE. **VIBE:** "The King of the World".`;
         }
 
         const masterPrompt = `
         You are a Master Painter creating a museum-quality oil portrait.
-        
-        **MISSION:** Create a beautiful composition. The subject's face must be perfectly recognizable, but the pose, lighting, and attire should be artistically elevated.
-
         **INSTRUCTIONS:**
-        1. Take the subject's head/face from the image and paint it exactly as it is.
-        2. Create a new, elegant body and pose for it.
-        3. Integrate it into this scene:
+        1. Take the subject's head/face from the image and paint it exactly as it is (Identity Lock).
+        2. Create the specific composition described below, integrating the subject seamlessly.
+        3. Apply a rich oil painting texture with visible brushstrokes.
+        
         ${promptStyle}
         
-        **FORMAT:** Vertical Portrait, Highly Detailed Oil Painting.
+        **FORMAT:** Vertical Portrait.
         `;
         
         const imageParts = images.map(img => ({ inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }}));
@@ -89,9 +90,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V51_BALANCE');
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V52_COMPOSITION');
         
-        console.log("✅ Resultado V51:", finalUrl);
+        console.log("✅ Resultado V52:", finalUrl);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -101,5 +102,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V51 (Equilibrio Maestro) listo en ${PORT}`);
+    console.log(`🚀 Servidor V52 (Emular Composición) listo en ${PORT}`);
 });
