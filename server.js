@@ -26,7 +26,7 @@ async function uploadBufferToSupabase(buffer, prefix) {
 app.post('/generate', async (req, res) => {
     try {
         const { images, style } = req.body;
-        console.log(`🎨 V53 (LIMPIEZA Y LUZ). Estilo: ${style} | Modelo: ${MODEL_ID}`);
+        console.log(`🎨 V55 (VARIEDAD DE COLORES). Estilo: ${style} | Modelo: ${MODEL_ID}`);
 
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -37,31 +37,33 @@ app.post('/generate', async (req, res) => {
 
         let promptStyle = "";
 
-        // --- ESTILO 1: RENACIMIENTO (VERSIÓN LIMPIA Y LUMINOSA) ---
+        // --- ESTILO 1: RENACIMIENTO (VERSIÓN FINAL CON VARIEDAD) ---
         if (style === 'renacimiento') {
             promptStyle = `
-            **STYLE:** 17th Century Dutch Baroque Oil Painting (Van Dyck style). Rich colors but clearer illumination.
+            **STYLE:** 17th Century Dutch/Flemish Baroque Oil Painting (Titian/Van Dyck style). Rich, deep colors, master texture.
 
-            **COMPOSITION GOAL:** A clean, noble, and well-illuminated pet portrait on the floor.
+            **COMPOSITION GOAL:** A noble pet portrait on the floor with a clean background and dramatic lighting.
 
             **1. THE SUBJECT (IDENTITY LOCK):**
             - Keep the EXACT facial features and expression from the input photo.
 
-            **2. THE POSE & SETTING (FLOOR & CLEAN WALL):**
-            - **POSE:** The animal is sitting or lying regally on a large, plush antique velvet cushion (e.g., deep crimson or gold).
-            - **PLACEMENT:** The cushion rests directly on a **polished antique stone floor or dark wooden planks**. NO TABLES.
-            - **BACKGROUND:** A **clean, uncluttered, textured plaster wall** in neutral, warm tones (e.g., aged beige, soft grey). NO busy elements like shelves or heavy furniture in the background. Keep it simple to focus on the subject.
+            **2. THE POSE & SETTING (CLEAN FLOOR + VARIETY):**
+            - **POSE:** The animal is sitting or lying regally on a large, plush antique velvet cushion.
+            - **VARIETY RULE (CUSHION COLOR):** The AI must choose a different rich, deep historical color for the cushion in every generation to ensure variety (e.g., forest green, royal blue, old gold, burnt orange, or deep crimson). Do not always use red.
+            - **PLACEMENT:** The cushion rests directly on a polished antique stone floor or dark wooden planks. NO TABLES.
+            - **BACKGROUND:** A clean, uncluttered, textured plaster wall in neutral, deep tones. Keep it simple.
 
             **3. THE "ROPITA" (NOBLE DRAPERY):**
-            - A heavy, richly embroidered brocade or velvet mantle/capelet is draped artfully *over* the animal's back.
+            - A heavy, richly embroidered brocade or velvet mantle/capelet is draped artfully *over* the animal's back. **COLOR: Complementary to the cushion but different.**
             - A prominent jeweled collar.
             - **NO human jackets or pants.**
 
-            **4. LIGHTING (BRIGHTER & SOFTER):**
-            - **Soft, diffused daylight** coming from a large window on the left. The scene should be **well-illuminated and clear**, avoiding excessively dark shadows, while still maintaining a painterly texture.
+            **4. LIGHTING (DRAMATIC CHIAROSCURO):**
+            - Dramatic, strong Chiaroscuro light coming from the upper left.
+            - The subject is spotlighted; the background fades into shadow.
             `;
         } 
-        // --- OTROS ESTILOS (Pendientes de pulir) ---
+        // --- OTROS ESTILOS (Pendientes) ---
         else if (style === 'rey') {
             promptStyle = `**STYLE:** Northern Renaissance Royal Portrait. **IDENTITY:** Keep exact face. **COMPOSITION:** Dignified sitting pose on a throne-like chair, wearing royal velvet robes. Soft, bright light.`;
         } 
@@ -90,9 +92,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V53_CLEAN');
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, 'MASTER_V55_VARIETY');
         
-        console.log("✅ Resultado V53:", finalUrl);
+        console.log("✅ Resultado V55:", finalUrl);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -102,5 +104,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V53 (Limpieza y Luz) listo en ${PORT}`);
+    console.log(`🚀 Servidor V55 (Variedad de Colores) listo en ${PORT}`);
 });
