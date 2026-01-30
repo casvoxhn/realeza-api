@@ -118,8 +118,42 @@ app.post('/generate', async (req, res) => {
             - **LIGHTING:** Bright, glorious, majestic light that makes gold and jewels sparkle. Less shadowy than the Renacimiento style.
             `;
         }
-        else if (style === 'barroco') { promptStyle = `**STYLE:** High Baroque. ATTIRE: Crowns and Red Capes.`; }
+        // --- ESTILO 3: BARROCO (DRAMA Y LUJO EXTREMO) ---
+        else if (style === 'barroco') {
+             promptStyle = `
+            **STYLE:** High Baroque Opulence & Theatricality (Rubens/Velázquez/Bernini influence).
+            **VIBE:** Dramatic, Intense, "More is More", Deep shadows meets blinding gold, Emotional & Grandiose.
 
+            **1. IDENTITY (CRITICAL):**
+            - ${identityInstruction}
+            - Maintain exact facial features. Expressions should be intense or haughtily noble.
+
+            **2. INTELLIGENT SUBJECT HANDLING (THE DRAMATIC RULES):**
+
+            --- **IF SUBJECT IS A PET:** ---
+            - **POSE:** Striking dynamic pose on a dark velvet cushion with gold tassels.
+            - **ATTIRE:** **A Gold Crown is MANDATORY.**
+            - **CLOTHING:** Flowing **Deep Red or Black Velvet Capes** with massive gold embroidery. The fabric should look heavy and expensive.
+            - **DETAILS:** Pearls, rubies, and excessive gold ornamentation.
+
+            --- **IF SUBJECT IS A HUMAN:** ---
+            - **POSE:** Dramatic, theatrical stance or seated with overflowing fabric. Not stiff, but commanding.
+            - **ATTIRE:**
+                - **HEAD:** **Gold Laurel Wreaths or Baroque Crowns**.
+                - **BODY:** Armor with gold filigree (for men) or corset gowns with massive hips and lace (for women).
+                - **KEY ELEMENT:** A massive **Red or Black velvet drape** flowing around them like a theatrical curtain.
+
+            --- **IF MIXED GROUP (The Baroque Dynasty):** ---
+            - **COMPOSITION:** A painting that looks like a scene from an opera.
+            - **ARRANGEMENT:** Highly staged. The Human is the dramatic center.
+            - **PET PLACEMENT:** The pets are part of the scenery, perhaps one sitting on a table looking at the viewer, another at the feet.
+            - **UNIFYING ELEMENT:** All subjects (human and pet) share the same palette of **Deep Red, Gold, and Black**.
+
+            **3. SETTING & LIGHTING:**
+            - **BACKGROUND:** Dark, moody palace interiors, heavy curtains, storm clouds in a window, or dark oak shadows.
+            - **LIGHTING:** Extreme Chiaroscuro (Caravaggio style) - Deep darkness contrasted with bright golden light hitting the faces and the gold jewelry.
+            `;
+        }
         const masterPrompt = `
         You are a Master Painter creating a museum-quality oil painting.
         **INSTRUCTIONS:**
@@ -159,4 +193,5 @@ app.post('/generate', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor V64 (Estilo Surrealism/Romántico) listo en ${PORT}`);
 });
+
 
