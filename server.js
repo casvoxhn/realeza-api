@@ -81,7 +81,9 @@ app.post('/generate', async (req, res) => {
         `;
 
         // 4. GENERAR
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
+        // Intentamos usar el modelo Gemini 3 (Nano Banana Pro)
+// Si este falla, significa que Google aún no lo habilita para tu API Key específica.
+const model = genAI.getGenerativeModel({ model: "gemini-3-pro-preview" });
         const imageParts = images.map(img => ({ inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }}));
         
         const result = await model.generateContent([ ...imageParts, masterPrompt ]);
@@ -107,3 +109,4 @@ app.post('/generate', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor V43 (Reglas Ariel + Calidad Museo) listo en puerto ${PORT}`);
 });
+
