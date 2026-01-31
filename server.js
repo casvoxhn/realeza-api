@@ -1,5 +1,5 @@
 // ARCHIVO: server.js
-// V73 - Arquitectura Modular con Código de Usuario Validado
+// V76 - Soporte Total (Mascotas, Familia, Niños, Parejas, RETRATOS)
 
 const express = require('express');
 const cors = require('cors');
@@ -9,7 +9,10 @@ require('dotenv').config();
 
 // --- IMPORTAMOS LOS MÓDULOS ---
 const getMascotasPrompt = require('./mascotas');
-const getFamiliaPrompt = require('./familia'); // Asegúrate de tener el archivo familia.js también
+const getFamiliaPrompt = require('./familia');
+const getNinosPrompt = require('./ninos');
+const getParejasPrompt = require('./parejas');
+const getRetratosPrompt = require('./retratos'); // <--- NUEVO IMPORT
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -34,9 +37,11 @@ app.post('/generate', async (req, res) => {
         const { images, style, category } = req.body;
         const numSubjects = images.length;
         const isGroup = numSubjects > 1;
+        
+        // Default a mascota si no se especifica
         const currentCategory = category || 'mascota'; 
 
-        console.log(`🛡️ V73 (USER VALIDATED PROMPTS). Cat: ${currentCategory} | Estilo: ${style}`);
+        console.log(`👤 V76 (PORTRAITS ADDED). Cat: ${currentCategory} | Estilo: ${style}`);
 
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -46,20 +51,33 @@ app.post('/generate', async (req, res) => {
         const model = genAI.getGenerativeModel({ model: MODEL_ID });
 
         let masterPrompt = "";
+        const baseInstruction = `You are a Master Painter creating a museum-quality oil painting. Analyze the ${numSubjects} input image(s). Create a cohesive composition applying the rules below. Apply a rich oil painting texture.`;
 
         // === EL CEREBRO SELECTOR ===
-        if (currentCategory === 'familia') {
-            // Carga la lógica de FAMILIA (que definimos en el archivo familia.js)
-            // Nota: Aquí asumimos que familia.js devuelve solo las reglas, así que añadimos el encabezado.
-            // Si actualizas familia.js para devolver el texto completo como mascotas.js, puedes quitar el encabezado aquí.
-            const baseInstruction = `You are a Master Painter creating a museum-quality oil painting. Analyze the ${numSubjects} input image(s). Create a cohesive composition applying the rules below. Apply a rich oil painting texture.`;
+        if (currentCategory === 'retratos') {
+            // Lógica RETRATOS (Auto-retratos)
+            const retratosRules = getRetratosPrompt(style, numSubjects, isGroup);
+            masterPrompt = `${baseInstruction}\n${retratosRules}`;
+        }
+        else if (currentCategory === 'parejas') {
+            const parejasRules = getParejasPrompt(style, numSubjects, isGroup);
+            masterPrompt = `${baseInstruction}\n${parejasRules}`;
+        }
+        else if (currentCategory === 'ninos') {
+            const ninosRules = getNinosPrompt(style, numSubjects, isGroup);
+            masterPrompt = `${baseInstruction}\n${ninosRules}`;
+        } 
+        else if (currentCategory === 'familia') {
             const familyRules = getFamiliaPrompt(style, numSubjects, isGroup);
             masterPrompt = `${baseInstruction}\n${familyRules}`;
         } 
         else {
-            // Carga la lógica de MASCOTAS (Tu código exacto desde mascotas.js)
-            // Como tu código ya incluye "You are a Master Painter...", lo usamos directo.
-            masterPrompt = getMascotasPrompt(style, numSubjects, isGroup);
+            // Lógica MASCOTAS (Default)
+            const identityInstruction = isGroup
+                ? `Capture the unique characteristics and likeness of **EVERY SINGLE ONE of the ${numSubjects} SUBJECTS**.`
+                : "Capture the unique characteristics and overall likeness of the subject.";
+            const petRules = getMascotasPrompt(style, numSubjects, isGroup, identityInstruction);
+            masterPrompt = `${baseInstruction}\n${petRules}`;
         }
         
         const imageParts = images.map(img => ({ inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }}));
@@ -71,9 +89,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, `MASTER_V73_${currentCategory.toUpperCase()}`);
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, `MASTER_V76_${currentCategory.toUpperCase()}`);
         
-        console.log(`✅ Resultado V73 OK (${currentCategory})`);
+        console.log(`✅ Resultado V76 OK (${currentCategory})`);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -83,5 +101,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V73 (Mascotas Blindado + Familia Modular) listo en ${PORT}`);
+    console.log(`🚀 Servidor V76 (Retratos + Parejas + Niños + Familia + Mascotas) listo en ${PORT}`);
 });
