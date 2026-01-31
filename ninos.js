@@ -1,50 +1,54 @@
 // ARCHIVO: ninos.js
-// Lógica Especializada: Inocencia Noble, Fidelidad de Sujetos y Cero Alucinaciones
+// Lógica V50.4: Estética Infantil pero INCLUSIVA (Padres y Mascotas permitidos)
 
 module.exports = function(style, numSubjects, isGroup) {
     
-    // --- 1. REGLAS DE ORO: LA ESENCIA INFANTIL Y FIDELIDAD ---
-    // Se han añadido reglas estrictas para contar sujetos y prohibir elementos inventados.
+    // --- 1. REGLAS DE ORO: FLEXIBILIDAD Y FIDELIDAD ---
     const baseInstructions = `
-    **CRITICAL CORE INSTRUCTIONS FOR CHILD SUBJECTS:**
-    1.  **SUBJECT COUNT FIDELITY (MOST IMPORTANT):** You must accurately assess the number of children present in the input images. **If the input shows TWO children (e.g., sisters), the output painting MUST contain TWO children.** Do not merge or omit subjects. Maintain their relative ages and likenesses.
-    2.  **NO HALLUCINATIONS:** Do NOT add any elements not present in the input or explicitly requested by the style. **ABSOLUTELY NO extra pets, dogs, cats, animals, or modern toys that are not in the source photos.**
-    3.  **THE SUBJECT IS A CHILD:** Approx age 3-10. Maintain childlike facial proportions, innocence, and curiosity. No adultifying faces or bodies.
-    4.  **NO HEAVY CROWNS:** Children do not wear giant adult crowns. Use delicate circlets, ribbons, or nothing on the head.
-    5.  **STUDIO PORTRAIT FEEL:** This is a posed painting session in a master painter's studio.
+    **CRITICAL CORE INSTRUCTIONS:**
+    1.  **INCLUDE EVERYONE:** You must detect and include **ALL** subjects present in the input image. 
+        - If there are parents/adults: Include them as noble guardians/kings/queens.
+        - If there are pets: Include them faithfully.
+        - If there are siblings: Include all of them.
+        - **DO NOT REMOVE ANYONE.**
+    
+    2.  **THEME HIERARCHY:** The aesthetic is centered around the CHILD's innocence/magic, but adults must fit perfectly into that world (e.g., if the child is a Fairy, the mother is a Fairy Queen; if the child is a Prince, the father is a King).
+    
+    3.  **NO HALLUCINATIONS:** Do not *invent* new people or pets that are not in the photo. Only paint who is there.
+    
+    4.  **AGE APPROPRIATE:** Keep children looking like children (innocent faces, correct proportions). Keep adults looking like adults.
     `;
 
     let promptStyle = "";
     let framingOverride = "";
 
-    // --- ESTILO 1: RENACIMIENTO (BOSQUE ENCANTADO / ESTUDIO MÁGICO) ---
+    // --- ESTILO 1: RENACIMIENTO (BOSQUE ENCANTADO / JARDÍN MÁGICO) ---
     if (style === 'renacimiento') {
         promptStyle = `
         ${baseInstructions}
-        **STYLE:** High Renaissance Oil Portrait (Raphael / Botticelli influence). Soft, ethereal, magical.
-        **SUBJECT:** The noble child(ren) posed gently. Innocence and wonder in their eyes.
-        **SETTING:** A painted studio backdrop of a **magical, dappled forest clearing** or an overgrown ancient garden with soft, natural elements like leaves and flowers.
-        **ATTIRE:** Rich but gentle fabrics. Silk velvets in earthy tones (moss green, soft blue, cream gold), embroidered with natural motifs.
-        **PROPS:** (Optional and subtle) Holding a small antique book or a single flower. **Do not add animals.**
-        **LIGHTING:** Soft, golden "Golden Hour" light filtering through imaginary trees.
+        **STYLE:** High Renaissance Oil Portrait (Raphael / Botticelli). Soft, ethereal, magical.
+        **SETTING:** A magical, dappled forest clearing or an ancient blooming garden.
+        **ATTIRE:** - Children: Silk velvets in earthy tones (moss green, soft blue), flower crowns.
+        - Adults (if present): Elegant, flowing robes or noble tunics that match the forest theme (Guardian of the Forest style).
+        **LIGHTING:** Soft, golden "Golden Hour" light filtering through trees.
+        **MOOD:** Protective, tender, magical.
         `;
-        framingOverride = "**FRAMING:** Medium Shot (Waist Up). Focus on the child(ren) interacting gently with the environment.";
+        framingOverride = "**FRAMING:** Group composition (if multiple) or Portrait. Focus on the connection between subjects.";
     } 
     
-    // --- ESTILO 2: PRÍNCIPE / PRINCESA (NOBLEZA INFANTIL) ---
-    // Se eliminó la referencia a mascotas en "PROPS".
+    // --- ESTILO 2: PRÍNCIPE / PRINCESA (NOBLEZA REAL) ---
     else if (style === 'principe') {
         promptStyle = `
         ${baseInstructions}
-        **STYLE:** Grand Manner Portraiture (Van Dyck / Velázquez royal children). Elegant, noble, yet youthful.
-        **SUBJECT:** The **young son(s)/daughter(s) of a monarch**. They possess innate dignity but childlike softness.
-        **NO HEAVY CROWNS:** Use a simple thin gold circlet or a fine silk ribbon if headwear is needed.
-        **ATTIRE:** "Junior" Royal attire. Fine brocades, lace collars, miniature satin sashes. Luxurious but not overwhelming.
-        **SETTING:** A royal nursery terrace or a palace garden with a distant castle view. A luxurious rug on the floor.
-        **PROPS:** A fine heirloom quality antique toy (like a porcelain doll or wooden horse) ONLY if it fits naturally. **NO pets or live animals.**
-        **LIGHTING:** Bright, flattering daylight highlighting the rich textures of the clothing.
+        **STYLE:** Grand Manner Portraiture (Van Dyck / Velázquez). Elegant, noble, wealthy.
+        **SETTING:** A royal palace terrace or luxurious nursery with a castle view.
+        **ATTIRE:** - Children: "Junior" Royal attire. Fine brocades, lace collars, miniature sashes.
+        - Adults (if present): King/Queen attire. Regalia, velvet capes, dignified stance.
+        **PROPS:** (Optional) Heirloom toys for kids.
+        **NO HEAVY CROWNS ON KIDS:** Use simple circlets for children. Adults can wear full crowns.
+        **LIGHTING:** Bright, flattering daylight highlighting luxury fabrics.
         `;
-        framingOverride = "**FRAMING:** Full Body or Three-Quarter Shot to show the elegant miniature outfits.";
+        framingOverride = "**FRAMING:** Full Body or Three-Quarter Shot to show the elegant outfits.";
     } 
     
     // --- ESTILO 3: BARROCO CLÁSICO (ESTUDIO INTENSO) ---
@@ -52,29 +56,27 @@ module.exports = function(style, numSubjects, isGroup) {
         promptStyle = `
         ${baseInstructions}
         **STYLE:** Dutch Golden Age / Baroque (Rembrandt style). Intense, moody, soulful.
-        **SUBJECT:** Serious, contemplative child(ren) with deep eyes. A "deep soul" look.
-        **NO ROYAL REGALIA:** No crowns, no scepters. The focus is strictly on the faces and intensity.
-        **ATTIRE:** Dark, rich, textured fabrics. Black velvet, deep burgundy, dark lace collars that frame the face.
-        **SETTING:** A dark, shadowy painter's studio background. Vague forms of antique furniture hidden in deep shadow.
-        **LIGHTING:** **Extreme Chiaroscuro (Dramatic Studio Lighting).** A single strong light source illuminates the faces against a very dark background.
+        **SETTING:** A dark, shadowy painter's studio background.
+        **ATTIRE:** Dark, rich, textured fabrics. Black velvet, deep burgundy, intricate lace collars.
+        **MOOD:** Serious, contemplative, deep family bond.
+        **LIGHTING:** **Extreme Chiaroscuro.** Strong directional light on faces against a dark background.
         `;
-        framingOverride = "**FRAMING:** **Medium Close-Up (Chest Up).** The faces must dominate the composition.";
+        framingOverride = "**FRAMING:** Medium Close-Up. Focus on the expressions and eyes of all subjects.";
     }
 
     // --- ESTRUCTURA FINAL DEL PROMPT ---
-    // Se reforzaron los NEGATIVE CONSTRAINTS.
     return `
-    You are a Master Painter creating a museum-quality oil painting of child subject(s).
+    You are a Master Painter creating a museum-quality oil painting.
     **INSTRUCTIONS:**
-    1.  **Analyze** the input image(s) to count the exact number of subjects and capture their likeness features exactly.
-    2.  **Transform** the subject(s) into the historical style defined below, adhering strictly to the "CRITICAL CORE INSTRUCTIONS".
-    3.  **Apply** a rich, detailed oil painting texture (visible brushstrokes).
+    1.  **Analyze** the input image to count EXACTLY how many people and pets are there.
+    2.  **Transform** ALL detected subjects into the historical style defined below.
+    3.  **Apply** a rich, detailed oil painting texture.
     
     ${promptStyle}
     
     **CRITICAL TECHNICAL SPECS:**
     **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
     ${framingOverride}
-    **NEGATIVE CONSTRAINTS (STRICT):** No extra people not in input, **NO PETS, NO DOGS, NO CATS, NO ANIMALS (unless specifically asked by style)**, no modern toys, no picture frames, no adult bodies on children, no distorted faces, no modern clothing.
+    **NEGATIVE CONSTRAINTS:** No missing people, no missing pets, no extra invented people, no modern clothing, no distorted faces, no sunglasses.
     `;
 };
