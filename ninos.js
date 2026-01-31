@@ -1,5 +1,5 @@
 // ARCHIVO: ninos.js
-// Lógica V50.5: Inclusión Total + MEJORA DEL BARROCO (Menos triste, más rico, plano medio)
+// Lógica V50.6: Inclusión Total + FIX NO MARCOS + VARIACIÓN DE COLOR EN RENACIMIENTO
 
 module.exports = function(style, numSubjects, isGroup) {
     
@@ -23,17 +23,18 @@ module.exports = function(style, numSubjects, isGroup) {
     let framingOverride = "";
 
     // --- ESTILO 1: RENACIMIENTO (BOSQUE ENCANTADO / JARDÍN MÁGICO) ---
+    // Corrección V50.6: Se fuerza la variedad de color para evitar que todo sea verde.
     if (style === 'renacimiento') {
         promptStyle = `
         ${baseInstructions}
-        **STYLE:** High Renaissance Oil Portrait (Raphael / Botticelli). Soft, ethereal, magical.
-        **SETTING:** A magical, dappled forest clearing or an ancient blooming garden.
-        **ATTIRE:** - Children: Silk velvets in earthy tones (moss green, soft blue), flower crowns.
-        - Adults (if present): Elegant, flowing robes or noble tunics that match the forest theme.
-        **LIGHTING:** Soft, golden "Golden Hour" light filtering through trees.
-        **MOOD:** Protective, tender, magical.
+        **STYLE:** High Renaissance Oil Portrait (Raphael / Botticelli style). Soft, ethereal, magically colorful.
+        **SETTING:** A magical forest clearing or ancient garden that is **NOT monochrome green**. It is rich in color diversity: colorful wildflowers (purples, yellows, reds), ancient stone moss, and glowing magical dust (gold/blue) breaking up the greenery.
+        **ATTIRE:** Rich, varied Renaissance fabrics. **DO NOT rely only on green.** Use a vibrant mix of deep crimsons, warm ochres, royal blues, cream golds, and forest tones. Brocades embroidered with varied flora.
+        - Adults (if present): Elegant, flowing robes in deep jewel tones that complement the magical environment without blending in.
+        **LIGHTING:** Soft, golden "Golden Hour" light filtering through trees, creating warm highlights.
+        **MOOD:** Protective, tender, magical wonder.
         `;
-        framingOverride = "**FRAMING:** Group composition or Portrait. Focus on the connection between subjects.";
+        framingOverride = "**FRAMING:** Group composition or Portrait. Focus on the connection between subjects and the colorful magical environment.";
     } 
     
     // --- ESTILO 2: PRÍNCIPE / PRINCESA (NOBLEZA REAL) ---
@@ -50,22 +51,21 @@ module.exports = function(style, numSubjects, isGroup) {
         framingOverride = "**FRAMING:** Full Body or Three-Quarter Shot to show the elegant outfits.";
     } 
     
-    // --- ESTILO 3: BARROCO CLÁSICO (MEJORADO V50.5) ---
-    // Corrección: Menos triste, más rico, iluminación cálida, mejores poses, plano medio.
+    // --- ESTILO 3: BARROCO CLÁSICO (ESTUDIO RICO) ---
     else if (style === 'barroco') {
         promptStyle = `
         ${baseInstructions}
-        **STYLE:** Flemish Baroque (Rubens / Van Dyck influence). Rich, opulent, dramatic but **full of life and nobility, NOT sad**.
+        **STYLE:** Flemish Baroque (Rubens / Van Dyck influence). Rich, opulent, dramatic but full of life and nobility, NOT sad.
         **SETTING:** An opulent, dimly lit study or library with heavy draped curtains and dark antique oak paneling.
         **ATTIRE:** Deep jewel tones dominate. Sapphire blues, emerald greens, rich burgundies, and heavy gold brocades. Silks that shimmer and intricate lace collars.
-        **MOOD & POSES:** Noble, thoughtful, and impressive. Subjects have dynamic, grounded poses: a hand on a hip, holding a leather-bound book, gesturing towards a globe. If a group, they are interacting warmly but formally as a powerful dynasty.
-        **LIGHTING:** **Dramatic Warm Chiaroscuro.** A strong, warm light source (like a large window or grand fireplace) makes the fabrics sparkle and skin glow healthily against the deep background shadows.
+        **MOOD & POSES:** Noble, thoughtful, and impressive. Subjects have dynamic, grounded poses.
+        **LIGHTING:** **Dramatic Warm Chiaroscuro.** A strong, warm light source makes the fabrics sparkle and skin glow healthily against the deep background shadows.
         `;
-        // CAMBIO CLAVE DE ENCUADRE:
-        framingOverride = "**FRAMING:** Medium Shot (Waist Up). Allow space for dynamic poses and show the richness of the attire and environment.";
+        framingOverride = "**FRAMING:** Medium Shot (Waist Up). Allow space for dynamic poses and show the richness of the attire.";
     }
 
     // --- ESTRUCTURA FINAL DEL PROMPT ---
+    // Corrección V50.6: Se añaden "no picture frames, no painted borders" a las restricciones negativas.
     return `
     You are a Master Painter creating a museum-quality oil painting.
     **INSTRUCTIONS:**
@@ -78,6 +78,6 @@ module.exports = function(style, numSubjects, isGroup) {
     **CRITICAL TECHNICAL SPECS:**
     **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
     ${framingOverride}
-    **NEGATIVE CONSTRAINTS:** No missing people, no missing pets, no extra invented people, no modern clothing, no distorted faces, no sunglasses, no sad or depressed expressions.
+    **NEGATIVE CONSTRAINTS (STRICT):** **No picture frames, no painted borders**, no missing people, no missing pets, no extra invented people, no modern clothing, no distorted faces, no sunglasses, no sad expressions, no monochromatic images.
     `;
 };
