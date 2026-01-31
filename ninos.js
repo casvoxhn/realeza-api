@@ -1,5 +1,5 @@
 // ARCHIVO: ninos.js
-// Lógica V50.4: Estética Infantil pero INCLUSIVA (Padres y Mascotas permitidos)
+// Lógica V50.5: Inclusión Total + MEJORA DEL BARROCO (Menos triste, más rico, plano medio)
 
 module.exports = function(style, numSubjects, isGroup) {
     
@@ -12,11 +12,11 @@ module.exports = function(style, numSubjects, isGroup) {
         - If there are siblings: Include all of them.
         - **DO NOT REMOVE ANYONE.**
     
-    2.  **THEME HIERARCHY:** The aesthetic is centered around the CHILD's innocence/magic, but adults must fit perfectly into that world (e.g., if the child is a Fairy, the mother is a Fairy Queen; if the child is a Prince, the father is a King).
+    2.  **THEME HIERARCHY:** The aesthetic is centered around the CHILD's innocence/magic, but adults must fit perfectly into that world.
     
     3.  **NO HALLUCINATIONS:** Do not *invent* new people or pets that are not in the photo. Only paint who is there.
     
-    4.  **AGE APPROPRIATE:** Keep children looking like children (innocent faces, correct proportions). Keep adults looking like adults.
+    4.  **AGE APPROPRIATE:** Keep children looking like children. Keep adults looking like adults.
     `;
 
     let promptStyle = "";
@@ -29,11 +29,11 @@ module.exports = function(style, numSubjects, isGroup) {
         **STYLE:** High Renaissance Oil Portrait (Raphael / Botticelli). Soft, ethereal, magical.
         **SETTING:** A magical, dappled forest clearing or an ancient blooming garden.
         **ATTIRE:** - Children: Silk velvets in earthy tones (moss green, soft blue), flower crowns.
-        - Adults (if present): Elegant, flowing robes or noble tunics that match the forest theme (Guardian of the Forest style).
+        - Adults (if present): Elegant, flowing robes or noble tunics that match the forest theme.
         **LIGHTING:** Soft, golden "Golden Hour" light filtering through trees.
         **MOOD:** Protective, tender, magical.
         `;
-        framingOverride = "**FRAMING:** Group composition (if multiple) or Portrait. Focus on the connection between subjects.";
+        framingOverride = "**FRAMING:** Group composition or Portrait. Focus on the connection between subjects.";
     } 
     
     // --- ESTILO 2: PRÍNCIPE / PRINCESA (NOBLEZA REAL) ---
@@ -44,24 +44,25 @@ module.exports = function(style, numSubjects, isGroup) {
         **SETTING:** A royal palace terrace or luxurious nursery with a castle view.
         **ATTIRE:** - Children: "Junior" Royal attire. Fine brocades, lace collars, miniature sashes.
         - Adults (if present): King/Queen attire. Regalia, velvet capes, dignified stance.
-        **PROPS:** (Optional) Heirloom toys for kids.
         **NO HEAVY CROWNS ON KIDS:** Use simple circlets for children. Adults can wear full crowns.
         **LIGHTING:** Bright, flattering daylight highlighting luxury fabrics.
         `;
         framingOverride = "**FRAMING:** Full Body or Three-Quarter Shot to show the elegant outfits.";
     } 
     
-    // --- ESTILO 3: BARROCO CLÁSICO (ESTUDIO INTENSO) ---
+    // --- ESTILO 3: BARROCO CLÁSICO (MEJORADO V50.5) ---
+    // Corrección: Menos triste, más rico, iluminación cálida, mejores poses, plano medio.
     else if (style === 'barroco') {
         promptStyle = `
         ${baseInstructions}
-        **STYLE:** Dutch Golden Age / Baroque (Rembrandt style). Intense, moody, soulful.
-        **SETTING:** A dark, shadowy painter's studio background.
-        **ATTIRE:** Dark, rich, textured fabrics. Black velvet, deep burgundy, intricate lace collars.
-        **MOOD:** Serious, contemplative, deep family bond.
-        **LIGHTING:** **Extreme Chiaroscuro.** Strong directional light on faces against a dark background.
+        **STYLE:** Flemish Baroque (Rubens / Van Dyck influence). Rich, opulent, dramatic but **full of life and nobility, NOT sad**.
+        **SETTING:** An opulent, dimly lit study or library with heavy draped curtains and dark antique oak paneling.
+        **ATTIRE:** Deep jewel tones dominate. Sapphire blues, emerald greens, rich burgundies, and heavy gold brocades. Silks that shimmer and intricate lace collars.
+        **MOOD & POSES:** Noble, thoughtful, and impressive. Subjects have dynamic, grounded poses: a hand on a hip, holding a leather-bound book, gesturing towards a globe. If a group, they are interacting warmly but formally as a powerful dynasty.
+        **LIGHTING:** **Dramatic Warm Chiaroscuro.** A strong, warm light source (like a large window or grand fireplace) makes the fabrics sparkle and skin glow healthily against the deep background shadows.
         `;
-        framingOverride = "**FRAMING:** Medium Close-Up. Focus on the expressions and eyes of all subjects.";
+        // CAMBIO CLAVE DE ENCUADRE:
+        framingOverride = "**FRAMING:** Medium Shot (Waist Up). Allow space for dynamic poses and show the richness of the attire and environment.";
     }
 
     // --- ESTRUCTURA FINAL DEL PROMPT ---
@@ -77,6 +78,6 @@ module.exports = function(style, numSubjects, isGroup) {
     **CRITICAL TECHNICAL SPECS:**
     **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
     ${framingOverride}
-    **NEGATIVE CONSTRAINTS:** No missing people, no missing pets, no extra invented people, no modern clothing, no distorted faces, no sunglasses.
+    **NEGATIVE CONSTRAINTS:** No missing people, no missing pets, no extra invented people, no modern clothing, no distorted faces, no sunglasses, no sad or depressed expressions.
     `;
 };
