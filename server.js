@@ -1,5 +1,5 @@
 // ARCHIVO: server.js
-// V76 - Soporte Total (Mascotas, Familia, Niños, Parejas, RETRATOS)
+// V77 - ECOSISTEMA COMPLETO (Mascotas, Familia, Niños, Parejas, Retratos, MUJER)
 
 const express = require('express');
 const cors = require('cors');
@@ -12,7 +12,8 @@ const getMascotasPrompt = require('./mascotas');
 const getFamiliaPrompt = require('./familia');
 const getNinosPrompt = require('./ninos');
 const getParejasPrompt = require('./parejas');
-const getRetratosPrompt = require('./retratos'); // <--- NUEVO IMPORT
+const getRetratosPrompt = require('./retratos');
+const getMujerPrompt = require('./mujer'); // <--- NUEVO IMPORT: MUJER
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -41,8 +42,9 @@ app.post('/generate', async (req, res) => {
         // Default a mascota si no se especifica
         const currentCategory = category || 'mascota'; 
 
-        console.log(`👤 V76 (PORTRAITS ADDED). Cat: ${currentCategory} | Estilo: ${style}`);
+        console.log(`👑 V77 (WOMAN MODULE ACTIVE). Cat: ${currentCategory} | Estilo: ${style}`);
 
+        // 1. Subir imágenes originales
         const originalUrls = await Promise.all(images.map(async (img, i) => {
             const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
             return await uploadBufferToSupabase(buffer, `ref_${i}`);
@@ -54,8 +56,14 @@ app.post('/generate', async (req, res) => {
         const baseInstruction = `You are a Master Painter creating a museum-quality oil painting. Analyze the ${numSubjects} input image(s). Create a cohesive composition applying the rules below. Apply a rich oil painting texture.`;
 
         // === EL CEREBRO SELECTOR ===
-        if (currentCategory === 'retratos') {
-            // Lógica RETRATOS (Auto-retratos)
+        
+        if (currentCategory === 'mujer') {
+            // Lógica MUJER (Nueva)
+            const mujerRules = getMujerPrompt(style, numSubjects, isGroup);
+            masterPrompt = `${baseInstruction}\n${mujerRules}`;
+        }
+        else if (currentCategory === 'retratos') {
+            // Lógica RETRATOS (Hombres/General)
             const retratosRules = getRetratosPrompt(style, numSubjects, isGroup);
             masterPrompt = `${baseInstruction}\n${retratosRules}`;
         }
@@ -89,9 +97,9 @@ app.post('/generate', async (req, res) => {
 
         const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
         const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, `MASTER_V76_${currentCategory.toUpperCase()}`);
+        const finalUrl = await uploadBufferToSupabase(imageBuffer, `MASTER_V77_${currentCategory.toUpperCase()}`);
         
-        console.log(`✅ Resultado V76 OK (${currentCategory})`);
+        console.log(`✅ Resultado V77 OK (${currentCategory})`);
         res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
 
     } catch (error) {
@@ -101,5 +109,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V76 (Retratos + Parejas + Niños + Familia + Mascotas) listo en ${PORT}`);
+    console.log(`🚀 Servidor V77 (Mujer + Retratos + Parejas + Niños + Familia + Mascotas) LISTO en puerto ${PORT}`);
 });
