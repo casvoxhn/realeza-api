@@ -1,7 +1,8 @@
 // ARCHIVO: mujer.js
-// V110: STRICT SUBJECT COUNT ENFORCEMENT + GROUP COMPOSITION LOCK
-// Objetivo: respetar EXACTAMENTE la cantidad de sujetos, sin omitir, sin fusionar, sin reemplazar.
-// Nota brutal: si aun falla, es tu pipeline (face-id/adapters/weights). Mira checklist al final.
+// V111: NANO BANANA PRO - MULTI-SUBJECT FIX
+// - Conteo estricto + anclas espaciales + NO “protagonista” en grupos (evita que se coma sujetos)
+// - Identidad y cabello lock por persona
+// - Variedad controlada dentro de cada arquetipo
 
 module.exports = function(style, numSubjects, isGroup) {
 
@@ -22,89 +23,102 @@ module.exports = function(style, numSubjects, isGroup) {
     return weightedOptions[weightedOptions.length - 1].value;
   }
 
+  const group = numSubjects > 1 || isGroup === true;
+
   // -------------------------------
-  // 🔒 BLOQUE DE CABELLO
+  // 🔒 IDENTIDAD + CABELLO (POR PERSONA)
   // -------------------------------
-  const hairLock = `
-HAIR LOCK — CRITICAL:
+  const identityHairLock = `
+IDENTITY LOCK — CRITICAL FOR EACH PERSON:
+Preserve the exact facial identity for EACH human subject from the reference.
+Do not “beautify” by changing facial structure, age, or ethnicity.
+Eyes must be sharp and lifelike.
+
+HAIR LOCK — CRITICAL FOR EACH PERSON:
 Preserve the SAME haircut, length, hairline and natural texture for each person from the reference.
-Do NOT change hairstyle category (straight/wavy/curly) per person.
-Do NOT shorten or lengthen hair. Do NOT add bangs if absent.
-Allowed only: subtle polish, minimal partial pinning, minimal wind, period accessories placed over existing hair.
+Do NOT change straight/wavy/curly type per person.
+Do NOT shorten or lengthen.
+Do NOT add bangs if absent.
+Allowed only: subtle polish, minimal flyaways, minimal wind, period accessories placed on top.
 `;
 
   // -------------------------------
-  // 🎯 MOTOR ENCUADRES PONDERADOS (EN GRUPO: SIEMPRE ENCUADRE QUE QUEPA TODO)
+  // ✅ CONTEO ESTRICTO (NBP necesita lenguaje simple y directo)
   // -------------------------------
-  function cropByStyle(styleName, subjectsCount) {
-    const group = subjectsCount > 1;
+  const strictCount = `
+STRICT SUBJECT COUNT — NON-NEGOTIABLE:
+Depict EXACTLY ${numSubjects} human subject(s) from the reference photo.
+Do NOT depict fewer. Do NOT depict more.
+If the reference includes pets, include ALL pets as well.
+
+DO NOT OMIT / DO NOT REPLACE:
+- Do not omit any subject.
+- Do not duplicate one subject to replace another.
+- Do not merge faces.
+- Do not turn someone into a blurred background silhouette.
+`;
+
+  // -------------------------------
+  // 🧷 ANCLAS ESPACIALES (CLAVE PARA NANO BANANA PRO)
+  // -------------------------------
+  // Esto reduce el “colapso” a un solo sujeto.
+  const spatialAnchors = `
+SPATIAL ANCHORS — MUST FOLLOW:
+Keep the same relative left-to-right ordering as the reference photo.
+Keep all heads fully inside the frame.
+Ensure each human face is clearly visible and separated (no overlap hiding faces).
+Minimum visibility rule: each human head must be at least ~12% of the image height (no tiny background people).
+If needed, zoom out or switch to a wider crop to fit everyone — never remove anyone.
+`;
+
+  // -------------------------------
+  // 🎯 ENCUADRES POR ESTILO (EN GRUPO: SIEMPRE MÁS ANCHO)
+  // -------------------------------
+  function cropByStyle(styleName) {
+    if (group) {
+      // En grupo, prioriza inclusión. NBP tiende a fallar en close-up de grupos.
+      return weightedPick([
+        { value: "three-quarter length group portrait (fit everyone clearly)", w: 70 },
+        { value: "waist-up group portrait (fit everyone clearly)", w: 30 }
+      ]);
+    }
 
     if (styleName === "musa") {
-      return group
-        ? weightedPick([
-            { value: "three-quarter length group portrait (fit everyone clearly)", w: 60 },
-            { value: "waist-up group portrait (fit everyone clearly)", w: 40 }
-          ])
-        : weightedPick([
-            { value: "intimate head-and-shoulders portrait", w: 55 },
-            { value: "waist-up portrait", w: 35 },
-            { value: "three-quarter length portrait", w: 10 }
-          ]);
+      return weightedPick([
+        { value: "intimate head-and-shoulders portrait", w: 55 },
+        { value: "waist-up portrait", w: 35 },
+        { value: "three-quarter length portrait", w: 10 }
+      ]);
     }
-
     if (styleName === "realeza") {
-      return group
-        ? weightedPick([
-            { value: "three-quarter length group portrait with regalia (all visible)", w: 75 },
-            { value: "full-figure group portrait with palace scale (only if all fit cleanly)", w: 25 }
-          ])
-        : weightedPick([
-            { value: "three-quarter length grand portrait", w: 45 },
-            { value: "full-figure grand portrait", w: 25 },
-            { value: "head-and-shoulders royal portrait", w: 20 },
-            { value: "waist-up couture portrait", w: 10 }
-          ]);
+      return weightedPick([
+        { value: "three-quarter length grand portrait", w: 55 },
+        { value: "head-and-shoulders royal portrait", w: 25 },
+        { value: "full-figure grand portrait", w: 20 }
+      ]);
     }
-
     if (styleName === "empoderada") {
-      return group
-        ? weightedPick([
-            { value: "three-quarter length group portrait (editorial power, all visible)", w: 65 },
-            { value: "waist-up group portrait (editorial power, all visible)", w: 35 }
-          ])
-        : weightedPick([
-            { value: "waist-up power-fashion portrait", w: 55 },
-            { value: "head-and-shoulders editorial portrait", w: 25 },
-            { value: "three-quarter length fashion portrait", w: 20 }
-          ]);
+      return weightedPick([
+        { value: "waist-up power-fashion portrait", w: 60 },
+        { value: "head-and-shoulders editorial portrait", w: 25 },
+        { value: "three-quarter length fashion portrait", w: 15 }
+      ]);
     }
-
-    return group ? "three-quarter length group portrait (fit everyone)" : "waist-up portrait";
+    return "waist-up portrait";
   }
 
   function cameraByStyle(styleName) {
-    if (styleName === "musa") {
-      return weightedPick([
-        { value: "eye-level classical portrait angle (no distortion)", w: 65 },
-        { value: "soft high-angle (subtle, flattering)", w: 30 },
-        { value: "three-quarter camera placement (minimal perspective)", w: 5 }
-      ]);
-    }
+    // Evitar distorsión. Nada de ultra-wide.
     if (styleName === "realeza") {
       return weightedPick([
-        { value: "eye-level formal grand portrait angle", w: 55 },
-        { value: "slightly low-angle heroic framing (subtle authority)", w: 40 },
-        { value: "three-quarter formal placement", w: 5 }
+        { value: "eye-level formal grand portrait angle (no distortion)", w: 55 },
+        { value: "slightly low-angle heroic framing (subtle authority)", w: 45 }
       ]);
     }
-    if (styleName === "empoderada") {
-      return weightedPick([
-        { value: "eye-level editorial angle (direct power)", w: 60 },
-        { value: "slightly low-angle (dominant authority)", w: 35 },
-        { value: "three-quarter placement", w: 5 }
-      ]);
-    }
-    return "eye-level classical portrait angle (no distortion)";
+    return weightedPick([
+      { value: "eye-level portrait angle (no distortion)", w: 75 },
+      { value: "subtle three-quarter camera placement (minimal perspective)", w: 25 }
+    ]);
   }
 
   function lightingByStyle(styleName) {
@@ -117,8 +131,8 @@ Allowed only: subtle polish, minimal partial pinning, minimal wind, period acces
     }
     if (styleName === "realeza") {
       return weightedPick([
-        { value: "palace skylight illumination (luxurious, crisp)", w: 40 },
-        { value: "ceremonial candlelit glow (heirloom)", w: 30 },
+        { value: "palace skylight illumination (luxurious, crisp)", w: 45 },
+        { value: "ceremonial candlelit glow (heirloom)", w: 25 },
         { value: "high-key daylight through tall palace windows", w: 30 }
       ]);
     }
@@ -133,15 +147,20 @@ Allowed only: subtle polish, minimal partial pinning, minimal wind, period acces
   }
 
   // -------------------------------
-  // VARIACIÓN SUAVE
+  // VARIACIÓN CONTROLADA (NO rompe arquetipo)
   // -------------------------------
-  const pose = randomPick([
-    "upright aristocratic posture, composed hands",
-    "three-quarter turn with lifted chin",
-    "seated formal pose, elegant stillness",
-    "standing contrapposto, refined shoulders",
-    "balanced stance with calm authority"
-  ]);
+  const pose = group
+    ? randomPick([
+        "balanced formal group stance, elegant stillness",
+        "classic triangular arrangement posture, calm authority",
+        "seated + standing mix for hierarchy while keeping all faces visible"
+      ])
+    : randomPick([
+        "upright aristocratic posture, composed hands",
+        "three-quarter turn with lifted chin",
+        "seated formal pose, elegant stillness",
+        "standing contrapposto, refined shoulders"
+      ]);
 
   const microExpression = randomPick([
     "calm authority",
@@ -151,7 +170,7 @@ Allowed only: subtle polish, minimal partial pinning, minimal wind, period acces
   ]);
 
   // -------------------------------
-  // ESTILO: paletas/siluetas/escenas (coherentes)
+  // ESTILOS (variedad dentro del arquetipo)
   // -------------------------------
   const musaPalettes = [
     "ivory, blush pink and antique gold",
@@ -160,7 +179,6 @@ Allowed only: subtle polish, minimal partial pinning, minimal wind, period acces
     "sky blue with pearl highlights",
     "pale gold with soft cream tones"
   ];
-
   const royalPalettes = [
     "crimson and gold leaf",
     "sapphire blue and ivory",
@@ -168,7 +186,6 @@ Allowed only: subtle polish, minimal partial pinning, minimal wind, period acces
     "emerald and antique gold",
     "royal purple with silver filigree"
   ];
-
   const empoweredPalettes = [
     "obsidian black and champagne",
     "deep oxblood red and gold",
@@ -183,14 +200,12 @@ Allowed only: subtle polish, minimal partial pinning, minimal wind, period acces
     "layered chiffon mantle dress",
     "high-neck romantic robe with trailing sleeves"
   ];
-
   const royalSilhouettes = [
     "corseted court gown with cathedral skirt",
     "ball gown with embroidered train",
     "brocade gown with gold thread and royal cape",
     "ermine-trimmed ceremonial cloak over structured bodice"
   ];
-
   const empoweredSilhouettes = [
     "structured velvet power dress",
     "sculptural couture gown with sharp lines",
@@ -204,14 +219,12 @@ Allowed only: subtle polish, minimal partial pinning, minimal wind, period acces
     "moonlit orchard with gentle haze",
     "rose terrace at sunset"
   ];
-
   const royalScenes = [
     "coronation throne room with heraldic details",
     "palace ballroom with chandeliers",
     "royal gallery corridor lined with portraits",
     "private audience chamber with drapery and columns"
   ];
-
   const empoweredScenes = [
     "dramatic velvet studio set",
     "grand staircase interior with editorial lighting",
@@ -225,23 +238,11 @@ Allowed only: subtle polish, minimal partial pinning, minimal wind, period acces
     "tiara (mandatory), pearl set, embroidered cape clasp, signet ring"
   ]);
 
-  const musaFabrics = randomPick([
-    "silk and chiffon layers",
-    "gauzy organza",
-    "soft satin with gentle sheen"
-  ]);
-
-  const royalFabrics = randomPick([
-    "heavy velvet and satin",
-    "brocade with gold thread embroidery",
-    "luxurious taffeta with jewel accents"
-  ]);
-
-  const empoweredFabrics = randomPick([
-    "structured velvet tailoring",
-    "matte silk with sharp couture lines",
-    "high-sheen satin with sculptural seams"
-  ]);
+  const fabricsByStyle = {
+    musa: randomPick(["silk and chiffon layers", "gauzy organza", "soft satin with gentle sheen"]),
+    realeza: randomPick(["heavy velvet and satin", "brocade with gold thread embroidery", "luxurious taffeta with jewel accents"]),
+    empoderada: randomPick(["structured velvet tailoring", "matte silk with sharp couture lines", "high-sheen satin with sculptural seams"])
+  };
 
   let palette, silhouette, scene, fabrics, styleArchetype, styleCore;
 
@@ -249,118 +250,75 @@ Allowed only: subtle polish, minimal partial pinning, minimal wind, period acces
     palette = randomPick(musaPalettes);
     silhouette = randomPick(musaSilhouettes);
     scene = randomPick(musaScenes);
-    fabrics = musaFabrics;
+    fabrics = fabricsByStyle.musa;
     styleArchetype = "Ethereal, poetic, romantic, mythic muse.";
-    styleCore = `
-STYLE CORE (MUSA):
-Dreamy atmosphere, soft romance, luminous sfumato edges.
-Never harsh power styling. No heavy royal regalia.
-`;
+    styleCore = `STYLE CORE (MUSA): dreamy atmosphere, soft romance, luminous sfumato edges. Never harsh power styling.`;
   } else if (style === "realeza") {
     palette = randomPick(royalPalettes);
     silhouette = randomPick(royalSilhouettes);
     scene = randomPick(royalScenes);
-    fabrics = royalFabrics;
+    fabrics = fabricsByStyle.realeza;
     styleArchetype = "Imperial, dynastic, commanding, unmistakably royal.";
-    styleCore = `
-STYLE CORE (REALEZA):
-Grand manner royal portrait. Regalia visible. Couture construction.
-A royal headpiece is mandatory. Jewelry must feel heirloom and expensive.
-`;
+    styleCore = `STYLE CORE (REALEZA): grand manner portrait. Regalia visible. Couture construction. Royal headpiece mandatory.`;
   } else if (style === "empoderada") {
     palette = randomPick(empoweredPalettes);
     silhouette = randomPick(empoweredSilhouettes);
     scene = randomPick(empoweredScenes);
-    fabrics = empoweredFabrics;
+    fabrics = fabricsByStyle.empoderada;
     styleArchetype = "Dominant, powerful, fashion-forward, intimidating in elegance.";
-    styleCore = `
-STYLE CORE (EMPODERADA):
-Editorial power, sharp silhouette, confident posture.
-No princess vibe. No soft romantic mood.
-`;
+    styleCore = `STYLE CORE (EMPODERADA): editorial power, sharp silhouette, confident posture. No princess vibe.`;
   } else {
+    // fallback a realeza
     palette = randomPick(royalPalettes);
     silhouette = randomPick(royalSilhouettes);
     scene = randomPick(royalScenes);
-    fabrics = royalFabrics;
+    fabrics = fabricsByStyle.realeza;
     styleArchetype = "Imperial, dynastic, commanding, unmistakably royal.";
-    styleCore = `
-STYLE CORE:
-Grand manner oil portrait, noble presence, premium heirloom feel.
-`;
+    styleCore = `STYLE CORE: grand manner oil portrait, noble presence, premium heirloom feel.`;
   }
 
   // -------------------------------
   // ENCUADRE/CÁMARA/LUZ
   // -------------------------------
-  const cropPicked = cropByStyle(style, numSubjects);
+  const cropPicked = cropByStyle(style);
   const cameraPicked = cameraByStyle(style);
   const lightingPicked = lightingByStyle(style);
 
   // -------------------------------
-  // 🔥 CONTEO ESTRICTO + INCLUSION LOCK (MÁS DURO QUE ANTES)
+  // 🔥 CLAVE: EN GRUPO, NUNCA “PROTAGONISTA”
   // -------------------------------
-  const strictCountBlock = `
-STRICT SUBJECT COUNT — NON-NEGOTIABLE:
-You must depict EXACTLY ${numSubjects} human subject(s) from the reference.
-Do not depict fewer. Do not depict more.
-If there is any pet in the reference, it must also be included (do not ignore pets).
-If subjects do not fit: zoom out, widen framing (without distortion), or adjust spacing — NEVER delete someone.
-
-ANTI-REPLACEMENT / ANTI-FUSION:
-- Do NOT duplicate one person to replace another.
-- Do NOT merge faces.
-- Do NOT turn a subject into a background silhouette.
-- Every human must have a distinct, clearly visible, recognizable face.
-`;
-
-  const fidelityAll = `
-FIDELITY FOR ALL SUBJECTS:
-Maintain identity fidelity for EACH human subject — preserve each person’s unique facial structure and age.
-Do not “beautify” by changing facial structure.
-Pets must be recognizable with correct markings and anatomy.
-`;
-
-  // -------------------------------
-  // COMPOSICIÓN GRUPO (OBLIGATORIA SI numSubjects>1)
-  // -------------------------------
-  const groupComposition = `
-GROUP PORTRAIT COMPOSITION (MANDATORY):
-Use a classical triangular / pyramidal grouping.
-All heads fully inside the frame.
-No overlapping faces that hide someone.
-Keep subject spacing so every face is readable.
-If needed, step back: use a wider crop (three-quarter length) rather than dropping a subject.
+  const hierarchyBlock = group
+    ? `
+GROUP HIERARCHY RULE:
+All subjects are equally important for inclusion. Do NOT sacrifice anyone for aesthetics.
+You may give a subtle emphasis to the main woman ONLY if it does not reduce visibility of others.
+`
+    : `
+SOLO HIERARCHY RULE:
+Make her feel like the most important person in the world, without changing her identity.
 `;
 
   // -------------------------------
   // PROMPT FINAL
   // -------------------------------
   return `
-You are a world-class classical portrait painter producing a **museum-grade oil painting on linen canvas**.
+You are a world-class classical portrait painter producing a museum-grade oil painting on linen canvas.
 
 ASPECT RATIO: vertical 4:5.
 
-PRIMARY GOAL:
-All subjects must be instantly recognizable and the artwork must feel collectible.
+${identityHairLock}
 
-IDENTITY LOCK — CRITICAL:
-Preserve facial proportions, bone structure, age and natural skin tone from the reference.
-Beautify only through painterly lighting and refined texture — never reshaping anatomy.
-Avoid wide-angle distortion; keep portrait-like perspective.
+${group ? strictCount : ""}
 
-${hairLock}
+${group ? spatialAnchors : ""}
 
-${numSubjects > 1 ? strictCountBlock : ""}
+${hierarchyBlock}
 
-${numSubjects > 1 ? fidelityAll : ""}
-
-STYLE ARCHETYPE — DO NOT BREAK:
+STYLE ARCHETYPE (DO NOT BREAK):
 ${styleArchetype}
-
 ${styleCore}
 
-WARDROBE (VARIATION WITHIN STYLE):
+WARDROBE (WITHIN STYLE):
 Silhouette: ${silhouette}.
 Fabrics: ${fabrics}.
 Color story: ${palette}.
@@ -375,27 +333,17 @@ Camera: ${cameraPicked}.
 Lighting: ${lightingPicked}.
 Pose: ${pose}.
 Expression: ${microExpression}.
-${numSubjects > 1 ? groupComposition : ""}
 
-CONTROLLED VARIATION RULE:
+CONTROLLED VARIATION:
 Each repeat changes wardrobe + palette + scene inside the same style archetype,
-but must NOT change identity, haircut, or subject count.
-Never reuse the exact same (palette + silhouette + scene) combo across repeats.
-
-PAINTING EXECUTION:
-Oil on canvas, layered glazes, subtle impasto highlights.
-Hands anatomically correct and elegant.
-No costume look.
+but must not change identity, hair, or subject count.
 
 NEGATIVE RULES:
-No identity change.
-No haircut change.
-No missing subjects.
-No merging subjects.
-No replacing subjects.
-No extra people not in the reference.
-No cartoon, anime, CGI, 3D.
-No plastic skin, no over-smoothing.
-No text, logos, watermarks, frames, UI.
+No missing subjects. No extra subjects.
+No merging faces. No replacing subjects.
+No wide-angle distortion.
+No cartoon/anime/CGI/3D.
+No plastic skin.
+No text/logos/watermarks/frames/UI.
 `;
 };
