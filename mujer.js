@@ -1,133 +1,177 @@
 // ARCHIVO: mujer.js
-// V106: MASTER SELLER ENGINE + PELO BLINDADO (Identidad Total)
+// V300 — IDENTIDAD BIOMÉTRICA + BLOQUEO DE CABELLO + MULTI-SUJETO + VARIACIÓN CONTROLADA + RETRATO COMERCIAL
 
 module.exports = function(style, numSubjects, isGroup) {
 
-    // --- 0. MOTOR DE ALEATORIEDAD (Variedad Infinita) ---
-    const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  // ===============================
+  // 1) DEFINICIÓN DE ESTILOS — CLAROS, NO AMBIGUOS
+  // ===============================
 
-    // --- 1. CONFIGURACIÓN DINÁMICA DE ESTILOS ---
-    let styleDetails = "";
+  let stylePrompt = "";
 
-    if (style === 'musa') {
-        const scenes = [
-            "a mysterious Ancient Forest with dappled sunlight",
-            "a serene Crystal Lake at twilight with reflections",
-            "a crumbling Marble Balcony overrun with ivy and roses",
-            "a Secret Garden filled with magical mist and blooming hydrangeas",
-            "a Golden Wheat Field under a dramatic soft sunset"
-        ];
-        const fabrics = ["Sheer Chiffon", "Flowing Silk", "Antique Lace", "Soft Velvet"];
-        const colors = ["Dusty Rose & Gold", "Deep Emerald & Silver", "Ethereal White & Pearl", "Lavender & Cream", "Sapphire Blue"];
-        
-        styleDetails = `
-        **ARTISTIC VISION:** **The Mythical Muse (Pre-Raphaelite Masterpiece).**
-        **INSPIRATION:** John William Waterhouse / Dante Gabriel Rossetti.
-        **SCENE:** ${pick(scenes)}.
-        **ATTIRE:** A gown made of ${pick(fabrics)} in ${pick(colors)}. Adorned with delicate vintage jewelry.
-        **HEAD:** You may add a flower crown gently, but **DO NOT HIDE THE HAIR**.
-        **MOOD:** Dreamy, poetic, connected to nature.
-        **LIGHTING:** **"Sfumato" Technique.** Soft edges, magical glowing skin, flattering soft light.
-        `;
-    } 
-    else if (style === 'realeza') {
-        const scenes = [
-            "a Grand Hall of Mirrors with crystal chandeliers",
-            "a Royal Terrace overlooking a vast empire",
-            "an Opulent Palace Throne Room with marble columns",
-            "a Luxurious Private Royal Garden with statues"
-        ];
-        const colors = ["Royal Blue & Diamonds", "Crimson Velvet & Gold", "Champagne Silk & Rubies", "Deep Purple & Amethyst", "Emerald Green & Gold Thread"];
-        
-        styleDetails = `
-        **ARTISTIC VISION:** **The Absolute Monarch (Grand Manner Portrait).**
-        **INSPIRATION:** Franz Xaver Winterhalter / Vigée Le Brun.
-        **SCENE:** ${pick(scenes)}.
-        **ATTIRE:** A massive, architectural Ballgown in ${pick(colors)}. **MANDATORY:** A Sparkling Tiara and heavy Statement Necklace.
-        **HEAD:** The Tiara must sit on her **ACTUAL HAIRSTYLE**.
-        **MOOD:** Unapologetic wealth, maximum status, elegance.
-        **LIGHTING:** **"Rembrandt" or High-Key Luxury.** Crisp, bright, making the jewelry and eyes sparkle intensely.
-        `;
-    } 
-    else if (style === 'empoderada') {
-        const scenes = [
-            "a Luxurious Renaissance Library with globes and maps",
-            "a Grand Stone Staircase in a bright palace",
-            "a Venetian Balcony overlooking the canal",
-            "an Opulent Painting Studio with art in the background"
-        ];
-        const outfits = [
-            "a Structured Gold Brocade Gown with a high Medici collar",
-            "a Deep Red Velvet dress with pearls and gold embroidery",
-            "a Rich Navy Blue Silk gown with a dramatic cape",
-            "a Renaissance gown with puffed sleeves and intricate corset work"
-        ];
-        const vibes = ["Chin up, commanding gaze", "Hand on hip, owning the space", "Looking down with a confident smile", "Standing tall with regal posture"];
+  if (style === "musa") {
+    stylePrompt = `
+ARTISTIC ROLE: "The Ethereal Muse"
+STYLE REFERENCE: Pre-Raphaelite oil painting, poetic realism, museum portrait.
+MOOD: luminous, romantic, noble softness.
+ATTIRE: flowing silk robes, botanical accents, subtle gold embroidery.
+COLOR PALETTE: emerald, ivory, rose, champagne.
+LIGHTING: diffused glowing daylight, halo glow around faces.
+BACKGROUND: misty garden, twilight lake, painterly foliage.
+`;
+  } else if (style === "realeza") {
+    stylePrompt = `
+ARTISTIC ROLE: "The Absolute Queen"
+STYLE REFERENCE: Winterhalter / Grand Manner portrait.
+MOOD: dominant, majestic, imperial.
+ATTIRE: heavy royal gown, velvet + satin, embroidered bodice; jeweled tiara REQUIRED.
+COLOR PALETTE: sapphire, ruby, gold, ivory.
+LIGHTING: polished palace daylight, sculpting shadows, luxurious clarity.
+BACKGROUND: palace interior, marble columns, velvet drapery, opulent decor.
+`;
+  } else if (style === "empoderada") {
+    stylePrompt = `
+ARTISTIC ROLE: "The Renaissance Empress"
+STYLE REFERENCE: high-status Renaissance portrait with Sargent/Boldini energy (movement + confidence).
+MOOD: radiant confidence, noble ego, commanding elegance (NOT gloomy).
+ATTIRE: strictly Renaissance noblewear — corseted silk gowns, brocade sleeves, pearls, embroidered collars.
+NO modern fashion allowed.
+COLOR PALETTE: crimson, ivory, gold, emerald.
+LIGHTING: radiant high-key daylight, heroic glow (no dark chiaroscuro).
+BACKGROUND: architectural courtyard, open loggia, painted skies, warm prestige.
+`;
+  } else {
+    // fallback seguro si llega un style no contemplado
+    stylePrompt = `
+ARTISTIC ROLE: "Museum Portrait"
+STYLE REFERENCE: classical oil painting portrait, premium realism.
+MOOD: elegant, bright, refined.
+ATTIRE: tasteful historical luxury (no modern streetwear).
+LIGHTING: flattering daylight.
+BACKGROUND: tasteful painterly interior.
+`;
+  }
 
-        styleDetails = `
-        **ARTISTIC VISION:** **The Renaissance Powerhouse (The Matriarch).**
-        **INSPIRATION:** Bronzino / Titian / High Renaissance.
-        **SCENE:** ${pick(scenes)}.
-        **ATTIRE:** ${pick(outfits)}. **NO MODERN CLOTHES.** Everything must look historical, expensive, and structured.
-        **MOOD:** **EGO & POWER.** ${pick(vibes)}. She is not sad; she is powerful and elegant.
-        **LIGHTING:** **Dramatic but Flattering.** Sculpted light that highlights the face structure and the richness of the fabric.
-        `;
-    }
+  // ===============================
+  // 2) COMPOSICIÓN Y JERARQUÍA
+  // ===============================
 
-    // --- 2. ENCUADRE INTELIGENTE (INCLUSIVO) ---
-    let framingInstruction = "";
-    
-    if (numSubjects > 1) {
-        framingInstruction = `
-        **COMPOSITION:** **DYNASTY GROUP PORTRAIT.**
-        - **INCLUSION MANDATE:** You MUST paint ALL ${numSubjects} subjects found in the input. 
-          - If there are **MEN**: Paint them as Kings/Dukes/Princes matching the woman's style.
-          - If there are **PETS**: Paint them as Royal Pets (high detail fur).
-        - **FRAMING:** Medium Shot (Waist Up) or Three-Quarter. Zoom out to fit everyone comfortably.
-        - **HIERARCHY:** The Main Woman is the **CENTERPIECE**. She gets the best light. Everyone else revolves around her.
-        `;
-    } else {
-        framingInstruction = `
-        **COMPOSITION:** **THE BEST SELLER PORTRAIT.**
-        - **Intelligent Framing:** Analyze the input.
-          - If the face/hair is the focus -> **Close-Up Portrait** (Focus on eyes/jewelry).
-          - If the pose is strong -> **Medium Shot** (Focus on the dress/posture).
-        - **Goal:** Make her fall in love with her own image. Flattering angles only.
-        `;
-    }
+  let framing = "";
 
-    // --- 3. PROMPT MAESTRO (EL CEREBRO) ---
-    return `
-    You are a Master Portrait Painter creating a **MUSEUM-QUALITY OIL PAINTING**.
+  if (numSubjects > 1) {
+    framing = `
+FRAMING MODE: GROUP PORTRAIT.
 
-    **🔴 TECHNICAL REQUIREMENT:**
-    **ASPECT RATIO:** **VERTICAL 4:5**. DO NOT MAKE IT SQUARE.
+INCLUSION (HARD RULE):
+- Depict ALL ${numSubjects} people and pets present in the input.
+- Do not crop heads, do not hide anyone, do not blur anyone.
+- Every individual must have a distinct, fully readable face.
 
-    **STEP 1: THE SUBJECTS (IDENTITY & HAIR LOCK)**
-    - Input: **${numSubjects} subject(s)**. **PAINT EVERY SINGLE ONE.**
-    - **FACIAL FIDELITY:** Preserve the **EXACT facial features** (nose, eyes, mouth, jawline).
-    - **HAIR FIDELITY (CRITICAL):** **DO NOT CHANGE THE HAIRSTYLE.** Keep the original **Length, Texture, and Cut** of the hair.
-      - If she has short hair, KEEP IT SHORT.
-      - If she has curly hair, KEEP IT CURLY.
-      - Do NOT put a generic wig on her. Integrate the accessories (Tiara/Flowers) onto her **REAL HAIR**.
-    - **BEAUTIFICATION:** Improve skin texture (Oil Glazing) and lighting, but do NOT morph the person.
-    - **MEN & PETS:** Stylize them historically but keep their identity/breed recognizable.
+COMPOSITION:
+- Medium-to-wide portrait (waist-up to 3/4 body depending on crowd).
+- Renaissance grouping: triangular / oval arrangement.
+- Main woman centered and slightly forward.
+- Secondary figures arranged symmetrically and clearly separated.
+- Pets integrated naturally in foreground / arms / beside feet.
 
-    **STEP 2: THE SCENE & STYLE (DYNAMIC)**
-    ${styleDetails}
-    
-    **STEP 3: EXECUTION (THE SALE)**
-    ${framingInstruction}
-    - **Medium:** 100% Oil on Canvas.
-    - **Brushwork:** Visible, confident, artistic brushstrokes. NO digital blur.
-    - **Transformation:** Eliminate all modern clothing/backgrounds. Replace with the requested Luxury Historical setting.
+LIGHTING HIERARCHY:
+- protagonist gets the strongest key light.
+- secondary subjects receive slightly softer light but still clear faces.
+`;
+  } else {
+    framing = `
+FRAMING MODE: SOLO PORTRAIT.
+- Choose the best flattering framing: waist-up or 3/4 body.
+- Slight head turn, confident posture.
+- Composition must feel premium and gallery-worthy.
+`;
+  }
 
-    **⛔ NEGATIVE CONSTRAINTS:**
-    - **DO NOT CHANGE THE HAIR LENGTH OR STYLE.**
-    - **DO NOT CHANGE THE FACE IDENTITY.**
-    - **DO NOT REMOVE PEOPLE OR PETS.**
-    - NO MODERN CLOTHING (No t-shirts, no glasses).
-    - NO CARTOON, NO 3D RENDER.
-    - NO PICTURE FRAMES.
-    `;
+  // ===============================
+  // 3) PROMPT MAESTRO — CON BLOQUEO FUERTE DE CABELLO
+  // ===============================
+
+  return `
+You are an elite museum portrait painter AND an art director for a premium custom portrait business.
+
+OUTPUT: museum-quality oil painting on canvas, collectible fine-art, commercially irresistible.
+
+TECHNICAL:
+- ASPECT RATIO: vertical 4:5 ONLY (never square).
+- Ultra-detailed faces, clean composition, premium lighting.
+
+----------------------------------
+IDENTITY LOCK — NON NEGOTIABLE
+----------------------------------
+
+INPUT contains ${numSubjects} subject(s).
+
+HARD RULES:
+- Paint EVERY subject found in the reference input: friends, children, women, men, and pets. No one may be omitted.
+- DO NOT merge faces. DO NOT simplify anyone into a generic look.
+- Each subject must be individually recognizable.
+
+FACIAL BIOMETRIC LOCK:
+- Preserve EXACT facial geometry for each person:
+  eye spacing, eyelid shape, brow shape, nose width/bridge, lip shape, jawline, cheekbones, chin.
+- The subject must be instantly recognizable to themselves.
+
+HAIR IDENTITY LOCK (CRITICAL):
+- Hair is part of identity. Keep hairstyle extremely close to the reference.
+- Preserve hairline height, parting (side/middle), bangs/fringe, length, volume, curl pattern, texture, density.
+- Do NOT significantly change haircut or styling.
+- Only minimal grooming upgrades allowed:
+  smoother strands, healthier shine, refined edges, painterly polish.
+- Never invent a new hairstyle.
+
+BEAUTIFICATION LIMIT:
+- You may improve lighting and skin texture slightly (reduce harsh blemishes),
+  but do NOT change facial structure, do NOT "modelify" the face.
+
+PETS:
+- If pets exist: preserve fur markings, color patterns, breed traits, and anatomy. Render in high detail.
+
+----------------------------------
+STYLE & SCENE (DIFFERENT LOOKS, SAME PEOPLE)
+----------------------------------
+
+${stylePrompt}
+
+${framing}
+
+VARIATION CONTROL:
+- Vary clothing, colors, and background within the selected style, but NEVER at the cost of identity.
+- Keep faces and hair consistent across styles; style changes should come from wardrobe, setting, lighting, and brushwork.
+
+----------------------------------
+EXECUTION
+----------------------------------
+
+MEDIUM: authentic oil on canvas (not digital airbrush).
+BRUSHWORK: visible artistic strokes, layered pigment, realistic anatomy.
+LIGHTING: flattering, premium, natural; emphasize facial features and eyes.
+POSE: elegant, confident, natural — no awkward poses.
+
+----------------------------------
+NEGATIVE CONSTRAINTS — STRICT
+----------------------------------
+
+- NEVER change facial identity.
+- NEVER change haircut or hairstyle drastically.
+- NEVER remove any person or pet.
+- NEVER merge faces or duplicate the same face on multiple people.
+- NO cartoon, NO anime, NO 3D render, NO CGI, NO plastic skin, NO heavy smoothing.
+- NO modern clothing in Renaissance styles.
+- NO gloomy/dark mood unless explicitly requested.
+- NO square format, NO cropped heads.
+
+----------------------------------
+COMMERCIAL GOAL
+----------------------------------
+
+Main woman must feel admired, powerful, and emotionally connected: "This is me."
+The image must look like expensive wall art worthy of framing.
+
+END.
+`;
 };
