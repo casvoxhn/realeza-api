@@ -1,26 +1,24 @@
 // ARCHIVO: mujer.js
-// Lógica V87: ENCUADRE CONTEXTUAL INTELIGENTE (La IA decide el mejor ángulo según la foto)
+// Lógica V88: FORMATO 4:5 FORZADO AL INICIO + Encuadre Inteligente + Variedad
 
 module.exports = function(style, numSubjects, isGroup) {
     
-    // --- 1. LÓGICA DE ENCUADRE (Ahora es INTELIGENTE, no Rígida) ---
+    // --- 1. LÓGICA DE ENCUADRE INTELIGENTE ---
     let framingInstruction = "";
     
     if (numSubjects > 1) {
-        // SEGURIDAD GRUPAL: Si hay más de 1, priorizamos que quepan todos.
-        framingInstruction = "**FRAMING PRIORITY:** COMPOSITION SAFETY. Use a **Medium Shot (Waist Up) or Three-Quarter Shot**. You MUST zoom out enough to include ALL subjects (children/pets) comfortably alongside the main woman.";
+        framingInstruction = "**FRAMING PRIORITY:** COMPOSITION SAFETY. Use a **Medium Shot (Waist Up) or Three-Quarter Shot**. You MUST zoom out enough to include ALL subjects (children/pets) comfortably alongside the main woman within the vertical frame.";
     } else {
-        // MODO SMART (1 Persona): La IA analiza y decide.
         framingInstruction = `
-        **FRAMING PRIORITY:** **SMART AESTHETIC DECISION.**
-        - **Analyze the input pose:** If she has a strong posture, hands on hips, or a beautiful outfit, use a **Medium Shot** or **Three-Quarter Shot** to show it off.
-        - **Analyze the face:** If the expression is the key, use a **Close-Up Portrait**.
-        - **DO NOT BE RIGID.** Choose the angle that makes her look most beautiful and powerful in this specific style. 
+        **FRAMING PRIORITY:** **SMART AESTHETIC DECISION (VERTICAL).**
+        - **Analyze the input pose:** If she has a strong posture or outfit, use a **Medium Shot** or **Three-Quarter Shot**.
+        - **Analyze the face:** If the expression is key, use a **Close-Up Portrait**.
+        - **DO NOT BE RIGID.** Choose the angle that makes her look most beautiful in this style.
         - **CRITICAL:** Even in wider shots, the face must be detailed and high quality.
         `;
     }
 
-    // --- 2. ESTILOS DE MUSEO (Optimizados para flexibilidad) ---
+    // --- 2. ESTILOS DE MUSEO ---
     let stylePrompt = "";
 
     if (style === 'musa') {
@@ -35,7 +33,7 @@ module.exports = function(style, numSubjects, isGroup) {
         stylePrompt = `
         **STYLE:** **Grand Manner Royal Portrait** (Winterhalter). Oil on Canvas.
         **ATMOSPHERE:** A bright, opulent palace interior or balcony.
-        **ATTIRE:** Pompous Royal Ballgown (show the volume if the framing allows). Sparkling Tiara.
+        **ATTIRE:** Pompous Royal Ballgown. Sparkling Tiara.
         **LIGHTING:** Bright, sparkling daylight showing wealth and status.
         `;
     } 
@@ -48,28 +46,30 @@ module.exports = function(style, numSubjects, isGroup) {
         `;
     }
 
-    // --- 3. PROMPT FINAL (Cero Rigidez) ---
+    // --- 3. PROMPT FINAL (CON FORMATO 4:5 PRIORITARIO) ---
     return `
-    You are a Master Painter (Old Master) creating a **MUSEUM-QUALITY OIL PAINTING**.
-    
+    You are a Master Painter creating a **MUSEUM-QUALITY OIL PAINTING**.
+
+    **CRITICAL TECHNICAL REQUIREMENT (MUST FOLLOW):**
+    **ASPECT RATIO:** **VERTICAL 4:5 PORTRAIT (4 parts width, 5 parts height).** DO NOT CREATE A SQUARE IMAGE.
+
     **STEP 1: SUBJECT FIDELITY & COUNT**
     - Input: **${numSubjects} subject(s)**. **PAINT THEM ALL.**
-    - **IDENTITY LOCK:** Keep the exact facial structure. Do not change the nose/eyes. Beautify via lighting, not plastic surgery.
+    - **IDENTITY LOCK:** Keep the exact facial structure. Beautify via lighting, not plastic surgery.
 
-    **STEP 2: SMART COMPOSITION (THE ARTIST'S EYE)**
-    - Look at the input image posture. Look at the chosen style.
-    - **DECIDE THE BEST FRAMING** for this specific combination.
+    **STEP 2: SMART COMPOSITION**
+    - **DECIDE THE BEST VERTICAL FRAMING** based on the input pose and style.
     ${framingInstruction}
-    - Ensure the composition feels balanced and expensive.
 
     **STEP 3: STYLE EXECUTION**
     - **MEDIUM:** 100% OIL ON CANVAS. Realistic texture.
     ${stylePrompt}
 
     **NEGATIVE CONSTRAINTS:**
+    - **NO SQUARE FORMAT, NO 1:1 ASPECT RATIO.**
     - **NO PICTURE FRAMES, NO BORDERS.**
     - **NO CARTOON, NO 3D, NO ANIME.**
     - No missing people/pets.
-    - No distorted faces in wider shots.
+    - No distorted faces.
     `;
 };
