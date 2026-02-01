@@ -1,76 +1,80 @@
 // ARCHIVO: mujer.js
-// Lógica V79: PLANOS CERRADOS (CLOSE-UPS), FIDELIDAD EXTREMA Y BELLEZA
+// Lógica V80: VARIEDAD DE PLANOS, MAGIA, CUENTO DE HADAS Y FOTO DE ESTUDIO + INCLUSIÓN TOTAL
 
 module.exports = function(style, numSubjects, isGroup) {
     
-    // --- 1. REGLAS DE ORO: LA CARA LO ES TODO ---
+    // --- 1. REGLAS DE ORO: ELLA ES LA ESTRELLA, PERO NO ESTÁ SOLA ---
     const baseInstructions = `
-    **CRITICAL CORE INSTRUCTIONS FOR FEMALE PORTRAITS:**
-    1.  **FACE FOCUS (THE MONEY SHOT):** The face must be the absolute center of attention. Capture the exact likeness but with a "Historical Beauty Filter" (glowing skin, sparkling eyes).
-    2.  **EXTREME FEMININITY:** Soft lighting, delicate features, graceful necklines.
-    3.  **CLOSE-UP FRAMING:** We want intimate portraits, not full-body scenes.
-    4.  **STATUS & LUXURY:** Even in close-ups, use jewelry (earrings, necklaces, tiaras) to show wealth.
-    5.  **NO BOOKS/INTELLECTUAL PROPS:** Use fans, flowers, jewelry, or mirrors instead.
+    **CRITICAL CORE INSTRUCTIONS:**
+    1.  **THE HIERARCHY (CRUCIAL):** The WOMAN is the absolute protagonist (The Queen/Goddess). She must have the best lighting and position.
+    2.  **INCLUDE EVERYONE:** You MUST detect and include **ALL** subjects (children, pets, partners) from the input.
+        - **Children:** Pose them lovingly next to her or holding her hand. They are her cherubs/heirs.
+        - **Pets:** They are her royal companions. Do not remove them.
+    3.  **BEAUTY FILTER:** Apply a "Historical Beauty" filter. Glowing skin, sparkling eyes, flattering angles. Make her look breathtaking.
+    4.  **NO BOOKS/INTELLECTUAL PROPS:** Replace them with fans, mirrors, flowers, or jewelry. Visual pleasure only.
     `;
 
     let promptStyle = "";
     let framingOverride = "";
 
-    // --- ESTILO 1: LA MUSA (Primer Plano Etéreo) ---
-    // Objetivo: Cara de ángel, flores en el pelo, mirada soñadora.
+    // --- ESTILO 1: LA MUSA (Pintura Mágica y Etérea) ---
+    // Enfoque: Fantasía pura, pincelada visible, sueño.
     if (style === 'musa') {
         promptStyle = `
         ${baseInstructions}
-        **STYLE:** Pre-Raphaelite / Romanticism Close-Up (Waterhouse style).
-        **SETTING:** Soft background of blurred roses or golden light (Bokeh).
-        **ATTIRE:** Delicate neckline. Sheer silk or lace that looks soft against the skin. A flower crown or jewels woven into loose, wavy hair.
-        **POSE:** **Head and Shoulders Portrait.** Face slightly tilted, lips slightly parted (breathless beauty). Maybe a delicate hand touching a flower near the face.
-        **LIGHTING:** **Heavenly Glow.** Soft, diffused light that makes the eyes sparkle and skin look flawless/porcelain.
+        **STYLE:** **Fantasy Oil Painting** (Pre-Raphaelite / Waterhouse style). Highly artistic, visible brushstrokes, dreamlike atmosphere.
+        **SETTING:** A magical garden straight out of a fantasy novel. Glowing flowers, floating petals, soft mist, maybe a subtle magical aura.
+        **ATTIRE:** Flowing, semi-sheer chiffon robes in pastel colors (Rose Gold, Lilac, Soft Blue). Flower crowns in the hair.
+        **MOOD:** Mystical, soft, enchanting. She looks like a forest goddess or a fairy queen.
+        **LIGHTING:** **Magical Glow.** Soft, diffused, iridescent light. No harsh shadows. The skin should look like porcelain.
         `;
-        framingOverride = "**FRAMING:** Close-Up (Head & Shoulders). The face and hair fill the frame.";
+        // Encuadre Dinámico
+        framingOverride = "**FRAMING:** Dynamic. If alone: Close-Up (Face/Shoulders). If with kids/pets: Medium Shot to include everyone in a magical embrace.";
     } 
     
-    // --- ESTILO 2: LA REINA (Busto Real - Joyas y Corona) ---
-    // Objetivo: La corona y la cara. Poder y riqueza en primer plano.
+    // --- ESTILO 2: LA REINA (Cuento de Hadas / Disney Opulento) ---
+    // Enfoque: Color, volumen, "Princesa", felicidad, lujo brillante.
     else if (style === 'realeza') {
         promptStyle = `
         ${baseInstructions}
-        **STYLE:** Winterhalter / Royal Portrait (Bust).
-        **SETTING:** Blurred palace background (gold and red blurry tones).
-        **ATTIRE:** A majestic diamond tiara (essential) and a massive statement necklace. Rich satin neckline (Royal Blue or Ruby Red). Heavy earrings.
-        **POSE:** **Royal Bust Portrait.** Chin up, proud, looking down slightly or directly at the viewer with absolute confidence.
-        **LIGHTING:** **Studio Glamour.** Bright, crisp light that makes the diamonds in the tiara and necklace blind the viewer with sparkles.
+        **STYLE:** **Fairytale Royal Portrait** (Winterhalter / Disney-esque Realism). Vibrant, colorful, crisp and polished.
+        **SETTING:** A bright, airy palace balcony or ballroom. Not dark/moody. Bright marble, golden railings, blue skies.
+        **ATTIRE:** **Pompous, Voluminous Ballgown.** Satin and tulle in vibrant feminine colors (Royal Pink, Sky Blue, Emerald). A sparkling tiara is mandatory.
+        **MOOD:** Proud, happy, majestic. "I am the Queen of this story."
+        **LIGHTING:** **Sparkling Daylight.** Bright, cheerful light that makes the jewelry and satin dress shine intensely.
         `;
-        framingOverride = "**FRAMING:** Bust Portrait (Chest Up). Focus on the face, the crown, and the neckline jewelry.";
+        // Encuadre Dinámico
+        framingOverride = "**FRAMING:** Dynamic. If alone: Medium Shot (Waist Up) to show the jewels/dress. If with kids/pets: Zoom out slightly to show the full royal family group.";
     } 
     
-    // --- ESTILO 3: EMPODERADA (Plano Intenso - Femme Fatale) ---
-    // Objetivo: La mirada que mata. Seducción y misterio.
+    // --- ESTILO 3: EMPODERADA (Foto de Estudio Dramática) ---
+    // Enfoque: Editorial de moda, nitidez, negro/rojo, drama.
     else if (style === 'empoderada') {
         promptStyle = `
         ${baseInstructions}
-        **STYLE:** Belle Époque Glamour (Sargent / Boldini style).
-        **SETTING:** Dark, rich velvet background (Black or Deep Burgundy) to make the face pop.
-        **ATTIRE:** Black velvet choker or elegant high collar. Long pearl earrings. A dark, sophisticated gown neckline.
-        **POSE:** **Medium Close-Up.** Intense eye contact. A mysterious half-smile. Perhaps a gloved hand resting near the chin or neck.
-        **LIGHTING:** **Dramatic Beauty.** High contrast. Shadow on one side of the face, bright highlight on the other cheekbone and eye.
+        **STYLE:** **High-End Historical Studio Photography** (Vogue 1920s / Sargent Glamour). Sharp focus, realistic texture, dramatic contrast.
+        **SETTING:** A luxurious studio background. Dark velvet curtains, an abstract textured backdrop in deep burgundy or black.
+        **ATTIRE:** Sophisticated, structured fashion. Black velvet, deep red silk, form-fitting silhouettes. Statement jewelry (pearl chokers, diamonds).
+        **MOOD:** Magnetic, seductive, powerful. "Femme Fatale" energy. Strong eye contact.
+        **LIGHTING:** **Studio Beauty Lighting.** A "Beauty Dish" effect: sculpted cheekbones, highlight in the eyes, separation from the background.
         `;
-        framingOverride = "**FRAMING:** Medium Close-Up (Chest Up). Focus on the intense gaze and elegant neck.";
+        // Encuadre Dinámico
+        framingOverride = "**FRAMING:** Dynamic. If alone: Medium Close-Up (Intense Portrait). If with kids/pets: They are posed artistically around her, like a fashion editorial group shot.";
     }
 
     // --- ESTRUCTURA FINAL DEL PROMPT ---
     return `
-    You are a Master Painter creating a stunning CLOSE-UP oil painting of a woman.
+    You are a Master Artist creating a portrait designed to be loved by the female subject.
     **INSTRUCTIONS:**
-    1.  **Analyze** the input image(s) to capture the subject's beauty and likeness primarily in the face.
-    2.  **Transform** her into the specific style below, focusing on a flattering portrait.
-    3.  **Apply** a rich, glossy oil painting texture.
+    1.  **Analyze** the input image(s) to capture the woman's beauty and likeness perfectly.
+    2.  **Count** every single person and pet in the input. **YOU MUST PAINT THEM ALL.**
+    3.  **Transform** the scene into the specific style below.
     
     ${promptStyle}
     
     **CRITICAL TECHNICAL SPECS:**
     **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
     ${framingOverride}
-    **NEGATIVE CONSTRAINTS (STRICT):** **No full body shots**, no distant shots, no books, no masculine clothing, no sad expressions, no distorted faces. The image must be BEAUTIFUL and INTIMATE.
+    **NEGATIVE CONSTRAINTS (STRICT):** **No missing family members, no missing pets**, no masculine energy, no sadness, no boring colors, no distorted faces. The image must feel expensive and flattering.
     `;
 };
