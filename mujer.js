@@ -1,29 +1,29 @@
 // ARCHIVO: mujer.js
-// Lógica V84: FIX MARCOS + EMPODERADA DRAMÁTICA (Poder, Color, Ego, Variedad)
+// Lógica V85: MUSA ATEMPORAL CON VARIEDAD TOTAL (Colores, Escenarios, Telas)
 
 module.exports = function(style, numSubjects, isGroup) {
     
-    // --- 1. LÓGICA DE ENCUADRE AUTOMÁTICA (Mantiene lo que funciona) ---
+    // --- 1. LÓGICA DE ENCUADRE AUTOMÁTICA ---
     let framingInstruction = "";
     
     if (numSubjects > 1) {
-        // Más de 1 persona: Plano Medio/Abierto para que quepan todos.
         framingInstruction = "**FRAMING:** MEDIUM SHOT (Waist Up) or THREE-QUARTER SHOT. Zoom out to include ALL subjects comfortably. Do not cut anyone off.";
     } else {
-        // Solo ella: Variedad de planos elegantes.
         framingInstruction = "**FRAMING:** VARIED ELEGANT FRAMING. Choose between a powerful Portrait, a dynamic Medium Shot, or a dramatic Three-Quarter shot to best showcase the pose and attire.";
     }
 
-    // --- 2. ESTILOS DE MUSEO RENOVADOS (Más Poder y Color) ---
+    // --- 2. ESTILOS DE MUSEO (Con Variedad Inyectada) ---
     let stylePrompt = "";
 
+    // --- MEJORA: VARIEDAD EN LA MUSA ---
     if (style === 'musa') {
         stylePrompt = `
-        **STYLE:** **Pre-Raphaelite Masterpiece** (John William Waterhouse style). Oil on Canvas.
-        **TEXTURE:** Visible oil brushstrokes, realistic skin texture, soft natural lighting.
-        **ATMOSPHERE:** A romantic, lush garden or nature setting. Dreamy.
-        **ATTIRE:** Renaissance-inspired silk robes, soft textures, natural flower details, pastel tones.
-        **LIGHTING:** Soft, diffused natural light (Sfumato technique).
+        **STYLE:** **Pre-Raphaelite & Romanticism Masterpiece** (Waterhouse / Rossetti / Leighton influence). Oil on Canvas.
+        **VARIETY INSTRUCTION (IMPORTANT):** **DO NOT always produce the same green garden or pink dress.** VARY the color palette and setting significantly.
+        **ATMOSPHERE:** **VARIED ROMANTIC SETTINGS.** It could be a serene lakeside at twilight, an ancient stone balcony with climbing roses, a deep mysterious forest, or a golden wheat field. Dreamy and magical.
+        **ATTIRE:** **VARIED ETHEREAL FASHION.** Flowing robes or structured bodices. Use a mix of colors: Deep Crimson, Emerald Green, Rich Gold, Sapphire Blue, OR Soft Pastels. Flower crowns or jeweled headpieces.
+        **TEXTURE:** Visible artistic brushstrokes, but with realistic, glowing skin.
+        **LIGHTING:** Soft, atmospheric light. Dappled sunlight, twilight glow, or warm golden hour.
         `;
     } 
     else if (style === 'realeza') {
@@ -35,14 +35,13 @@ module.exports = function(style, numSubjects, isGroup) {
         **LIGHTING:** Bright, luxurious light that highlights wealth.
         `;
     } 
-    // --- CAMBIO MAYOR AQUÍ: EMPODERADA DRAMÁTICA ---
     else if (style === 'empoderada') {
         stylePrompt = `
         **STYLE:** **High-Fashion Historical Drama** (Giovanni Boldini / Vogue Historical Editorial style). Oil on Canvas.
         **TEXTURE:** Dynamic brushwork full of movement and energy. Luxurious fabrics that feel expensive.
-        **ATMOSPHERE:** **OPULENT and DRAMATIC.** A grand staircase, a luxurious salon with heavy curtains, or a dramatic balcony at sunset. Not dark or gloomy.
+        **ATMOSPHERE:** **OPULENT and DRAMATIC.** A grand staircase, a luxurious salon with heavy curtains, or a dramatic balcony at sunset.
         **ATTIRE:** **VARIETY of powerful, feminine fashion.** Deep jewel tones (Ruby Red, Emerald Green, Sapphire Blue), gold brocades, dramatic capes, confident silhouettes.
-        **MOOD & POSE:** **EGO and POWER.** High confidence, dramatic feminine poses (chin up, hand on hip, commanding gaze, dynamic swirling fabric). She owns the room.
+        **MOOD & POSE:** **EGO and POWER.** High confidence, dramatic feminine poses (chin up, hand on hip, commanding gaze). She owns the room.
         **LIGHTING:** Dramatic theatrical lighting that highlights power and beauty.
         `;
     }
