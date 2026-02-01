@@ -66,7 +66,7 @@ module.exports = function(style, numSubjects, isGroup) {
     - Input contains: **${numSubjects} subject(s)**.
     - **MANDATORY:** Paint EXACTLY ${numSubjects} subjects. If there is a dog, paint the dog. If there is a child, paint the child.
     - **FACE PRESERVATION:** Keep the **EXACT facial structure** (nose, eyes, jaw) of the source photos. 
-    - **BEAUTIFICATION:** Beautify only via **Lighting** (glow), **Skin Texture** (smoothness), and **Hair Volume**. Do NOT change the person's identity.
+    - **BEAUTIFICATION:** Beautify only via **Lighting** (glow), **Skin Texture** (smoothness). Do NOT change the person's identity.
 
     **STEP 2: COMPOSITION & FRAMING**
     ${framingInstruction}
