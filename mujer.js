@@ -1,207 +1,175 @@
 // ARCHIVO: mujer.js
-// V105: IDENTIDAD LOCK + WOW VARIATION + PALETAS + VESTUARIO + ATMOSFERAS ROTATIVAS
-// Objetivo: misma mujer reconocible, cada repeat = outfit, color, mood y escena radicalmente distintos.
+// V107: IDENTIDAD BIOMÉTRICA + CABELLO BLOQUEADO + VARIEDAD CONTROLADA POR ESTILO
+// Objetivo: misma mujer reconocible, mismo cabello base, repeats distintos SIN perder musa / reina / empoderada.
 
 module.exports = function(style, numSubjects, isGroup) {
 
   // -------------------------------
-  // UTILIDADES
+  // UTIL
   // -------------------------------
   function randomPick(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 
   // -------------------------------
-  // BANCOS DE VARIACIÓN GLOBAL
+  // 🔒 BLOQUE DE CABELLO (NO CAMBIA CORTE / LARGO / TIPO)
   // -------------------------------
-
-  const paletteBank = [
-    "ivory and antique gold with soft pearl highlights",
-    "sapphire blue and champagne glow",
-    "crimson and obsidian with gilded accents",
-    "lavender, silver and moonlight white",
-    "amber, copper and warm earth tones",
-    "teal, coral and sunlit bronze",
-    "midnight blue with platinum highlights",
-    "rose quartz, blush pink and warm ivory",
-    "burnt orange and royal purple",
-    "turquoise, sand and gold leaf"
-  ];
-
-  const fabricBank = [
-    "sheer chiffon layered over silk",
-    "heavy velvet with embroidered trim",
-    "lustrous satin and brocade",
-    "gauzy organza with metallic threads",
-    "linen-silk blends with hand-painted patterns",
-    "pleated taffeta with jewel accents",
-    "raw silk with gold leaf embroidery",
-    "lace overlays with pearl beading"
-  ];
-
-  const silhouetteBank = [
-    "draped Greco-Roman gown with flowing folds",
-    "empire-waist ethereal dress",
-    "corseted Renaissance bodice with cascading skirt",
-    "off-the-shoulder romantic silhouette",
-    "asymmetrical one-shoulder couture gown",
-    "layered medieval court dress",
-    "high-neck poetic robe with trailing sleeves",
-    "open-front mantle over inner silk gown"
-  ];
-
-  const atmosphereBank = [
-    "misty dawn garden with pastel sky",
-    "storm-lit lake shore with dramatic clouds",
-    "sun-washed marble courtyard",
-    "moonlit forest clearing",
-    "golden autumn terrace",
-    "candle-filled interior chapel",
-    "twilight riverbank with reflections",
-    "rose garden at sunset",
-    "ancient ruins overtaken by vines",
-    "palace balcony overlooking mountains"
-  ];
+  const hairLock = `
+HAIR LOCK — CRITICAL:
+Preserve the SAME haircut, length, hairline and natural texture from the reference photo.
+Do NOT change hairstyle category (straight/wavy/curly).
+Do NOT shorten or lengthen.
+Do NOT add bangs if absent.
+Allowed only:
+- subtle styling polish
+- partial pinning
+- gentle wind movement
+- period-appropriate jewelry or crown placed over existing hair
+`;
 
   // -------------------------------
-  // VARIATION ENGINE (POSE / LUZ / ETC.)
+  // VARIACIÓN GLOBAL SUAVE (NO rompe identidad ni estilo)
   // -------------------------------
-
   const pose = randomPick([
     "standing in elegant contrapposto",
-    "seated on a carved chair",
-    "leaning softly against a column",
-    "walking slowly with fabric flowing",
-    "three-quarter turn over the shoulder",
-    "profile-to-3/4 transition pose"
+    "seated in an aristocratic pose",
+    "three-quarter turn with lifted chin",
+    "slow walking motion with flowing fabric",
+    "upright posture with hands gently posed"
   ]);
 
   const cameraAngle = randomPick([
-    "eye-level classical portrait angle",
-    "subtle low-angle hero framing",
-    "soft high-angle collector portrait",
+    "eye-level classical portrait",
+    "slightly low-angle heroic framing",
     "three-quarter camera placement"
   ]);
 
   const crop = randomPick([
-    "intimate head-and-shoulders",
-    "waist-up couture portrait",
-    "three-quarter length",
-    "full-figure with grand environment"
-  ]);
-
-  const lightingScenario = randomPick([
-    "candlelit warm glow",
-    "window side-light with Rembrandt falloff",
-    "backlit halo rim-light",
-    "skylight illumination",
-    "stormy ambient light",
-    "torch-lit golden ambiance"
+    "waist-up portrait",
+    "three-quarter length portrait",
+    "full-figure with architectural scale"
   ]);
 
   const microExpression = randomPick([
-    "serene and regal",
-    "confident and magnetic",
-    "contemplative and poetic",
-    "warm subtle smile",
-    "fierce commanding gaze"
-  ]);
-
-  const hairDynamics = randomPick([
-    "wind-blown strands",
-    "pinned with loose curls",
-    "loose romantic waves",
-    "braided with ornaments",
-    "smooth pulled-back"
-  ]);
-
-  const brushworkEnergy = randomPick([
-    "soft layered glazes",
-    "bold expressive strokes in fabrics",
-    "impasto highlights",
-    "sfumato transitions"
+    "calm authority",
+    "poised confidence",
+    "serene magnetism",
+    "controlled power",
+    "quiet dominance"
   ]);
 
   // -------------------------------
-  // ROPA + COLOR DINÁMICO
+  // 🎨 PALETAS POR ESTILO (NO CRUZAR)
   // -------------------------------
 
-  const selectedPalette = randomPick(paletteBank);
-  const selectedFabric = randomPick(fabricBank);
-  const selectedSilhouette = randomPick(silhouetteBank);
-  const selectedAtmosphere = randomPick(atmosphereBank);
+  const musaPalettes = [
+    "ivory, blush pink and antique gold",
+    "lavender, pearl white and silver",
+    "teal, coral and sunlit bronze",
+    "rose quartz with warm ivory",
+    "sage green with champagne accents"
+  ];
+
+  const royalPalettes = [
+    "crimson and gold leaf",
+    "sapphire blue and ivory",
+    "black velvet with diamond highlights",
+    "emerald and antique gold",
+    "royal purple with silver filigree"
+  ];
+
+  const empoweredPalettes = [
+    "obsidian black and champagne",
+    "deep oxblood red and gold",
+    "graphite gray and platinum",
+    "midnight blue with sharp highlights",
+    "espresso brown with bronze accents"
+  ];
 
   // -------------------------------
-  // ESTILOS BASE
+  // 👗 SILUETAS POR ESTILO
   // -------------------------------
 
-  let stylePrompt = "";
+  const musaSilhouettes = [
+    "flowing Greco-Roman draped gown",
+    "empire-waist ethereal dress",
+    "off-the-shoulder poetic robe",
+    "layered chiffon mantle dress",
+    "high-neck romantic robe with trailing sleeves"
+  ];
+
+  const royalSilhouettes = [
+    "corseted court gown with cathedral skirt",
+    "ball gown with embroidered train",
+    "velvet mantle over structured bodice",
+    "ermine-trimmed ceremonial cloak",
+    "regal column dress with jeweled sash"
+  ];
+
+  const empoweredSilhouettes = [
+    "sculptural couture gown with sharp lines",
+    "structured velvet power dress",
+    "tailored historical blazer-gown hybrid",
+    "architectural corseted silhouette",
+    "high-fashion asymmetrical statement gown"
+  ];
+
+  // -------------------------------
+  // 👑 ESCENARIOS POR ESTILO
+  // -------------------------------
+
+  const musaScenes = [
+    "misty dawn garden",
+    "moonlit orchard",
+    "twilight lake shore",
+    "rose terrace at sunset",
+    "forest clearing with glowing haze"
+  ];
+
+  const royalScenes = [
+    "coronation throne room",
+    "palace ballroom",
+    "royal gallery corridor",
+    "private audience chamber",
+    "ceremonial balcony overlooking city"
+  ];
+
+  const empoweredScenes = [
+    "dramatic velvet studio set",
+    "grand staircase interior",
+    "gallery-like power backdrop",
+    "editorial stage with spotlight",
+    "luxury penthouse window wall (painterly)"
+  ];
+
+  // -------------------------------
+  // 🎯 SELECCIÓN POR ESTILO
+  // -------------------------------
+
+  let palette, silhouette, scene;
 
   if (style === "musa") {
-    stylePrompt = `
-ARTISTIC DIRECTION: Ethereal Pre-Raphaelite Muse.
-Mood: poetic, luminous, collectible fine art.
-Wardrobe: ${selectedSilhouette}, crafted in ${selectedFabric}.
-Color story: ${selectedPalette}.
-Atmosphere: ${selectedAtmosphere}.
-`;
+    palette = randomPick(musaPalettes);
+    silhouette = randomPick(musaSilhouettes);
+    scene = randomPick(musaScenes);
   }
 
   else if (style === "realeza") {
-    stylePrompt = `
-ARTISTIC DIRECTION: Imperial court portrait.
-Mood: dynastic power and luxury.
-Wardrobe: royal ${selectedSilhouette}, heavy couture construction, jewel embroidery.
-Color story: ${selectedPalette}.
-Atmosphere: palace interior or balcony variation — ${selectedAtmosphere}.
-`;
+    palette = randomPick(royalPalettes);
+    silhouette = randomPick(royalSilhouettes);
+    scene = randomPick(royalScenes);
   }
 
   else if (style === "empoderada") {
-    stylePrompt = `
-ARTISTIC DIRECTION: Historical Vogue power portrait.
-Mood: dominance and magnetism.
-Wardrobe: sculptural couture variant of ${selectedSilhouette}.
-Color story: ${selectedPalette}.
-Atmosphere: dramatic interior or architectural set — ${selectedAtmosphere}.
-`;
+    palette = randomPick(empoweredPalettes);
+    silhouette = randomPick(empoweredSilhouettes);
+    scene = randomPick(empoweredScenes);
   }
 
   else {
-    stylePrompt = `
-ARTISTIC DIRECTION: museum-grade classical oil portrait.
-Wardrobe: couture version of ${selectedSilhouette}.
-Color story: ${selectedPalette}.
-Atmosphere: ${selectedAtmosphere}.
-`;
-  }
-
-  // -------------------------------
-  // COMPOSICIÓN
-  // -------------------------------
-
-  let framing = "";
-
-  if (numSubjects > 1) {
-    framing = `
-COMPOSITION: multi-figure museum portrait.
-Include ALL ${numSubjects} subjects and pets.
-Main woman dominant in light and posture.
-Framing: ${crop}.
-Camera: ${cameraAngle}.
-Pose: protagonist ${pose}.
-Expression: ${microExpression}.
-Hair: ${hairDynamics}.
-`;
-  } else {
-    framing = `
-COMPOSITION: solo masterpiece.
-Framing: ${crop}.
-Camera: ${cameraAngle}.
-Pose: ${pose}.
-Expression: ${microExpression}.
-Hair: ${hairDynamics}.
-`;
+    palette = randomPick(royalPalettes);
+    silhouette = randomPick(royalSilhouettes);
+    scene = randomPick(royalScenes);
   }
 
   // -------------------------------
@@ -214,41 +182,55 @@ You are a world-class classical portrait painter producing a **museum-grade oil 
 ASPECT RATIO: vertical 4:5.
 
 PRIMARY GOAL:
-The woman must recognize herself instantly and feel elevated, powerful and worthy of collecting.
+The woman must instantly recognize herself and feel elevated, powerful and worthy of collecting.
 
 IDENTITY LOCK — CRITICAL:
 Preserve facial proportions, bone structure, age and natural skin tone.
 Beautify only through painterly light and texture.
-Never reshape anatomy into a generic face.
+Never reshape anatomy.
+
+${hairLock}
 
 SUBJECTS:
-Input has ${numSubjects} subject(s). Include all people and pets.
+Input has ${numSubjects} subject(s). Include everyone and every pet.
+
+STYLE ARCHETYPE — DO NOT BREAK:
+${style === "musa" ? "She must feel ethereal, poetic, romantic and mythic." :
+  style === "realeza" ? "She must feel imperial, dynastic, commanding, unquestionably royal." :
+  "She must feel dominant, powerful, fashion-forward, intimidating in elegance."}
+
+WARDROBE:
+${silhouette}, executed in luxury fabrics and couture construction.
+Color story: ${palette}.
 
 SCENE:
-${stylePrompt}
+${scene}.
 
 COMPOSITION:
-${framing}
+Pose: ${pose}.
+Crop: ${crop}.
+Camera: three-quarter classical framing.
+Expression: ${microExpression}.
 
-WOW VARIATION DIRECTIVE:
-Every repeat must substantially change wardrobe, palette, atmosphere and staging.
-Never reuse the same color story + silhouette combination.
-Treat each render as a new masterpiece.
+VARIATION RULE:
+Change wardrobe, palette and environment each repeat,
+BUT never violate the style archetype or hair lock.
 
 PAINTING EXECUTION:
-Oil on canvas, layered glazes, impasto highlights.
-Natural fabric physics.
+Oil on canvas.
+Layered glazes.
+Impasto highlights on jewels and folds.
 Hands anatomically correct.
 No costume look.
 
 NEGATIVE RULES:
 No identity change.
+No haircut change.
 No cartoon, anime, CGI, 3D.
 No plastic skin.
-No face swap artifacts.
-No extra people.
 No missing limbs.
-No modern casual clothing.
-No text, logos, frames or watermarks.
+No extra people.
+No modern clothing.
+No logos, text or frames.
 `;
 };
