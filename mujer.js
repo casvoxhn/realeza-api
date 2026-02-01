@@ -1,80 +1,72 @@
 // ARCHIVO: mujer.js
-// Lógica V80: VARIEDAD DE PLANOS, MAGIA, CUENTO DE HADAS Y FOTO DE ESTUDIO + INCLUSIÓN TOTAL
+// Lógica V81: IDENTIDAD BLINDADA + EMBELLECIMIENTO COSMÉTICO (Cero cambios de cara)
 
 module.exports = function(style, numSubjects, isGroup) {
     
-    // --- 1. REGLAS DE ORO: ELLA ES LA ESTRELLA, PERO NO ESTÁ SOLA ---
+    // --- 1. REGLAS DE ORO: ELLA ES LA ESTRELLA Y DEBE SER ELLA ---
     const baseInstructions = `
-    **CRITICAL CORE INSTRUCTIONS:**
-    1.  **THE HIERARCHY (CRUCIAL):** The WOMAN is the absolute protagonist (The Queen/Goddess). She must have the best lighting and position.
-    2.  **INCLUDE EVERYONE:** You MUST detect and include **ALL** subjects (children, pets, partners) from the input.
-        - **Children:** Pose them lovingly next to her or holding her hand. They are her cherubs/heirs.
-        - **Pets:** They are her royal companions. Do not remove them.
-    3.  **BEAUTY FILTER:** Apply a "Historical Beauty" filter. Glowing skin, sparkling eyes, flattering angles. Make her look breathtaking.
-    4.  **NO BOOKS/INTELLECTUAL PROPS:** Replace them with fans, mirrors, flowers, or jewelry. Visual pleasure only.
+    **CRITICAL CORE INSTRUCTIONS - IDENTITY LOCK:**
+    1.  **ABSOLUTE FACE FIDELITY (PRIORITY #1):** You MUST preserve the EXACT facial structure, nose shape, eye shape, and jawline of the woman. **DO NOT CHANGE HER FACE to look like a generic model.** It must be recognized instantly as the person in the photo.
+    2.  **COSMETIC BEAUTIFICATION ONLY:** "Beautify" by improving **skin texture, lighting, and hair volume**, NOT by altering facial features. Think of it as professional makeup and studio lighting, not plastic surgery.
+    3.  **INCLUDE EVERYONE FAITHFULLY:** Detect and include **ALL** subjects (children, pets, partners) retaining their **EXACT LIKENESS**. Do not replace the user's specific dog with a generic dog.
+    4.  **HIERARCHY:** The woman is the Queen/Goddess. Pose others lovingly around her.
     `;
 
     let promptStyle = "";
     let framingOverride = "";
 
-    // --- ESTILO 1: LA MUSA (Pintura Mágica y Etérea) ---
-    // Enfoque: Fantasía pura, pincelada visible, sueño.
+    // --- ESTILO 1: LA MUSA (Pintura Mágica - Identidad Soñadora) ---
     if (style === 'musa') {
         promptStyle = `
         ${baseInstructions}
-        **STYLE:** **Fantasy Oil Painting** (Pre-Raphaelite / Waterhouse style). Highly artistic, visible brushstrokes, dreamlike atmosphere.
-        **SETTING:** A magical garden straight out of a fantasy novel. Glowing flowers, floating petals, soft mist, maybe a subtle magical aura.
+        **STYLE:** **Fantasy Oil Painting** (Pre-Raphaelite style). Artistic brushstrokes but with a **photorealistic face likeness**.
+        **SETTING:** A magical garden straight out of a fantasy novel. Glowing flowers, floating petals, soft mist.
         **ATTIRE:** Flowing, semi-sheer chiffon robes in pastel colors (Rose Gold, Lilac, Soft Blue). Flower crowns in the hair.
-        **MOOD:** Mystical, soft, enchanting. She looks like a forest goddess or a fairy queen.
-        **LIGHTING:** **Magical Glow.** Soft, diffused, iridescent light. No harsh shadows. The skin should look like porcelain.
+        **MOOD:** Mystical, soft, enchanting.
+        **LIGHTING:** **Magical Glow.** Soft, diffused light that smooths the skin tone without changing the facial structure.
         `;
-        // Encuadre Dinámico
-        framingOverride = "**FRAMING:** Dynamic. If alone: Close-Up (Face/Shoulders). If with kids/pets: Medium Shot to include everyone in a magical embrace.";
+        framingOverride = "**FRAMING:** Dynamic. If alone: Close-Up (Focus on HER eyes). If with others: Medium Shot to embrace them.";
     } 
     
-    // --- ESTILO 2: LA REINA (Cuento de Hadas / Disney Opulento) ---
-    // Enfoque: Color, volumen, "Princesa", felicidad, lujo brillante.
+    // --- ESTILO 2: LA REINA (Cuento de Hadas - Identidad Real) ---
     else if (style === 'realeza') {
         promptStyle = `
         ${baseInstructions}
-        **STYLE:** **Fairytale Royal Portrait** (Winterhalter / Disney-esque Realism). Vibrant, colorful, crisp and polished.
-        **SETTING:** A bright, airy palace balcony or ballroom. Not dark/moody. Bright marble, golden railings, blue skies.
+        **STYLE:** **Fairytale Royal Portrait** (Disney-esque Realism). Vibrant, colorful, crisp.
+        **SETTING:** A bright, airy palace balcony or ballroom. Bright marble, golden railings, blue skies.
         **ATTIRE:** **Pompous, Voluminous Ballgown.** Satin and tulle in vibrant feminine colors (Royal Pink, Sky Blue, Emerald). A sparkling tiara is mandatory.
-        **MOOD:** Proud, happy, majestic. "I am the Queen of this story."
-        **LIGHTING:** **Sparkling Daylight.** Bright, cheerful light that makes the jewelry and satin dress shine intensely.
+        **MOOD:** Proud, happy, majestic.
+        **LIGHTING:** **Sparkling Daylight.** Bright, cheerful light. Use highlights to make her eyes sparkle, but keep the eye shape exactly as the input.
         `;
-        // Encuadre Dinámico
-        framingOverride = "**FRAMING:** Dynamic. If alone: Medium Shot (Waist Up) to show the jewels/dress. If with kids/pets: Zoom out slightly to show the full royal family group.";
+        framingOverride = "**FRAMING:** Dynamic. If alone: Medium Shot (Waist Up) to show the jewels/dress. If with others: Zoom out slightly for the royal family.";
     } 
     
-    // --- ESTILO 3: EMPODERADA (Foto de Estudio Dramática) ---
-    // Enfoque: Editorial de moda, nitidez, negro/rojo, drama.
+    // --- ESTILO 3: EMPODERADA (Foto de Estudio - Identidad Definida) ---
     else if (style === 'empoderada') {
         promptStyle = `
         ${baseInstructions}
-        **STYLE:** **High-End Historical Studio Photography** (Vogue 1920s / Sargent Glamour). Sharp focus, realistic texture, dramatic contrast.
-        **SETTING:** A luxurious studio background. Dark velvet curtains, an abstract textured backdrop in deep burgundy or black.
-        **ATTIRE:** Sophisticated, structured fashion. Black velvet, deep red silk, form-fitting silhouettes. Statement jewelry (pearl chokers, diamonds).
-        **MOOD:** Magnetic, seductive, powerful. "Femme Fatale" energy. Strong eye contact.
-        **LIGHTING:** **Studio Beauty Lighting.** A "Beauty Dish" effect: sculpted cheekbones, highlight in the eyes, separation from the background.
+        **STYLE:** **High-End Historical Studio Photography** (Vogue 1920s style). Sharp focus, realistic texture.
+        **SETTING:** A luxurious studio background. Dark velvet curtains, textured backdrop in deep burgundy or black.
+        **ATTIRE:** Sophisticated, structured fashion. Black velvet, deep red silk, form-fitting silhouettes. Statement jewelry.
+        **MOOD:** Magnetic, seductive, powerful. Strong eye contact.
+        **LIGHTING:** **Studio Beauty Lighting.** A "Butterfly Lighting" scheme that sculpts HER specific cheekbones and defines HER specific face shape perfectly.
         `;
-        // Encuadre Dinámico
-        framingOverride = "**FRAMING:** Dynamic. If alone: Medium Close-Up (Intense Portrait). If with kids/pets: They are posed artistically around her, like a fashion editorial group shot.";
+        framingOverride = "**FRAMING:** Dynamic. If alone: Medium Close-Up (Intense). If with others: Posed artistically around her like a fashion editorial.";
     }
 
     // --- ESTRUCTURA FINAL DEL PROMPT ---
     return `
-    You are a Master Artist creating a portrait designed to be loved by the female subject.
+    You are a Master Artist creating a portrait that looks EXACTLY like the user but in a historical style.
     **INSTRUCTIONS:**
-    1.  **Analyze** the input image(s) to capture the woman's beauty and likeness perfectly.
-    2.  **Count** every single person and pet in the input. **YOU MUST PAINT THEM ALL.**
-    3.  **Transform** the scene into the specific style below.
+    1.  **Analyze** the input image(s). **LOCK ON TO THE FACIAL FEATURES.** Do not deviate.
+    2.  **Count** every single person and pet. **PAINT THEM ALL EXACTLY AS THEY ARE.**
+    3.  **Transform** the scene (clothes/background) into the style below, but keep the heads/faces true to reality.
     
     ${promptStyle}
     
     **CRITICAL TECHNICAL SPECS:**
     **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
     ${framingOverride}
-    **NEGATIVE CONSTRAINTS (STRICT):** **No missing family members, no missing pets**, no masculine energy, no sadness, no boring colors, no distorted faces. The image must feel expensive and flattering.
+    **NEGATIVE CONSTRAINTS (STRICT):** **DO NOT CHANGE THE FACE**, do not look like a different person, no missing family members, no missing pets, no masculine energy, no sadness, no boring colors.
     `;
 };
