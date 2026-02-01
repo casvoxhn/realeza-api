@@ -1,15 +1,14 @@
 // ARCHIVO: mujer.js
-// V200: CORE ENGINE — SIMPLE, ESTABLE, VENDIBLE
+// V201: CORE ENGINE — FEMININITY + INTERACTION BOOST
 // Prioridades: identidad > retrato > conteo > wow > estilo.
-// Diseñado para Nano Banana Pro con mínima fricción.
+// Añade feminidad vendible y relaciones visuales en grupos.
 
 module.exports = function(style, numSubjects, isGroup) {
 
-    // --- RANDOM UTIL ---
     const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
     // -------------------------------------------------
-    // 1) BLOQUES CRÍTICOS (SIEMPRE ACTIVOS)
+    // 1) BLOQUES CRÍTICOS
     // -------------------------------------------------
 
     const identityBlock = `
@@ -56,8 +55,29 @@ Do NOT change the face.
 Avoid selfie poses or awkward hands.
 `;
 
+    // 🔥 NUEVO — FEMININIDAD
+    const femininityBlock = `
+FEMININITY & GRACE:
+Hands soft and expressive.
+Relaxed shoulders and elongated neck line.
+Gentle S-curve posture.
+Delicate jewelry accents.
+Elegant drapery flow.
+Warm but confident gaze.
+`;
+
+    // 🔥 NUEVO — INTERACCIÓN EN GRUPO
+    const interactionBlock = `
+GROUP INTERACTION:
+Show natural emotional connection between people.
+Use subtle touch: hand on arm or shoulder, shared stance, slight lean toward each other.
+Crossed gazes or shared focal point.
+Pets integrated emotionally (being held, resting beside someone).
+No stiff lineup — composition must feel alive and intimate.
+`;
+
     // -------------------------------------------------
-    // 2) ESTILOS LIMPIOS Y VENDIBLES
+    // 2) ESTILOS LIMPIOS
     // -------------------------------------------------
 
     let styleBlock = "";
@@ -132,7 +152,6 @@ STYLE: RENAISSANCE POWER WOMAN.
 Elegant, feminine, commanding — not modern.
 Court gown in ${pick(colors)}.
 Clean neckline, sculpted bodice, dramatic sleeves.
-No modern fashion.
 Scene: ${pick(scenes)}.
 Chiaroscuro lighting for strength.
 `;
@@ -159,6 +178,7 @@ Wide or three-quarter group portrait.
 Keep everyone visible.
 Main woman slightly emphasized with light and position.
 Arrange subjects into a balanced composition.
+${interactionBlock}
 `;
 
     } else {
@@ -188,6 +208,8 @@ ${antiCollageBlock}
 ${portraitRule}
 
 ${poseRule}
+
+${femininityBlock}
 
 ${styleBlock}
 
