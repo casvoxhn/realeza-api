@@ -1,78 +1,76 @@
 // ARCHIVO: mujer.js
-// Lógica: Retratos Femeninos de Éxito, Poder y Belleza (Flexible a grupos/mascotas)
+// Lógica V78: NEUROMARKETING FEMENINO, EFECTO WOW, BELLEZA Y LUJO (Cero cosas aburridas)
 
 module.exports = function(style, numSubjects, isGroup) {
     
-    // --- 1. REGLAS DE ORO: FIDELIDAD Y FLEXIBILIDAD ---
-    // La protagonista es ELLA, pero si sube fotos con otros, se incluyen en SU mundo.
+    // --- 1. REGLAS DE ORO: BELLEZA, STATUS Y DESEO ---
     const baseInstructions = `
-    **CRITICAL CORE INSTRUCTIONS:**
-    1.  **MAIN SUBJECT FOCUS & FIDELITY:** The primary focus is the woman. Capture her exact facial features, hair color, and essence. She must look beautiful, powerful, and opulent.
-    2.  **INCLUDE EVERYONE (FLEXIBILITY):** You must detect and include **ALL** subjects present in the input image.
-        - If there are friends/partners: Include them as noble companions in her court.
-        - If there are pets: Include them faithfully, adding to the luxury (e.g., a royal lap dog).
-    3.  **THEME: SUCCESS & OPULENCE:** The overall mood must be one of high status, wealth, and historical success. Rich textures, jewelry, and confident poses are essential.
-    4.  **NO HALLUCINATIONS:** Do not invent people or pets not in the input.
+    **CRITICAL CORE INSTRUCTIONS FOR FEMALE PORTRAITS:**
+    1.  **THE "WOW" FACTOR (BEAUTY FILTER):** The main goal is to make the subject look BREATHTAKING. Use "Beauty Lighting" (soft, glowing skin, sparkling eyes). Flattering angles only.
+    2.  **EXTREME FEMININITY:** Emphasize feminine grace, curves, elegance, and softness. NO masculine energy, NO stiff poses.
+    3.  **STATUS & LUXURY:** Every element must scream "expensive." Silks, diamonds, flowers, gold.
+    4.  **FIDELITY:** Keep her face recognizably hers, but elevated to her most beautiful historical version.
+    5.  **NO BOOKS/NO INTELLECTUAL PROPS:** We want visual pleasure, not study. Use fans, flowers, jewelry, or mirrors instead.
     `;
 
     let promptStyle = "";
     let framingOverride = "";
 
-    // --- ESTILO 1: LA MUSA ATEMPORAL (Renacentista / Prerrafaelita) ---
-    // Enfoque: Belleza etérea, inspiración artística, suavidad lujosa.
+    // --- ESTILO 1: LA MUSA (Diosa Etérea / Sueño Romántico) ---
+    // Objetivo: Que se sienta como una obra de arte viviente. Suave, soñadora, irresistible.
     if (style === 'musa') {
         promptStyle = `
         ${baseInstructions}
-        **STYLE:** High Renaissance / Pre-Raphaelite Oil Portrait (Botticelli / Rossetti influence). Soft, dreamlike, incredibly beautiful.
-        **SETTING:** An artistic, lush environment. A blooming ancient garden pavilion or a beautifully decorated artist's studio filled with flowers and art objects.
-        **ATTIRE:** Flowing, rich fabrics. Silk velvets in deep jewel tones (sapphire, emerald) or cream/gold brocades, adorned with pearls and natural elements. Hair loosely styled with ribbons or flowers.
-        **MOOD & POSE:** Dreamy, intellectual, inspiring. A gentle, confident gaze. Posed gracefully, perhaps holding a book, a musical instrument, or a single symbolic flower.
-        **LIGHTING:** **Soft Golden Hour Light.** Flattering, warm, natural light that gives the skin a porcelain glow and highlights the silk textures.
+        **STYLE:** Pre-Raphaelite / Romanticism (Waterhouse / Rossetti style). Ethereal, dreamy, hyper-feminine.
+        **SETTING:** A magical, blooming rose garden at twilight or a fantasy balcony with floating petals. The background should be blurry and dreamy (Bokeh effect).
+        **ATTIRE:** Flowing, semi-sheer chiffon or silk robes in pastel tones (Dusty Pink, Lilac, Soft Gold). The fabric should look like it's floating. Flower crown or jewels woven into loose, wavy hair.
+        **POSE:** Sensual and relaxed. Looking over the shoulder, or touching a flower to her lips. Eyes half-closed or looking dreamily at the viewer.
+        **LIGHTING:** **Ethereal Glow.** Soft, backlit "Halo" lighting that makes the hair shine and skin look porcelain and flawless.
         `;
-        framingOverride = "**FRAMING:** Medium Portrait or Three-Quarter Shot. Focus on elegance and grace.";
+        framingOverride = "**FRAMING:** Medium Close-Up. Focus on the face, hair texture, and the romantic mood.";
     } 
     
-    // --- ESTILO 2: LA REINA (Barroco / Rococó Imperial) ---
-    // Enfoque: Poder absoluto, majestad, lujo extremo, "Mírenme".
+    // --- ESTILO 2: LA REINA (Alta Costura Real / Bridgerton Elevado) ---
+    // Objetivo: Poder absoluto pero con moda explosiva. "Soy la dueña de todo".
     else if (style === 'realeza') {
         promptStyle = `
         ${baseInstructions}
-        **STYLE:** Grand Manner Royal Portrait (Winterhalter / Velázquez influence). Majestic, imposing, opulent.
-        **SETTING:** A grand palace throne room or the top of a dramatic staircase with heavy marble columns and rich drapery.
-        **ATTIRE:** The height of royal fashion. Magnificent, heavy gowns with wide skirts, covered in gold embroidery, diamonds, and precious stones. A crown or elaborate tiara is essential. Rich furs (ermine).
-        **MOOD & POSE:** Commanding, regal, confident. A direct, powerful gaze at the viewer. Standing tall with excellent posture, radiating authority.
-        **LIGHTING:** **Dramatic Palace Lighting.** Bright, sparkling light from chandeliers that makes jewelry flash and silks shine theatrically.
+        **STYLE:** Winterhalter / Rococo Royal Portrait. High Fashion History. Bright, colorful, opulent.
+        **SETTING:** A spectacular palace ballroom with crystal chandeliers and golden mirrors. Bright and airy.
+        **ATTIRE:** Massive, spectacular ballgown. Satin and lace in vibrant colors (Royal Blue, Emerald, or Ruby Red). A massive diamond tiara and necklace that sparkle intensely.
+        **POSE:** Regal confidence. Standing tall, chin slightly up (proud), hands resting elegantly on the dress volume. A "Queen of the Ball" attitude.
+        **LIGHTING:** **Sparkling Brilliance.** Bright, frontal lighting that highlights the jewelry sparkles and the sheen of the satin dress.
         `;
-        framingOverride = "**FRAMING:** Full Body or Deep Three-Quarter Shot to showcase the incredible grandeur of the gown and setting.";
+        framingOverride = "**FRAMING:** Three-Quarter Shot (Knees up). Show the incredible volume of the dress and the jewelry.";
     } 
     
-    // --- ESTILO 3: MUJER EMPODERADA (Dama de Hierro Victoriana/Edwardiana) ---
-    // Enfoque: Éxito independiente, fuerza, seriedad, control.
+    // --- ESTILO 3: EMPODERADA (Femme Fatale / Dama de Alta Sociedad) ---
+    // Objetivo: Magnetismo, seducción elegante, misterio.
     else if (style === 'empoderada') {
         promptStyle = `
         ${baseInstructions}
-        **STYLE:** 19th Century Power Portrait (John Singer Sargent influence). Sharp, strong, focused on character and success.
-        **SETTING:** A luxurious, dark wood private library, a powerful estate office, or standing confidently on the grounds of a large manor.
-        **ATTIRE:** Structured, powerful fashion. A tailored velvet riding habit, a dark silk gown with a strong silhouette, or a high-collared brocade jacket. Colors are deep: charcoal, navy, forest green, deep burgundy.
-        **MOOD & POSE:** Independent, formidable, successful. A confident, perhaps slightly challenging gaze. Strong pose: hand on hip, leaning on a desk, holding riding gloves.
-        **LIGHTING:** **Strong, Directional Chiaroscuro.** A single, powerful light source that sculpts the face and emphasizes strength and structure.
+        **STYLE:** Belle Époque Portrait (Boldini / Sargent style). Dynamic, swishing fabrics, magnetic personality.
+        **SETTING:** A luxurious private boudoir or an opera box with red velvet curtains.
+        **ATTIRE:** A stunning, form-fitting velvet gown in Deep Black or Burgundy. Long silk gloves. Statement jewelry (pearls or rubies).
+        **POSE:** Confident and slightly seductive. Hand on hip, or adjusting a glove. Intense, direct eye contact that creates a connection. "I am the main character."
+        **LIGHTING:** **Dramatic Glamour.** High contrast but flattering. Highlights on the cheekbones and collarbones.
         `;
-        framingOverride = "**FRAMING:** Medium Shot (Waist Up) or Medium Close-Up. Focus on the powerful expression and confident stance.";
+        framingOverride = "**FRAMING:** Medium Shot. Focus on the silhouette, the posture, and the intense gaze.";
     }
 
     // --- ESTRUCTURA FINAL DEL PROMPT ---
     return `
-    You are a Master Painter creating a museum-quality oil painting of a powerful historical woman.
+    You are a Master Painter creating a stunning, commercially appealing oil painting of a woman.
     **INSTRUCTIONS:**
-    1.  **Analyze** the input image(s) to capture the exact likeness of the main female subject and include any other present subjects/pets.
-    2.  **Transform** them into the historical style defined below, focusing on luxury and beauty.
-    3.  **Apply** a rich, detailed oil painting texture.
+    1.  **Analyze** the input image(s) to capture the subject's beauty and likeness.
+    2.  **Transform** her into the specific style below, maximizing beauty and femininity.
+    3.  **Apply** a rich, glossy oil painting texture.
     
     ${promptStyle}
     
     **CRITICAL TECHNICAL SPECS:**
     **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
     ${framingOverride}
-    **NEGATIVE CONSTRAINTS (STRICT):** **No picture frames, no painted borders**, no modern clothing, no distorted faces, no sunglasses, no sad or weak expressions. The look must be one of success and beauty.
+    **NEGATIVE CONSTRAINTS (STRICT):** **NO BOOKS, NO GLASSES, NO MASCULINE CLOTHING**, no boring backgrounds, no sad expressions, no distorted faces, no extra limbs. The image must be BEAUTIFUL and DESIRABLE.
     `;
 };
