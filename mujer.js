@@ -1,123 +1,80 @@
 // ARCHIVO: mujer.js
-// V92 FINAL ENGINE: MOTOR DE ALEATORIEDAD + CALIDAD EXTREMA + IDENTIDAD BLINDADA
+// V94: ADAPTACIÓN ORGÁNICA (Cero Plantillas). La foto original MANDA.
 
 module.exports = function(style, numSubjects, isGroup) {
 
-    // --- 0. MOTOR DE ALEATORIEDAD (El antídoto contra el aburrimiento) ---
-    const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-    // --- 1. CONFIGURACIÓN DINÁMICA DE ESTILOS ---
-    let styleDetails = "";
+    // --- 1. ESTILOS ADAPTATIVOS (No aleatorios) ---
+    // La IA debe "leer" la foto y mejorarla, no inventar de cero.
+    let stylePrompt = "";
 
     if (style === 'musa') {
-        const settings = [
-            "a mysterious ancient forest with dappled sunlight",
-            "a serene lakeside at twilight with reflection on the water",
-            "a crumbling greek stone balcony overrun with ivy and roses",
-            "a secret garden filled with glowing fireflies and mist",
-            "a golden wheat field under a dramatic sunset"
-        ];
-        const colors = ["Dusty Rose and Gold", "Deep Emerald and Silver", "Ethereal White and Pearls", "Rich Lavender and Cream", "Sapphire Blue and Bronze"];
-        const textures = ["sheer chiffon", "heavy velvet", "intricate lace", "flowing silk"];
-        const poses = [
-            "looking dreamily over her shoulder",
-            "touching a flower delicately near her face",
-            "reclining gracefully on a stone bench",
-            "standing tall with wind blowing through her hair",
-            "gazing upward with a look of longing"
-        ];
-
-        styleDetails = `
-        **STYLE:** **Pre-Raphaelite Masterpiece** (Influence: Waterhouse, Rossetti, Leighton).
-        **SCENE:** ${pick(settings)}.
-        **ATTIRE:** A unique ${pick(colors)} gown made of ${pick(textures)}. adorned with flower crowns or subtle vintage jewelry.
-        **POSE ACTION:** She is ${pick(poses)}. NO STIFFNESS. Fluid, organic movement.
-        **LIGHTING:** **Ethereal Sfumato.** Soft, hazy, magical light that wraps around the subject.
+        stylePrompt = `
+        **STYLE:** **Pre-Raphaelite / Romanticism** (Waterhouse style).
+        **ADAPTATION STRATEGY:**
+        - **Analyze the input background:** Transform it into a magical, artistic version. If she is indoors, turn it into a lush conservatory or ancient room. If outdoors, turn it into a magical garden.
+        - **Analyze the outfit:** Transform her current clothes into flowing, ethereal silk robes that follow the same drape and movement.
+        - **Vibe:** Soft, poetic, dreamy. Keep the gentleness of the original photo.
         `;
     } 
     else if (style === 'realeza') {
-        const settings = [
-            "a grand Hall of Mirrors with crystal chandeliers",
-            "a royal terrace overlooking a vast empire",
-            "a private royal garden filled with white marble statues",
-            "the grand staircase of a winter palace",
-            "an opulent tea room with gold leaf walls"
-        ];
-        const colors = ["Royal Blue and Diamonds", "Crimson Red and Ermine Fur", "Emerald Green and Gold Embroidery", "Champagne Silk and Rubies", "Deep Purple and Amethyst"];
-        const props = ["resting a hand on a velvet chair", "adjusting a diamond bracelet", "standing with regal posture holding the dress volume", "looking proudly at her domain"];
-        
-        styleDetails = `
-        **STYLE:** **Grand Manner Royal Portrait** (Influence: Winterhalter, Vigée Le Brun).
-        **SCENE:** ${pick(settings)}.
-        **ATTIRE:** A Massive, Pompous Ballgown in ${pick(colors)}. **MANDATORY:** A spectacular Tiara and statement necklace.
-        **POSE ACTION:** Majestic and proud, ${pick(props)}.
-        **LIGHTING:** **Sparkling Daylight.** Crisp, high-end illumination that makes the jewelry blind the viewer with brilliance.
+        stylePrompt = `
+        **STYLE:** **Grand Manner Royal Portrait** (Winterhalter style).
+        **ADAPTATION STRATEGY:**
+        - **Analyze the input posture:** Elevate her current pose to be more majestic. Straighten the back slightly.
+        - **Background:** Transform the surroundings into a Palace interior or terrace that MATCHES the lighting direction of the original photo.
+        - **Attire:** Upgrade her current outfit into a Pompous Royal Ballgown. Add a Tiara that fits her head angle naturally.
         `;
     } 
     else if (style === 'empoderada') {
-        const settings = [
-            "a luxurious private library with dark wood",
-            "an opera box with heavy red velvet curtains",
-            "a high-fashion studio with an abstract painted backdrop",
-            "a dramatic balcony with a stormy sky background",
-            "a sophisticated Parisian salon at night"
-        ];
-        const outfits = [
-            "a structured black velvet tuxedo-style gown",
-            "a daring deep red silk dress with gloves",
-            "a gold brocade outfit with a high collar",
-            "a dramatic cape over a fitted evening gown"
-        ];
-        const vibes = ["intense and challenging", "mysterious and seductive", "confident and owning the room", "intellectual and sharp"];
-
-        styleDetails = `
-        **STYLE:** **Belle Époque / Vogue Historical** (Influence: Giovanni Boldini, John Singer Sargent).
-        **SCENE:** ${pick(settings)}.
-        **ATTIRE:** ${pick(outfits)}. High-fashion, expensive, bold.
-        **POSE ACTION:** ${pick(vibes)}. Dynamic brushwork, swishing fabrics, kinetic energy.
-        **LIGHTING:** **Dramatic "Butterfly" Studio Light.** High contrast, sculpting the face, highlighting the eyes.
+        stylePrompt = `
+        **STYLE:** **High-Fashion Historical Portrait** (Boldini / Sargent style).
+        **ADAPTATION STRATEGY:**
+        - **Analyze the attitude:** Capture the exact energy/vibe she is projecting. Amplify it.
+        - **Background:** Create a luxurious, dramatic atmosphere (Dark Velvet / Studio) that complements the subject's coloring.
+        - **Attire:** Transform her clothes into a "Power Outfit" (Velvet, Silk, Structured) but respect the original silhouette if it's strong.
         `;
     }
 
-    // --- 2. LÓGICA DE ENCUADRE INTELIGENTE ---
+    // --- 2. ENCUADRE ORGÁNICO ---
+    // Ya no forzamos nada. Dejamos que la foto original dicte el mejor encuadre.
     let framingInstruction = "";
     if (numSubjects > 1) {
-        framingInstruction = "**COMPOSITION:** GROUP SHOT. Use a **Medium Shot (Waist Up)** or **Three-Quarter Shot**. Zoom out to include ALL subjects (children/pets) comfortably. Create a cohesive connection between them.";
+        framingInstruction = "**COMPOSITION:** Include ALL subjects comfortably. Use the original photo's arrangement as a guide but improve the spacing/balance.";
     } else {
         framingInstruction = `
-        **COMPOSITION:** **BEST AESTHETIC CHOICE.**
-        - **Analyze the Pose:** If the dress/outfit is massive, pull back to a Medium Shot.
-        - **Analyze the Face:** If the expression is captivating, ZOOM IN for a Portrait.
-        - **DO NOT DEFAULT TO THE SAME FRAMING.** Vary the distance based on what looks most expensive.
+        **COMPOSITION:** **RESPECT THE ORIGINAL FRAMING CUES.**
+        - If the user uploaded a Close-Up -> Keep it intimate and detailed.
+        - If the user uploaded a Full Body/Pose -> Keep the framing wide to show the outfit.
+        - **IMPROVE, DON'T CROP:** You may widen the shot slightly to add artistic context, but do not lose the essence of the original crop.
         `;
     }
 
-    // --- 3. PROMPT MAESTRO (EL CEREBRO) ---
+    // --- 3. PROMPT MAESTRO (ADAPTACIÓN TOTAL) ---
     return `
-    You are a Master Painter creating a **MUSEUM-QUALITY OIL PAINTING**.
-
-    **🔴 TECHNICAL REQUIREMENT:**
-    **ASPECT RATIO:** **VERTICAL 4:5**. DO NOT MAKE IT SQUARE.
-
-    **STEP 1: THE SUBJECT (IDENTITY LOCK)**
-    - Input: **${numSubjects} subject(s)**. **PAINT THEM ALL.**
-     - **BIOMETRIC FIDELITY:** You must keep the **EXACT facial features** (nose, eyes, mouth) of the source photo. The person must be instantly recognizable.
-    - **BEAUTIFICATION:** Improve skin texture and lighting, but do NOT change the facial structure to look generic.
-    - **TRANSFORMATION:** The person is the ACTOR. The face remains hers, but the **style, hair volume, skin texture, and lighting** must be elevated to "Goddess/Queen" levels.
-
-    **STEP 2: THE SCENE (DYNAMIC GENERATION)**
-    ${styleDetails}
+    You are a Master Painter performing a **HIGH-END STYLE TRANSFER**.
     
-    **STEP 3: EXECUTION**
+    **🔴 TECHNICAL:** ASPECT RATIO VERTICAL 4:5.
+
+    **STEP 1: ANALYZE & RESPECT (THE BASE)**
+    - Input: **${numSubjects} subject(s)**. Paint them ALL.
+    - **IDENTITY:** Keep the facial features 100% IDENTICAL.
+    - **ORGANIC BASIS:** Do NOT treat the input as a loose reference. Use the **lighting direction, pose, and composition** of the source image as the FOUNDATION.
+    - **Avoid the "Sticker" effect:** The subject must feel like they are *actually* in the scene, not pasted on top. Match the lighting of the face to the background perfectly.
+
+    **STEP 2: THE TRANSFORMATION**
+    ${stylePrompt}
     ${framingInstruction}
-    - **TEXTURE:** Rich, visible oil brushstrokes. Impasto details on jewelry/flowers. Glazing on skin.
-    - **QUALITY:** Hyper-detailed, award-winning art.
+
+    **STEP 3: ARTISTIC FINISH**
+    - **Medium:** Oil on Canvas.
+    - **Texture:** Realistic brushwork.
+    - **Goal:** It should look like the user traveled back in time and posed for a painter, NOT like a Photoshop collage.
 
     **⛔ NEGATIVE CONSTRAINTS:**
-    - **DO NOT REPEAT THE SAME POSE AS THE INPUT PHOTO.** ACT!
-    - **DO NOT CHANGE THE FACIAL IDENTITY.**
-    - NO PICTURE FRAMES, NO BORDERS.
-    - NO CARTOON, NO 3D RENDER, NO PLASTIC SKIN.
-    - NO RIGID/STIFF POSES.
+    - **NO GENERIC TEMPLATES.**
+    - NO CHANGING THE FACE.
+    - NO DISCONNECTED LIGHTING (Subject and background must match).
+    - NO CARTOON/3D.
+    - NO MISSING PEOPLE/PETS.
     `;
 };
