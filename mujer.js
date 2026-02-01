@@ -1,80 +1,88 @@
 // ARCHIVO: mujer.js
-// V94: ADAPTACIÓN ORGÁNICA (Cero Plantillas). La foto original MANDA.
+// V102: INCLUSIÓN TOTAL + JERARQUÍA (Ella es la protagonista, los demás acompañan)
 
 module.exports = function(style, numSubjects, isGroup) {
 
-    // --- 1. ESTILOS ADAPTATIVOS (No aleatorios) ---
-    // La IA debe "leer" la foto y mejorarla, no inventar de cero.
+    // --- 1. DEFINICIÓN DE ESTILOS (Musa, Reina, Empoderada) ---
     let stylePrompt = "";
 
     if (style === 'musa') {
         stylePrompt = `
-        **STYLE:** **Pre-Raphaelite / Romanticism** (Waterhouse style).
-        **ADAPTATION STRATEGY:**
-        - **Analyze the input background:** Transform it into a magical, artistic version. If she is indoors, turn it into a lush conservatory or ancient room. If outdoors, turn it into a magical garden.
-        - **Analyze the outfit:** Transform her current clothes into flowing, ethereal silk robes that follow the same drape and movement.
-        - **Vibe:** Soft, poetic, dreamy. Keep the gentleness of the original photo.
+        **ARTISTIC VISION:** **The Ethereal Muse.**
+        **STYLE:** Pre-Raphaelite Oil Painting (Waterhouse). Soft, romantic.
+        **THE LOOK:** Goddess of nature.
+        **ATTIRE:** Flowing silk robes, soft drapes, flower accents. Colors: Deep Emerald, Dusty Rose, or Gold.
+        **LIGHTING:** **Magical Sfumato.** Soft, glowing light.
+        **BACKGROUND:** A blurred, artistic garden or twilight lake.
         `;
     } 
     else if (style === 'realeza') {
         stylePrompt = `
-        **STYLE:** **Grand Manner Royal Portrait** (Winterhalter style).
-        **ADAPTATION STRATEGY:**
-        - **Analyze the input posture:** Elevate her current pose to be more majestic. Straighten the back slightly.
-        - **Background:** Transform the surroundings into a Palace interior or terrace that MATCHES the lighting direction of the original photo.
-        - **Attire:** Upgrade her current outfit into a Pompous Royal Ballgown. Add a Tiara that fits her head angle naturally.
+        **ARTISTIC VISION:** **The Absolute Queen.**
+        **STYLE:** Royal Grand Manner Portrait (Winterhalter). Detailed, sharp.
+        **THE LOOK:** Ruler of an empire. Maximum status.
+        **ATTIRE:** Heavy Royal Ballgown (Satin/Velvet). Tiara is MANDATORY.
+        **LIGHTING:** **Luxurious Daylight.** Bright, crisp lighting.
+        **BACKGROUND:** An opulent palace interior.
         `;
     } 
     else if (style === 'empoderada') {
         stylePrompt = `
-        **STYLE:** **High-Fashion Historical Portrait** (Boldini / Sargent style).
-        **ADAPTATION STRATEGY:**
-        - **Analyze the attitude:** Capture the exact energy/vibe she is projecting. Amplify it.
-        - **Background:** Create a luxurious, dramatic atmosphere (Dark Velvet / Studio) that complements the subject's coloring.
-        - **Attire:** Transform her clothes into a "Power Outfit" (Velvet, Silk, Structured) but respect the original silhouette if it's strong.
+        **ARTISTIC VISION:** **The Iron Lady (Vogue Historical).**
+        **STYLE:** High-Fashion Dramatic Portrait (Boldini / Sargent). Energetic.
+        **THE LOOK:** She owns the room. Unstoppable confidence.
+        **ATTIRE:** Structured Power-Fashion. Black Velvet, Deep Red Silk.
+        **LIGHTING:** **Dramatic Chiaroscuro.** High contrast studio light.
+        **BACKGROUND:** Dark, luxurious abstract or heavy curtains.
         `;
     }
 
-    // --- 2. ENCUADRE ORGÁNICO ---
-    // Ya no forzamos nada. Dejamos que la foto original dicte el mejor encuadre.
-    let framingInstruction = "";
-    if (numSubjects > 1) {
-        framingInstruction = "**COMPOSITION:** Include ALL subjects comfortably. Use the original photo's arrangement as a guide but improve the spacing/balance.";
-    } else {
-        framingInstruction = `
-        **COMPOSITION:** **RESPECT THE ORIGINAL FRAMING CUES.**
-        - If the user uploaded a Close-Up -> Keep it intimate and detailed.
-        - If the user uploaded a Full Body/Pose -> Keep the framing wide to show the outfit.
-        - **IMPROVE, DON'T CROP:** You may widen the shot slightly to add artistic context, but do not lose the essence of the original crop.
-        `;
-    }
-
-    // --- 3. PROMPT MAESTRO (ADAPTACIÓN TOTAL) ---
-    return `
-    You are a Master Painter performing a **HIGH-END STYLE TRANSFER**.
+    // --- 2. ENCUADRE Y JERARQUÍA (La Lógica Clave) ---
+    let framing = "";
     
-    **🔴 TECHNICAL:** ASPECT RATIO VERTICAL 4:5.
+    if (numSubjects > 1) {
+        // LÓGICA DE GRUPO: TODOS DENTRO, ELLA AL MANDO
+        framing = `
+        **FRAMING & HIERARCHY:** **GROUP PORTRAIT.**
+        - **INCLUSION IS MANDATORY:** You must paint ALL ${numSubjects} subjects found in the input. Do not ignore children, friends, or pets.
+        - **COMPOSITION:** Use a **Medium Shot (Waist Up)** or **Three-Quarter Shot**. Zoom out to fit everyone comfortably.
+        - **VISUAL HIERARCHY:** The Main Woman is the PROTAGONIST. Place her centrally or give her the brightest lighting. The others (partners, kids, pets) should surround her lovingly, but **SHE MUST BE THE VISUAL FOCUS.**
+        `;
+    } else {
+        // LÓGICA INDIVIDUAL
+        framing = `
+        **FRAMING:** **SOLO PORTRAIT.**
+        - Analyze the pose. If the face is the power, do a **Close-Up**. 
+        - If the dress is the power, do a **Medium Shot**. 
+        - **Goal:** Make her look like the most important person in the world.
+        `;
+    }
 
-    **STEP 1: ANALYZE & RESPECT (THE BASE)**
-    - Input: **${numSubjects} subject(s)**. Paint them ALL.
-    - **IDENTITY:** Keep the facial features 100% IDENTICAL.
-    - **ORGANIC BASIS:** Do NOT treat the input as a loose reference. Use the **lighting direction, pose, and composition** of the source image as the FOUNDATION.
-    - **Avoid the "Sticker" effect:** The subject must feel like they are *actually* in the scene, not pasted on top. Match the lighting of the face to the background perfectly.
+    // --- 3. PROMPT MAESTRO ---
+    return `
+    You are a Master Portrait Painter creating a **MUSEUM-QUALITY OIL PAINTING**.
 
-    **STEP 2: THE TRANSFORMATION**
+    **🔴 TECHNICAL:** ASPECT RATIO **VERTICAL 4:5**. DO NOT MAKE IT SQUARE.
+
+    **STEP 1: THE CAST (NO ONE LEFT BEHIND)**
+    - Input: **${numSubjects} subject(s)**. **PAINT EVERY SINGLE ONE.**
+    - **CHECK:** Count the heads in the source photo. If there are 3, paint 3. If there is a dog, paint the dog.
+    - **IDENTITY:** Preserve the **EXACT facial features** of the main woman. She must recognize herself instantly.
+    - **PETS:** Paint pets with high-detail realism (fur texture, bright eyes). They are part of the family.
+
+    **STEP 2: THE SCENE**
     ${stylePrompt}
-    ${framingInstruction}
+    ${framing}
 
-    **STEP 3: ARTISTIC FINISH**
-    - **Medium:** Oil on Canvas.
-    - **Texture:** Realistic brushwork.
-    - **Goal:** It should look like the user traveled back in time and posed for a painter, NOT like a Photoshop collage.
+    **STEP 3: EXECUTION**
+    - **Medium:** 100% Oil on Canvas.
+    - **Brushwork:** Visible, artistic brushstrokes. NO digital smoothing.
+    - **Transformation:** Replace boring clothes with the requested Historical/Royal attire for everyone.
 
     **⛔ NEGATIVE CONSTRAINTS:**
-    - **NO GENERIC TEMPLATES.**
-    - NO CHANGING THE FACE.
-    - NO DISCONNECTED LIGHTING (Subject and background must match).
-    - NO CARTOON/3D.
-    - NO MISSING PEOPLE/PETS.
+    - **DO NOT REMOVE ANY PERSON OR PET.**
+    - DO NOT CHANGE THE MAIN WOMAN'S FACE.
+    - NO UGLY POSES.
+    - NO CARTOON, NO 3D.
     `;
 };
