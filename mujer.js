@@ -1,71 +1,76 @@
 // ARCHIVO: mujer.js
-// Lógica V82: SIMPLIFICADA. Fidelidad Total + Encuadre Automático + Cero Rigidez.
+// Lógica V83: REALISMO DE MUSEO (Cero Caricatura) + FORMATO VERTICAL 4:5 + FIDELIDAD
 
 module.exports = function(style, numSubjects, isGroup) {
     
-    // --- 1. LÓGICA DE ENCUADRE AUTOMÁTICA (No dejamos que la IA decida mal) ---
+    // --- 1. LÓGICA DE ENCUADRE AUTOMÁTICA (Mantiene lo que funciona) ---
     let framingInstruction = "";
     
     if (numSubjects > 1) {
-        // Si hay más de 1 (mujer + hijos/perro/amiga), forzamos plano abierto.
-        framingInstruction = "**FRAMING:** MEDIUM SHOT or THREE-QUARTER SHOT. You MUST zoom out enough to include ALL subjects comfortably. Do not cut anyone off.";
+        // Más de 1 persona: Plano Medio/Abierto para que quepan todos.
+        framingInstruction = "**FRAMING:** MEDIUM SHOT (Waist Up) or THREE-QUARTER SHOT. Zoom out to include ALL subjects comfortably. Do not cut anyone off.";
     } else {
-        // Si es solo ella, damos libertad entre retrato y medio cuerpo.
-        framingInstruction = "**FRAMING:** Portrait or Medium Shot. Focus on her beauty, but keep the framing natural, not stiff.";
+        // Solo ella: Retrato o Plano Medio (pero con aire, elegante).
+        framingInstruction = "**FRAMING:** Classic Portrait Framing. Elegant and balanced.";
     }
 
-    // --- 2. ESTILOS SIMPLIFICADOS (Ambiente y Ropa, no Poses Rígidas) ---
+    // --- 2. ESTILOS DE MUSEO (Realismo Pictórico, no Digital) ---
     let stylePrompt = "";
 
     if (style === 'musa') {
         stylePrompt = `
-        **STYLE:** Magical Fantasy Oil Painting (Pre-Raphaelite style).
-        **ATMOSPHERE:** Dreamy, soft, surrounded by nature and magic. A blooming garden or enchanted forest.
-        **ATTIRE:** Flowing silk robes, pastel colors (rose, lilac, gold), flower crowns.
-        **LIGHTING:** Soft, magical glow. Ethereal and romantic.
+        **STYLE:** **Pre-Raphaelite Masterpiece** (John William Waterhouse style). Oil on Canvas.
+        **TEXTURE:** Visible oil brushstrokes, realistic skin texture (pores, natural flush), soft natural lighting. NOT digital art.
+        **ATMOSPHERE:** A romantic, lush garden or nature setting.
+        **ATTIRE:** Renaissance-inspired silk robes, soft textures, natural flower details.
+        **LIGHTING:** Soft, diffused natural light (Sfumato technique).
         `;
     } 
     else if (style === 'realeza') {
         stylePrompt = `
-        **STYLE:** High-End Royal Portrait (Disney-esque Realism). Vibrant and Colorful.
-        **ATMOSPHERE:** A bright, luxurious palace balcony or garden. Blue skies, white marble.
-        **ATTIRE:** Pompous, colorful ballgown (Pink, Blue, Emerald). Sparkling Tiara and Jewels.
-        **LIGHTING:** Bright daylight, happy and majestic.
+        **STYLE:** **Grand Manner Portraiture** (Franz Xaver Winterhalter / Velázquez style). Oil on Canvas.
+        **TEXTURE:** Hyper-realistic fabrics (satin sheen, velvet depth), realistic jewelry reflection. Museum quality.
+        **ATMOSPHERE:** A grand palace interior with architectural depth.
+        **ATTIRE:** Historical Royal Gown (rich colors: Royal Blue, Crimson, or Emerald). Detailed Tiara.
+        **LIGHTING:** Chiaroscuro. Directional light that creates volume and realism.
         `;
     } 
     else if (style === 'empoderada') {
         stylePrompt = `
-        **STYLE:** High-Fashion Historical Studio Photography (Vogue 1920s style).
-        **ATMOSPHERE:** Luxurious dark studio background (Velvet curtains, abstract texture).
-        **ATTIRE:** Elegant, structured fashion. Black velvet, deep red, pearls, sophisticated evening gowns.
-        **LIGHTING:** Dramatic Studio Lighting. High contrast, elegant and sharp.
+        **STYLE:** **19th Century Realism** (John Singer Sargent / Giovanni Boldini style). Oil on Canvas.
+        **TEXTURE:** Bold, confident brushwork but with highly realistic faces. Elegant and sharp.
+        **ATMOSPHERE:** A dark, sophisticated studio background.
+        **ATTIRE:** High-fashion black velvet, pearls, elegant silhouette.
+        **LIGHTING:** Dramatic studio lighting, highlighting the face features realistically.
         `;
     }
 
-    // --- 3. PROMPT FINAL BLINDADO ---
+    // --- 3. PROMPT FINAL BLINDADO (Formato 4:5 + Realismo) ---
     return `
-    You are a Master Artist creating a custom portrait.
+    You are a Master Painter (Old Master) creating a **MUSEUM-QUALITY OIL PAINTING**.
     
-    **STEP 1: SUBJECT CHECK (CRITICAL)**
-    - You have received images containing **${numSubjects} subject(s)** (people/pets).
-    - **YOU MUST PAINT EXACTLY ${numSubjects} SUBJECTS.** - **DO NOT IGNORE ANYONE.** If there is a dog, paint the dog. If there is a child, paint the child. If there is a friend, paint the friend.
-    - **HIERARCHY:** The main woman is the focal point, but all other subjects must be present and interacting naturally with her.
+    **STEP 1: SUBJECT FIDELITY (CRITICAL)**
+    - Input contains: **${numSubjects} subject(s)**.
+    - **PAINT EXACTLY ${numSubjects} SUBJECTS.** Do not ignore children or pets.
+    - **FACE FIDELITY:** Keep the exact facial structure and features of the source photos. Do not turn them into cartoons. They must look like REAL people painted in oil.
 
-    **STEP 2: IDENTITY & FACIAL FIDELITY**
-    - **KEEP THE FACES EXACTLY AS THEY ARE.** Do not change features, nose, eyes, or expressions to look "generic". 
-    - Beautify via **Lighting and Skin Texture**, NOT by changing bone structure.
-    - The subjects must be instantly recognizable.
-
+    **STEP 2: ARTISTIC EXECUTION**
+    - **MEDIUM:** 100% OIL ON CANVAS. Use glazing, impasto, and realistic shading.
+    - **NO CARTOONS:** The skin must look like skin, not plastic. The hair must look like hair, not solid shapes.
+    
     **STEP 3: STYLE & COMPOSITION**
     ${stylePrompt}
     
     ${framingInstruction}
     
+    **TECHNICAL SPECS:**
+    - **ASPECT RATIO:** **Vertical 4:5** (ALWAYS).
+    - **COMPOSITION:** Classical, balanced, museum-worthy.
+
     **NEGATIVE CONSTRAINTS:**
+    - **NO CARTOON, NO 3D RENDER, NO ILLUSTRATION STYLE, NO ANIME.**
+    - No plastic skin, no airbrushed look.
     - DO NOT REMOVE PEOPLE OR PETS.
-    - DO NOT CHANGE FACES.
-    - NO STIFF/RIGID POSES.
-    - No books, no glasses, no masculine clothes.
-    - No sad expressions.
+    - No modern clothing (t-shirts, glasses).
     `;
 };
