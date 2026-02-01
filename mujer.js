@@ -101,7 +101,8 @@ module.exports = function(style, numSubjects, isGroup) {
 
     **STEP 1: THE SUBJECT (IDENTITY LOCK)**
     - Input: **${numSubjects} subject(s)**. **PAINT THEM ALL.**
-    - **BIOMETRIC FIDELITY:** You must keep the **EXACT facial features** (nose, eyes, mouth structure) of the source photo.
+     - **BIOMETRIC FIDELITY:** You must keep the **EXACT facial features** (nose, eyes, mouth) of the source photo. The person must be instantly recognizable.
+    - **BEAUTIFICATION:** Improve skin texture and lighting, but do NOT change the facial structure to look generic.
     - **TRANSFORMATION:** The person is the ACTOR. The face remains hers, but the **style, hair volume, skin texture, and lighting** must be elevated to "Goddess/Queen" levels.
 
     **STEP 2: THE SCENE (DYNAMIC GENERATION)**
