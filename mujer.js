@@ -1,9 +1,9 @@
 // ARCHIVO: mujer.js
-// V102: INCLUSIÓN TOTAL + JERARQUÍA (Ella es la protagonista, los demás acompañan)
+// V103: FIDELIDAD BIOMÉTRICA TEXTUAL + JERARQUÍA + MASCOTAS/GRUPOS
 
 module.exports = function(style, numSubjects, isGroup) {
 
-    // --- 1. DEFINICIÓN DE ESTILOS (Musa, Reina, Empoderada) ---
+    // --- 1. DEFINICIÓN DE ESTILOS ---
     let stylePrompt = "";
 
     if (style === 'musa') {
@@ -37,38 +37,35 @@ module.exports = function(style, numSubjects, isGroup) {
         `;
     }
 
-    // --- 2. ENCUADRE Y JERARQUÍA (La Lógica Clave) ---
+    // --- 2. ENCUADRE Y JERARQUÍA ---
     let framing = "";
     
     if (numSubjects > 1) {
-        // LÓGICA DE GRUPO: TODOS DENTRO, ELLA AL MANDO
         framing = `
         **FRAMING & HIERARCHY:** **GROUP PORTRAIT.**
-        - **INCLUSION IS MANDATORY:** You must paint ALL ${numSubjects} subjects found in the input. Do not ignore children, friends, or pets.
-        - **COMPOSITION:** Use a **Medium Shot (Waist Up)** or **Three-Quarter Shot**. Zoom out to fit everyone comfortably.
-        - **VISUAL HIERARCHY:** The Main Woman is the PROTAGONIST. Place her centrally or give her the brightest lighting. The others (partners, kids, pets) should surround her lovingly, but **SHE MUST BE THE VISUAL FOCUS.**
+        - **INCLUSION:** Paint ALL ${numSubjects} subjects found in the input (friends, children, pets). Do not ignore anyone.
+        - **COMPOSITION:** Use a **Medium Shot (Waist Up)**. Zoom out to fit everyone.
+        - **HIERARCHY:** The Main Woman is the **PROTAGONIST**. Give her the best lighting and central position. Pets/Partners complement her.
         `;
     } else {
-        // LÓGICA INDIVIDUAL
         framing = `
         **FRAMING:** **SOLO PORTRAIT.**
-        - Analyze the pose. If the face is the power, do a **Close-Up**. 
-        - If the dress is the power, do a **Medium Shot**. 
+        - Use **Best Aesthetic Choice**: Close-Up for emotion, Medium Shot for fashion. 
         - **Goal:** Make her look like the most important person in the world.
         `;
     }
 
-    // --- 3. PROMPT MAESTRO ---
+    // --- 3. PROMPT MAESTRO (CON CANDADO BIOMÉTRICO) ---
     return `
     You are a Master Portrait Painter creating a **MUSEUM-QUALITY OIL PAINTING**.
 
     **🔴 TECHNICAL:** ASPECT RATIO **VERTICAL 4:5**. DO NOT MAKE IT SQUARE.
 
-    **STEP 1: THE CAST (NO ONE LEFT BEHIND)**
+    **STEP 1: THE SUBJECTS (IDENTITY LOCK)**
     - Input: **${numSubjects} subject(s)**. **PAINT EVERY SINGLE ONE.**
-    - **CHECK:** Count the heads in the source photo. If there are 3, paint 3. If there is a dog, paint the dog.
-    - **IDENTITY:** Preserve the **EXACT facial features** of the main woman. She must recognize herself instantly.
-    - **PETS:** Paint pets with high-detail realism (fur texture, bright eyes). They are part of the family.
+    - **BIOMETRIC FIDELITY:** You must keep the **EXACT facial features** (nose, eyes, mouth) of the source photo. The person must be instantly recognizable.
+    - **BEAUTIFICATION:** Improve skin texture and lighting, but do NOT change the facial structure to look generic.
+    - **PETS:** If there is a pet, paint it with high-detail realism. Do not ignore it.
 
     **STEP 2: THE SCENE**
     ${stylePrompt}
@@ -77,11 +74,11 @@ module.exports = function(style, numSubjects, isGroup) {
     **STEP 3: EXECUTION**
     - **Medium:** 100% Oil on Canvas.
     - **Brushwork:** Visible, artistic brushstrokes. NO digital smoothing.
-    - **Transformation:** Replace boring clothes with the requested Historical/Royal attire for everyone.
+    - **Transformation:** Replace boring clothes with the requested Historical/Royal attire.
 
     **⛔ NEGATIVE CONSTRAINTS:**
+    - **DO NOT CHANGE THE FACE.** (Identity is priority #1).
     - **DO NOT REMOVE ANY PERSON OR PET.**
-    - DO NOT CHANGE THE MAIN WOMAN'S FACE.
     - NO UGLY POSES.
     - NO CARTOON, NO 3D.
     `;
