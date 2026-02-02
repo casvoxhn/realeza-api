@@ -174,10 +174,12 @@ ${categoryGuardrails}
     `**GROUP COMPOSITION:** one seated / one standing if it helps composition. Keep proportions consistent. ALL faces equally recognizable.`
   ];
 
-  const interaction = isMulti ? `\n**GROUP INTERACTION:** ${pick(groupInteractions)}.` : "";
-
-  framing = (isMulti ? pick(groupFramings) : pick(soloFramings)) + interaction;
-
+// Selección de Encuadre
+  const interaction = isMulti ? `\n**INTERACTION:** ${pick(groupInteractions)}.` : "";
+  
+  // Si es multi, usa groupFramings obligatoriamente
+  framing = (isMulti ? pick(groupFramings) : pick(soloPoses)) + interaction;
+  
   // Llamada al masterPrompt (Constitución)
   return masterPrompt(numSubjects, styleDescription, framing);
 };
