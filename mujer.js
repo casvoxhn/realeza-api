@@ -1,10 +1,7 @@
-// ARCHIVO: mujer.js (FINAL v4)
-// Meta: ya ganaste consistencia. Ahora ganamos "estética premium".
-// Cambios clave v4:
-// - Quitamos lenguaje de foto/estudio (eso te estaba matando).
-// - Fondos con profundidad tipo óleo clásico (sin caras en decor).
-// - Más pomposidad: telas pesadas, bordados, encajes, capas, props nobles.
-// - "Disney" = live-action fairytale / storybook romantic realism (NO cartoon).
+// ARCHIVO: mujer.js (FINAL v6)
+// 3 estilos distinguibles + estética premium (obra maestra) + variación segura
+// + interacción en grupos + anti-uniforme.
+// Importante: SIN lenguaje fotográfico (mata la sensación de cuadro caro).
 
 const masterPrompt = require('./masterPrompt');
 
@@ -14,50 +11,48 @@ module.exports = function (style, numSubjects, isGroup, options = {}) {
   const group = (Number(numSubjects) > 1) || Boolean(isGroup);
 
   const {
-    poseMode = "mix_standing_seated",     // "standing_only" | "mix_standing_seated" | "seated_only"
-    groupPoseMode = "mix_standing_seated",// "standing_only" | "mix_standing_seated"
+    poseMode = "mix_standing_seated",
+    groupPoseMode = "mix_standing_seated",
     accessoriesMode = "refined_plus",     // "none" | "refined_default" | "refined_plus"
     backgroundMode = "storybook_depth",   // "dark_simple" | "storybook_depth"
     opulenceLevel = "high"               // "medium" | "high"
   } = options;
 
-  // Guardrails de categoría
   const categoryGuardrails = `
 **CATEGORY GUARDRAILS (WOMAN / PREMIUM ART):**
-- Must feel like a high-end commissioned painting someone would proudly hang on a wall.
-- Romantic, elevated, "storybook live-action" atmosphere — but naturalistic realism (NOT cartoon).
+- Must feel like a high-end commissioned painting someone would hang on a wall.
+- Express "wow" ONLY through storybook realism: warm romantic glow, atmospheric depth, rich textiles, elegant staging.
+- Naturalistic realism only (no stylized illustration, no exaggerated cute proportions).
 - Background decor must contain NO faces: no portraits, statues, figurative murals, crowds.
-- Avoid modern studio-photo vibe. Keep it painterly, staged, and luxurious.
+- Avoid modern studio-photo vibe. Keep it painterly and luxurious.
 `;
 
-  // Fondos (profundos, tipo óleo clásico)
+  // Fondos con profundidad (sin caras)
   const backgroundsDarkSimple = [
-    "a deep warm umber background with subtle tonal transitions (low detail, painterly)",
+    "a deep warm umber background with subtle tonal transitions (painterly, low detail)",
     "a dark olive-brown gradient with soft vignette (painterly)",
     "a charcoal-to-warm-brown background with gentle atmosphere (painterly)"
   ];
 
   const backgroundsStorybookDepth = [
     "a painterly twilight garden with soft atmospheric depth and warm glow (no people, no faces in decor)",
-    "a grand interior with heavy velvet drapery and subtle columns (NO portraits/statues, no faces)",
-    "a classical painted sky backdrop with warm clouds and golden light (painterly, romantic, no figures)",
-    "a dim palace corridor with draped fabric and candlelike glow (no portraits/statues, no faces)",
+    "a grand interior with heavy velvet drapery and subtle columns (no portraits/statues, no faces)",
+    "a classical painted sky backdrop with warm clouds and golden light (painterly, no figures)",
+    "a dim palace corridor with draped fabric and warm glow (no portraits/statues, no faces)",
     "a romantic landscape with distant trees and warm sunset haze (painterly, no extra figures)"
   ];
 
   const backgroundPool =
-    backgroundMode === "storybook_depth"
-      ? backgroundsStorybookDepth
-      : backgroundsDarkSimple;
+    backgroundMode === "storybook_depth" ? backgroundsStorybookDepth : backgroundsDarkSimple;
 
-  // Luces (más magia, sin cartoon)
+  // Luz premium (magia realista)
   const lightingPremium = [
-    "luminous golden key light with soft falloff, gentle rim light separation, painterly chiaroscuro (not harsh)",
+    "luminous warm key light with soft falloff and gentle rim separation, painterly chiaroscuro (not harsh)",
     "soft radiant light with warm highlights on fabrics and jewelry, deep but clean shadows (old-master inspired)",
-    "romantic warm glow with subtle atmospheric depth and elegant vignette (naturalistic, not fantasy effects)"
+    "romantic warm glow with subtle atmospheric depth and elegant vignette (naturalistic)"
   ];
 
-  // Poses: evita rigidez, mete elegancia real (y sillas!)
+  // Poses
   const soloStandingPoses = [
     "a graceful 3/4 standing pose with relaxed shoulders and natural weight shift",
     "a calm standing pose with gentle turn and elegant posture (not stiff)"
@@ -70,11 +65,11 @@ module.exports = function (style, numSubjects, isGroup, options = {}) {
 
   const groupStandingPoses = [
     "a balanced group pose with slight stagger and natural asymmetry, both faces clearly visible",
-    "a group pose with one slightly behind the other, elegant spacing, no symmetry-clone"
+    "a group pose with subtle staggered positions (no symmetry-clone), both faces clearly visible"
   ];
 
   const groupSeatedPoses = [
-    "a seated group pose on antique chair/bench, waist-up framing, natural asymmetry, faces clearly visible"
+    "a seated group pose on an antique chair/bench, waist-up framing, natural asymmetry, faces clearly visible"
   ];
 
   const groupInteraction = [
@@ -91,23 +86,23 @@ module.exports = function (style, numSubjects, isGroup, options = {}) {
         [...soloStandingPoses, ...soloSeatedPoses]
       );
 
-  // Props nobles (sin generar caras)
+  // Props nobles sin caras
   const nobleProps = [
     "a delicate fan (held naturally)",
     "a small bouquet of flowers (subtle, tasteful)",
     "a jeweled brooch (small, refined)",
     "a silk shawl or cape draped elegantly (luxury fabric)",
-    "a classic antique chair with carved wood (no faces in carvings)"
+    "an antique carved chair (no faces in carvings)"
   ];
 
-  // Accesorios (más “regalable”)
+  // Accesorios
   let accessoriesLine = "**ACCESSORIES:** minimal and refined.";
   if (accessoriesMode === "none") {
     accessoriesLine = "**ACCESSORIES:** none.";
   } else if (!group) {
     if (accessoriesMode === "refined_plus") {
       accessoriesLine =
-        "**ACCESSORIES (TASTEFUL):** delicate necklace + small earrings + one subtle bracelet OR a small elegant watch (not both heavy).";
+        "**ACCESSORIES (TASTEFUL):** delicate necklace + small earrings + one subtle bracelet OR a small elegant watch (not heavy).";
     } else {
       accessoriesLine =
         "**ACCESSORIES (TASTEFUL):** delicate necklace (thin chain, small pendant).";
@@ -121,11 +116,11 @@ module.exports = function (style, numSubjects, isGroup, options = {}) {
 `;
   }
 
-  // Vestuario: aquí está el “arte caro”
+  // Opulencia (materiales caros)
   const opulentFabrics = [
     "deep velvet with rich folds and subtle sheen",
     "brocade with tasteful gold thread embroidery",
-    "silk/sाटन with luminous highlights and layered drape",
+    "silk with luminous highlights and layered drape",
     "lace cuffs/collar details, refined and delicate"
   ];
 
@@ -135,15 +130,13 @@ module.exports = function (style, numSubjects, isGroup, options = {}) {
     "a silk gown with subtle embroidery and layered sleeves (romantic, premium)"
   ];
 
-  // Para grupos: prohibimos uniformidad explícito y le damos guía concreta
   const wardrobeGroupRule = `
 **WARDROBE (GROUP ANTI-UNIFORM — HARD):**
 - Coordinated luxury level, but NOT matching.
 - HARD: different color tone AND different neckline AND different silhouette per person.
-- Examples of difference (do NOT copy literally): one off-shoulder vs one square neckline; one velvet vs one brocade; one deeper jewel tone vs one lighter warm tone.
+- Keep it elegant and realistic; no theatrical costume vibe.
 `;
 
-  // 3 estilos: diferéncialos por paleta + mood + staging
   const STYLE_PRESETS = {
     musa: {
       role: "**The Ethereal Muse** (romantic, luminous — storybook realism).",
@@ -155,7 +148,7 @@ module.exports = function (style, numSubjects, isGroup, options = {}) {
       mood: [
         "romantic luminous calm with gentle atmosphere",
         "soft poetic serenity with elegant glow",
-        "dreamy-but-real refinement (storybook live-action)"
+        "dreamy-but-real refinement (storybook realism)"
       ]
     },
     realeza: {
@@ -213,7 +206,7 @@ ${group ? `- ${pick(groupInteraction)}.` : ""}
 
   const styleDescription = `
 **ROLE:** ${preset.role}
-**STYLE TARGET:** Old-master romance + storybook live-action glow (naturalistic realism, NOT cartoon).
+**STYLE TARGET:** old-master romance + storybook realism glow (naturalistic realism only).
 **SCENE:** ${pick(backgroundPool)}.
 **MOOD:** ${pick(preset.mood)}.
 ${paletteLine}
@@ -227,7 +220,6 @@ ${direction}
 ${categoryGuardrails}
 `;
 
-  // Composición: más “pintura comprable”
   const soloFramings = [
     "**SOLO COMPOSITION:** 3/4 portrait (upper torso) with elegant negative space and painterly depth.",
     "**SOLO COMPOSITION:** half-body (waist up) with rich fabric detail visible and refined staging.",
@@ -239,9 +231,7 @@ ${categoryGuardrails}
     "**GROUP COMPOSITION:** medium shot (waist up) with staggered depth and elegant staging (no symmetry-clone)."
   ];
 
-  const framing = group
-    ? `${pick(groupFramings)}`
-    : pick(soloFramings);
+  const framing = group ? `${pick(groupFramings)}` : pick(soloFramings);
 
   return masterPrompt(numSubjects, styleDescription, framing);
 };
