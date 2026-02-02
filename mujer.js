@@ -52,12 +52,18 @@ module.exports = function (style, numSubjects, isGroup) {
     "half-body portrait, slight head turn, calm confident expression, hands subtly posed (natural)"
   ];
 
-  // Interacciones de grupo (lo que te faltaba)
+  // --- FIX QUIRÚRGICO AQUÍ: Poses de Grupo ---
+  // Forzamos "ZOOM OUT" y "FIT EVERYONE" para evitar el recorte en 4:5
+  const groupFramings = [
+    `**GROUP COMPOSITION (CRITICAL):** Medium Shot (Waist Up) or slightly wider. **ZOOM OUT** enough to fit all subjects comfortably within the vertical frame. DO NOT CUT SHOULDERS.`,
+    `**GROUP COMPOSITION (CRITICAL):** One subject seated, one standing/leaning. Composition must remain **wide enough** to show both faces clearly. No tight crops.`
+  ];
+
   const groupInteractions = [
-    "one subject seated and the other standing slightly behind, a gentle hand on the shoulder (warm, protective)",
-    "both seated close, subtle hand-holding or hands lightly touching (romantic, natural)",
-    "standing close with slight lean-in, one hand resting on the other's forearm (friendly intimacy)",
-    "if a pet exists: pet on lap or at knee level with one hand gently resting on the pet (natural affection)"
+    "gentle hand on the shoulder (warm connection)",
+    "standing close with slight lean-in (friendly intimacy)",
+    "relaxed interaction, heads close but distinct",
+    "bodies slightly turned towards each other"
   ];
 
   // --- 3 estilos, bien separados por (paleta + wardrobe + mood + staging) ---
