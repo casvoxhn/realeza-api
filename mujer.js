@@ -1,8 +1,8 @@
 // ARCHIVO: mujer.js
 // CATEGORÍA: Mujer
 // Objetivo: 3 estilos MUY distinguibles + variación curada + cero kitsch.
-// Cambios clave: más "Old Masters" staging (chair/drapery/backdrop), poses sentadas,
-// interacción en grupos, y regla anti-outfits clonados.
+// Mejoras: "commissioned portrait" cues + depth/separation + textiles táctiles + highlights control
+// + interacciones más naturales (1 gesto), evitando rigidez y repetición.
 
 const masterPrompt = require('./masterPrompt');
 
@@ -10,25 +10,27 @@ module.exports = function (style, numSubjects, isGroup) {
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
   const isMulti = numSubjects > 1 || !!isGroup;
 
-  // Guardrails globales (evitan “foto plana”, “AI look”, “cartoon” y manchas)
+  // --- 1) Guardrails globales (MUJER) ---
   const categoryGuardrails = `
 **CATEGORY GUARDRAILS (WOMAN / COMMERCIAL / MASTERPIECE):**
 - Keep it **tasteful, elegant, feminine, and premium** (no cheap costume vibe).
 - **Naturalistic realism** under the paint (credible anatomy, believable skin).
-- Avoid "dreamy/magic effects" that look illustrative. No fantasy VFX.
-- Background must contain **NO faces**: no portraits, statues, crowds, tapestries with faces.
-- Preserve real beauty marks ONLY if present; **do NOT invent random dark spots** on skin.
-- If multiple people: **distinct wardrobe design per person** (no matching dresses by default).
+- Avoid illustrative "magic effects" and fantasy VFX. No cartoon vibes.
+- Jewelry must be **refined** (no bulky collars, no oversized weird accessories).
+- Background decor must contain **NO faces**: no portraits, statues, crowds, tapestries with faces.
+- Background must be **low-frequency / low-detail** (no busy patterns, no tiny ornaments).
+- If multiple people: **distinct wardrobe per person** (no matching dresses by default).
 `;
 
-  // Staging / fondo inspirado en tus ejemplos (comprable, no “sesión plana”)
+  // --- 2) Backdrops & props (commissioned portrait cues, pero limpios) ---
   const backdrops = [
-    "a dark painterly backdrop with subtle warm-to-cool gradient (simple, elegant, low-detail)",
-    "a classical painted sky backdrop with warm golden clouds (soft, painterly, NOT photo-real sky)",
-    "a deep, moody interior atmosphere with soft shadows and minimal architectural suggestion (no clutter)",
-    "a subtle drapery backdrop with rich fabric folds (no patterns with faces, no figurative art)"
+    "a dark painterly studio backdrop with a subtle warm-to-cool gradient (very clean, low-detail, low-frequency)",
+    "a subtle drapery backdrop with rich fabric folds (simple, elegant, no patterns, no figurative art)",
+    "a deep, moody interior atmosphere with minimal architectural suggestion (soft, clean, no clutter, low-detail)",
+    "a classical painted sky backdrop with warm golden clouds (soft painterly, not photo-sky, minimal detail)"
   ];
 
+  // 1 prop máximo (para que no parezca set teatral)
   const props = [
     "one elegant carved wooden chair or chaise (single prop, clean composition)",
     "a simple velvet drape and a small side table (minimal, no clutter)",
@@ -36,31 +38,33 @@ module.exports = function (style, numSubjects, isGroup) {
     "no props, only the painted backdrop (ultra clean)"
   ];
 
-  // Luz: opción estudio + opción Rembrandt (opción, no dominante)
+  // --- 3) Lighting (depth + separation + highlights control) ---
+  // Nota: Rembrandt queda como opción, pero controlado y suave.
   const lightingOptions = [
-    "classic studio portrait lighting: soft key light + gentle fill + subtle rim separation, natural skin",
-    "Rembrandt-inspired lighting: soft key with a delicate triangular cheek light, controlled shadows (not harsh)",
-    "soft north-window daylight look: gentle modeling, warm highlights, smooth tonal transitions",
-    "academic portrait lighting: warm key + cool ambient fill, painterly but natural"
+    "classic studio portrait lighting: soft key + gentle fill + subtle rim separation; controlled highlights; rich blacks; natural skin",
+    "soft Rembrandt-inspired lighting: delicate triangular cheek light; soft controlled shadows (not harsh); subtle rim separation",
+    "soft north-window daylight look: gentle modeling; smooth tonal transitions; controlled highlights; rich darks",
+    "academic portrait lighting: warm key + cool ambient fill; painterly depth; controlled specular highlights (no digital bloom)"
   ];
 
-  // Poses (evitar rigidez repetida) + sentadas incluidas
+  // --- 4) Poses (evitar rigidez repetida) ---
+  // Manos simples, elegantes, sin “maniquí”.
   const soloPoses = [
     "seated 3/4 portrait on an elegant chair, relaxed posture, hands softly resting (natural, not stiff)",
-    "seated half-body, slight torso turn, one hand resting on lap, the other lightly touching a sleeve/jewel",
+    "seated half-body, slight torso turn, one hand resting on lap, the other lightly touching a sleeve/jewel (simple hands)",
     "standing 3/4 portrait, gentle S-curve posture, shoulders relaxed, hands natural (no mannequin pose)",
-    "half-body portrait, slight head turn, calm confident expression, hands subtly posed (natural)"
+    "half-body portrait, slight head turn, calm confident expression, hands subtly posed (minimal, natural)"
   ];
 
-  // Interacciones de grupo (lo que te faltaba)
+  // Interacción de grupo: 1 gesto principal (para evitar manos raras y rigidez)
   const groupInteractions = [
-    "one subject seated and the other standing slightly behind, a gentle hand on the shoulder (warm, protective)",
-    "both seated close, subtle hand-holding or hands lightly touching (romantic, natural)",
-    "standing close with slight lean-in, one hand resting on the other's forearm (friendly intimacy)",
-    "if a pet exists: pet on lap or at knee level with one hand gently resting on the pet (natural affection)"
+    "one gentle hand on the other subject’s shoulder (single gesture), warm closeness, ALL faces visible",
+    "subtle touch on forearm (single gesture), friendly intimacy, ALL faces visible",
+    "slight lean-in with minimal touch (no hugging), composed warmth, ALL faces visible",
+    "if a pet exists: one hand gently resting on the pet’s back at knee/lap level (single gesture), pet never blocks faces"
   ];
 
-  // --- 3 estilos, bien separados por (paleta + wardrobe + mood + staging) ---
+  // --- 5) ADN de estilos (3 estilos) ---
   const STYLE_PRESETS = {
     musa: {
       role: "**La Musa Atemporal** (luminosa, romántica, delicada — realismo pictórico).",
@@ -82,7 +86,7 @@ module.exports = function (style, numSubjects, isGroup) {
       mood: `
 **STYLE SIGNATURE (MUSA):**
 - Romantic softness via glazing and gentle atmosphere (NOT fantasy effects).
-- More painterly background, clean composition, premium fabric rendering.
+- Clean composition; airy elegance expressed through light and fabric, not props.
 `
     },
 
@@ -105,8 +109,8 @@ module.exports = function (style, numSubjects, isGroup) {
       ],
       mood: `
 **STYLE SIGNATURE (REALEZA):**
-- Opulence through textiles, posture, jewelry and staging (chair/drapery).
-- Sparkle must feel expensive and controlled (no costume shine).
+- Opulence through textiles, posture and controlled sparkle (no costume shine).
+- Luxury is clean and restrained, not theatrical.
 `
     },
 
@@ -130,14 +134,24 @@ module.exports = function (style, numSubjects, isGroup) {
       mood: `
 **STYLE SIGNATURE (EMPODERADA):**
 - Power through posture, tailoring, and light control (not armor, not harsh drama).
-- Clean, premium, composed.
+- Clean, premium, composed — no exaggerated accessories.
 `
     }
   };
 
   const preset = STYLE_PRESETS[style] || STYLE_PRESETS.empoderada;
 
-  // Construcción de estilo (más staging “comprable”)
+  // --- 6) Art Direction Finish (el 10% final de valor percibido) ---
+  const artDirectionFinish = `
+**ART DIRECTION FINISH (VALUE / COMMISSIONED PORTRAIT):**
+- The **face is the primary detail zone** (highest clarity/detail). Background is simpler, darker, low-detail.
+- Add **subtle rim separation** to cleanly separate the subject from the backdrop.
+- **Controlled highlights + rich blacks**: no digital bloom, no HDR, no harsh specular shine.
+- Textiles must feel tactile: **velvet pile**, **brocade weave**, **lace microstructure** (subtle, not oversharp).
+- Use **only 1–2 "commission cues"** total (chair/drape/table/balustrade). Keep composition clean.
+`;
+
+  // --- 7) Construcción de styleDescription ---
   const styleDescription = `
 **ROLE:** ${preset.role}
 **BACKDROP:** ${pick(backdrops)}.
@@ -148,30 +162,28 @@ module.exports = function (style, numSubjects, isGroup) {
 **LIGHTING:** ${pick(lightingOptions)}.
 ${preset.mood}
 ${categoryGuardrails}
+${artDirectionFinish}
 
 **DEPTH & FINISH NOTES:**
-- Add rich fabric micro-detail (velvet pile, satin sheen, lace texture), but keep it tasteful.
 - Subtle vignette and atmospheric depth (painterly), avoid flat "photo session" look.
+- Keep it museum-grade and commercially attractive — never costume-like.
 `;
 
-  // Composición: NO full-body por defecto (riesgo manos/proporción + baja conversión).
-  // Pero sí permitimos sentado 3/4 y half-body con manos naturales.
+  // --- 8) Composición ---
   let framing = "";
 
   const soloFramings = [
     `**SOLO COMPOSITION:** ${pick(soloPoses)}. Eye-level. 50–85mm portrait feel. Face crisp, background softer.`,
-    `**SOLO COMPOSITION:** half-body (waist up), slight torso turn, natural hands visible (no stiffness), face crisp.`
+    `**SOLO COMPOSITION:** half-body (waist up), slight torso turn, hands simple and natural (no stiffness), face crisp.`
   ];
 
   const groupFramings = [
     `**GROUP COMPOSITION:** medium shot (waist up) or seated 3/4 to fit everyone. Eye-level. Balanced spacing. ALL faces visible.`,
-    `**GROUP COMPOSITION:** one seated / one standing if it helps composition. Keep proportions consistent. ALL faces equally recognizable.`
+    `**GROUP COMPOSITION:** one seated / others standing if it helps composition. Keep proportions consistent. ALL faces equally recognizable.`
   ];
 
   const interaction = isMulti ? `\n**GROUP INTERACTION:** ${pick(groupInteractions)}.` : "";
-
   framing = (isMulti ? pick(groupFramings) : pick(soloFramings)) + interaction;
 
-  // Llamada al masterPrompt (Constitución)
   return masterPrompt(numSubjects, styleDescription, framing);
 };
