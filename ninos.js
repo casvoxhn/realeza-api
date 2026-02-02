@@ -35,6 +35,7 @@ module.exports = function (style, numSubjects, isGroup) {
   // Guardrails (niños son más sensibles: evita adultizar, evita muñeco, evita manchas)
   const categoryGuardrails = `
 **CATEGORY GUARDRAILS (CHILDREN / COMMERCIAL / MASTERPIECE):**
+- Keep child facial fullness natural: do NOT slim cheeks, do NOT sharpen jawline; preserve baby-like roundness if present.
 - The child/baby must be **instantly recognizable** (identity preserved). Parents must say: "That's my child."
 - **Child-appropriate styling:** no adult makeup, no adult jewelry, no mature necklines, no sensual posing.
 - **Naturalistic realism** under the paint: believable anatomy, natural skin texture (no plastic, no beauty filter).
