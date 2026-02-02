@@ -1,7 +1,7 @@
 // ARCHIVO: mujer.js
 // CATEGORÍA: Mujer
 // Objetivo: 3 estilos MUY distinguibles + variación curada (segura) + cero kitsch.
-// Se apoya en masterPrompt para identidad / conteo / anti-collage / acabado "obra maestra".
+// Enfoque extra: fondos más simples y oscuros para que el sujeto resalte (sin cinematic/grim).
 
 const masterPrompt = require('./masterPrompt');
 
@@ -9,7 +9,6 @@ module.exports = function (style, numSubjects, isGroup) {
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
   // --- 1) Guardrails globales de categoría (MUJER) ---
-  // Importante: reforzamos "obra maestra real" y evitamos palabras que empujen a cartoon/fantasy.
   const categoryGuardrails = `
 **CATEGORY GUARDRAILS (WOMAN / COMMERCIAL / MASTERPIECE):**
 - Keep it **tasteful, elegant, feminine, and commercially attractive** (no cheap costume vibe).
@@ -17,17 +16,17 @@ module.exports = function (style, numSubjects, isGroup) {
 - Avoid cinematic/grim lighting: use **soft, clean, flattering light** (no harsh shadows).
 - Jewelry must be **refined** (no bulky collars, no oversized weird accessories).
 - Background decor must contain **NO faces**: no portraits, no statues, no figurative artwork, no crowd.
+- **BACKGROUND RULE:** Background must be **simple, darker, and low-detail** to maximize subject separation (no bright bokeh, no busy highlights).
 `;
 
-  // --- 2) ADN de los 3 estilos (que se note cada uno) ---
-  // Distinción por rol + paleta + ambiente + textiles + mood. Sin fantasía literal.
+  // --- 2) ADN de los 3 estilos ---
   const STYLE_PRESETS = {
     musa: {
       role: "**The Ethereal Muse** (airy, luminous, romantic — but realistic oil paint).",
       scenes: [
-        "a softly blurred Secret Garden with gentle atmospheric depth (clean background, no clutter, no figures, no statues)",
-        "a serene lakeside at golden hour with subtle bokeh (no extra figures, no boats/people, no faces in decor)",
-        "a bright greenhouse-like space with soft greenery, minimal and elegant (no signage, no crowd, no faces)"
+        "a dark, softly blurred Secret Garden with gentle atmospheric depth (deep greens/umbers; clean background; no figures; no statues)",
+        "a muted lakeside backdrop with low-detail water reflections (darker tones; no boats/people; no faces in decor; no bright bokeh)",
+        "a minimal botanical backdrop in deep olive tones (subtle greenery blur; no signage; no crowd; no faces)"
       ],
       palettes: [
         "Dusty Rose + Soft Gold accents",
@@ -46,17 +45,17 @@ module.exports = function (style, numSubjects, isGroup) {
       ],
       signature: `
 **STYLE SIGNATURE (MUSA):**
-- Airy, luminous romantic softness, expressed through **glazing and atmospheric depth** (not fantasy effects).
-- Background stays clean and subtle; emphasis on face + graceful fabric flow.
+- Airy, luminous romantic softness expressed through **glazing and atmospheric depth** (not fantasy effects).
+- Background stays clean, darker, and subtle; emphasis on face + graceful fabric flow.
 `
     },
 
     realeza: {
       role: "**The Absolute Queen** (regal, opulent, high-status — tasteful luxury).",
       scenes: [
-        "an opulent palace interior with subtle depth (clean, softly blurred, NO portraits, NO statues, NO figurative decor)",
-        "a royal balcony with bright luxury daylight (no extra people, no crowd, clean architecture only)",
-        "a grand hall with elegant architectural lines, minimal clutter (NO portraits/statues/tapestries with faces)"
+        "an opulent palace interior in low-key tones with subtle depth (clean; softly blurred; NO portraits; NO statues; NO figurative decor)",
+        "a royal balcony in muted, darker late-afternoon tones (clean architecture only; no crowd; no extra people; no bright background highlights)",
+        "a grand hall in deep, warm low-light tones (elegant lines; minimal clutter; NO portraits/statues/tapestries with faces)"
       ],
       palettes: [
         "Royal Blue + Diamonds (refined sparkle)",
@@ -69,9 +68,9 @@ module.exports = function (style, numSubjects, isGroup) {
         "a classic high-status gown with clean silhouette and subtle train"
       ],
       lighting: [
-        "luxurious clean daylight, crisp but flattering (no harsh shadows)",
+        "soft luxurious key light with controlled shadows (flattering, not harsh)",
         "soft studio light with premium sparkle control (jewels look expensive, not gaudy)",
-        "bright soft key light + subtle rim light separation (still non-cinematic)"
+        "clean soft key light + subtle rim light separation (non-cinematic)"
       ],
       signature: `
 **STYLE SIGNATURE (REALEZA):**
@@ -83,9 +82,9 @@ module.exports = function (style, numSubjects, isGroup) {
     empoderada: {
       role: "**The Noble Matriarch** (powerful, elegant, composed — modern refinement).",
       scenes: [
-        "a refined library interior (clean, softly blurred, premium atmosphere; NO portraits, NO statues, NO faces in decor)",
-        "a minimalist stone staircase with soft daylight (no clutter, no crowd, clean lines)",
-        "an elegant interior with renaissance-inspired tones, subtle and modern (NO figurative decor, NO faces)"
+        "a refined library interior in deep neutral tones (clean; softly blurred; premium atmosphere; NO portraits; NO statues; NO faces in decor)",
+        "a minimalist stone staircase with soft light and darker background separation (no clutter; no crowd; clean lines)",
+        "an elegant interior with renaissance-inspired tones in low-key palette (subtle; modern; NO figurative decor; NO faces)"
       ],
       palettes: [
         "Deep Navy + muted gold accents",
@@ -110,10 +109,8 @@ module.exports = function (style, numSubjects, isGroup) {
     }
   };
 
-  // Fallback seguro si llega un style raro
   const preset = STYLE_PRESETS[style] || STYLE_PRESETS.empoderada;
 
-  // --- 3) Construcción del styleDescription ---
   const styleDescription = `
 **ROLE:** ${preset.role}
 **SCENE:** ${pick(preset.scenes)}.
@@ -125,7 +122,6 @@ ${categoryGuardrails}
 `;
 
   // --- 4) Composición (variación segura) ---
-  // Regla: evitar full-body. Mucho riesgo de manos/proporciones y baja conversion.
   let framing = "";
 
   const soloFramings = [
@@ -146,6 +142,5 @@ ${categoryGuardrails}
     framing = pick(soloFramings);
   }
 
-  // --- 5) Llamada al masterPrompt (Constitución) ---
   return masterPrompt(numSubjects, styleDescription, framing);
 };
