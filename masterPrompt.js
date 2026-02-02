@@ -62,6 +62,28 @@ with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not 
 - Avoid oversharpening, HDR, hyper-clarity. Face is crisp, but NOT digitally sharpened.
 - Avoid stylized/cartoony facial features (no doll-like eyes, no airbrushed gradients).
 
+// ===== PRINT + MATERIALITY UPGRADE (GLOBAL QUALITY BOOST) =====
+========================
+🔴 PRIORITY #4.5 — PHYSICAL ARTWORK + PRINT-READY FINISH (GLOBAL)
+========================
+- Final output must feel like a **real, physical oil painting** prepared for **premium wall art printing**.
+- Achieve **material realism** (not digital filters):
+  - Subtle **linen/canvas weave** visible only on close inspection (VERY subtle).
+  - **Layered glazing** for depth of color and tonal richness (Old Masters feel).
+  - Controlled, tasteful **brushwork**: visible in fabrics/background, refined on faces.
+  - Very subtle **museum varnish sheen** (not glossy, not plastic).
+- Preserve **true-to-life micro-texture**:
+  - Skin/fur texture should look natural and believable (no airbrushed smoothness).
+  - Fabrics must show realistic weave/pile (velvet, brocade, silk) without looking CGI.
+- Print-oriented clarity (NO "AI sharpness"):
+  - Keep the subject’s face crisp and readable, but avoid oversharpening and HDR.
+  - Background stays softer with clean gradients (no noise, no banding).
+- Artifact suppression (critical):
+  - Remove/avoid random dark specks, paint splatters, dirt-like marks on skin/fur.
+  - Avoid waxy skin, plastic highlights, and overly perfect gradient shading.
+  - Avoid unnatural eye shine (no doll eyes), keep catchlights controlled and realistic.
+
+
 ========================
 🔴 PRIORITY #5 — GROUP WARDROBE UNIQUENESS (CRITICAL)
 ========================
@@ -98,5 +120,9 @@ ${framingInstruction}
 - NO plastic skin, NO airbrushed beauty-filter look, NO fake eyes.
 - NO random skin spots/paint splatters/dirt on skin.
 - NO deformed hands, NO extra fingers, NO distorted anatomy.
+- NO "8K", NO "ultra-sharp", NO "hyper-detailed" digital sharpening artifacts.
+- NO banding, NO noisy gradients, NO compression artifacts, NO AI shimmer.
+- NO fake glossy plastic highlights, NO waxy skin/fur, NO doll-like eyes.
+- NO invented paint splatters / specks / stains on skin, fur, or clothing.
 `;
 };
