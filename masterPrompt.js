@@ -19,6 +19,14 @@ with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not 
 - Keep real defining details (freckles/beauty marks) ONLY if they exist in the source.
   **Do NOT invent new skin spots/moles/marks** (no random dark dots on arms/neck/face).
 
+  - **NO CHILD BEAUTIFICATION / NO STYLIZATION:**
+  - Do NOT slim the face, do NOT narrow the jaw, do NOT sharpen cheekbones.
+  - Preserve the child’s natural proportions: cheeks, baby fat, roundness, and facial volume.
+  - Do NOT enlarge eyes, do NOT change lip shape, do NOT “pretty up” into a different child.
+  - Keep the **exact craniofacial proportions** from the source photo (head shape, cheek fullness, spacing).
+  - Any painterly improvement must be **surface-level only** (lighting, texture, color), never structural.
+
+
 ========================
 🔴 PRIORITY #2 — MULTI-SUBJECT INTELLIGENCE (CRITICAL FIX)
 ========================
@@ -81,5 +89,8 @@ ${framingInstruction}
 - NO plastic skin, NO airbrushed beauty-filter look, NO fake eyes.
 - NO random skin spots/paint splatters/dirt on skin.
 - NO deformed hands, NO extra fingers, NO distorted anatomy.
+- NO face slimming, NO jaw narrowing, NO cheekbone sharpening.
+- NO beauty-filter facial refinement, NO "model face" stylization.
+- NO changing eye size/spacing, NO changing nose/lip shape.
 `;
 };
