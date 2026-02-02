@@ -9,23 +9,27 @@ You are a master portrait painter creating a **MUSEUM-GRADE, NATURALISTIC OIL PO
 with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not a poster.
 
 ========================
-🔴 PRIORITY #1 — IDENTITY (NON-NEGOTIABLE)
+🔴 PRIORITY #1 — IDENTITY / ACTOR LOCK (NON-NEGOTIABLE)
 ========================
-- The person in the input photo is an **ACTOR** (their identity must be preserved).
-- Paint the **EXACT SAME PERSON** in a new scene, wearing the role's wardrobe.
-- Preserve **biometric identity**: eyes, nose, mouth, jawline, facial proportions.
-- Preserve **hair**: length, texture, part, and overall hairstyle from the source.
-- Do NOT "correct" the person: no face slimming, no beautifying into a different person, no age shifting.
+- The subject(s) in the input photo are **ACTORS**. Each actor has a fixed, unchangeable identity.
+- Paint the **EXACT SAME ACTOR(S)** in a new scene wearing the role wardrobe.
+- **GEOMETRY LOCK (ABSOLUTE):** Preserve the actor’s **exact craniofacial geometry** from the source:
+  - head shape, cheek volume/fullness, jaw width, chin length, facial proportions
+  - eye size/shape/spacing, brow shape, nose shape/width, lip shape
+  - natural asymmetries, eyelids, smile lines, defining features
+- **EXPRESSION / VIBE LOCK:** Keep the same core expression/vibe from the source (do NOT "modelize" or redesign the gaze).
+- **HAIR LOCK:** Preserve hairline, length, texture, part, and overall hairstyle from the source.
+- **NO CORRECTION / NO BEAUTIFICATION:** Do NOT slim the face/body, do NOT beautify into a different person, do NOT age shift.
 - Keep real defining details (freckles/beauty marks) ONLY if they exist in the source.
   **Do NOT invent new skin spots/moles/marks** (no random dark dots on arms/neck/face).
 
-  - **NO CHILD BEAUTIFICATION / NO STYLIZATION:**
+- **CHILD FIDELITY (IF A CHILD/BABY):**
   - Do NOT slim the face, do NOT narrow the jaw, do NOT sharpen cheekbones.
-  - Preserve the child’s natural proportions: cheeks, baby fat, roundness, and facial volume.
-  - Do NOT enlarge eyes, do NOT change lip shape, do NOT “pretty up” into a different child.
-  - Keep the **exact craniofacial proportions** from the source photo (head shape, cheek fullness, spacing).
+  - Preserve natural child proportions: cheeks/baby fat/roundness/facial volume exactly.
+  - Do NOT enlarge eyes, do NOT change lip shape, do NOT "pretty up" into a different child.
   - Any painterly improvement must be **surface-level only** (lighting, texture, color), never structural.
 
+- **STYLE MUST ADAPT TO THE ACTOR, NOT THE ACTOR TO THE STYLE.**
 
 ========================
 🔴 PRIORITY #2 — MULTI-SUBJECT INTELLIGENCE (CRITICAL FIX)
@@ -33,11 +37,10 @@ with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not 
 - System count says: **${numSubjects} subject(s)**.
 - **VISUAL OVERRIDE (IMPORTANT):** Look at the source photo yourself.
   - If you see **MORE** main subjects (e.g., two friends) than the number above, **PAINT ALL OF THEM**.
-  - Never crop out a friend or partner just because the text count might be wrong.
+  - Never crop out a friend/partner just because the text count might be wrong.
   - **PAINT EVERYONE VISIBLE IN THE FOREGROUND.**
-  
 - If multiple input photos are provided, treat each as a **separate actor**.
-- **NEVER blend identities** and NEVER average faces.
+- **NEVER blend identities** and NEVER average faces. No face merging.
 
 ========================
 🔴 PRIORITY #3 — COHERENT SINGLE IMAGE (NO COLLAGE)
@@ -45,6 +48,7 @@ with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not 
 - Create ONE new cohesive scene with unified perspective and lighting.
 - DO NOT paste original photos.
 - NO collage, NO split image, NO grids, NO side-by-side composites.
+- Keep a single believable perspective and consistent scale across all subjects.
 
 ========================
 🔴 PRIORITY #4 — "MASTERPIECE" LOOK (ANTI-AI / ANTI-CARTOON)
@@ -53,19 +57,20 @@ with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not 
   - Naturalistic realism (credible anatomy + believable skin).
   - Painterly handling: controlled brushwork + glazing + pigment depth.
   - Subtle canvas/linen texture, subtle museum varnish sheen.
-  - Avoid the "AI smooth" look: keep **natural skin texture** (pores are subtle, not plastic).
+  - Avoid the "AI smooth" look: keep **natural skin texture** (not plastic).
+- **RENDER LAYER ONLY:** The oil-paint look is a rendering layer (brushwork/light/color/texture) and must NOT change facial geometry.
 - Avoid oversharpening, HDR, hyper-clarity. Face is crisp, but NOT digitally sharpened.
-- Avoid stylized/cartoony facial features (no doll-like eyes, no perfect airbrushed gradients).
+- Avoid stylized/cartoony facial features (no doll-like eyes, no airbrushed gradients).
 
 ========================
 🔴 PRIORITY #5 — GROUP WARDROBE UNIQUENESS (CRITICAL)
 ========================
 - If more than 1 human subject:
   - **NO matching outfits by default.**
-  - Each person must have a **distinct dress design** (different neckline/sleeves/silhouette),
+  - Each person must have a **distinct outfit design** (different neckline/sleeves/silhouette),
     distinct accessories (necklace/earrings/bracelet/watch), and distinct color variation
     within the style palette.
-  - Keep harmony (same era/style family), but avoid "twins/clones" look.
+  - Keep harmony (same era/style family), but avoid a "twins/clones" look.
 
 --------------------------------------------------
 SCENE & STYLE (ROLE INSTRUCTIONS)
@@ -82,15 +87,16 @@ ${framingInstruction}
 ⛔ NEGATIVE CONSTRAINTS (STRICT)
 ========================
 - NO extra people, NO extra animals, NO extra faces (background/reflections/statues/portraits).
-- NO identity drift. NO face morphing. NO merged faces.
+- NO identity drift. NO face morphing. NO merged/averaged faces.
+- NO changes to facial geometry/proportions (craniofacial structure is locked).
+- NO face slimming, NO jaw narrowing, NO cheekbone sharpening.
+- NO changing eye shape/spacing/size, NO gaze redesign, NO almond-eye conversion.
+- NO changing nose/lip shape. NO "model face" stylization.
 - NO collage, NO split image, NO photo grid, NO pasted photo.
 - NO text, NO watermarks, NO logos, NO UI.
 - NO cartoon, NO anime, NO illustration look, NO 3D render, NO CGI.
 - NO plastic skin, NO airbrushed beauty-filter look, NO fake eyes.
 - NO random skin spots/paint splatters/dirt on skin.
 - NO deformed hands, NO extra fingers, NO distorted anatomy.
-- NO face slimming, NO jaw narrowing, NO cheekbone sharpening.
-- NO beauty-filter facial refinement, NO "model face" stylization.
-- NO changing eye size/spacing, NO changing nose/lip shape.
 `;
 };
