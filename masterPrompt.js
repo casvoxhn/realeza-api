@@ -20,13 +20,16 @@ with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not 
   **Do NOT invent new skin spots/moles/marks** (no random dark dots on arms/neck/face).
 
 ========================
-🔴 PRIORITY #2 — MULTI-SUBJECT ACCURACY (NO FUSION / NO CLONES)
+🔴 PRIORITY #2 — MULTI-SUBJECT INTELLIGENCE (CRITICAL FIX)
 ========================
-- Input contains **${numSubjects} subject(s)**. Paint EVERY ONE.
-- If multiple input photos are provided, treat each as a **separate actor reference**.
-  **NEVER blend identities** and NEVER average faces between people.
-- **NO HALLUCINATIONS:** do not add extra people/animals.
-- **NO EXTRA FACES** anywhere: no background faces, reflections, statues, portraits, paintings-with-faces.
+- System count says: **${numSubjects} subject(s)**.
+- **VISUAL OVERRIDE (IMPORTANT):** Look at the source photo yourself.
+  - If you see **MORE** main subjects (e.g., two friends) than the number above, **PAINT ALL OF THEM**.
+  - Never crop out a friend or partner just because the text count might be wrong.
+  - **PAINT EVERYONE VISIBLE IN THE FOREGROUND.**
+  
+- If multiple input photos are provided, treat each as a **separate actor**.
+- **NEVER blend identities** and NEVER average faces.
 
 ========================
 🔴 PRIORITY #3 — COHERENT SINGLE IMAGE (NO COLLAGE)
