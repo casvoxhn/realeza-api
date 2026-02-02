@@ -220,6 +220,7 @@ ${paletteLine}
 ${wardrobeLine}
 ${opulenceLine}
 ${accessoriesLine}
+${style === "realeza" ? "**TIARA SUTIL:** wearing a delicate low golden tiara with one central gem, very elegant and low-profile." : ""}
 ${propLine}
 **LIGHTING:** ${pick(lightingPremium)}.
 ${direction}
