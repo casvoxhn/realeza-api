@@ -1,227 +1,75 @@
 // ARCHIVO: mujer.js
-// V201: CORE ENGINE — FEMININITY + INTERACTION BOOST
-// Prioridades: identidad > retrato > conteo > wow > estilo.
-// Añade feminidad vendible y relaciones visuales en grupos.
+// ESTILO: Mujer (Se conecta con masterPrompt para la identidad)
+
+const masterPrompt = require('./masterPrompt'); // Importamos el cerebro
 
 module.exports = function(style, numSubjects, isGroup) {
 
+    // --- 0. MOTOR DE ALEATORIEDAD (Variedad Visual) ---
     const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-    // -------------------------------------------------
-    // 1) BLOQUES CRÍTICOS
-    // -------------------------------------------------
+    // --- 1. DEFINICIÓN DEL ROL (ESTILO) ---
+    let styleDescription = "";
 
-    const identityBlock = `
-IDENTITY — TOP PRIORITY:
-Preserve the EXACT facial features of every person from the reference photo.
-Eyes, nose, mouth, jawline, proportions must stay the same.
-Beautify only with lighting and skin texture.
-Do NOT replace the face with a different person.
-Keep the same haircut, length and texture.
-`;
-
-    const strictCountBlock = `
-SUBJECT COUNT — STRICT:
-Depict EXACTLY ${numSubjects} human subject(s) from the reference.
-If there are pets, include ALL pets.
-No extra people.
-No background figures.
-No silhouettes.
-No reflections with faces.
-No invented subjects.
-If framing is tight, zoom out — never remove anyone.
-`;
-
-    const antiCollageBlock = `
-SINGLE CANVAS RULE:
-Combine all reference photos into ONE unified painted scene.
-Do NOT create split screens, diptychs, panels or collages.
-Do NOT paste original photos.
-Everything must exist in the same environment and lighting.
-`;
-
-    const portraitRule = `
-PORTRAIT RULE:
-This must feel like a classical portrait made to be framed.
-Eyes sharp, face dominant, flattering proportions.
-No wide-angle distortion.
-Oil painting look.
-`;
-
-    const poseRule = `
-POSE:
-You may reinterpret the body posture to make it noble and elegant.
-Do NOT change the face.
-Avoid selfie poses or awkward hands.
-`;
-
-    // 🔥 NUEVO — FEMININIDAD
-    const femininityBlock = `
-FEMININITY & GRACE:
-Hands soft and expressive.
-Relaxed shoulders and elongated neck line.
-Gentle S-curve posture.
-Delicate jewelry accents.
-Elegant drapery flow.
-Warm but confident gaze.
-`;
-
-    // 🔥 NUEVO — INTERACCIÓN EN GRUPO
-    const interactionBlock = `
-GROUP INTERACTION:
-Show natural emotional connection between people.
-Use subtle touch: hand on arm or shoulder, shared stance, slight lean toward each other.
-Crossed gazes or shared focal point.
-Pets integrated emotionally (being held, resting beside someone).
-No stiff lineup — composition must feel alive and intimate.
-`;
-
-    // -------------------------------------------------
-    // 2) ESTILOS LIMPIOS
-    // -------------------------------------------------
-
-    let styleBlock = "";
-
-    if (style === "musa") {
-
+    if (style === 'musa') {
         const scenes = [
-            "twilight garden",
-            "misty lakeside",
-            "moonlit orchard",
-            "sunset rose terrace"
+            "a mysterious Ancient Forest with dappled sunlight",
+            "a serene Crystal Lake at twilight",
+            "a Secret Garden filled with magical mist"
         ];
-
-        const colors = [
-            "ivory and champagne",
-            "lavender and pearl",
-            "dusty rose and gold",
-            "sky blue and cream"
-        ];
-
-        styleBlock = `
-STYLE: ETHEREAL MUSE.
-Atmospheric, poetic, romantic.
-Flowing classical gown in ${pick(colors)}.
-Soft glowing light.
-Scene: ${pick(scenes)}.
-`;
-
-    } else if (style === "realeza") {
-
+        const colors = ["Dusty Rose & Gold", "Deep Emerald", "Ethereal White"];
+        
+        styleDescription = `
+        **ROLE:** **The Ethereal Muse (Nature Goddess).**
+        **SCENE:** ${pick(scenes)}.
+        **COSTUME:** A flowing gown made of Silk/Chiffon in ${pick(colors)}. Adorned with flowers.
+        **LIGHTING:** Soft, magical "Sfumato" glow. Dreamy atmosphere.
+        `;
+    } 
+    else if (style === 'realeza') {
         const scenes = [
-            "opulent throne room",
-            "hall of mirrors",
-            "royal gallery",
-            "palace balcony"
+            "a Grand Hall of Mirrors",
+            "a Royal Terrace overlooking an empire",
+            "an Opulent Palace Throne Room"
         ];
-
-        const colors = [
-            "crimson and gold",
-            "royal blue and diamonds",
-            "emerald and gold",
-            "black velvet and jewels"
-        ];
-
-        styleBlock = `
-STYLE: IMPERIAL QUEEN.
-Maximum luxury and authority.
-Heavy court gown in ${pick(colors)}.
-Crown or tiara and heirloom jewelry.
-Scene: ${pick(scenes)}.
-Bright luxurious lighting on face and jewels.
-`;
-
-    } else if (style === "empoderada") {
-
+        const colors = ["Royal Blue & Diamonds", "Crimson Velvet & Gold", "Champagne Silk"];
+        
+        styleDescription = `
+        **ROLE:** **The Absolute Queen.**
+        **SCENE:** ${pick(scenes)}.
+        **COSTUME:** A massive Royal Ballgown in ${pick(colors)}. **MANDATORY:** A Sparkling Tiara on her head.
+        **LIGHTING:** Luxurious, crisp daylight. High-end sparkle.
+        `;
+    } 
+    else if (style === 'empoderada') {
         const scenes = [
-            "renaissance library",
-            "court chamber with velvet drapery",
-            "stone hall with torchlight",
-            "royal map room"
+            "a Luxurious Renaissance Library",
+            "a Grand Stone Staircase",
+            "a Venetian Balcony"
         ];
-
-        const colors = [
-            "deep red and antique gold",
-            "midnight blue and embroidery",
-            "dark emerald and gold",
-            "obsidian black and champagne"
+        const outfits = [
+            "Structured Gold Brocade Gown",
+            "Deep Red Velvet Power-Dress",
+            "Navy Blue Silk gown with a cape"
         ];
-
-        styleBlock = `
-STYLE: RENAISSANCE POWER WOMAN.
-Elegant, feminine, commanding — not modern.
-Court gown in ${pick(colors)}.
-Clean neckline, sculpted bodice, dramatic sleeves.
-Scene: ${pick(scenes)}.
-Chiaroscuro lighting for strength.
-`;
-
-    } else {
-
-        styleBlock = `
-STYLE: CLASSICAL PORTRAIT.
-Elegant, museum-grade, timeless.
-`;
+        
+        styleDescription = `
+        **ROLE:** **The Renaissance Matriarch (Power & Ego).**
+        **SCENE:** ${pick(scenes)}.
+        **COSTUME:** ${pick(outfits)}. Historical, expensive, structured.
+        **LIGHTING:** "Butterfly" Studio Lighting. Dramatic contrast, sculpting the face.
+        `;
     }
 
-    // -------------------------------------------------
-    // 3) FRAMING
-    // -------------------------------------------------
-
-    let framingBlock = "";
-
+    // --- 2. ENCUADRE (Composición) ---
+    let framing = "";
     if (numSubjects > 1) {
-
-        framingBlock = `
-FRAMING:
-Wide or three-quarter group portrait.
-Keep everyone visible.
-Main woman slightly emphasized with light and position.
-Arrange subjects into a balanced composition.
-${interactionBlock}
-`;
-
+        framing = `**GROUP COMPOSITION:** Medium Shot (Waist Up). Zoom out to fit everyone (partners/pets). The main woman is the CENTERPIECE.`;
     } else {
-
-        framingBlock = `
-FRAMING:
-Three-quarter or waist-up portrait.
-Face is dominant.
-`;
+        framing = `**SOLO COMPOSITION:** Intelligent Framing. If the face is expressive -> Close-Up. If the dress is big -> Medium Shot.`;
     }
 
-    // -------------------------------------------------
-    // 4) FINAL PROMPT
-    // -------------------------------------------------
-
-    return `
-You are a classical portrait painter creating a museum-grade oil painting.
-
-ASPECT RATIO: vertical 4:5.
-
-${identityBlock}
-
-${strictCountBlock}
-
-${antiCollageBlock}
-
-${portraitRule}
-
-${poseRule}
-
-${femininityBlock}
-
-${styleBlock}
-
-${framingBlock}
-
-NEGATIVE RULES:
-No cartoon.
-No anime.
-No CGI / 3D.
-No plastic skin.
-No text or logos.
-No watermarks.
-No frames.
-`;
+    // --- 3. LLAMADA AL MAESTRO ---
+    // Aquí ocurre la magia: Enviamos el estilo y el encuadre al Maestro para que aplique las reglas de identidad.
+    return masterPrompt(numSubjects, styleDescription, framing);
 };
