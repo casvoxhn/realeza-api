@@ -1,6 +1,7 @@
 // ARCHIVO: masterPrompt.js
 // LA CONSTITUCIÓN: Identidad, Fidelidad, Conteo y Calidad Técnica.
-// Objetivo extra: que se vea como OBRA MAESTRA REAL (museum-grade), no poster, no "AI look", no cartoon.
+// Objetivo extra: OBRA MAESTRA REAL (museum-grade), no poster, no "AI look", no cartoon.
+// Parche: evitar manchas / puntitos inventados en piel (solo preservar marcas reales).
 
 module.exports = function (numSubjects, specificStyleDescription, framingInstruction) {
   return `
@@ -26,14 +27,20 @@ You are a Master Portrait Painter creating a **MUSEUM-QUALITY, REALISTIC OIL PAI
 - **NO collage / no split layout / no side-by-side composites / no photo grid.**
 - Keep a single, believable perspective and consistent scale across all subjects.
 
-**🔴 PRIORITY #4: MASTERPIECE FINISH (ANTI-POSTER / ANTI-AI LOOK)**
+**🔴 PRIORITY #4: CLEAN SKIN & MARK FIDELITY (NO RANDOM SPOTS)**
+- **DO NOT invent new moles, freckles, stains, speckles, black dots, or random skin marks.**
+- Preserve **only** the real, original beauty marks that exist in the input photo, in the correct location and size.
+- Skin must look natural and clean (no blotches, no dirty patches).
+
+**🔴 PRIORITY #5: MASTERPIECE FINISH (ANTI-POSTER / ANTI-AI LOOK)**
 - This must look like a **real, physical oil painting masterpiece** hanging on a wall — not a digital poster.
 - Use **authentic oil painting handling**: subtle visible brushwork, layered glazing, pigment depth, and realistic canvas/linen texture.
-- Add a **refined museum varnish finish** and **very subtle** natural micro-imperfections (only enough to feel real).
+- Add a **refined museum varnish finish** with **very subtle** physical surface character.
+- **IMPORTANT:** Any micro-imperfections may appear only as subtle **canvas/varnish surface texture**, never as dark spots on skin.
 - Keep it **naturalistic realism**: no cartoon look, no plastic skin, no “beauty filter” face.
 - Avoid over-sharpening and HDR-like clarity. The face stays crisp, but the rendering feels painterly and refined.
 
-**🔴 PRIORITY #5: ARTISTIC TECHNIQUE (THE "WOW")**
+**🔴 PRIORITY #6: ARTISTIC TECHNIQUE (THE "WOW")**
 - Apply museum-grade detail with tasteful luxury.
 - Enhance lighting and texture using glazing, but **NEVER alter facial structure**.
 - **Tasteful and commercially attractive** — avoid cheap costume vibes unless explicitly requested.
@@ -55,6 +62,7 @@ ${framingInstruction}
 - NO text, NO watermarks, NO logos, NO UI, NO borders, NO frames.
 - NO cartoon, NO illustration, NO anime, NO 3D render, NO CGI.
 - NO plastic skin, NO airbrushed look, NO doll-like face, NO fake eyes.
+- NO random spots, NO stains, NO speckles, NO black dots, NO blemish artifacts on skin.
 - NO oversharpened, NO HDR, NO hyper-clarity, NO “digital filter” look.
 - NO deformed hands, NO extra fingers, NO distorted anatomy.
 `;
