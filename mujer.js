@@ -1,144 +1,148 @@
-// ARCHIVO: mujer.js
+// ARCHIVO: mujer.js (FINAL)
 // CATEGORÍA: Mujer
 // Objetivo: 3 estilos MUY distinguibles + variación curada (segura) + cero kitsch.
-// Giro: "studio portrait realism" + ejecución de óleo museo.
-// IMPORTANTE: NO imponer decisiones -> control por opciones (poseMode, lightMode, accessoriesMode).
+// Diseñado para NO generar rigidez ni "misma foto" y para evitar clones en grupos.
+// Se apoya en masterPrompt para identidad / conteo / anti-collage / anti-spots / anti-text / anti-clone global.
 
 const masterPrompt = require('./masterPrompt');
 
-module.exports = function (
-  style,
-  numSubjects,
-  isGroup,
-  options = {}
-) {
+module.exports = function (style, numSubjects, isGroup, options = {}) {
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  const chance = (p) => Math.random() < p;
+  const group = (Number(numSubjects) > 1) || Boolean(isGroup);
 
-  // --- OPCIONES (sin imponer defaults raros) ---
+  // Opciones controladas (sin defaults peligrosos)
   const {
     poseMode = "standing_only",            // "standing_only" | "mix_standing_seated" | "seated_only"
+    groupPoseMode = "standing_only",       // "standing_only" | "mix_standing_seated"
     lightMode = "mix_studio_rembrandt",    // "studio_only" | "mix_studio_rembrandt" | "rembrandt_only"
     accessoriesMode = "refined_default",   // "none" | "refined_default"
-    backgroundMode = "dark_simple"         // "dark_simple" | "dark_simple_variants"
+    backgroundMode = "dark_simple_variants", // "dark_simple" | "dark_simple_variants"
+    lensMode = "mix_50_85"                 // "50_only" | "85_only" | "mix_50_85"
   } = options;
 
-  // --- Guardrails coherentes con masterPrompt (sin contradicciones) ---
+  // Guardrails de categoría (sin chocar con masterPrompt)
   const categoryGuardrails = `
-**CATEGORY GUARDRAILS (WOMAN / MASTERPIECE):**
-- Studio-portrait realism + museum oil execution (subtle brushwork, glazing).
-- Background must be **simple, darker, low-detail** to maximize subject separation (no bright bokeh, no clutter).
-- Avoid cinematic/grim lighting: flattering portrait lighting only (no harsh darkness).
-- Jewelry/accessories must be **refined** (no bulky collars, no exaggerated props).
-- Background decor must contain **NO faces** (no portraits, no statues, no figurative art).
+**CATEGORY GUARDRAILS (WOMAN):**
+- Tasteful, elegant, feminine, commercially attractive (no cheap costume vibe).
+- Realistic, naturalistic oil portrait (avoid illustration/cartoon feel).
+- Background: simple, darker, low-detail to make the subject pop.
+- Lighting: flattering portrait lighting (studio / soft Rembrandt-inspired), never grim/cinematic.
+- Background decor: NO faces (no portraits/statues/figurative decor).
 `;
 
-  // --- Fondos oscuros simples ---
-  const studioBackgroundsCore = [
-    "a dark warm studio gradient backdrop (low detail, no texture clutter)",
-    "a deep olive/umber seamless backdrop with subtle tonal variation",
-    "a dark charcoal studio backdrop, softly blended, minimal"
+  // Fondos oscuros simples (variedad real sin caos)
+  const backgroundsCore = [
+    "a dark warm studio gradient backdrop (low detail, minimal)",
+    "a deep olive/umber seamless backdrop with subtle tonal variation (low detail)",
+    "a dark charcoal studio backdrop, softly blended (minimal)"
   ];
 
-  // Variante extra para no sentir “la misma foto”
-  const studioBackgroundsVariants = [
-    "a deep brown-to-olive studio gradient backdrop, very subtle texture (no speckles)",
-    "a muted forest-green studio backdrop with soft vignette (low detail, no bokeh)",
-    "a warm umber backdrop with gentle falloff behind the head (simple, low detail)"
+  const backgroundsVariants = [
+    "a warm umber backdrop with subtle lighter falloff behind the head (simple, low detail)",
+    "a muted forest-green backdrop with a soft vignette (clean, low detail)",
+    "a deep brown-to-olive gradient backdrop (clean, low detail)"
   ];
 
   const backgroundPool =
     backgroundMode === "dark_simple_variants"
-      ? [...studioBackgroundsCore, ...studioBackgroundsVariants]
-      : studioBackgroundsCore;
+      ? [...backgroundsCore, ...backgroundsVariants]
+      : backgroundsCore;
 
-  // --- Accesorios refinados (opcional) ---
-  const accessoriesRefined = [
-    "a delicate necklace (thin chain, tasteful pendant) and a small elegant wristwatch",
-    "a refined necklace with subtle sparkle and a classic wristwatch (no oversized jewelry)",
-    "minimal earrings + delicate necklace + elegant wristwatch (all tasteful)"
-  ];
+  // Lens feel (rompe “misma foto” sin meter locura)
+  const lens50 = ["50mm portrait feel (natural, classic)"];
+  const lens85 = ["85mm portrait feel (gentle compression, premium flattering)"];
+  const lensPool =
+    lensMode === "50_only" ? lens50 :
+    lensMode === "85_only" ? lens85 :
+    [...lens50, ...lens85];
 
-  // --- Iluminación (studio y Rembrandt suave como opción) ---
+  // Iluminación (Rembrandt solo como inspiración suave con fill)
   const studioLighting = [
-    "soft studio key light (large softbox), gentle shadows, clean catchlights in the eyes",
-    "beauty-dish style soft studio lighting (flattering), smooth tonal transitions",
+    "soft studio key light (large softbox), gentle shadows, clean catchlights",
+    "beauty-dish style soft lighting (flattering), smooth tonal transitions",
     "soft studio key + subtle fill, clean highlights, natural skin tones"
   ];
 
-  // Rembrandt SOLO suave (no grim/cinematic)
   const rembrandtLighting = [
-    "soft Rembrandt portrait lighting: gentle Rembrandt triangle, controlled contrast, still flattering (no harsh shadows)",
-    "classic Rembrandt-inspired lighting with subtle fill and smooth falloff (portrait-friendly, not grim)",
-    "Rembrandt-style key with soft transitions and natural skin tones (no harsh darkness)"
+    "Rembrandt-inspired portrait lighting WITH soft fill: gentle triangle, controlled contrast, flattering (no harsh shadows)",
+    "Rembrandt-inspired key WITH subtle fill and smooth falloff (portrait-friendly, not grim)"
   ];
 
   const lightingPool =
     lightMode === "studio_only" ? studioLighting :
     lightMode === "rembrandt_only" ? rembrandtLighting :
-    [...studioLighting, ...rembrandtLighting]; // mix_studio_rembrandt
+    [...studioLighting, ...rembrandtLighting];
 
-  // --- Micro-variación segura (evita rigidez sin romper identidad) ---
-  const cameraAngles = [
-    "eye-level camera",
-    "slightly above eye-level (subtle, flattering)",
-    "slightly below eye-level (subtle, confident)"
+  // Micro-variación segura (compacta, no checklist)
+  const gaze = [
+    "gaze at camera",
+    "gaze slightly off-camera (natural)",
+    "gaze toward the key light (serene)"
   ];
 
-  const gazeDirections = [
-    "looking at camera (calm, confident)",
-    "looking 20–30 degrees off-camera (thoughtful, natural)",
-    "looking toward the key light (serene)"
+  const expression = [
+    "neutral soft expression",
+    "subtle soft smile",
+    "serene calm expression"
   ];
 
-  const bodyAngles = [
-    "frontal with relaxed shoulders",
-    "3/4 turn (about 25–35 degrees), elegant posture",
-    "3/4 turn (about 40–50 degrees), confident stance"
+  const hands = [
+    "hands relaxed and natural (no tension)",
+    "one hand gently resting on the other wrist (soft, natural)",
+    "one hand resting lightly on the forearm (soft, composed)",
+    "hands softly placed at waist level (natural fingers)"
   ];
 
-  const expressions = [
-    "neutral expression (soft, natural)",
-    "soft subtle smile (minimal)",
-    "serene expression (relaxed jaw, natural eyes)"
-  ];
-
-  // Manos: variación segura (reduce manos raras y evita rigidez)
-  const handPoses = [
-    "hands relaxed at waist level (natural fingers, no tension)",
-    "one hand gently resting on the other wrist (soft, elegant)",
-    "one hand lightly touching the necklace pendant (subtle, natural)",
-    "one hand resting on the forearm (soft, composed)"
-  ];
-
-  // --- Poses base (sin ser tiesas) ---
+  // Poses (naturalidad > rigidez)
   const standingPoses = [
-    "standing, gentle 3/4 turn, relaxed shoulders, natural weight shift",
-    "standing, slight lean, relaxed arms, natural hands visible",
-    "standing, subtle contrapposto, elegant but candid"
+    "a relaxed standing portrait with a gentle 3/4 turn and natural weight shift",
+    "a candid standing pose with relaxed shoulders (not stiff)",
+    "a calm elegant standing posture with subtle contrapposto (natural)"
   ];
 
   const seatedPoses = [
-    "seated on a simple studio chair, slight 3/4 turn, relaxed posture",
-    "seated, one forearm resting lightly, hands natural and soft",
-    "seated, upright but relaxed, subtle lean, calm presence"
+    "a relaxed seated portrait on a simple studio chair with a slight 3/4 turn",
+    "a seated pose with natural posture and soft hands placement (not stiff)"
   ];
 
-  // Grupos: por estabilidad, no forzamos sentado (pero damos naturalidad)
-  const groupPoses = [
-    "standing close together, balanced spacing, everyone equally visible",
-    "group composition with balanced spacing, waist-up framing, everyone equally visible"
+  const groupStandingPoses = [
+    "a balanced group portrait with clean spacing; each person slightly different body angle (natural asymmetry); all faces visible",
+    "a group portrait with subtle staggered positions; no symmetry-clone; all faces visible"
+  ];
+
+  const groupSeatedPoses = [
+    "a seated group portrait on simple chairs/bench, waist-up framing; natural asymmetry; all faces visible"
   ];
 
   const posePool =
-    (numSubjects > 1 || isGroup)
-      ? groupPoses
+    group
+      ? (groupPoseMode === "mix_standing_seated" ? [...groupStandingPoses, ...groupSeatedPoses] : groupStandingPoses)
       : (
           poseMode === "standing_only" ? standingPoses :
           poseMode === "seated_only" ? seatedPoses :
-          [...standingPoses, ...seatedPoses] // mix_standing_seated
+          [...standingPoses, ...seatedPoses]
         );
 
-  // --- 3 estilos diferenciados ---
+  // Accesorios: refinado y anti-duplicación en grupos (sin “Woman A/B”)
+  let accessoriesLine = "**ACCESSORIES:** none.";
+  if (accessoriesMode !== "none") {
+    if (!group) {
+      const includeWatch = chance(0.40);
+      accessoriesLine = includeWatch
+        ? "**ACCESSORIES (TASTEFUL):** a delicate necklace (thin chain, small pendant) and a small elegant wristwatch (minimal)."
+        : "**ACCESSORIES (TASTEFUL):** a delicate necklace (thin chain, small pendant).";
+    } else {
+      accessoriesLine = `
+**ACCESSORIES (TASTEFUL, GROUP DISTINCT):**
+- Accessories must be different per person (do NOT repeat the same necklace/pendant/watch).
+- If a watch appears: only one person may wear it; the other person must not.
+- Keep jewelry minimal and refined (no chunky or oversized pieces).
+`;
+    }
+  }
+
+  // 3 estilos: distinción por rol + paleta + mood + textiles
   const STYLE_PRESETS = {
     musa: {
       role: "**The Ethereal Muse** (romantic softness through glazing — realistic, not fantasy).",
@@ -147,12 +151,18 @@ module.exports = function (
         "Pearl White + Warm Champagne highlights",
         "Emerald Green + muted antique gold"
       ],
-      wardrobe: [
-        "a refined chiffon/silk gown with elegant neckline (no costume elements)",
+      wardrobeSolo: [
+        "a refined chiffon/silk dress with elegant neckline (no costume elements)",
         "a premium soft gown with subtle embroidery (tasteful, minimal)",
         "a minimalist couture dress with refined fabric sheen (realistic)"
+      ],
+      mood: [
+        "soft luminous mood (refined, gentle glow)",
+        "romantic calm mood (warm, elegant)",
+        "airy refined mood (premium, subtle)"
       ]
     },
+
     realeza: {
       role: "**The Absolute Queen** (regal, high-status — tasteful luxury, not costume).",
       palette: [
@@ -160,12 +170,18 @@ module.exports = function (
         "Crimson Velvet + Antique Gold",
         "Champagne Silk + Pearls"
       ],
-      wardrobe: [
+      wardrobeSolo: [
         "a regal gown with premium velvet/silk texture and refined detailing",
         "a structured high-status dress with tasteful embroidery (not theatrical)",
-        "a classic luxurious gown with clean silhouette and subtle train"
+        "a classic luxurious gown with clean silhouette"
+      ],
+      mood: [
+        "authoritative luxury mood (clean, premium)",
+        "regal calm mood (controlled, elegant)",
+        "high-status refined mood (polished)"
       ]
     },
+
     empoderada: {
       role: "**The Noble Matriarch** (powerful, composed — modern refinement).",
       palette: [
@@ -173,41 +189,46 @@ module.exports = function (
         "Burgundy + warm neutral highlights",
         "Black + antique gold (minimal luxury)"
       ],
-      wardrobe: [
+      wardrobeSolo: [
         "a structured couture dress (clean silhouette), feminine neckline",
         "a tailored velvet dress with refined sleeves (no bulky collar pieces)",
         "a silk dress with a subtle cape detail (elegant, not theatrical)"
+      ],
+      mood: [
+        "confident composed mood (clean, premium)",
+        "powerful calm mood (subtle strength)",
+        "minimal luxury mood (refined restraint)"
       ]
     }
   };
 
   const preset = STYLE_PRESETS[style] || STYLE_PRESETS.empoderada;
 
-  const accessoriesLine =
-    accessoriesMode === "none"
-      ? "**ACCESSORIES:** none."
-      : `**ACCESSORIES (TASTEFUL):** ${pick(accessoriesRefined)}.`;
+  // Wardrobe: SOLO vs GRUPO
+  const wardrobeLine = group
+    ? `**WARDROBE (GROUP DISTINCT):** coordinated palette and luxury level, but each person wears a different dress silhouette/cut/neckline; do NOT match.`
+    : `**WARDROBE:** ${pick(preset.wardrobeSolo)}.`;
 
-  // --- styleDescription final ---
+  // Dirección compacta (reduce rigidez)
+  const portraitDirection = `
+**PORTRAIT DIRECTION (NATURAL):**
+- ${pick(posePool)}; ${pick(gaze)}; ${pick(expression)}; ${pick(hands)}.
+- ${pick(lensPool)}.
+`;
+
   const styleDescription = `
 **ROLE:** ${preset.role}
 **BACKGROUND:** ${pick(backgroundPool)}.
+**MOOD:** ${pick(preset.mood)}.
 **PALETTE:** ${pick(preset.palette)}.
-**WARDROBE:** ${pick(preset.wardrobe)}.
+${wardrobeLine}
 ${accessoriesLine}
 **LIGHTING:** ${pick(lightingPool)}.
-**CAMERA:** ${pick(cameraAngles)}.
-**GAZE:** ${pick(gazeDirections)}.
-**BODY ANGLE:** ${pick(bodyAngles)}.
-**EXPRESSION:** ${pick(expressions)}.
-**HANDS:** ${pick(handPoses)}.
-**POSE:** ${pick(posePool)}.
+${portraitDirection}
 ${categoryGuardrails}
 `;
 
-  // --- Composición (variación segura; quitamos 50mm fijo para no clonar) ---
-  let framing = "";
-
+  // Composición (segura): evita full-body
   const soloFramings = [
     "**SOLO COMPOSITION:** Head & shoulders portrait. Clean separation from background.",
     "**SOLO COMPOSITION:** Half-body (waist up). Clean separation. Natural proportions.",
@@ -215,14 +236,13 @@ ${categoryGuardrails}
   ];
 
   const groupFramings = [
-    "**GROUP COMPOSITION:** Half-body (waist up) to fit everyone. Eye-level. Balanced spacing. ALL faces equally visible and sharp.",
+    "**GROUP COMPOSITION:** Half-body (waist up) to fit everyone. Balanced spacing. ALL faces equally visible and sharp.",
     "**GROUP COMPOSITION:** Medium shot (waist up). Subjects separated (no merged faces). ALL faces equally prioritized."
   ];
 
-  framing =
-    (numSubjects > 1 || isGroup)
-      ? pick(groupFramings) + " The main woman is the visual anchor WITHOUT hiding or diminishing other subjects."
-      : pick(soloFramings);
+  const framing = group
+    ? `${pick(groupFramings)} Avoid symmetry-clone; keep subtle natural asymmetry between people.`
+    : pick(soloFramings);
 
   return masterPrompt(numSubjects, styleDescription, framing);
 };
