@@ -1,7 +1,7 @@
 // ARCHIVO: mujer.js
 // CATEGORÍA: Mujer
 // Objetivo: 3 estilos MUY distinguibles + variación curada (segura) + cero kitsch.
-// Se apoya en masterPrompt para identidad / conteo / anti-collage / calidad base.
+// Se apoya en masterPrompt para identidad / conteo / anti-collage / acabado "obra maestra".
 
 const masterPrompt = require('./masterPrompt');
 
@@ -9,23 +9,25 @@ module.exports = function (style, numSubjects, isGroup) {
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
   // --- 1) Guardrails globales de categoría (MUJER) ---
-  // Nota: masterPrompt ya tiene identidad / conteo / no-collage. Aquí reforzamos "vendible".
+  // Importante: reforzamos "obra maestra real" y evitamos palabras que empujen a cartoon/fantasy.
   const categoryGuardrails = `
-**CATEGORY GUARDRAILS (WOMAN / COMMERCIAL):**
+**CATEGORY GUARDRAILS (WOMAN / COMMERCIAL / MASTERPIECE):**
 - Keep it **tasteful, elegant, feminine, and commercially attractive** (no cheap costume vibe).
+- Keep it **naturalistic and realistic** (avoid illustration/cartoon vibes).
 - Avoid cinematic/grim lighting: use **soft, clean, flattering light** (no harsh shadows).
 - Jewelry must be **refined** (no bulky collars, no oversized weird accessories).
+- Background decor must contain **NO faces**: no portraits, no statues, no figurative artwork, no crowd.
 `;
 
   // --- 2) ADN de los 3 estilos (que se note cada uno) ---
-  // Importante: Distinción por (rol + paleta + ambiente + textiles + mood), NO por props ridículos.
+  // Distinción por rol + paleta + ambiente + textiles + mood. Sin fantasía literal.
   const STYLE_PRESETS = {
     musa: {
-      role: "**The Ethereal Muse** (romantic, airy, luminous).",
+      role: "**The Ethereal Muse** (airy, luminous, romantic — but realistic oil paint).",
       scenes: [
-        "a softly blurred Secret Garden with delicate mist (clean background, no clutter)",
-        "a serene lakeside at golden hour with subtle bokeh (no extra figures)",
-        "a bright greenhouse-like space with soft greenery, minimal and elegant"
+        "a softly blurred Secret Garden with gentle atmospheric depth (clean background, no clutter, no figures, no statues)",
+        "a serene lakeside at golden hour with subtle bokeh (no extra figures, no boats/people, no faces in decor)",
+        "a bright greenhouse-like space with soft greenery, minimal and elegant (no signage, no crowd, no faces)"
       ],
       palettes: [
         "Dusty Rose + Soft Gold accents",
@@ -33,28 +35,28 @@ module.exports = function (style, numSubjects, isGroup) {
         "Emerald Green + muted antique gold"
       ],
       wardrobe: [
-        "a flowing chiffon/silk gown, refined drape, elegant neckline (no bulky collars)",
-        "a soft layered gown with subtle floral embroidery (tasteful, not costume)",
-        "a minimalist couture gown with ethereal translucency (fully tasteful)"
+        "a flowing chiffon/silk gown, refined drape, elegant neckline (no bulky collars, no costume elements)",
+        "a soft layered gown with subtle floral embroidery (tasteful, premium, not fantasy costume)",
+        "a minimalist couture gown with refined translucency (subtle, realistic fabric handling)"
       ],
       lighting: [
-        "soft daylight from the side, gentle glow, delicate shadows",
-        "soft studio light mimicking daylight, clean highlights on face",
-        "luminous soft light with subtle haze (sfumato-like), but face remains crisp"
+        "soft daylight from the side, gentle glow through glazing, delicate shadows",
+        "soft studio light mimicking daylight, clean highlights on face, refined tonal transitions",
+        "luminous soft light with subtle atmospheric perspective (no 'magic haze'), face remains crisp"
       ],
       signature: `
 **STYLE SIGNATURE (MUSA):**
-- Airy, luminous, romantic softness.
+- Airy, luminous romantic softness, expressed through **glazing and atmospheric depth** (not fantasy effects).
 - Background stays clean and subtle; emphasis on face + graceful fabric flow.
 `
     },
 
     realeza: {
-      role: "**The Absolute Queen** (regal, opulent, high-status).",
+      role: "**The Absolute Queen** (regal, opulent, high-status — tasteful luxury).",
       scenes: [
-        "an opulent palace interior with subtle depth (clean, no crowd, softly blurred)",
-        "a royal balcony with bright luxury daylight (no extra people)",
-        "a grand hall with elegant architectural lines, minimal clutter"
+        "an opulent palace interior with subtle depth (clean, softly blurred, NO portraits, NO statues, NO figurative decor)",
+        "a royal balcony with bright luxury daylight (no extra people, no crowd, clean architecture only)",
+        "a grand hall with elegant architectural lines, minimal clutter (NO portraits/statues/tapestries with faces)"
       ],
       palettes: [
         "Royal Blue + Diamonds (refined sparkle)",
@@ -68,7 +70,7 @@ module.exports = function (style, numSubjects, isGroup) {
       ],
       lighting: [
         "luxurious clean daylight, crisp but flattering (no harsh shadows)",
-        "soft studio light with premium sparkle control (jewels look expensive)",
+        "soft studio light with premium sparkle control (jewels look expensive, not gaudy)",
         "bright soft key light + subtle rim light separation (still non-cinematic)"
       ],
       signature: `
@@ -79,12 +81,11 @@ module.exports = function (style, numSubjects, isGroup) {
     },
 
     empoderada: {
-      // OJO: aquí matamos lo ridículo. Empoderada = poder elegante, no armadura ni drama dura.
-      role: "**The Noble Matriarch** (powerful, elegant, composed).",
+      role: "**The Noble Matriarch** (powerful, elegant, composed — modern refinement).",
       scenes: [
-        "a refined library interior (clean, softly blurred, premium atmosphere)",
-        "a minimalist stone staircase with soft daylight (no clutter)",
-        "an elegant interior with renaissance-inspired tones, subtle and modern"
+        "a refined library interior (clean, softly blurred, premium atmosphere; NO portraits, NO statues, NO faces in decor)",
+        "a minimalist stone staircase with soft daylight (no clutter, no crowd, clean lines)",
+        "an elegant interior with renaissance-inspired tones, subtle and modern (NO figurative decor, NO faces)"
       ],
       palettes: [
         "Deep Navy + muted gold accents",
@@ -98,12 +99,12 @@ module.exports = function (style, numSubjects, isGroup) {
       ],
       lighting: [
         "soft studio light, flattering, gentle contrast (no dramatic harshness)",
-        "soft daylight with controlled shadows (face remains natural)",
+        "soft daylight with controlled shadows (face remains natural, identity preserved)",
         "clean portrait lighting emphasizing confidence and symmetry"
       ],
       signature: `
 **STYLE SIGNATURE (EMPODERADA):**
-- Power through posture and elegance, not through exaggerated accessories.
+- Power through posture and elegance, not exaggerated accessories.
 - Confident, composed expression; premium tailoring; minimal clutter.
 `
     }
@@ -112,7 +113,7 @@ module.exports = function (style, numSubjects, isGroup) {
   // Fallback seguro si llega un style raro
   const preset = STYLE_PRESETS[style] || STYLE_PRESETS.empoderada;
 
-  // --- 3) Construcción del styleDescription (compacto pero contundente) ---
+  // --- 3) Construcción del styleDescription ---
   const styleDescription = `
 **ROLE:** ${preset.role}
 **SCENE:** ${pick(preset.scenes)}.
@@ -124,7 +125,7 @@ ${categoryGuardrails}
 `;
 
   // --- 4) Composición (variación segura) ---
-  // Regla: evitar full-body. Es donde revientan manos, proporciones y "disfraz".
+  // Regla: evitar full-body. Mucho riesgo de manos/proporciones y baja conversion.
   let framing = "";
 
   const soloFramings = [
@@ -133,12 +134,14 @@ ${categoryGuardrails}
   ];
 
   const groupFramings = [
-    "**GROUP COMPOSITION:** Half-body (waist up) to fit everyone. Eye-level. Balanced spacing. ALL faces clearly visible.",
-    "**GROUP COMPOSITION:** Medium shot (waist up). Keep subjects separated (no merged faces). ALL faces visible and recognizable."
+    "**GROUP COMPOSITION:** Half-body (waist up) to fit everyone. Eye-level. Balanced spacing. ALL faces clearly visible and equally sharp.",
+    "**GROUP COMPOSITION:** Medium shot (waist up). Keep subjects separated (no merged faces). ALL faces visible, recognizable, and equally prioritized."
   ];
 
   if (numSubjects > 1 || isGroup) {
-    framing = pick(groupFramings) + " The main woman remains the visual centerpiece, without hiding other subjects.";
+    framing =
+      pick(groupFramings) +
+      " The main woman is the visual anchor WITHOUT hiding or diminishing other subjects.";
   } else {
     framing = pick(soloFramings);
   }
