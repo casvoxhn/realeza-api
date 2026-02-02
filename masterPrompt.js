@@ -13,11 +13,17 @@ with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not 
 ========================
 - The subject(s) in the input photo are **ACTORS**. Each actor has a fixed, unchangeable identity.
 - Paint the **EXACT SAME ACTOR(S)** in a new scene wearing the role wardrobe.
+
 - **GEOMETRY LOCK (ABSOLUTE):** Preserve the actor’s **exact craniofacial geometry** from the source:
   - head shape, cheek volume/fullness, jaw width, chin length, facial proportions
   - eye size/shape/spacing, brow shape, nose shape/width, lip shape
   - natural asymmetries, eyelids, smile lines, defining features
-- **EXPRESSION / VIBE LOCK:** Keep the same core expression/vibe from the source (do NOT "modelize" or redesign the gaze).
+
+- **EXPRESSION / VIBE LOCK:** Preserve the same core expression/vibe from the source.
+  - If the source has a **technical capture issue** (blink/eyes closed, awkward mid-syllable mouth),
+    you may correct it **minimally** to a natural neutral expression **WITHOUT changing identity**.
+  - Do NOT "modelize" the face or redesign the gaze.
+
 - **HAIR LOCK:** Preserve hairline, length, texture, part, and overall hairstyle from the source.
 - **NO CORRECTION / NO BEAUTIFICATION:** Do NOT slim the face/body, do NOT beautify into a different person, do NOT age shift.
 - Keep real defining details (freckles/beauty marks) ONLY if they exist in the source.
@@ -28,6 +34,12 @@ with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not 
   - Preserve natural child proportions: cheeks/baby fat/roundness/facial volume exactly.
   - Do NOT enlarge eyes, do NOT change lip shape, do NOT "pretty up" into a different child.
   - Any painterly improvement must be **surface-level only** (lighting, texture, color), never structural.
+
+- **PET FIDELITY (IF A PET EXISTS):**
+  - The pet is also an **ACTOR** with a locked identity.
+  - Preserve: coat color/pattern/markings, fur length/texture, ear shape, muzzle shape, eye color, nose color.
+  - Do NOT change breed traits. Do NOT “cute-ify” or alter head proportions.
+  - Any painterly improvement must be **surface-level only** (light/texture/color), never structural.
 
 - **STYLE MUST ADAPT TO THE ACTOR, NOT THE ACTOR TO THE STYLE.**
 
@@ -54,15 +66,14 @@ with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not 
 🔴 PRIORITY #4 — "MASTERPIECE" LOOK (ANTI-AI / ANTI-CARTOON)
 ========================
 - Must feel like a real commissioned oil portrait:
-  - Naturalistic realism (credible anatomy + believable skin).
+  - Naturalistic realism (credible anatomy + believable skin/fur).
   - Painterly handling: controlled brushwork + glazing + pigment depth.
   - Subtle canvas/linen texture, subtle museum varnish sheen.
-  - Avoid the "AI smooth" look: keep **natural skin texture** (not plastic).
+  - Avoid the "AI smooth" look: keep **natural micro-texture** (not plastic).
 - **RENDER LAYER ONLY:** The oil-paint look is a rendering layer (brushwork/light/color/texture) and must NOT change facial geometry.
 - Avoid oversharpening, HDR, hyper-clarity. Face is crisp, but NOT digitally sharpened.
 - Avoid stylized/cartoony facial features (no doll-like eyes, no airbrushed gradients).
 
-// ===== PRINT + MATERIALITY UPGRADE (GLOBAL QUALITY BOOST) =====
 ========================
 🔴 PRIORITY #4.5 — PHYSICAL ARTWORK + PRINT-READY FINISH (GLOBAL)
 ========================
@@ -82,7 +93,6 @@ with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not 
   - Remove/avoid random dark specks, paint splatters, dirt-like marks on skin/fur.
   - Avoid waxy skin, plastic highlights, and overly perfect gradient shading.
   - Avoid unnatural eye shine (no doll eyes), keep catchlights controlled and realistic.
-
 
 ========================
 🔴 PRIORITY #5 — GROUP WARDROBE UNIQUENESS (CRITICAL)
@@ -118,7 +128,7 @@ ${framingInstruction}
 - NO text, NO watermarks, NO logos, NO UI.
 - NO cartoon, NO anime, NO illustration look, NO 3D render, NO CGI.
 - NO plastic skin, NO airbrushed beauty-filter look, NO fake eyes.
-- NO random skin spots/paint splatters/dirt on skin.
+- NO random skin spots/paint splatters/dirt on skin or fur.
 - NO deformed hands, NO extra fingers, NO distorted anatomy.
 - NO "8K", NO "ultra-sharp", NO "hyper-detailed" digital sharpening artifacts.
 - NO banding, NO noisy gradients, NO compression artifacts, NO AI shimmer.
