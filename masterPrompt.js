@@ -1,113 +1,82 @@
-// ARCHIVO: masterPrompt.js (FINAL v6)
-// Constitución global: identidad + inclusión + anti-collage + anti-fusión (multi-foto y foto grupal)
-// + anti-manchas + acabado obra maestra (anti-foto/anti-poster/anti-AI look)
-// + "storybook realism" SIN stylization animada.
+// ARCHIVO: masterPrompt.js
+// LA CONSTITUCIÓN: Identidad, Fidelidad, Conteo y Calidad Técnica.
+// Objetivo: OBRA MAESTRA real (museum-grade), no poster, no "AI look", no cartoon.
+// Extra clave: anti-fusión de identidades + anti-outfits clonados en grupos.
 
 module.exports = function (numSubjects, specificStyleDescription, framingInstruction) {
-  const isGroup = Number(numSubjects) > 1;
-
   return `
-You are a Master Portrait Artist creating a **MUSEUM-QUALITY, HIGH-END OIL PORTRAIT**
-that feels like a **valuable commissioned physical artwork** (not a modern photo session, not a poster).
+You are a master portrait painter creating a **MUSEUM-GRADE, NATURALISTIC OIL PORTRAIT**
+with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not a poster.
 
-**🔴 PRIORITY #1: THE CAST (IDENTITY IS NON-NEGOTIABLE)**
-- The subjects in the input are the CAST.
-- Paint the EXACT SAME subjects: preserve biometric identity (nose/eyes/mouth/jawline) and hair (length/texture/style).
-- NO beautifying into a different person. NO slimming. NO age changes.
-- Goal: the user instantly says: "That is ME / THAT IS US in a masterpiece."
+========================
+🔴 PRIORITY #1 — IDENTITY (NON-NEGOTIABLE)
+========================
+- The person in the input photo is an **ACTOR** (their identity must be preserved).
+- Paint the **EXACT SAME PERSON** in a new scene, wearing the role's wardrobe.
+- Preserve **biometric identity**: eyes, nose, mouth, jawline, facial proportions.
+- Preserve **hair**: length, texture, part, and overall hairstyle from the source.
+- Do NOT "correct" the person: no face slimming, no beautifying into a different person, no age shifting.
+- Keep real defining details (freckles/beauty marks) ONLY if they exist in the source.
+  **Do NOT invent new skin spots/moles/marks** (no random dark dots on arms/neck/face).
 
-**🔴 PRIORITY #2: SUBJECT COUNT & INCLUSION**
-- Input contains **${numSubjects} subject(s)**. Paint every single one.
-- Do NOT add extra people/animals.
-- All subjects must be clearly visible and recognizable.
-- NO extra faces anywhere (background faces, reflections, portraits, statues, figurative decor).
+========================
+🔴 PRIORITY #2 — MULTI-SUBJECT ACCURACY (NO FUSION / NO CLONES)
+========================
+- Input contains **${numSubjects} subject(s)**. Paint EVERY ONE.
+- If multiple input photos are provided, treat each as a **separate actor reference**.
+  **NEVER blend identities** and NEVER average faces between people.
+- **NO HALLUCINATIONS:** do not add extra people/animals.
+- **NO EXTRA FACES** anywhere: no background faces, reflections, statues, portraits, paintings-with-faces.
 
-**🔴 PRIORITY #3: CAST MAPPING (CRITICAL WHEN INPUT PHOTOS ARE SEPARATE)**
-- If multiple input photos are provided (e.g., Photo A = Person A, Photo B = Person B, Photo C = Pet):
-  - Treat each input photo as a separate identity anchor.
-  - Preserve Person A ONLY from Photo A; preserve Person B ONLY from Photo B; preserve the Pet ONLY from the pet photo.
-  - **NEVER blend identities across photos.** No averaging, no mixing facial features, no "best of both".
-  - Each human must keep their own unique face. Each pet keeps its own unique face/body.
+========================
+🔴 PRIORITY #3 — COHERENT SINGLE IMAGE (NO COLLAGE)
+========================
+- Create ONE new cohesive scene with unified perspective and lighting.
+- DO NOT paste original photos.
+- NO collage, NO split image, NO grids, NO side-by-side composites.
 
-**🔴 PRIORITY #4: GROUP IDENTITY SEPARATION (ANTI-FUSION / ANTI-MERGE)**
-- Each human subject must remain a **distinct individual** with their own face.
-- **NO face blending:** do not merge/morph/average faces between different people.
-- **NO identity reuse:** do not reuse one face for multiple people.
-- **SEPARATION RULE:** keep clean, non-overlapping facial silhouettes (no partial overlaps that could "heal" into one face).
-- If uncertain, choose **two clearly distinct faces** over "beauty".
+========================
+🔴 PRIORITY #4 — "MASTERPIECE" LOOK (ANTI-AI / ANTI-CARTOON)
+========================
+- Must feel like a real commissioned oil portrait:
+  - Naturalistic realism (credible anatomy + believable skin).
+  - Painterly handling: controlled brushwork + glazing + pigment depth.
+  - Subtle canvas/linen texture, subtle museum varnish sheen.
+  - Avoid the "AI smooth" look: keep **natural skin texture** (pores are subtle, not plastic).
+- Avoid oversharpening, HDR, hyper-clarity. Face is crisp, but NOT digitally sharpened.
+- Avoid stylized/cartoony facial features (no doll-like eyes, no perfect airbrushed gradients).
 
-${isGroup ? `
-**🔴 PRIORITY #5: GROUP DISTINCTNESS (ANTI-CLONE)**
-- Do NOT make the group look like the same person twice.
-- Keep distinct micro-features per subject (eye spacing, nose shape, jawline, lip shape) exactly as their own identity anchor.
-- Keep distinct hair volume/part/shape per subject as in their own source.
-
-**🔴 PRIORITY #6: GROUP WARDROBE & ACCESSORIES (ANTI-UNIFORM)**
-- Coordinated luxury level, BUT NOT matching.
-- HARD RULE: different people must NOT have the exact same outfit silhouette + neckline + color at the same time.
-- Accessories must be distinct: do NOT duplicate the same necklace/pendant/watch across people.
-- Harmonize palette but vary tones: one deeper, one lighter or complementary.
-
-**🔴 PRIORITY #7: INTERACTION (ELEGANT, NOT AWKWARD)**
-- The group must show subtle interaction (not standing separately).
-- Choose ONE: gentle hand-on-forearm, light hand holding, subtle shoulder touch, or close posture with relaxed connection.
-- Keep it tasteful; avoid tangled limbs; all hands remain anatomically correct.
-` : ""}
-
-**🔴 PRIORITY #8: COHERENT SINGLE IMAGE (NO COLLAGE)**
-- Create ONE cohesive new scene with unified lighting and perspective.
-- Do NOT paste the original input photos.
-- NO collage / split layout / side-by-side / photo grid.
-- Single believable perspective and consistent scale across subjects.
-
-**🔴 PRIORITY #9: CLEAN SKIN POLICY (ANTI-SPOTS / ANTI-ARTIFACTS)**
-- For HUMAN skin: default is clean and spotless.
-- Do NOT invent random moles/freckles/stains/speckles/black dots/acne/dirt/artifacts.
-- Preserve a beauty mark ONLY if clearly present in the source for that specific person and in the same location/size.
-- If uncertain: do NOT include it.
-
-**🔴 PRIORITY #10: REALISM-ONLY "MAGIC" (STORYBOOK REALISM, NOT CARTOON)**
-- If "magic" or "wow" is desired, express it ONLY through **storybook realism**:
-  warm romantic glow, atmospheric depth, rich textiles, elegant staging, and painterly glazing.
-- Do NOT use animation stylization. Do NOT exaggerate cute proportions. Keep natural human anatomy and realistic facial proportions.
-
-**🔴 PRIORITY #11: HIGH-ART DIRECTION (NOT A MODERN PHOTO SESSION)**
-- This must NOT look like a modern studio photo painted over.
-- Avoid photography language and modern studio aesthetics (no "softbox", no "50mm", no "photo backdrop").
-- Use classical oil portrait conventions: depth, layered paint, rich materials, elegant staging.
-
-**🔴 PRIORITY #12: MASTERPIECE FINISH (ANTI-AI / ANTI-POSTER)**
-- Naturalistic realism with authentic oil handling: subtle brushwork, layered glazing, pigment depth.
-- Subtle linen/canvas texture + refined varnish finish.
-- Controlled chiaroscuro with warm, luminous highlights on fabric and jewelry (tasteful).
-- Avoid AI look: no plastic skin, no doll face, no oversharpen, no HDR.
-
-**🔴 PRIORITY #13: PRESENTATION QUALITY**
-- NO borders, NO frames, NO mockups.
-- NO text, NO watermarks, NO logos, NO signatures.
+========================
+🔴 PRIORITY #5 — GROUP WARDROBE UNIQUENESS (CRITICAL)
+========================
+- If more than 1 human subject:
+  - **NO matching outfits by default.**
+  - Each person must have a **distinct dress design** (different neckline/sleeves/silhouette),
+    distinct accessories (necklace/earrings/bracelet/watch), and distinct color variation
+    within the style palette.
+  - Keep harmony (same era/style family), but avoid "twins/clones" look.
 
 --------------------------------------------------
-**SCENE & STYLE INSTRUCTIONS (THE ROLE):**
+SCENE & STYLE (ROLE INSTRUCTIONS)
+--------------------------------------------------
 ${specificStyleDescription}
---------------------------------------------------
 
-**COMPOSITION:**
+--------------------------------------------------
+COMPOSITION
+--------------------------------------------------
 ${framingInstruction}
 - ASPECT RATIO: VERTICAL 4:5.
 
-**⛔ NEGATIVE CONSTRAINTS (STRICT):**
-- NO extra people/animals/faces (including portraits/statues/reflections/figurative decor).
-- NO identity drift, NO duplicate faces, NO merged faces, NO morphing, NO blending across subjects.
-- NO collage, NO split image, NO pasted photo, NO photo grid.
-- NO text, NO watermark, NO logo, NO UI, NO signature.
-- NO cartoon, NO anime, NO illustration stylization, NO 3D render, NO CGI.
-- NO random skin spots / speckles / stains / artifacts.
-- NO plastic skin, NO airbrushed look, NO doll-like face, NO fake eyes.
-- NO oversharpened, NO HDR, NO digital filter look.
+========================
+⛔ NEGATIVE CONSTRAINTS (STRICT)
+========================
+- NO extra people, NO extra animals, NO extra faces (background/reflections/statues/portraits).
+- NO identity drift. NO face morphing. NO merged faces.
+- NO collage, NO split image, NO photo grid, NO pasted photo.
+- NO text, NO watermarks, NO logos, NO UI.
+- NO cartoon, NO anime, NO illustration look, NO 3D render, NO CGI.
+- NO plastic skin, NO airbrushed beauty-filter look, NO fake eyes.
+- NO random skin spots/paint splatters/dirt on skin.
 - NO deformed hands, NO extra fingers, NO distorted anatomy.
-${isGroup ? `
-- NO matching outfits. NO duplicated accessories across different people.
-- NO subjects standing separately without interaction.
-` : ""}
 `;
 };
