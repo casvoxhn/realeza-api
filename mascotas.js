@@ -1,115 +1,198 @@
 // ARCHIVO: mascotas.js
-// Lógica ORIGINAL y VALIDADA por el usuario (No tocar)
+// CATEGORÍA: Mascotas (PET-FIRST)
+// Objetivo: 3 estilos MUY distinguibles + identidad del animal intacta + interacción cálida con humanos
+// (niños = ternura cercana, adultos = caricia orgánica) + multi-pet (hasta 5 sujetos) sin caos.
 
-module.exports = function(style, numSubjects, isGroup) {
-    
-    // --- VARIABLES DINÁMICAS ---
-    const identityInstruction = isGroup
-        ? `Capture the unique characteristics and likeness of **EVERY SINGLE ONE of the ${numSubjects} SUBJECTS** (humans and/or animals) provided.`
-        : "Capture the unique characteristics and overall likeness of the subject.";
+const masterPrompt = require('./masterPrompt');
 
-    let promptStyle = "";
+module.exports = function (style, numSubjects, isGroup) {
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  const isMulti = numSubjects > 1 || !!isGroup;
 
-    // --- ESTILO 1: RENACIMIENTO (ROMÁNTICO/ELEGANTE) ---
-    if (style === 'renacimiento') {
-        promptStyle = `
-        **STYLE:** 18th/19th Century Romantic Royal Portrait (Winterhalter/Sargent style).
-        **VIBE:** Luxurious, Soft, Elegant, Majestic.
+  // 1) Guardrails específicos de mascotas (identidad del animal y anti-kitsch)
+  const petGuardrails = `
+**CATEGORY GUARDRAILS (PETS / MUSEUM COMMISSION):**
+- This is a **PET-FIRST** commissioned oil portrait: the hero pet is the main subject.
+- Preserve the pet's **exact identity** from the source:
+  - coat color and pattern, markings, fur length/texture, ear shape, eye color, muzzle shape, nose color.
+  - Do NOT change breed traits. Do NOT "cute-ify" into a different animal.
+  - Do NOT change head shape, eye spacing, muzzle length, or facial proportions.
+- Keep expression natural: calm, noble, warm. Avoid goofy/cartoon smiles.
+- If the pet has a collar in the source, you may replace it with **period-appropriate** fine accessories,
+  but preserve the pet’s identity (no anatomy changes).
+- No kitsch: no oversized crowns, no clown costumes, no cheap shiny plastics.
+- Background must contain **NO faces** (no portraits/statues/figurative tapestries/crowds).
+`;
 
-        **1. IDENTITY (CRITICAL):**
-        - ${identityInstruction}
-        - Maintain exact facial features for humans and breed/markings for pets.
+  // 2) Backdrops / staging (cojín grande + opulencia controlada)
+  const backdrops = [
+    "a dark museum backdrop with subtle warm-to-cool gradient, minimal, elegant, low-detail",
+    "a classical interior suggestion with soft columns and warm drapery, minimal architecture, no clutter",
+    "a moody baroque interior with deep shadows and controlled highlights, clean negative space",
+    "a soft painted sky backdrop with warm golden clouds, painterly (NOT photoreal sky)"
+  ];
 
-        **2. INTELLIGENT SUBJECT HANDLING:**
-        --- **IF SUBJECT IS A PET:** ---
-        - **POSE:** Reclining or sitting regally on a massive antique velvet cushion.
-        - **ATTIRE:** Heavy brocade mantle/capelet **draped open at the front** (V-shape) to reveal neck fur.
-        - **FASTENING:** Connected by an opulent jeweled clasp/chain across the chest.
+  const props = [
+    "a **large plush velvet cushion** with tassels and subtle gold trim (throne-like, premium)",
+    "an elegant low chaise or carved bench with rich upholstery (minimal, clean composition)",
+    "a single draped velvet cloth over a small platform (simple, museum-grade)",
+    "a classic balustrade silhouette + one large cushion (minimal, no crowd, no clutter)"
+  ];
 
-        --- **IF SUBJECT IS A HUMAN:** ---
-        - **POSE:** Seated gracefully on a luxurious sofa, throne, or standing elegantly.
-        - **ATTIRE (GOWNS NOT BLACK):** Use **Opulent Royal Gowns/Robes**. Colors: Royal Blue, Deep Emerald, Rich Burgundy, Gold, or Rose.
-        - **Vibe:** A queen or princess in her palace.
+  // 3) Luz (evitar look CGI / caricatura)
+  const lightingOptions = [
+    "museum portrait lighting: soft key + gentle fill + subtle rim separation, natural fur detail",
+    "Rembrandt-inspired lighting: controlled shadows, soft modeling, no harsh contrast",
+    "soft north-window daylight: warm highlights, smooth tonal transitions, believable texture",
+    "baroque candlelit ambience (subtle): warm key, deep background, realistic reflections, NOT fantasy glow"
+  ];
 
-        --- **IF MIXED GROUP (Humans + Pets):** ---
-        - **COMPOSITION:** A wider "Family Portrait" scene. The Human is the anchor. Pets are arranged naturally (lap, feet, stool).
+  // 4) Poses pet-only (seguras, vendibles)
+  const petSoloPoses = [
+    "hero pet seated 3/4 on a large cushion, front paws relaxed, noble posture, calm gaze",
+    "hero pet lying elegantly on a large cushion, head raised, dignified, soft eye contact",
+    "hero pet seated upright, slight head turn, natural expression, fur texture highly detailed",
+    "medium portrait of hero pet (chest up), calm gaze, background softer, fur crisp"
+  ];
 
-        **3. SETTING & LIGHTING:**
-        - **BACKGROUND:** A palace interior with depth (drapery, columns).
-        - **LIGHTING:** Soft, flattering, golden-hour museum light.
-        `;
-    } 
-    // --- ESTILO 2: REY / REINA (OPULENCIA REAL) ---
-    else if (style === 'rey') {
-        promptStyle = `
-        **STYLE:** High Renaissance & Baroque Royal Coronation Portrait.
-        **VIBE:** Majestic, Opulent, Imposing, Luxurious, Gold-drenched.
+  // 5) Multi-pet composition (hasta 5 sujetos)
+  const multiPetArrangements = [
+    "hero pet centered on the main cushion; secondary pets arranged in a gentle arc around, slightly behind",
+    "hero pet in front with strongest light; secondary pets staggered by depth (no crowding), all faces visible",
+    "two pets share one large cushion (hero pet more centered); additional pets on floor near cushion edge (subtle)",
+    "triangle composition: hero pet at apex, others forming balanced base, consistent scale and perspective"
+  ];
 
-        **1. IDENTITY (CRITICAL):**
-        - ${identityInstruction}
-        - Maintain exact facial features/markings. Expression should be dignified.
+  // 6) Interacción con humanos (condicional: si aparecen humanos en la(s) foto(s))
+  // Nota: No asumimos que siempre habrá humanos; lo dejamos como regla "si existen".
+  const humanWarmInteractions = [
+    "IF a child is present: child close to the pet, gentle hug or cheek-to-fur closeness, warm tenderness; pet remains visually dominant",
+    "IF a child is present: child seated beside the cushion, one hand softly on the pet’s shoulder/back; affectionate and natural",
+    "IF an adult is present: adult slightly behind/side, hand gently resting on the pet’s chest/neck area; calm, organic closeness",
+    "IF an adult is present: adult seated near the cushion, subtle touch on the pet’s back, soft protective presence (supporting role)"
+  ];
 
-        **2. INTELLIGENT SUBJECT HANDLING:**
-        --- **IF SUBJECT IS A PET:** ---
-        - **POSE:** Reclining on a gilded royal dais or cushion with gold tassels.
-        - **ATTIRE:** Deep royal velvet mantles trimmed with ermine fur. Massive jeweled clasps.
+  // 7) Anti-clone en grupos (accesorios por mascota)
+  const multiPetUniqueness = `
+**MULTI-PET UNIQUENESS (CRITICAL):**
+- If more than 1 pet: do NOT clone accessories.
+- Keep harmony (same era/material family), but vary:
+  - one pet: medallion; another: refined collar; another: small brooch; another: no jewelry (premium restraint).
+- Keep all pets equally recognizable; no blending of faces/patterns.
+`;
 
-        --- **IF SUBJECT IS A HUMAN:** ---
-        - **POSE:** Seated imposingly on a Golden Throne under a canopy.
-        - **ATTIRE (MANDATORY CROWNS):** A grand **Imperial Crown** is MUST. Heavily embroidered coronation robes, goldwork, ermine collars. Holding scepter and orb. Color palette: Purple, Crimson, Gold.
+  // 8) 3 estilos del modal (operativos, claros)
+  const STYLE_PRESETS = {
+    renacimiento: {
+      role: "**Renacimiento Romántico (Elegancia)** — suave, cálido, museo, ternura noble.",
+      palette: [
+        "Champagne + soft gold + warm creams",
+        "Muted emerald + antique gold + pearl highlights",
+        "Soft burgundy + warm neutrals + subtle gold accents"
+      ],
+      wardrobe: [
+        "a refined velvet cape with subtle embroidery and a small medallion (premium, restrained)",
+        "a soft silk mantle with lace edge detail and a tasteful brooch (museum-grade, not costume)",
+        "a noble fur-trimmed cloak (ermine-inspired) with minimal jewels (controlled opulence)"
+      ],
+      accessories: [
+        "a single fine medallion + small pearls (subtle luxury)",
+        "a refined collar with one gemstone + small brooch",
+        "a minimal necklace/chain detail (very subtle) + no crown"
+      ],
+      mood: `
+**STYLE SIGNATURE (RENACIMIENTO):**
+- Warm softness, glazing depth, gentle atmosphere (no fantasy effects).
+- Cojín grande + textiles premium; expression calm and lovable.
+`
+    },
 
-        --- **IF MIXED GROUP:** ---
-        - **COMPOSITION:** Formal Royal Family portrait. Monarch on throne, pets acting as guardians at the feet.
+    realeza: {
+      role: "**Realeza Imperial (Coronación)** — opulencia controlada, trono, presencia oficial.",
+      palette: [
+        "Royal blue + antique gold + pearls",
+        "Crimson velvet + deep gold + warm shadows",
+        "Emerald + gold filigree + black accents"
+      ],
+      wardrobe: [
+        "a regal velvet mantle with ermine trim and refined gold embroidery (not gaudy)",
+        "a brocade-lined cape with a jeweled clasp (tasteful, premium)",
+        "a royal draped cloak with subtle train and gold edging (museum-worthy)"
+      ],
+      accessories: [
+        "a small tasteful coronet OR jeweled headpiece (very small) + fine collar",
+        "a statement medallion (premium) + pearl detail (subtle)",
+        "a refined brooch + elegant chain (no oversized crown)"
+      ],
+      mood: `
+**STYLE SIGNATURE (REALEZA):**
+- Throne-like cushion + drapery/columns suggestion.
+- Strong hierarchy: hero pet looks like royalty without looking like cosplay.
+`
+    },
 
-        **3. SETTING & LIGHTING:**
-        - **BACKGROUND:** Throne Room. Gilded columns, heraldic tapestries.
-        - **LIGHTING:** Bright, glorious, majestic light.
-        `;
-    } 
-    // --- ESTILO 3: BARROCO (DRAMA Y LUJO EXTREMO) ---
-    else if (style === 'barroco') {
-            promptStyle = `
-        **STYLE:** High Baroque Opulence & Theatricality.
-        **VIBE:** Dramatic, Intense, "More is More", Deep shadows meets blinding gold.
-
-        **1. IDENTITY (CRITICAL):**
-        - ${identityInstruction}
-        - Maintain exact facial features. Expressions should be intense or noble.
-
-        **2. INTELLIGENT SUBJECT HANDLING:**
-        --- **IF SUBJECT IS A PET:** ---
-        - **POSE:** Dynamic pose on a dark velvet cushion.
-        - **ATTIRE:** **A Gold Crown is MANDATORY.** Flowing Deep Red or Black Velvet Capes. Excessive gold ornamentation.
-
-        --- **IF SUBJECT IS A HUMAN:** ---
-        - **POSE:** Dramatic, theatrical stance or seated with overflowing fabric.
-        - **ATTIRE:** **Gold Baroque Crowns**. Armor with gold filigree or corset gowns with massive hips. A massive **Red or Black velvet drape** flowing around them.
-
-        --- **IF MIXED GROUP:** ---
-        - **COMPOSITION:** Opera scene. Highly staged. Human is center, pets are part of the scenery. Unifying colors: Deep Red, Gold, Black.
-
-        **3. SETTING & LIGHTING:**
-        - **BACKGROUND:** Dark palace interiors, heavy curtains, storm clouds.
-        - **LIGHTING:** Extreme Chiaroscuro (Caravaggio style) - Deep darkness vs bright golden light.
-        `;
+    barroco: {
+      role: "**Barroco Dramático (Teatral)** — intenso, Rembrandt, contraste elegante, carácter.",
+      palette: [
+        "Black + antique gold + deep burgundy",
+        "Ox-blood red + warm shadow browns + subtle gold",
+        "Deep navy + muted gold + candle-warm highlights"
+      ],
+      wardrobe: [
+        "a dark velvet cloak with gold trim and a single brooch (dramatic, premium)",
+        "a deep red mantle with subtle embroidery, controlled shine (no costume gloss)",
+        "a black-and-gold draped cape with minimal jewels (high contrast, elegant)"
+      ],
+      accessories: [
+        "a single brooch + thin chain (restraint)",
+        "a refined collar + one gemstone (no crown)",
+        "optional small medallion, keep it subtle"
+      ],
+      mood: `
+**STYLE SIGNATURE (BARROCO):**
+- Controlled drama: deep shadows, warm highlights, realistic texture.
+- No horror vibes, no fantasy glow — just museum-grade intensity.
+`
     }
+  };
 
-    const masterPrompt = `
-    You are a Master Painter creating a museum-quality oil painting.
-    **INSTRUCTIONS:**
-    1. Analyze the ${numSubjects} input image(s) to determine if they are humans, pets, or a mix.
-    2. Create a cohesive composition applying the "INTELLIGENT SUBJECT HANDLING" rules below.
-    3. Apply a rich oil painting texture.
-    
-    ${promptStyle}
-    
-    **CRITICAL TECHNICAL SPECS:**
-    **FORMAT:** Aspect Ratio 4:5 (Standard Portrait).
-    **FRAMING:** **Three-Quarter Shot (Knees Up or Full Seated Body).** Open the frame to show the beautiful attire and full arrangement. Do NOT crop too tight on the face.
+  const preset = STYLE_PRESETS[style] || STYLE_PRESETS.renacimiento;
 
-    **NEGATIVE CONSTRAINTS (WHAT NOT TO DRAW):**
-    - **DO NOT INCLUDE A PICTURE FRAME.** The image must be the painting itself, edge-to-edge canvas, with NO external border, mount, or gold frame generated around it.
-    `;
+  // 9) Style description (la “receta”)
+  const styleDescription = `
+**ROLE:** ${preset.role}
+**BACKDROP:** ${pick(backdrops)}.
+**STAGING/PROP:** ${pick(props)}.
+**PALETTE:** ${pick(preset.palette)}.
+**WARDROBE (CAPE/MANTLE):** ${pick(preset.wardrobe)}.
+**ACCESSORIES:** ${pick(preset.accessories)}.
+**LIGHTING:** ${pick(lightingOptions)}.
+${preset.mood}
+${petGuardrails}
+${isMulti ? multiPetUniqueness : ""}
 
-    return masterPrompt;
+**DEPTH & FINISH NOTES:**
+- Fur must show micro-detail (individual strands, realistic softness, believable volume).
+- Textiles must feel expensive (velvet pile, brocade weave, lace edge) without looking CGI.
+- Add subtle atmospheric depth + gentle vignette (painterly), avoid flat photo-session feel.
+`;
+
+  // 10) Framing / composición (4:5 vertical ya lo impone masterPrompt)
+  const soloFramings = [
+    `**SOLO COMPOSITION:** ${pick(petSoloPoses)}. Eye-level. 50–85mm portrait feel. Pet face crisp, background softer.`,
+    `**SOLO COMPOSITION:** medium portrait (chest up) with calm gaze; luxurious cushion edge visible; clean negative space.`
+  ];
+
+  const groupFramings = [
+    `**GROUP COMPOSITION:** medium shot or seated 3/4 to fit everyone. ${pick(multiPetArrangements)}. ALL faces visible. Hero pet most prominent.`,
+    `**GROUP COMPOSITION:** keep consistent scale/perspective. Hero pet gets strongest light + center priority. Secondary subjects slightly behind or to sides.`
+  ];
+
+  const interaction = isMulti
+    ? `\n**WARM INTERACTION RULES:** ${pick(humanWarmInteractions)}. If multiple pets: gentle contact (touching paws/leaning), no crowding.`
+    : `\n**WARMTH NOTE:** calm, noble, lovable presence; avoid goofy grin; subtle warmth in eyes.`;
+
+  const framing = (isMulti ? pick(groupFramings) : pick(soloFramings)) + interaction;
+
+  return masterPrompt(numSubjects, styleDescription, framing);
 };
