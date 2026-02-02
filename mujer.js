@@ -148,4 +148,81 @@ module.exports = function (
         "Emerald Green + muted antique gold"
       ],
       wardrobe: [
-        "a refined chiffon/silk gown with elegant neckli
+        "a refined chiffon/silk gown with elegant neckline (no costume elements)",
+        "a premium soft gown with subtle embroidery (tasteful, minimal)",
+        "a minimalist couture dress with refined fabric sheen (realistic)"
+      ]
+    },
+    realeza: {
+      role: "**The Absolute Queen** (regal, high-status — tasteful luxury, not costume).",
+      palette: [
+        "Royal Blue + refined sparkle",
+        "Crimson Velvet + Antique Gold",
+        "Champagne Silk + Pearls"
+      ],
+      wardrobe: [
+        "a regal gown with premium velvet/silk texture and refined detailing",
+        "a structured high-status dress with tasteful embroidery (not theatrical)",
+        "a classic luxurious gown with clean silhouette and subtle train"
+      ]
+    },
+    empoderada: {
+      role: "**The Noble Matriarch** (powerful, composed — modern refinement).",
+      palette: [
+        "Deep Navy + muted gold accents",
+        "Burgundy + warm neutral highlights",
+        "Black + antique gold (minimal luxury)"
+      ],
+      wardrobe: [
+        "a structured couture dress (clean silhouette), feminine neckline",
+        "a tailored velvet dress with refined sleeves (no bulky collar pieces)",
+        "a silk dress with a subtle cape detail (elegant, not theatrical)"
+      ]
+    }
+  };
+
+  const preset = STYLE_PRESETS[style] || STYLE_PRESETS.empoderada;
+
+  const accessoriesLine =
+    accessoriesMode === "none"
+      ? "**ACCESSORIES:** none."
+      : `**ACCESSORIES (TASTEFUL):** ${pick(accessoriesRefined)}.`;
+
+  // --- styleDescription final ---
+  const styleDescription = `
+**ROLE:** ${preset.role}
+**BACKGROUND:** ${pick(backgroundPool)}.
+**PALETTE:** ${pick(preset.palette)}.
+**WARDROBE:** ${pick(preset.wardrobe)}.
+${accessoriesLine}
+**LIGHTING:** ${pick(lightingPool)}.
+**CAMERA:** ${pick(cameraAngles)}.
+**GAZE:** ${pick(gazeDirections)}.
+**BODY ANGLE:** ${pick(bodyAngles)}.
+**EXPRESSION:** ${pick(expressions)}.
+**HANDS:** ${pick(handPoses)}.
+**POSE:** ${pick(posePool)}.
+${categoryGuardrails}
+`;
+
+  // --- Composición (variación segura; quitamos 50mm fijo para no clonar) ---
+  let framing = "";
+
+  const soloFramings = [
+    "**SOLO COMPOSITION:** Head & shoulders portrait. Clean separation from background.",
+    "**SOLO COMPOSITION:** Half-body (waist up). Clean separation. Natural proportions.",
+    "**SOLO COMPOSITION:** 3/4 crop (upper torso). Elegant negative space."
+  ];
+
+  const groupFramings = [
+    "**GROUP COMPOSITION:** Half-body (waist up) to fit everyone. Eye-level. Balanced spacing. ALL faces equally visible and sharp.",
+    "**GROUP COMPOSITION:** Medium shot (waist up). Subjects separated (no merged faces). ALL faces equally prioritized."
+  ];
+
+  framing =
+    (numSubjects > 1 || isGroup)
+      ? pick(groupFramings) + " The main woman is the visual anchor WITHOUT hiding or diminishing other subjects."
+      : pick(soloFramings);
+
+  return masterPrompt(numSubjects, styleDescription, framing);
+};
