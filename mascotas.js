@@ -1,6 +1,6 @@
 // ARCHIVO: mascotas.js
-// CATEGORÍA: Mascotas (PET-FIRST) - V3.1 (WOW Factor + Human/Multi Support)
-// Objetivo: Texturas hiperrealistas + Capas abiertas + Soporte robusto para grupos (Mascotas y Humanos).
+// CATEGORÍA: Mascotas (PET-FIRST) - V3.2 (WOW Factor + Child/Baby Logic)
+// Objetivo: Texturas hiperrealistas + Capas abiertas + Lógica específica para Bebés vs Adultos.
 
 const masterPrompt = require('./masterPrompt');
 
@@ -73,7 +73,7 @@ module.exports = function (style, numSubjects, isGroup) {
       { value: pick(petSeatedPoses), weight: 30 }
     ]);
 
-  // 6) Multi-Subject Logic (Mascotas VS Humanos)
+  // 6) Multi-Subject Logic (Mascotas VS Humanos VS Niños)
   const multiPetArrangements = [
     "hero pet centered on the main cushion; secondary pets lounging naturally around/behind, forming a pyramid composition",
     "all pets sharing the massive cushion, arranged by size, with the hero pet slightly forward and brighter",
@@ -81,16 +81,18 @@ module.exports = function (style, numSubjects, isGroup) {
   ];
 
   const humanWarmInteractions = [
-    "**HUMAN ROLE:** The human acts as a noble guardian or companion. They do NOT wear costumes. They wear elegant formal attire (dark colors).",
-    "**INTERACTION:** Human standing slightly behind or seated next to the cushion, a gentle hand resting on the pet's back or chest.",
-    "**INTERACTION:** Human leaning in warmly towards the pet, creating a bond, but the Pet remains the visual center/King."
+    "**ADULT ROLE:** Noble guardian. Dark formal period attire. Standing slightly behind or seated next to cushion. Hand on pet's back.",
+    "**CHILD/BABY ROLE:** Innocent companion or 'Little Prince/Princess'. Soft period clothing (creams, white, soft velvet).",
+    "**CHILD/BABY POSE:** Child seated ON the cushion with the pet, or hugging the pet gently. Eye level with the animal. Angelic lighting on the child."
   ];
 
   // 7) Anti-clone en grupos
   const multiPetUniqueness = `
 **MULTI-SUBJECT LOGIC:**
 - **If multiple pets:** Keep harmony (same era materials) but vary accessories slightly (e.g., different collar styles). NO CLONES.
-- **If Humans are present:** Humans must look natural, elegant, and supportive. They should NOT wear the pet's cape. They frame the pet.
+- **If Humans are present:** - Adults: Dignified, protective, dark/rich colors.
+  - Children: Soft, angelic, lighter colors (cream/gold/pastel). 
+  - Humans do NOT wear the pet's cape. They frame the pet.
 `;
 
   // 8) Estilos (CAPAS ABIERTAS OBLIGATORIAS)
@@ -166,9 +168,7 @@ ${isMulti ? multiPetUniqueness : ""}
 - **Life in Eyes:** The eyes must be glossy, deep, and have a clear reflection of the light source.
 `;
 
-  // 10) Composición Inteligente (Humanos vs Mascotas)
-  
-  // Si es multi, le damos opciones mixtas para que el MasterPrompt decida según lo que ve en la foto
+  // 10) Composición Inteligente (Humanos vs Mascotas vs Niños)
   const groupLogic = `
 **GROUP SCENARIO:**
 - **IF MULTIPLE PETS:** ${pick(multiPetArrangements)}. 
