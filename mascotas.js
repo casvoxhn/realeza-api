@@ -1,7 +1,6 @@
 // ARCHIVO: mascotas.js
-// CATEGORÍA: Mascotas (PET-FIRST)
-// Objetivo: 3 estilos distinguibles + identidad intacta + interacción cálida con humanos
-// + multi-pet (hasta 5 sujetos) + DEFAULT POSE DOMINANTE: "ACOSTADO ELEGANTE" (B).
+// CATEGORÍA: Mascotas (PET-FIRST) - V2.0 (Surrealum-level realism + Dynamic Poses + Modesty)
+// Objetivo: 3 estilos distinguibles + identidad intacta + poses vivas y dignas + texturas hiperrealistas.
 
 const masterPrompt = require('./masterPrompt');
 
@@ -9,7 +8,6 @@ module.exports = function (style, numSubjects, isGroup) {
   // Random helpers
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
   const weightedPick = (items) => {
-    // items: [{ value: "text", weight: 4 }, ...]
     const total = items.reduce((sum, it) => sum + (it.weight || 1), 0);
     let r = Math.random() * total;
     for (const it of items) {
@@ -21,207 +19,166 @@ module.exports = function (style, numSubjects, isGroup) {
 
   const isMulti = numSubjects > 1 || !!isGroup;
 
-  // 1) Guardrails específicos de mascotas (identidad del animal y anti-kitsch)
+  // 1) Guardrails específicos de mascotas (identidad, modestia y anti-kitsch)
   const petGuardrails = `
-**CATEGORY GUARDRAILS (PETS / MUSEUM COMMISSION):**
+**CATEGORY GUARDRAILS (PETS / MASTERPIECE COMMISSION):**
 - This is a **PET-FIRST** commissioned oil portrait: the hero pet is the main subject.
-- Preserve the pet's **exact identity** from the source:
-  - coat color and pattern, markings, fur length/texture, ear shape, eye color, muzzle shape, nose color.
-  - Do NOT change breed traits. Do NOT "cute-ify" into a different animal.
-  - Do NOT change head shape, eye spacing, muzzle length, or facial proportions.
-- Keep expression natural: calm, noble, warm. Avoid goofy/cartoon smiles.
-- No kitsch: no oversized crowns, no clown costumes, no cheap shiny plastics.
-- Background must contain **NO faces** (no portraits/statues/figurative tapestries/crowds).
+- Preserve the pet's **exact identity** from the source: coat color/pattern, markings, fur texture, ear shape, eye color.
+- **AESTHETIC MODESTY (CRITICAL):** Ensure a dignified composition. Use natural posing (e.g., a strategically placed paw, tail, or fabric drape) to aesthetically conceal intimate areas, maintaining a noble presentation.
+- Keep expression natural and alive: calm, noble, alert, warm. Avoid goofy/cartoon smiles or stiff taxidermy looks.
+- No kitsch: no oversized crowns, no cheap shiny plastics. Materials must look expensive and real.
 `;
 
   // 2) Backdrops / staging (cojín grande + opulencia controlada)
   const backdrops = [
-    "a dark museum backdrop with subtle warm-to-cool gradient, minimal, elegant, low-detail",
-    "a classical interior suggestion with soft columns and warm drapery, minimal architecture, no clutter",
-    "a moody baroque interior with deep shadows and controlled highlights, clean negative space",
-    "a soft painted sky backdrop with warm golden clouds, painterly (NOT photoreal sky)"
+    "a dark, rich museum backdrop with subtle warm-to-cool gradient, deep shadows, very elegant",
+    "a classical interior suggestion with deep carved wood paneling and heavy drapery shadows",
+    "a moody baroque interior with intense, controlled highlights on the subject, dark negative space",
+    "a aged master painter's studio background, dark and atmospheric, putting all focus on the pet"
   ];
 
   const props = [
-    "a **large plush velvet cushion** with tassels and subtle gold trim (throne-like, premium)",
-    "an elegant low chaise or carved bench with rich upholstery (minimal, clean composition)",
-    "a single draped velvet cloth over a small platform (simple, museum-grade)",
-    "a classic balustrade silhouette + one large cushion (minimal, no crowd, no clutter)"
+    "a **massive, plush velvet cushion** with heavy gold tassels and intricate brocade trim (throne-like weight)",
+    "an elegant, low antique chaise lounge with rich, deep upholstery and heavy fabric folds",
+    "a raised platform draped in heavy, light-catching velvet and damask fabrics"
   ];
 
-  // 3) Luz (evitar look CGI / caricatura)
+  // 3) Luz (Dramática y texturizante - Clave para el efecto wow)
   const lightingOptions = [
-    "museum portrait lighting: soft key + gentle fill + subtle rim separation, natural fur detail",
-    "Rembrandt-inspired lighting: controlled shadows, soft modeling, no harsh contrast",
-    "soft north-window daylight: warm highlights, smooth tonal transitions, believable texture",
-    "baroque candlelit ambience (subtle): warm key, deep background, realistic reflections, NOT fantasy glow"
+    "dramatic museum portrait lighting: strong key light from side revealing fur texture, deep soft shadows",
+    "master painter's light (Rembrandt-esque): focused beam on the pet's face and chest, rich dark fall-off",
+    "deep chiaroscuro lighting: high contrast but retaining detail in shadows, emphasizing volume and texture",
+    "soft but directional north-window light, creating sparkling highlights on fur and jewel tones on fabric"
   ];
 
-  // 4) Poses PET-SOLO (B dominante: acostado elegante)
-  // Idea: muchas variaciones de "lying" para que NO se sienta repetitivo.
+  // 4) Poses PET-SOLO (Más vivas, menos estáticas, y con opciones de capa abierta)
   const petLyingPoses = [
-    "hero pet lying elegantly on the large cushion, head raised, calm noble gaze, front paws relaxed",
-    "hero pet in a sphinx-like pose on the cushion (front paws forward), head slightly turned, dignified expression",
-    "hero pet lying on the cushion with one front paw subtly advanced, soft eye contact, natural posture",
-    "hero pet lying on a low chaise with draped velvet, head raised, warm calm presence, realistic fur",
-    "hero pet lying comfortably with gentle chest lift, relaxed shoulders, noble calm eyes, no stiffness",
-    "hero pet lying on the cushion, slight diagonal body angle, head turned toward light, refined silhouette"
+    "hero pet lying with **dynamic relaxation** on the large cushion, head turned alertly toward light, one paw draped naturally over the edge",
+    "hero pet lying settled deep into the cushion fabric, body angled, looking back over shoulder with a **lively, intelligent expression**",
+    "hero pet lying in a noble sphinx-like pose, but with tension released in shoulders, calm dominant gaze, chest visible",
+    "hero pet lying comfortably, shifting weight slightly, giving a natural sense of life and breath, eyes bright"
   ];
 
   const petSeatedPoses = [
-    "hero pet seated 3/4 on the large cushion, front paws visible and relaxed, calm noble gaze",
-    "hero pet seated upright, slight head turn, natural expression, fur texture highly detailed"
+    "hero pet seated regally 3/4 on the cushion, chest puffed proudly, alert gaze, tail curled naturally around base",
+    "hero pet seated upright but relaxed, head slightly tilted with curiosity, fur texture incredibly defined on chest"
   ];
 
-  const petIconPoses = [
-    "medium portrait of hero pet (chest up), calm gaze, background softer, fur crisp",
-    "chest-up iconic portrait, cape visible on shoulders, fur texture crisp, background minimal"
-  ];
-
-  // Weighted default: 50% lying, 35% seated, 15% chest-up/icon
+  // Weighted default: 60% lying (more noble/heavy), 40% seated
   const petSoloPoseWeighted = () =>
     weightedPick([
-      { value: pick(petLyingPoses), weight: 50 },
-      { value: pick(petSeatedPoses), weight: 35 },
-      { value: pick(petIconPoses), weight: 15 }
+      { value: pick(petLyingPoses), weight: 60 },
+      { value: pick(petSeatedPoses), weight: 40 }
     ]);
 
-  // 5) Multi-pet composition (hasta 5 sujetos)
+  // 5) Multi-pet composition
   const multiPetArrangements = [
-    "hero pet centered on the main cushion; secondary pets arranged in a gentle arc around, slightly behind",
-    "hero pet in front with strongest light; secondary pets staggered by depth (no crowding), all faces visible",
-    "two pets share one large cushion (hero pet more centered); additional pets near cushion edge (subtle), no clutter",
-    "triangle composition: hero pet at apex, others forming balanced base, consistent scale and perspective"
+    "hero pet centered dynamically on the main cushion; secondary pets arranged in a natural, non-stiff arc around them",
+    "hero pet in front with strongest light and most alert pose; secondary pets staggered by depth, all faces alive and visible",
+    "two pets sharing the large cushion naturally (hero pet more prominent); additional pets near cushion edge, forming a unified group"
   ];
 
-  // 6) Interacción con humanos (si existen humanos)
-  // En niños: calidez/ternura. En adultos: caricia orgánica. Siempre pet-first.
+  // 6) Interacción con humanos (si existen)
   const humanWarmInteractions = [
-    "IF a child is present: child close to the pet, gentle hug or cheek-to-fur closeness, warm tenderness; pet remains centered and largest",
-    "IF a child is present: child seated beside the cushion, one hand softly on the pet’s back/shoulder; affectionate and natural",
-    "IF an adult is present: adult slightly behind/side, hand gently resting on the pet’s chest/neck; calm organic closeness (supporting role)",
-    "IF an adult is present: adult seated near the cushion, subtle touch on the pet’s back; protective presence without stealing focus"
+    "IF a child is present: child leaning gently against the cushion, calm organic closeness; pet remains the focus",
+    "IF an adult is present: adult standing subtly behind or to the side, a hand resting naturally on the pet's shoulder (supporting role)"
   ];
 
-  // 7) Anti-clone en grupos (accesorios por mascota)
+  // 7) Anti-clone en grupos
   const multiPetUniqueness = `
-**MULTI-PET UNIQUENESS (CRITICAL):**
-- If more than 1 pet: do NOT clone accessories.
-- Keep harmony (same era/material family), but vary:
-  - one pet: medallion; another: refined collar; another: small brooch; another: no jewelry (premium restraint).
-- Keep all pets equally recognizable; no blending of faces/patterns.
+**MULTI-PET UNIQUENESS:**
+- If >1 pet: keep harmony (same era materials) but vary accessories slightly (e.g., one has a medallion, another a collar).
+- Keep all pets equally recognizable and alive.
 `;
 
-  // 8) 3 estilos del modal (operativos, claros)
+  // 8) 3 estilos del modal (Con vestuario "abierto" añadido)
   const STYLE_PRESETS = {
     renacimiento: {
       role: "**Renacimiento Romántico (Elegancia)** — suave, cálido, museo, ternura noble.",
       palette: [
-        "Champagne + soft gold + warm creams",
-        "Muted emerald + antique gold + pearl highlights",
-        "Soft burgundy + warm neutrals + subtle gold accents"
+        "Rich Champagne + soft gold + deep warm creams",
+        "Muted emerald green + antique gold + pearl accents",
+        "Deep soft burgundy + warm neutrals + subtle gold thread"
       ],
       wardrobe: [
-        "a refined velvet cape with subtle embroidery and a small medallion (premium, restrained)",
-        "a soft silk mantle with lace edge detail and a tasteful brooch (museum-grade, not costume)",
-        "a noble fur-trimmed cloak (ermine-inspired) with minimal jewels (controlled opulence)"
+        // Opción de capa abierta añadida:
+        "a refined velvet cape, **draped open at the front to reveal the chest fur**, with subtle embroidery and a small medallion",
+        "a soft silk mantle with heavy folds, lace edge detail and a tasteful brooch",
+        "a noble fur-trimmed cloak loosely draped over shoulders with minimal jewels"
       ],
-      accessories: [
-        "a single fine medallion + small pearls (subtle luxury)",
-        "a refined collar with one gemstone + small brooch",
-        "a minimal chain detail (very subtle) + no crown"
-      ],
-      mood: `
-**STYLE SIGNATURE (RENACIMIENTO):**
-- Warm softness, glazing depth, gentle atmosphere (no fantasy effects).
-- Big cushion + premium textiles; expression calm and lovable.
-`
+      accessories: ["a single fine medallion", "a refined collar with one gemstone", "a minimal gold chain"],
+      mood: `**STYLE SIGNATURE (RENACIMIENTO):** Warm softness, deep glazing, gentle atmosphere. Big cushion, calm lovable expression.`
     },
 
     realeza: {
-      role: "**Realeza Imperial (Coronación)** — opulencia controlada, trono, presencia oficial.",
+      role: "**Realeza Imperial (Coronación)** — opulencia controlada, poder, presencia oficial.",
       palette: [
-        "Royal blue + antique gold + pearls",
-        "Crimson velvet + deep gold + warm shadows",
-        "Emerald + gold filigree + black accents"
+        "Royal blue velvet + heavy antique gold + pearls",
+        "Deep Crimson velvet + rich gold bullion + warm shadows",
+        "Dark Emerald + gold filigree + black fur accents"
       ],
       wardrobe: [
-        "a regal velvet mantle with ermine trim and refined gold embroidery (not gaudy)",
-        "a brocade-lined cape with a jeweled clasp (tasteful, premium)",
-        "a royal draped cloak with subtle train and gold edging (museum-worthy)"
+        // Opción de capa abierta añadida:
+        "a regal velvet mantle with ermine trim, **thrown casually back over one shoulder** to show the pet's form",
+        "a heavy brocade-lined cape with a jeweled clasp, sitting heavily on the cushion",
+        "a royal draped cloak with a long train pooling on the cushion, gold edging"
       ],
-      accessories: [
-        "a small tasteful coronet OR jeweled headpiece (very small) + fine collar",
-        "a premium medallion + subtle pearl detail",
-        "a refined brooch + elegant chain (no oversized crown)"
-      ],
-      mood: `
-**STYLE SIGNATURE (REALEZA):**
-- Throne-like cushion + minimal drapery/columns suggestion.
-- Hero pet looks royal without looking like cosplay.
-`
+      accessories: ["a small tasteful coronet (very small) OR jeweled headpiece", "a premium heavy medallion", "a refined brooch + thick chain"],
+      mood: `**STYLE SIGNATURE (REALEZA):** Throne-like weight. Hero pet looks powerful and royal, heavy fabrics.`
     },
 
     barroco: {
-      role: "**Barroco Dramático (Teatral)** — intenso, Rembrandt opcional, contraste elegante, carácter.",
+      role: "**Barroco Dramático (Teatral)** — intenso, alto contraste, elegante, carácter fuerte.",
       palette: [
-        "Black + antique gold + deep burgundy",
-        "Ox-blood red + warm shadow browns + subtle gold",
-        "Deep navy + muted gold + candle-warm highlights"
+        "Onyx Black + antique brass gold + deep burgundy accents",
+        "Ox-blood red + deep shadow browns + burnished gold",
+        "Midnight navy + muted heavy gold + warm highlights"
       ],
       wardrobe: [
-        "a dark velvet cloak with gold trim and a single brooch (dramatic, premium)",
-        "a deep red mantle with subtle embroidery, controlled sheen (no costume gloss)",
-        "a black-and-gold draped cape with minimal jewels (high contrast, elegant)"
+        // Opción de capa abierta añadida:
+        "a dark, heavy velvet cloak with gold trim, **partially open**, revealing the neck and chest",
+        "a deep red mantle with rich, heavy embroidery creating deep shadows",
+        "a black-and-gold draped cape with tangible weight and minimal, striking jewels"
       ],
-      accessories: [
-        "a single brooch + thin chain (restraint)",
-        "a refined collar + one gemstone (no crown)",
-        "optional small medallion, keep it subtle"
-      ],
-      mood: `
-**STYLE SIGNATURE (BARROCO):**
-- Controlled drama: deep shadows, warm highlights, realistic texture.
-- No horror vibes, no fantasy glow — museum-grade intensity only.
-`
-    }
+      accessories: ["a single striking brooch + thick chain", "a heavy refined collar", "optional substantial medallion"],
+      mood: `**STYLE SIGNATURE (BARROCO):** High drama, deep shadows, warm highlights, intense gaze. Looks like a Rembrandt.`
+    },
   };
 
   const preset = STYLE_PRESETS[style] || STYLE_PRESETS.renacimiento;
 
-  // 9) Style description (la “receta”)
+  // 9) Style description (la “receta” mejorada para realismo)
   const styleDescription = `
 **ROLE:** ${preset.role}
 **BACKDROP:** ${pick(backdrops)}.
 **STAGING/PROP:** ${pick(props)}.
 **PALETTE:** ${pick(preset.palette)}.
-**WARDROBE (CAPE/MANTLE):** ${pick(preset.wardrobe)}.
+**WARDROBE (CAPE/MANTLE):** ${pick(preset.wardrobe)}. The fabric must look heavy and real.
 **ACCESSORIES:** ${pick(preset.accessories)}.
 **LIGHTING:** ${pick(lightingOptions)}.
 ${preset.mood}
 ${petGuardrails}
 ${isMulti ? multiPetUniqueness : ""}
 
-**DEPTH & FINISH NOTES:**
-- Fur must show micro-detail (individual strands, realistic softness, believable volume).
-- Textiles must feel expensive (velvet pile, brocade weave, lace edge) without looking CGI.
-- Add subtle atmospheric depth + gentle vignette (painterly), avoid flat photo-session feel.
+**ULTRA-REALISTIC PAINTERLY FINISH (CRITICAL FOR WOW EFFECT):**
+- The final image must look like a **photograph of a master oil painting** (like the reference style).
+- **Fur Texture:** Incredible attention to micro-detail. Every strand of fur must be visible, reacting to the light, looking soft and tangible.
+- **Fabric Weight:** Capes and cushions must have heavy, realistic folds with deep shadows and rich highlights. They should not look flat.
+- **Life:** The eyes must have life, wetness, and a clear catchlight. The pose must feel like a captured living moment, not a statue.
 `;
 
-  // 10) Framing / composición (4:5 vertical lo impone masterPrompt)
+  // 10) Framing
   const soloFramings = [
-    `**SOLO COMPOSITION:** ${petSoloPoseWeighted()}. Eye-level. 50–85mm portrait feel. Pet face crisp, background softer.`,
-    `**SOLO COMPOSITION:** seated 3/4 or lying 3/4 on the cushion (prefer lying). Keep paws natural and believable; avoid stiffness.`
+    `**SOLO COMPOSITION:** ${petSoloPoseWeighted()}. Eye-level classic portrait. Focus is sharp on the pet's eyes and fur texture.`,
   ];
 
   const groupFramings = [
-    `**GROUP COMPOSITION:** medium shot or seated/lying 3/4 to fit everyone. ${pick(multiPetArrangements)}. ALL faces visible. Hero pet most prominent.`,
-    `**GROUP COMPOSITION:** consistent scale/perspective. Hero pet gets strongest light + center priority. Secondary subjects slightly behind or to sides.`
+    `**GROUP COMPOSITION:** ${pick(multiPetArrangements)}. ALL faces visible and sharp. Hero pet has the primary focus and light.`,
   ];
 
   const interaction = isMulti
-    ? `\n**WARM INTERACTION RULES:** ${pick(humanWarmInteractions)}. If multiple pets: gentle contact (touching paws/leaning), no crowding.`
-    : `\n**WARMTH NOTE:** calm, noble, lovable presence; avoid goofy grin; subtle warmth in eyes.`;
+    ? `\n**INTERACTION:** ${pick(humanWarmInteractions)}. If multiple pets: natural proximity, no crowding.`
+    : `\n**NOTE:** Pet has a noble, calm, and **alive** presence.`;
 
   const framing = (isMulti ? pick(groupFramings) : pick(soloFramings)) + interaction;
 
