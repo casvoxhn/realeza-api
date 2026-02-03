@@ -1,7 +1,6 @@
 // ARCHIVO: masterPrompt.js
 // LA CONSTITUCIÓN: Identidad, Fidelidad, Conteo y Calidad Técnica.
-// Objetivo: OBRA MAESTRA real (museum-grade), no poster, no "AI look", no cartoon.
-// Extra clave: anti-fusión de identidades + anti-outfits clonados en grupos.
+// V4.1 - FIX FINAL: "Visual Override" ahora incluye "Auto-Interaction" para grupos no detectados.
 
 module.exports = function (numSubjects, specificStyleDescription, framingInstruction) {
   return `
@@ -49,8 +48,10 @@ with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not 
 - System text count says: **${numSubjects} subject(s)**.
 - **CRITICAL VISUAL CHECK:** Look at the source photo yourself.
   - **IF YOU SEE MORE SUBJECTS THAN THE TEXT SAYS, PAINT ALL OF THEM.**
-  - **IGNORE** any "Solo Composition" instructions below if the image actually contains a group (e.g., 2 friends, or human + pet).
-  - **Example:** If input has 2 girls + 1 cat, but text says "1 person", you MUST paint **2 girls and 1 cat**.
+  - **IGNORE** any "Solo Composition" instructions below if the image actually contains a group.
+  - **AUTO-INTERACTION RULE:** If you detect a group (humans or pets) that wasn't in the text prompt:
+    - **Connect them physically:** Use gentle hands on shoulders, arm-in-arm posing, or holding the pet comfortably.
+    - **Eliminate gaps:** Arrange them closely and naturally. Do NOT paint them standing stiffly apart.
   - **NEVER CROP** a friend, partner, or pet. Widen the frame to fit everyone naturally.
 - If multiple input photos are provided, treat each as a **separate actor**.
 - **NEVER blend identities** and NEVER average faces. No face merging.
@@ -115,10 +116,12 @@ COMPOSITION
 --------------------------------------------------
 ${framingInstruction}
 - ASPECT RATIO: VERTICAL 4:5.
+- **FINAL CHECK:** If multiple subjects are present in source, IGNORE any "Solo" constraint above and FRAME FOR GROUP with WARM INTERACTION.
 
 ========================
 ⛔ NEGATIVE CONSTRAINTS (STRICT)
 ========================
+- NO removing people or pets present in the source.
 - NO extra people, NO extra animals, NO extra faces (background/reflections/statues/portraits).
 - NO identity drift. NO face morphing. NO merged/averaged faces.
 - NO changes to facial geometry/proportions (craniofacial structure is locked).
