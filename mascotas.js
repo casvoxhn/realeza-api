@@ -1,6 +1,6 @@
 // ARCHIVO: mascotas.js
-// CATEGORÍA: Mascotas (PET-FIRST) - V3.0 (Surrealum WOW Factor)
-// Objetivo: Texturas hiperrealistas + Capas abiertas (Pecho visible) + Modestia estética + Poses Vivas.
+// CATEGORÍA: Mascotas (PET-FIRST) - V3.1 (WOW Factor + Human/Multi Support)
+// Objetivo: Texturas hiperrealistas + Capas abiertas + Soporte robusto para grupos (Mascotas y Humanos).
 
 const masterPrompt = require('./masterPrompt');
 
@@ -28,18 +28,17 @@ module.exports = function (style, numSubjects, isGroup) {
 - **ALIVENESS:** The pet must NOT look like a taxidermy statue. 
   - Eyes must have "wetness" and specular highlights (catchlights).
   - Posture must show "weight" (sinking slightly into the cushion).
-  - Mouth/Expression: Natural breath, relaxed jaw, or alert curiosity.
 `;
 
   // 2) Backdrops (Oscuros y ricos para contraste WOW)
   const backdrops = [
-    "a pitch-dark Master's studio background with minimal warm atmospheric haze (rembrandt style)",
+    "a pitch-dark Master's studio background with minimal warm atmospheric haze",
     "a deep, dark baroque interior where the background fades into near-black shadow",
     "a rich, dark olive-brown museum backdrop, smooth and unfocused to make the subject pop",
     "a moody classical setting with deep shadows, emphasizing the light on the subject"
   ];
 
-  // 3) Props (El cojín pesado y lujoso es clave en tus referencias)
+  // 3) Props (El cojín pesado y lujoso es clave)
   const props = [
     "a **massive, luxurious velvet cushion** (throne-like) with heavy gold tassels and deep button tufting",
     "a large, plush antique pillow with crushed velvet texture and gold braided trim",
@@ -56,13 +55,9 @@ module.exports = function (style, numSubjects, isGroup) {
 
   // 5) Poses (Dinámicas + Modestia + Pecho Visible)
   const petLyingPoses = [
-    // Pose esfinge pero relajada (modestia fácil)
     "hero pet lying in a 'sphinx' pose on the cushion, front paws extended elegantly, chest puffed out and visible between the cape folds, head alert",
-    // Pose de lado con patas cruzadas (tapa zona trasera)
     "hero pet lying comfortably on its side, front paws crossed gracefully, head turned towards the viewer, the body sinking into the plush cushion",
-    // Pose "Guardia Real" (alerta)
     "hero pet lying with dynamic tension (ready to rise), head high and noble, cape flowing backwards over shoulders revealing the full chest",
-    // Pose relajada con "peso"
     "hero pet settled deep into the cushion, one paw draping over the edge naturally, looking off-camera with a noble, wet-eyed gaze"
   ];
 
@@ -78,14 +73,27 @@ module.exports = function (style, numSubjects, isGroup) {
       { value: pick(petSeatedPoses), weight: 30 }
     ]);
 
-  // 6) Multi-Pet (Jerarquía y Espacio)
+  // 6) Multi-Subject Logic (Mascotas VS Humanos)
   const multiPetArrangements = [
     "hero pet centered on the main cushion; secondary pets lounging naturally around/behind, forming a pyramid composition",
     "all pets sharing the massive cushion, arranged by size, with the hero pet slightly forward and brighter",
-    "a cozy, organic pile of pets on the throne-cushion, heads distinct, bodies overlapping naturally (warm connection)"
+    "a cozy, organic pile of pets on the throne-cushion, heads distinct, bodies overlapping naturally"
   ];
 
-  // 7) Estilos (CAPAS ABIERTAS OBLIGATORIAS)
+  const humanWarmInteractions = [
+    "**HUMAN ROLE:** The human acts as a noble guardian or companion. They do NOT wear costumes. They wear elegant formal attire (dark colors).",
+    "**INTERACTION:** Human standing slightly behind or seated next to the cushion, a gentle hand resting on the pet's back or chest.",
+    "**INTERACTION:** Human leaning in warmly towards the pet, creating a bond, but the Pet remains the visual center/King."
+  ];
+
+  // 7) Anti-clone en grupos
+  const multiPetUniqueness = `
+**MULTI-SUBJECT LOGIC:**
+- **If multiple pets:** Keep harmony (same era materials) but vary accessories slightly (e.g., different collar styles). NO CLONES.
+- **If Humans are present:** Humans must look natural, elegant, and supportive. They should NOT wear the pet's cape. They frame the pet.
+`;
+
+  // 8) Estilos (CAPAS ABIERTAS OBLIGATORIAS)
   const STYLE_PRESETS = {
     renacimiento: {
       role: "**Bosque Encantado / Renacimiento** (Luz suave, mágico).",
@@ -95,12 +103,11 @@ module.exports = function (style, numSubjects, isGroup) {
         "Nature tones: Moss Green + Earthy Browns + Soft Gold"
       ],
       wardrobe: [
-        // CAPA ABIERTA
         "a soft velvet cape **draped loosely over the shoulders and open at the front**, revealing the chest fur",
         "a renaissance mantle thrown back casually, showing the animal's neck and chest",
         "a delicate silk cloak pinned only at the shoulders, leaving the front body exposed and natural"
       ],
-      accessories: ["a delicate pearl string (loose)", "a small nature-inspired brooch", "no heavy collar, just fur"],
+      accessories: ["a delicate pearl string (loose)", "a small nature-inspired brooch", "no heavy collar"],
       mood: `**STYLE SIGNATURE:** Ethereal, soft focus background but sharp fur. Magic light.`
     },
 
@@ -112,7 +119,6 @@ module.exports = function (style, numSubjects, isGroup) {
         "Purple Velvet + Diamond accents + Stark Contrast"
       ],
       wardrobe: [
-        // CAPA ABIERTA Y PESADA
         "a heavy royal velvet mantle with ermine (spotted fur) trim, **draped wide open** to show the proud chest",
         "a king's cloak thrown over the back, pooling on the cushion behind, leaving the front unobstructed",
         "a brocade cape resting on the shoulders but unclasped or very loosely clasped to reveal the neck"
@@ -129,7 +135,6 @@ module.exports = function (style, numSubjects, isGroup) {
         "Midnight Blue + Silver + Candlelight"
       ],
       wardrobe: [
-        // CAPA ABIERTA Y DRAMATICA
         "a dark, textured velvet cloak **falling off the shoulders**, completely revealing the chest and neck texture",
         "a dramatic black and gold cape draped artistically around the back, not covering the front",
         "a heavy period costume jacket worn open, showing the fur texture underneath"
@@ -141,7 +146,7 @@ module.exports = function (style, numSubjects, isGroup) {
 
   const preset = STYLE_PRESETS[style] || STYLE_PRESETS.renacimiento;
 
-  // 8) La receta técnica para el "WOW"
+  // 9) La receta técnica para el "WOW"
   const styleDescription = `
 **ROLE:** ${preset.role}
 **BACKDROP:** ${pick(backdrops)}.
@@ -152,6 +157,7 @@ module.exports = function (style, numSubjects, isGroup) {
 **LIGHTING:** ${pick(lightingOptions)}.
 ${preset.mood}
 ${petGuardrails}
+${isMulti ? multiPetUniqueness : ""}
 
 **ULTRA-REALISTIC "SURREALUM" FINISH (THE WOW FACTOR):**
 - **Texture is King:** The fur must look **touchable**. Paint individual stray hairs catching the light.
@@ -160,14 +166,20 @@ ${petGuardrails}
 - **Life in Eyes:** The eyes must be glossy, deep, and have a clear reflection of the light source.
 `;
 
-  // 9) Composición
-  const interaction = isMulti
-    ? `\n**INTERACTION:** ${pick(multiPetArrangements)}. Pets close, touching naturally.`
-    : `\n**NOTE:** The pet looks proud, relaxed, and alive.`;
+  // 10) Composición Inteligente (Humanos vs Mascotas)
+  
+  // Si es multi, le damos opciones mixtas para que el MasterPrompt decida según lo que ve en la foto
+  const groupLogic = `
+**GROUP SCENARIO:**
+- **IF MULTIPLE PETS:** ${pick(multiPetArrangements)}. 
+- **IF HUMAN(S) + PET:** ${pick(humanWarmInteractions)}.
+- **COMPOSITION:** 4:5 Vertical fit. Zoom out slightly to fit the cushion and subjects comfortably.
+`;
 
   const framing = (isMulti 
-    ? `**GROUP COMPOSITION:** ${pick(multiPetArrangements)}. 4:5 Vertical fit. Zoom out slightly to fit cushion.` 
-    : `**SOLO COMPOSITION:** ${petSoloPoseWeighted()}. 4:5 Vertical. **Eye-level view**.`) + interaction;
+    ? groupLogic
+    : `**SOLO COMPOSITION:** ${petSoloPoseWeighted()}. 4:5 Vertical. **Eye-level view**. Focus on texture.`) + 
+    `\n**FINAL TOUCH:** The image must feel like a priceless heirloom found in a castle.`;
 
   return masterPrompt(numSubjects, styleDescription, framing);
 };
