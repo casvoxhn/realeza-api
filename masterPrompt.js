@@ -11,7 +11,7 @@ with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not 
 ========================
 🔴 PRIORITY #1 — IDENTITY / ACTOR LOCK (NON-NEGOTIABLE)
 ========================
-- The subject(s) in the input photo are **ACTORS**. Each actor has a fixed, unchangeable identity. Subject 100% identical to input image
+- The subject(s) in the input photo are **ACTORS**. Each actor has a fixed, unchangeable identity. Subject 100% identical to input image.
 - Paint the **EXACT SAME ACTOR(S)** maintaining exact facial structure and key features in a new scene wearing the role wardrobe.
 
 - **GEOMETRY LOCK (ABSOLUTE):** Preserve the actor’s **exact craniofacial geometry** from the source:
