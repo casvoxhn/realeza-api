@@ -1,189 +1,169 @@
 // ARCHIVO: mujer.js
-// CATEGORÍA: Mujer
-// Objetivo: 3 estilos MUY distinguibles + variación curada + cero kitsch.
-// Mejoras: "commissioned portrait" cues + depth/separation + textiles táctiles + highlights control
-// + interacciones más naturales (1 gesto), evitando rigidez y repetición.
+// CATEGORÍA: Mujer - V3.0 (Surrealum Human WOW Factor)
+// Objetivo: Piel hiperrealista + Escotes de época (Aire) + Telas pesadas + Iluminación Chiaroscuro.
 
 const masterPrompt = require('./masterPrompt');
 
 module.exports = function (style, numSubjects, isGroup) {
+  // Random helpers
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
   const isMulti = numSubjects > 1 || !!isGroup;
 
-  // --- 1) Guardrails globales (MUJER) ---
+  // 1) Guardrails: Feminidad, Realismo y "Aire"
   const categoryGuardrails = `
-**CATEGORY GUARDRAILS (WOMAN / COMMERCIAL / MASTERPIECE):**
-- Keep it **tasteful, elegant, feminine, and premium** (no cheap costume vibe).
-- **Naturalistic realism** under the paint (credible anatomy, believable skin).
-- Avoid illustrative "magic effects" and fantasy VFX. No cartoon vibes.
-- Jewelry must be **refined** (no bulky collars, no oversized weird accessories).
-- Background decor must contain **NO faces**: no portraits, statues, crowds, tapestries with faces.
-- Background must be **low-frequency / low-detail** (no busy patterns, no tiny ornaments).
-- If multiple people: **distinct wardrobe per person** (no matching dresses by default).
+**CATEGORY GUARDRAILS (WOMAN / HIGH-END MASTERPIECE):**
+- **SKIN REALISM:** Skin must look like living porcelain—translucent, with natural flushing/blush on cheeks, and distinct texture (not plastic AI smoothing).
+- **ANATOMY:** Elegant, elongated necks and relaxed shoulders. No stiffness.
+- **WARDROBE FIT:** Clothing must fit naturally, revealing the collarbones/neck (décolletage) to add elegance and "breath" to the image. Avoid high, stiff collars unless requested.
+- **NO KITSCH:** No cheap costume jewelry, no plastic tiaras. Only heavy, museum-grade materials.
+- **BACKGROUND:** Deep, dark, and blurry to make the subject pop.
 `;
 
-  // --- 2) Backdrops & props (commissioned portrait cues, pero limpios) ---
+  // 2) Backdrops (Oscuros para contraste máximo)
   const backdrops = [
-    "a dark painterly studio backdrop with a subtle warm-to-cool gradient (very clean, low-detail, low-frequency)",
-    "a subtle drapery backdrop with rich fabric folds (simple, elegant, no patterns, no figurative art)",
-    "a deep, moody interior atmosphere with minimal architectural suggestion (soft, clean, no clutter, low-detail)",
-    "a classical painted sky backdrop with warm golden clouds (soft painterly, not photo-sky, minimal detail)"
+    "a pitch-dark Master's studio background with minimal warm atmospheric haze (Rembrandt style)",
+    "a deep, dark baroque interior where the background fades into near-black shadow",
+    "a rich, dark olive-brown museum backdrop, smooth and unfocused",
+    "a moody classical setting with deep shadows, emphasizing the light on the skin"
   ];
 
-  // 1 prop máximo (para que no parezca set teatral)
+  // 3) Props (Soportes para poses relajadas)
   const props = [
-    "one elegant carved wooden chair or chaise (single prop, clean composition)",
-    "a simple velvet drape and a small side table (minimal, no clutter)",
-    "a classical balustrade silhouette with soft depth (minimal, no crowd)",
-    "no props, only the painted backdrop (ultra clean)"
+    "an elegant **velvet-upholstered chair** (dark wood) providing a resting place for an arm",
+    "a heavy velvet drape pooling on a side table (minimal prop, adds texture)",
+    "a classical balustrade obscured by shadow, just a hint of structure",
+    "no props, just the figure emerging from the dark void (Chiaroscuro focus)"
   ];
 
-  // --- 3) Lighting (depth + separation + highlights control) ---
-  // Nota: Rembrandt queda como opción, pero controlado y suave.
+  // 4) Iluminación (La clave del volumen)
   const lightingOptions = [
-    "classic studio portrait lighting: soft key + gentle fill + subtle rim separation; controlled highlights; rich blacks; natural skin",
-    "soft Rembrandt-inspired lighting: delicate triangular cheek light; soft controlled shadows (not harsh); subtle rim separation",
-    "soft north-window daylight look: gentle modeling; smooth tonal transitions; controlled highlights; rich darks",
-    "academic portrait lighting: warm key + cool ambient fill; painterly depth; controlled specular highlights (no digital bloom)"
+    "**DRAMATIC CHIAROSCURO:** Strong, directional light from the side-front. Illuminates the face and décolletage, leaving the rest in rich shadow.",
+    "**PORTRAIT STUDIO GLOW:** Soft but directional light creating a 'pearl' sheen on the skin and sharp specular highlights in the eyes.",
+    "**GOLDEN AGE DRAMA:** A focused beam of light hitting the face and shoulders, fading to black at the edges.",
+    "**PAINTERLY VOLUME:** High-contrast lighting that emphasizes the folds of the dress and the curve of the neck."
   ];
 
-  // --- 4) Poses (evitar rigidez repetida) ---
-  // Manos simples, elegantes, sin “maniquí”.
+  // 5) Poses (Femeninas, relajadas, con contacto táctil)
   const soloPoses = [
-    "seated 3/4 portrait on an elegant chair, relaxed posture, hands softly resting (natural, not stiff)",
-    "seated half-body, slight torso turn, one hand resting on lap, the other lightly touching a sleeve/jewel (simple hands)",
-    "standing 3/4 portrait, gentle S-curve posture, shoulders relaxed, hands natural (no mannequin pose)",
-    "half-body portrait, slight head turn, calm confident expression, hands subtly posed (minimal, natural)"
+    // Mano al cuello/joya (Clásico Surrealum)
+    "seated portrait, one hand gently touching a necklace or collarbone, head tilted slightly, expression soft and breathing",
+    // Pose relajada en silla
+    "seated comfortably in a velvet chair, body angled, face turned to light, hands resting naturally on the lap or chair arm (no tension)",
+    // Mirada sobre el hombro
+    "standing with back angled slightly, looking back over the shoulder, highlighting the neck and earring detail, elegant and timeless",
+    // Pose frontal poderosa
+    "facing forward, shoulders relaxed and bare (off-shoulder dress), gaze direct and confident, chest breathing naturally"
   ];
 
-  // Interacción de grupo: 1 gesto principal (para evitar manos raras y rigidez)
+  // Interacción de grupo (Cercanía natural)
   const groupInteractions = [
-    "one gentle hand on the other subject’s shoulder (single gesture), warm closeness, ALL faces visible",
-    "subtle touch on forearm (single gesture), friendly intimacy, ALL faces visible",
-    "slight lean-in with minimal touch (no hugging), composed warmth, ALL faces visible",
-    "if a pet exists: one hand gently resting on the pet’s back at knee/lap level (single gesture), pet never blocks faces"
+    "subjects standing/sitting very close, one leaning head gently towards the other, warm sisterly bond",
+    "one subject seated, the other standing behind with hands softly on the seated subject's shoulders (protective/close)",
+    "arm-in-arm pose, comfortable intimacy, leaning in to share a secret, natural smiles or calm gazes",
+    "if a pet is present: the woman holds the pet comfortably in her lap or by her side, the pet is calm, she looks at the viewer"
   ];
 
-  // --- 5) ADN de estilos (3 estilos) ---
+  // 6) Estilos (Vestuario con "Aire" y Textura Pesada)
   const STYLE_PRESETS = {
     musa: {
-      role: "**La Musa Atemporal** (luminosa, romántica, delicada — realismo pictórico).",
+      role: "**La Musa Atemporal** (Magia, Renacimiento, Suavidad).",
       palette: [
-        "Dusty Rose + Soft Gold accents",
-        "Pearl White + Warm Champagne highlights",
-        "Muted Emerald + Antique Gold"
+        "Dusty Rose + Antique Gold + Creamy Skin tones",
+        "Pearl White + Champagne + Soft Earth browns",
+        "Muted Emerald + Bronze + Warm shadows"
       ],
       wardrobe: [
-        "a refined silk/chiffon gown with delicate lace trim and tasteful embroidery (premium, not costume)",
-        "a flowing satin gown with soft drape and subtle floral detailing (elegant neckline, no bulky collars)",
-        "a romantic renaissance-inspired gown with refined sleeves and lace cuffs (tasteful, high-end)"
+        // Escotes abiertos y telas suaves
+        "a renaissance-inspired gown with a **square neckline** revealing the collarbones, made of heavy crushed velvet",
+        "a soft silk dress draped loosely off the shoulders, creating a romantic and timeless silhouette",
+        "a flowing chiffon gown with lace details, vintage and ethereal, not stiff"
       ],
       accessories: [
-        "a delicate necklace with a small pendant + subtle earrings (fine jewelry)",
-        "pearl drop earrings + a thin bracelet (tasteful, not flashy)",
-        "a refined necklace + a single elegant ring (minimal luxury)"
+        "a delicate pearl necklace lying on the skin",
+        "small drop earrings catching the light",
+        "no heavy jewelry, just natural elegance"
       ],
-      mood: `
-**STYLE SIGNATURE (MUSA):**
-- Romantic softness via glazing and gentle atmosphere (NOT fantasy effects).
-- Clean composition; airy elegance expressed through light and fabric, not props.
-`
+      mood: `**STYLE SIGNATURE:** Ethereal softness. Skin glows like a pearl. Romantic atmosphere.`
     },
 
     realeza: {
-      role: "**La Reina** (autoridad, lujo, pompa — sin cosplay).",
+      role: "**La Reina** (Poder Absoluto, Lujo Pesado).",
       palette: [
-        "Royal Blue + Diamonds (refined sparkle)",
-        "Crimson Velvet + Antique Gold",
-        "Champagne Silk + Pearls"
+        "Deep Royal Blue + Diamonds + Pale Skin contrast",
+        "Rich Burgundy Velvet + Gold embroidery + Dark Shadows",
+        "Black Velvet + Pearls + Stark lighting"
       ],
       wardrobe: [
-        "a regal velvet gown with subtle train and refined gold embroidery (high status, not gaudy)",
-        "a structured brocade gown with lace details and premium tailoring (elegant silhouette)",
-        "a satin + velvet combination gown with tasteful jewels and refined sleeves (museum-worthy)"
+        // Lujo pesado pero femenino
+        "a heavy velvet royal gown with a deep neckline framed by gold embroidery",
+        "a structured brocade dress with an elegant corset bodice, pushing up slightly for a feminine silhouette",
+        "a dark satin majestic gown with lace sleeves, looking expensive and commanding"
       ],
       accessories: [
-        "a refined tiara/coronet SMALL and tasteful + diamond/pearl earrings",
-        "a statement necklace (fine jewelry) + elegant bracelet (not chunky)",
-        "a tasteful crown OR jeweled hairpiece (small) + matching earrings"
+        "a statement necklace with gemstones resting on the skin",
+        "diamond drop earrings or a small tasteful tiara",
+        "luxurious details that sparkle in the dark"
       ],
-      mood: `
-**STYLE SIGNATURE (REALEZA):**
-- Opulence through textiles, posture and controlled sparkle (no costume shine).
-- Luxury is clean and restrained, not theatrical.
-`
+      mood: `**STYLE SIGNATURE:** Opulence. Heavy fabrics. The subject looks expensive and powerful.`
     },
 
     empoderada: {
-      role: "**La Dama Empoderada** (poder elegante, sofisticación, carácter).",
+      role: "**Mujer Empoderada** (Dama de Hierro, Carácter, Moderno-Clásico).",
       palette: [
-        "Deep Navy + muted gold accents",
-        "Burgundy + warm neutrals",
-        "Black + antique gold (minimal luxury)"
+        "Midnight Navy + Silver + Cool Skin tones",
+        "Onyx Black + Gold accents + Deep contrasts",
+        "Dark Plum + Bronze + Moody atmosphere"
       ],
       wardrobe: [
-        "a couture structured gown with clean silhouette and refined neckline (powerful, feminine)",
-        "a velvet dress with tailored waist and elegant sleeves (premium, not theatrical)",
-        "a silk gown with subtle cape detail and high-end drape (confident, composed)"
+        // Estructura y elegancia
+        "a couture dark velvet gown with a sharp, elegant silhouette and defined shoulders",
+        "a structured corset-style top with a flowing skirt, combining power and femininity",
+        "a deep v-neck silk dress in dark tones, exuding confidence and strength"
       ],
       accessories: [
-        "a refined watch + minimal necklace (executive elegance, not flashy)",
-        "a delicate bracelet + subtle earrings (premium restraint)",
-        "a small pendant necklace + a fine ring (quiet luxury)"
+        "a refined watch or single gold bracelet",
+        "minimalist but expensive-looking pendant",
+        "classic earrings, nothing distracting"
       ],
-      mood: `
-**STYLE SIGNATURE (EMPODERADA):**
-- Power through posture, tailoring, and light control (not armor, not harsh drama).
-- Clean, premium, composed — no exaggerated accessories.
-`
+      mood: `**STYLE SIGNATURE:** Confidence. High contrast lighting. Sharp focus on the eyes.`
     }
   };
 
   const preset = STYLE_PRESETS[style] || STYLE_PRESETS.empoderada;
 
-  // --- 6) Art Direction Finish (el 10% final de valor percibido) ---
-  const artDirectionFinish = `
-**ART DIRECTION FINISH (VALUE / COMMISSIONED PORTRAIT):**
-- The **face is the primary detail zone** (highest clarity/detail). Background is simpler, darker, low-detail.
-- Add **subtle rim separation** to cleanly separate the subject from the backdrop.
-- **Controlled highlights + rich blacks**: no digital bloom, no HDR, no harsh specular shine.
-- Textiles must feel tactile: **velvet pile**, **brocade weave**, **lace microstructure** (subtle, not oversharp).
-- Use **only 1–2 "commission cues"** total (chair/drape/table/balustrade). Keep composition clean.
-`;
-
-  // --- 7) Construcción de styleDescription ---
+  // 7) La receta técnica para el "WOW" Humano
   const styleDescription = `
 **ROLE:** ${preset.role}
 **BACKDROP:** ${pick(backdrops)}.
 **STAGING/PROP:** ${pick(props)}.
 **PALETTE:** ${pick(preset.palette)}.
-**WARDROBE:** ${pick(preset.wardrobe)}.
+**WARDROBE:** ${pick(preset.wardrobe)}. **IMPORTANT: Fabric must look heavy, tactile, and expensive.**
 **ACCESSORIES:** ${pick(preset.accessories)}.
 **LIGHTING:** ${pick(lightingOptions)}.
 ${preset.mood}
 ${categoryGuardrails}
-${artDirectionFinish}
 
-**DEPTH & FINISH NOTES:**
-- Subtle vignette and atmospheric depth (painterly), avoid flat "photo session" look.
-- Keep it museum-grade and commercially attractive — never costume-like.
+**ULTRA-REALISTIC "SURREALUM" FINISH (THE WOW FACTOR):**
+- **Skin Texture:** Skin must look translucent and alive (subsurface scattering). Add a natural flush to cheeks.
+- **Fabric Weight:** Velvet must look crushed and heavy. Silk must shimmer. Lace must have visible weave.
+- **Photographic Depth:** The subject must pop out of the dark background. High contrast on the face.
+- **Eyes:** Eyes must be sharp, glossy, and have a clear "catchlight" reflection.
 `;
 
-  // --- 8) Composición ---
+  // 8) Composición
   let framing = "";
 
   const soloFramings = [
-    `**SOLO COMPOSITION:** ${pick(soloPoses)}. Eye-level. 50–85mm portrait feel. Face crisp, background softer.`,
-    `**SOLO COMPOSITION:** half-body (waist up), slight torso turn, hands simple and natural (no stiffness), face crisp.`
+    `**SOLO COMPOSITION:** ${pick(soloPoses)}. Eye-level. 50–85mm portrait feel. Focus on the eyes and skin texture.`,
+    `**SOLO COMPOSITION:** Medium shot (waist up). The body is angled but the face turns to the viewer. Elegant and poised.`
   ];
 
   const groupFramings = [
-    `**GROUP COMPOSITION:** medium shot (waist up) or seated 3/4 to fit everyone. Eye-level. Balanced spacing. ALL faces visible.`,
-    `**GROUP COMPOSITION:** one seated / others standing if it helps composition. Keep proportions consistent. ALL faces equally recognizable.`
+    `**GROUP COMPOSITION:** ${pick(groupInteractions)}. Medium shot. Balanced spacing. ALL faces visible and equally sharp.`,
+    `**GROUP COMPOSITION:** Two subjects sharing the frame naturally, physically close (leaning/touching) to show connection.`
   ];
 
-  const interaction = isMulti ? `\n**GROUP INTERACTION:** ${pick(groupInteractions)}.` : "";
-  framing = (isMulti ? pick(groupFramings) : pick(soloFramings)) + interaction;
+  framing = (isMulti ? pick(groupFramings) : pick(soloFramings));
 
   return masterPrompt(numSubjects, styleDescription, framing);
 };
