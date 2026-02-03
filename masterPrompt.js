@@ -44,13 +44,14 @@ with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not 
 - **STYLE MUST ADAPT TO THE ACTOR, NOT THE ACTOR TO THE STYLE.**
 
 ========================
-🔴 PRIORITY #2 — MULTI-SUBJECT INTELLIGENCE (CRITICAL FIX)
+🔴 PRIORITY #2 — VISUAL TRUTH & GROUP INTEGRITY (ABSOLUTE OVERRIDE)
 ========================
-- System count says: **${numSubjects} subject(s)**.
-- **VISUAL OVERRIDE (IMPORTANT):** Look at the source photo yourself.
-  - If you see **MORE** main subjects (e.g., two friends) than the number above, **PAINT ALL OF THEM**.
-  - Never crop out a friend/partner just because the text count might be wrong.
-  - **PAINT EVERYONE VISIBLE IN THE FOREGROUND.**
+- System text count says: **${numSubjects} subject(s)**.
+- **CRITICAL VISUAL CHECK:** Look at the source photo yourself.
+  - **IF YOU SEE MORE SUBJECTS THAN THE TEXT SAYS, PAINT ALL OF THEM.**
+  - **IGNORE** any "Solo Composition" instructions below if the image actually contains a group (e.g., 2 friends, or human + pet).
+  - **Example:** If input has 2 girls + 1 cat, but text says "1 person", you MUST paint **2 girls and 1 cat**.
+  - **NEVER CROP** a friend, partner, or pet. Widen the frame to fit everyone naturally.
 - If multiple input photos are provided, treat each as a **separate actor**.
 - **NEVER blend identities** and NEVER average faces. No face merging.
 
