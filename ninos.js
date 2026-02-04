@@ -39,11 +39,11 @@ module.exports = function (style, numSubjects, isGroup) {
 
   // 4) Iluminación (ANTES: muy “fade to black”. AHORA: halo + daylight premium sin sombras duras)
   const lightingOptions = [
-    "**LUMINOUS HALO DAYLIGHT:** Soft directional window light with a gentle halo around hair and cheeks; background stays bright and warm.",
-    "**PEARLESCENT STUDIO LIGHT (BRIGHT):** Wrapping soft light for a pearl sheen on skin; clean highlights; no harsh contrast.",
-    "**GOLDEN WARMTH (AIRY):** Warm flattering light on the face with soft falloff into a warm cream backdrop (no black edges).",
-    "**PAINTERLY VOLUME (SOFTENED):** Gentle contrast that shapes cheeks and fabrics while keeping the overall scene bright and child-friendly."
-  ];
+  "**SOFT WINDOW DAYLIGHT:** Diffused natural window light, flattering and even. Clean skin tones, gentle shadows only.",
+  "**BRIGHT SOFT STUDIO LIGHT:** Large soft light source, smooth wrap, natural highlights (no glow).",
+  "**WARM DAYLIGHT (SUBTLE):** Warm, flattering light on the face with soft falloff into a warm cream background (no black edges).",
+  "**GENTLE PAINTERLY VOLUME:** Mild contrast for depth and fabric texture while keeping the overall scene bright and child-friendly."
+];
 
   // 5) Poses (igual)
   const soloPoses = [
