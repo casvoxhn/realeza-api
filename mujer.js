@@ -1,11 +1,6 @@
 // ARCHIVO: mujer.js
 // CATEGORÍA: Mujer - V4.2 (Competition-Grade Finish + Regal WOW, identity-safe)
 // Objetivo: mantener identidad (masterPrompt manda) + elevar “calidad percibida” emulando competencia:
-// - edge control (cara más nítida, fondo suave)
-// - glazing/pigment depth (color caro, capas)
-// - canvas weave + museum varnish (sutil)
-// - craquelure auténtica (mínima, NO en cara)
-// - chiaroscuro controlado (drama premium sin “void” feo)
 
 const masterPrompt = require('./masterPrompt');
 
