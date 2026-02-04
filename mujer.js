@@ -1,6 +1,11 @@
 // ARCHIVO: mujer.js
-// CATEGORÍA: Mujer - V4.1 (REINA: Más VIDA + Pomposidad Premium, sin tocar identidad)
-// Sistema: 2-PASS (identity_base) + WOW A/B (wow_regal / wow_editorial)
+// CATEGORÍA: Mujer - V4.2 (Competition-Grade Finish + Regal WOW, identity-safe)
+// Objetivo: mantener identidad (masterPrompt manda) + elevar “calidad percibida” emulando competencia:
+// - edge control (cara más nítida, fondo suave)
+// - glazing/pigment depth (color caro, capas)
+// - canvas weave + museum varnish (sutil)
+// - craquelure auténtica (mínima, NO en cara)
+// - chiaroscuro controlado (drama premium sin “void” feo)
 
 const masterPrompt = require('./masterPrompt');
 
@@ -29,7 +34,27 @@ module.exports = function (style, numSubjects, isGroup, variant = "wow_regal") {
 `;
 
   // -----------------------------
-  // 2) STYLE PRESETS (musa / realeza / empoderada)
+  // 2) COMPETITION-GRADE FINISH (ENGINEERED FROM YOUR EXAMPLES)
+  // -----------------------------
+  const competitionFinish = `
+**COMPETITION-GRADE OIL FINISH (MUST EMULATE):**
+- **EDGE CONTROL / DEPTH HIERARCHY (CRITICAL):**
+  - Face and eyes are the sharpest region with highest micro-detail.
+  - Hair and fabrics slightly softer edges; background is atmospheric and soft with long gradients.
+  - Subject pops from background without looking cut-out.
+- **GLAZING + PIGMENT DEPTH (EXPENSIVE COLOR):**
+  - Layered glazing, pigment richness, deep warm/cool shadow structure (warm umbers + cool blues).
+  - Elegant saturation: no flat digital color blocks, no neon.
+- **PHYSICAL PAINTING LOOK (NOT A FILTER):**
+  - Very subtle linen/canvas weave visible only on close inspection.
+  - Very subtle museum varnish sheen (soft, not glossy plastic).
+  - **SUBTLE CRAQUELURE (AUTHENTIC):** minimal hairline cracks mostly on background/darker passages.
+    IMPORTANT: craquelure must NOT distort the face, eyes, lips, or fine facial details.
+- **ANTI-DIGITAL:** no HDR, no “hyper-clarity”, no oversharpening. Crisp face, but painterly.
+`;
+
+  // -----------------------------
+  // 3) STYLE PRESETS (musa / realeza / empoderada)
   // -----------------------------
   const STYLE_PRESETS = {
     musa: {
@@ -40,7 +65,7 @@ module.exports = function (style, numSubjects, isGroup, variant = "wow_regal") {
         "Muted Emerald + Bronze + Warm shadow depth"
       ],
       wardrobe: [
-        "a renaissance-inspired gown with a **square neckline** revealing collarbones, heavy crushed velvet, tailored and premium (not costume)",
+        "a renaissance-inspired gown with a **square neckline** revealing the collarbones, heavy crushed velvet, tailored and premium (not costume)",
         "a soft silk dress draped elegantly off the shoulders (refined, tasteful), with soft folds and heirloom feel",
         "a satin gown with subtle lace sleeves and premium tailoring, ethereal but realistic"
       ],
@@ -52,7 +77,6 @@ module.exports = function (style, numSubjects, isGroup, variant = "wow_regal") {
       mood: `**STYLE SIGNATURE:** Romantic depth + luminous highlights. Commissioned painting energy.`
     },
 
-    // ⭐️ REINA: subimos vida + pomposidad (sin cosplay)
     realeza: {
       role: "**LA REINA (High-Status Royal Portrait)** — opulent, alive, intimidatingly premium.",
       palette: [
@@ -65,7 +89,6 @@ module.exports = function (style, numSubjects, isGroup, variant = "wow_regal") {
         "a brocade court dress with visible weave, sculpted bodice, and rich sleeves; expensive tailoring; collarbones softly visible",
         "a satin + velvet layered gown with lace accents, deep folds, and museum-grade texture; regal and feminine"
       ],
-      // Pomposidad controlada: joya hero + opción de coronet MUY sutil (porque lo pediste)
       accessories: [
         "ONE hero piece: an heirloom statement necklace (gems/pearls) with controlled sparkle (no cheap shine)",
         "ONE hero piece: refined chandelier/drop earrings (if no necklace), subtle but unmistakably expensive",
@@ -98,7 +121,7 @@ module.exports = function (style, numSubjects, isGroup, variant = "wow_regal") {
   const preset = STYLE_PRESETS[style] || STYLE_PRESETS.realeza;
 
   // -----------------------------
-  // 3) BACKDROPS / PROPS
+  // 4) BACKDROPS / PROPS (VARIANT-BASED)
   // -----------------------------
   const backdrops_identity = [
     "a premium neutral gallery gradient backdrop (warm ivory to warm beige), low detail, expensive and calm",
@@ -106,7 +129,6 @@ module.exports = function (style, numSubjects, isGroup, variant = "wow_regal") {
     "a simple museum backdrop with soft tonal falloff (no busy elements)"
   ];
 
-  // ⭐️ Regal: más pomposidad (arquitectura sugerida + atmósfera cálida)
   const backdrops_regal = [
     "a warm-umber museum backdrop with layered atmospheric gradient and subtle vignette (tasteful, not heavy)",
     "a refined baroque interior hinted in soft shadow: arches + drapery suggestions, low-detail, expensive depth",
@@ -129,14 +151,13 @@ module.exports = function (style, numSubjects, isGroup, variant = "wow_regal") {
   ];
 
   // -----------------------------
-  // 4) LIGHTING (vida + lujo, sin reventar cara)
+  // 5) LIGHTING (CONTROLLED DRAMA + FACE READABILITY)
   // -----------------------------
   const lighting_identity = [
     "**SOFT WINDOW DAYLIGHT:** Diffused; face fully readable; gentle shadows only; controlled catchlights; no glow.",
     "**CLEAN SOFT STUDIO:** Large soft source; smooth wrap; natural highlights; no harsh shadow patches."
   ];
 
-  // ⭐️ Regal: drama controlado + “sparkle budget” + separación premium
   const lighting_regal = [
     "**ROYAL CHIAROSCURO (CONTROLLED):** Directional key from side-front/top for sculpted depth. Add gentle fill to keep identity crystal clear (no face shadow blotches).",
     "**CINEMATIC KEY + SOFT FILL + RIM (SUBTLE):** Strong key + soft fill for face readability + a subtle rim light on hair/shoulders for separation (not neon).",
@@ -151,14 +172,13 @@ module.exports = function (style, numSubjects, isGroup, variant = "wow_regal") {
   ];
 
   // -----------------------------
-  // 5) POSES / COMPOSITION (más vida, más magnetismo)
+  // 6) POSES / COMPOSITION (SAFER FOR IDENTITY + WOW)
   // -----------------------------
   const soloPoses_identity = [
     "3/4 angle, relaxed shoulders, elongated neck, calm confident expression; hands minimal (0–1 hand visible)",
     "seated 3/4 portrait, one arm resting naturally; chin slightly down; eyes to camera; closed mouth or subtle smile"
   ];
 
-  // ⭐️ Regal: micro-vida + jerarquía visual (cara/ojos/cuello/tela)
   const soloPoses_wow_regal = [
     "seated 3/4 portrait, chin slightly down, eyes to camera, one hand resting lightly on the chair arm, the other softly touching a velvet/brocade fold (quiet authority)",
     "standing 3/4, shoulders relaxed, head turned toward the light, subtle closed-mouth smile, neckline visible, regal presence (not stiff)",
@@ -181,7 +201,7 @@ module.exports = function (style, numSubjects, isGroup, variant = "wow_regal") {
   ];
 
   // -----------------------------
-  // 6) FINISH blocks (más vida y pomposidad sin ‘CGI’)
+  // 7) FINISH BLOCKS (BASE vs WOW)
   // -----------------------------
   const finish_identity = `
 **FINISH (BASE):**
@@ -191,43 +211,40 @@ module.exports = function (style, numSubjects, isGroup, variant = "wow_regal") {
 - IMPORTANT: This must be a NEW portrait setup (not a paint-over of the original), while preserving identity perfectly.
 `;
 
-  // ⭐️ WOW: añadimos “vida” (ojos/respiración/calidez) + pomposidad (materiales + atmósfera)
   const finish_wow = `
-**ULTRA-REALISTIC "SURREALUM" FINISH (IMPACT WOW):**
-- **Oil Painting Depth:** layered glazing, pigment richness, subtle museum varnish sheen, real canvas feel (VERY subtle).
-- **LIFE IN THE SUBJECT (CRITICAL):**
-  - Eyes have depth + realistic wet line, controlled catchlights (not glossy doll eyes).
-  - Skin has gentle warmth (cheeks/collarbone) and natural micro-texture (NOT smoothing).
-  - Expression feels present and human: calm confidence, soft breath, not statue-like.
-- **Materials (ROYAL):** velvet pile, brocade weave, silk sheen, lace detail — tactile and expensive, never CGI.
-- **Cinematic Hierarchy:** face + eyes + neckline are the hero; textiles support; background stays atmospheric and premium.
-- **Print-Ready Presence:** crisp face (no oversharpen), rich tonal range, deep clean shadows, no flatness.
+**FINISH (WOW):**
+- Apply a true museum-grade oil painting render: layered glazing, pigment depth, controlled brushwork.
+- Add life: realistic wet line in eyes, controlled catchlights, gentle warmth in cheeks/collarbone.
+- Keep drama premium, never horror. Shadows must be clean.
 `;
 
   // -----------------------------
-  // 7) NEGATIVES
+  // 8) NEGATIVES (STRICT)
   // -----------------------------
   const negativeBlock = `
 **NEGATIVE (STRICT):**
 - no identity drift, no face morphing, no merged/averaged face
 - no face slimming, no jaw narrowing, no cheekbone sharpening, no almond-eye conversion
-- no digital beauty filter, no airbrushed smoothing, no wax/plastic skin, no CGI shine
+- no digital beauty filter, no airbrushed smoothing, no wax/plastic skin, no CGI look
 - no hyper-glossy doll eyes, no oversized catchlights
 - no teeth/tongue artifacts (unless clearly in reference), no weird mouths
 - no deformed hands, no extra fingers, no complex hand gestures
+- no oversharpening, no HDR, no hyper-clarity, no “8K” claims
+- no random specks/dirt/paint splatters on skin; no stain-like artifacts
+- no excessive cracks; no cracks across eyes/mouth; no “aged damage” on face
 - no flat lighting, no bland sterile look, no washed-out colors
 - no heavy dirty vignette, no harsh shadow blotches on face, no uplighting
 - no cheap costume jewelry, no plastic tiaras, no clown sparkle overload
 `;
 
   // -----------------------------
-  // 8) BUILD STYLE DESCRIPTION (by variant)
+  // 9) BUILD STYLE DESCRIPTION (BY VARIANT)
   // -----------------------------
   const buildStyleDescription = () => {
     if (variant === "identity_base") {
       return `
 **ROLE:** IDENTITY-LOCK PORTRAIT BASE (WOMAN)
-**GOAL:** Create a clean, faithful base where the woman looks EXACTLY like the reference. This is not the final dramatic version.
+**GOAL:** Clean, faithful base where the woman looks EXACTLY like the reference. This is not the final dramatic version.
 
 ${globalGuardrails}
 
@@ -249,6 +266,7 @@ ${negativeBlock}
 **GOAL:** Luxury editorial cover energy + museum-grade oil finish. Immediate buyer reaction: "WOW, I want this framed at home."
 
 ${globalGuardrails}
+${competitionFinish}
 
 **BACKDROP:** ${pick(backdrops_editorial)}.
 **STAGING/PROP:** ${pick(props_common)}.
@@ -262,12 +280,13 @@ ${negativeBlock}
 `;
     }
 
-    // default => wow_regal (Reina con vida + pomposidad)
+    // default => wow_regal (Reina competition-grade)
     return `
-**ROLE:** REGAL DEPTH MASTERPIECE (WOMAN) — WOW VERSION A (ROYAL, ALIVE, POMP)
-**GOAL:** Old Masters cinematic depth + royal opulence + real feminine magnetism. Immediate buyer reaction: "I look like a QUEEN. Frame it."
+**ROLE:** REGAL DEPTH MASTERPIECE (WOMAN) — WOW VERSION A (ROYAL, ALIVE, COMPETITION-GRADE)
+**GOAL:** Old Masters cinematic depth + royal opulence + competition-grade finish. Immediate buyer reaction: "I look like a QUEEN. Frame it."
 
 ${globalGuardrails}
+${competitionFinish}
 
 **BACKDROP:** ${pick(backdrops_regal)}.
 **STAGING/PROP:** ${pick(props_common)}.
@@ -282,14 +301,16 @@ ${negativeBlock}
   };
 
   // -----------------------------
-  // 9) FRAMING
+  // 10) FRAMING
   // -----------------------------
+  const pickSoloPose = () => {
+    if (variant === "identity_base") return pick(soloPoses_identity);
+    if (variant === "wow_editorial") return pick(soloPoses_wow_editorial);
+    return pick(soloPoses_wow_regal);
+  };
+
   const soloFramings = [
-    `**SOLO COMPOSITION:** ${pick(
-      variant === "identity_base"
-        ? soloPoses_identity
-        : (variant === "wow_editorial" ? soloPoses_wow_editorial : soloPoses_wow_regal)
-    )}. Eye-level. 50–85mm portrait feel. 3/4 portrait (head to mid-torso). Strong presence, not stiff.`,
+    `**SOLO COMPOSITION:** ${pickSoloPose()}. Eye-level. 50–85mm portrait feel. 3/4 portrait (head to mid-torso). Strong presence, not stiff.`,
     `**SOLO COMPOSITION:** Medium shot (waist up). Body angled 3/4, face turns to viewer. Keep neckline visible and elegant. Cinematic depth without obscuring identity.`
   ];
 
