@@ -1,6 +1,5 @@
 // ARCHIVO: mujer.js
 // CATEGORÍA: Mujer - V4.2 (Competition-Grade Finish + Regal WOW, identity-safe)
-// Objetivo: mantener identidad (masterPrompt manda) + elevar “calidad percibida” emulando competencia:
 
 const masterPrompt = require('./masterPrompt');
 
