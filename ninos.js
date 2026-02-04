@@ -1,7 +1,6 @@
 // ARCHIVO: ninos.js
-// CATEGORÍA: Niños - V5.0 (BRIGHT MASTERPIECE - Parent-Conversion)
-// Objetivo: que el papá/mamá diga: "LO QUIERO en la sala".
-// Cambio clave: ADIÓS oscuridad lúgubre + ADIÓS “ojos gigantes porcelana” => natural + cálido + fine-art.
+// CATEGORÍA: Niños - V6.0 (WOW + NATURAL LIKENESS LOCK)
+// Objetivo: retrato premium para sala: tierno, luminoso, real, sin “muñeco IA”.
 
 const masterPrompt = require('./masterPrompt');
 
@@ -9,146 +8,140 @@ module.exports = function (style, numSubjects, isGroup) {
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
   const isMulti = numSubjects > 1 || !!isGroup;
 
-  // ---------- 1) Guardrails anti-creepy / anti-IA ----------
+  // 1) GUARDRAILS DUROS (anti-uncanny, anti-muñeco, anti-invenciones)
   const categoryGuardrails = `
-**CATEGORY GUARDRAILS (CHILDREN & PETS — BUYER-READY MASTERPIECE):**
-- **EMOTIONAL GOAL:** Warmth, safety, tenderness, pride. This must feel like a high-end portrait parents proudly hang in their living room.
-- **ABSOLUTE REALISM (NO "AI BABY"):**
-  - Keep **natural proportions** (NO oversized eyes, NO doll face, NO exaggerated cheeks).
-  - Preserve **true facial structure** from the reference (eye spacing, nose shape, mouth shape, chin).
-  - Skin must look **real**: soft, delicate, tiny pores, gentle blush — not plastic, not wax, not porcelain.
-- **LIGHTING RULES (CRITICAL):**
-  - Soft daylight / diffused key light (window-like).
-  - **NO uplighting** (no light coming from below the chin).
-  - Avoid harsh shadows on the face; keep it flattering and clean.
-- **BACKGROUND MOOD:** Elegant, bright, uplifting — never horror, never “emerging from void”.
-- **SUBJECT COUNT:** Render **exactly ${numSubjects} subject(s)**. Do not invent extra faces or bodies.
-- **PETS:** If present, keep the pet close (lap/knee/at side) with natural scale and correct anatomy.
-- **ADULTS (IF PRESENT IN SOURCE):**
-  - Either crop them out OR render as soft, tasteful supporting presence.
-  - NEVER shadowy/creepy silhouettes. No “lurking in darkness”.
+**CATEGORY GUARDRAILS (CHILDREN & PETS — WOW, NATURAL, BUYER-READY):**
+- **ABSOLUTE LIKENESS:** Keep the **exact same child(ren)/pet(s)** identity from the reference photo(s). Do not stylize faces.
+- **NATURAL PROPORTIONS (CRITICAL):** Age-accurate head-to-body scale, natural eye size, natural facial geometry. **NO oversized head, NO big cartoon eyes, NO doll face.**
+- **SKIN REALISM:** Soft real skin texture, subtle pores and tonal variation. **NO porcelain, NO wax, NO plastic airbrush, NO beauty-smoothing.**
+- **MOUTH/TEETH RULE:** Prefer closed mouth or very subtle smile. **Avoid open mouth/teeth/tongue unless clearly present in the reference.**
+- **HANDS RULE:** Age-accurate hands/fingers, natural grip. **NO adult hands on baby, NO weird fingers.**
+- **LIGHTING RULES:** Soft daylight (window-like), flattering, even. **NO uplighting, NO harsh shadows, NO heavy vignette.**
+- **BACKGROUND MOOD:** Bright, warm, elegant, uplifting. **NO void, NO gloom, NO horror mood.**
+- **SUBJECT COUNT:** Render **exactly ${numSubjects} subject(s)**. **NO extra faces/people/bodies.**
+- **PETS:** If present, correct anatomy/scale; keep close and affectionate (lap/side). Do not invent animals.
+- **WARDROBE RULE:** Premium and tasteful, age-appropriate. **NO heavy costumes, NO armor, NO exaggerated royal props.**
 `;
 
-  // ---------- 2) Age-based recipe (composition that actually sells) ----------
-  // We can’t truly know age from code reliably, so we provide instructions that adapt based on visible cues.
+  // 2) AGE PROFILES (prop control + safer poses)
   const ageProfiles = {
     newborn: {
-      cues: "newborn: very small body, swaddled, sleepy vibe",
+      cues: "newborn: swaddled, sleepy, tiny body, soft features",
       backdrops: [
-        "a bright, creamy fine-art studio backdrop with soft gradient (ivory to warm beige)",
-        "a cozy sunlit nursery corner with gentle bokeh, airy and minimal",
+        "a bright creamy fine-art studio backdrop with soft warm gradient (ivory to warm beige)",
+        "a sunlit airy nursery corner with gentle bokeh, minimal and premium",
         "a classic painted museum backdrop in warm light tones (not dark)"
       ],
       lighting: [
-        "**SOFT WINDOW DAYLIGHT:** diffused from above and slightly to the side, flattering cheeks and forehead",
-        "**FEATHERED SOFTBOX LOOK:** ultra-soft wrap, clean skin tones, delicate shadows"
+        "**SOFT WINDOW DAYLIGHT:** diffused from above and slightly to the side, gentle shadows only",
+        "**FEATHERED SOFTBOX LOOK:** ultra-soft wrap, clean skin tones, minimal contrast"
       ],
       poses: [
-        "newborn: peacefully swaddled, head slightly turned toward the light, calm expression, tiny hands visible",
-        "newborn: cradled pose with safe support implied, gentle smile or sleepy serenity"
+        "newborn: peacefully swaddled, head gently turned toward the light, calm serene expression",
+        "newborn: safe cradled portrait feel, relaxed face, tiny hands peeking naturally"
       ],
       props: [
-        "a soft knit wrap and a simple heirloom blanket (neutral tones)",
-        "a small plush cushion, minimal and tasteful"
+        "a soft knit wrap and simple heirloom blanket (neutral tones)",
+        "a minimal plush toy barely visible (secondary)"
       ]
     },
+
     baby: {
-      cues: "baby: sitting supported, baby fat, curious eyes, soft hair",
+      cues: "baby: seated supported, baby fat, curious calm eyes, soft hair",
       backdrops: [
-        "a bright classic studio background (warm ivory) with subtle painterly texture",
-        "a sunlit living-room setting with creamy highlights and soft bokeh",
-        "a garden-like airy background with pastel florals far out of focus"
+        "a bright warm-ivory studio background with subtle painterly texture",
+        "a softly sunlit interior with creamy highlights and shallow depth of field",
+        "a gentle pastel garden blur (very subtle, premium)"
       ],
       lighting: [
-        "**GOLDEN HOUR SOFTNESS:** warm, flattering, no harsh shadows",
-        "**CLEAN DAYLIGHT WRAP:** soft and even, beautiful catchlights"
+        "**CLEAN DAYLIGHT WRAP:** soft and even, natural catchlights",
+        "**WARM DAYLIGHT:** flattering cheeks, no harsh shadows"
       ],
       poses: [
-        "baby: seated securely, looking slightly above the lens, natural smile or curious calm",
+        "baby: seated securely, eye-level, calm curiosity or tiny closed-mouth smile",
         "baby: gentle 3/4 angle, hands resting naturally, cheeks softly lit"
       ],
       props: [
-        "a tasteful small toy (wooden) barely visible, secondary",
-        "a simple cushion with subtle texture (no heavy throne)"
+        "a simple textured cushion (premium, subtle)",
+        "a small wooden toy barely visible (secondary)"
       ]
     },
+
     toddler: {
-      cues: "toddler: standing or sitting, playful, expressive",
+      cues: "toddler: playful, expressive, standing or seated, lively connection",
       backdrops: [
         "a bright fine-art backdrop with warm pastel gradient",
         "a sunlit window background with airy curtains and soft bokeh",
         "a light garden terrace feel with soft greenery blur"
       ],
       lighting: [
-        "**SOFT DAYLIGHT WITH SPARKLE:** bright face, gentle shadow under nose, clean skin tones",
+        "**SOFT DAYLIGHT WITH SPARKLE:** bright face, clean tones, gentle shadow under chin only",
         "**OPEN SHADE LOOK:** even light, no blotchy highlights"
       ],
       poses: [
-        "toddler: eye-level portrait, playful grin, hands holding a small object naturally",
-        "toddler: seated, leaning slightly forward (connection), gentle laugh captured"
+        "toddler: eye-level portrait, playful grin, natural posture, hands relaxed",
+        "toddler: seated leaning slightly forward for connection, gentle laugh captured"
       ],
       props: [
-        "a small vintage storybook (tasteful)",
-        "a tiny bouquet or ribbon (subtle, not costume-like)"
+        "a tiny bouquet or ribbon (subtle, premium)",
+        "a small simple storybook (NOT vintage leather, not dramatic)"
       ]
     },
+
     child: {
-      cues: "child: older kid, confident posture, calmer smile",
+      cues: "child: older kid, confident but sweet, relaxed posture",
       backdrops: [
         "a refined bright museum-style backdrop (warm neutral) with subtle painterly depth",
         "a classy interior with soft window light and creamy bokeh",
         "a luminous outdoor portrait look (soft greenery blur), elegant and premium"
       ],
       lighting: [
-        "**CLASSIC PORTRAIT DAYLIGHT:** sculpting from above/side, flattering jawline, gentle contrast",
-        "**SOFT STUDIO LOOK:** clean and premium, natural catchlights"
+        "**CLASSIC PORTRAIT DAYLIGHT:** flattering, gentle contrast, clean skin tones",
+        "**SOFT STUDIO LOOK:** premium, natural catchlights, no harsh shadows"
       ],
       poses: [
-        "child: relaxed 3/4 pose, warm smile, hands natural (no stiff royal pose)",
+        "child: relaxed 3/4 pose, warm closed-mouth smile, hands natural",
         "child: seated, slight chin down, eyes to camera, confident and sweet"
       ],
       props: [
         "a subtle chair/stool (simple, premium)",
-        "a small pet beside them (if applicable), affectionate connection"
+        "a small pet beside them (if present), affectionate connection"
       ]
     }
   };
 
-  // Pick a profile set (we can randomize to add variety; model should adapt based on cues).
+  // 3) Perfil (variedad controlada)
   const profileKey = pick(["newborn", "baby", "toddler", "child"]);
   const profile = ageProfiles[profileKey];
 
-  // ---------- 3) Backgrounds (NO more void / horror) ----------
-  const brightBackdrops = profile.backdrops;
-
-  // ---------- 4) Styles (menos disfraz, más vendible) ----------
+  // 4) Estilos (más vendible, menos disfraz)
   const STYLE_PRESETS = {
     renacimiento: {
-      role: "**Fine-Art Renaissance (Bright & Tender)** — museum-grade oil portrait, uplifting.",
+      role: "**Luminous Fine-Art Renaissance** — museum-grade oil portrait, warm and tender.",
       palettes: ["Warm Ivory + Soft Gold", "Sage Green + Cream", "Dusty Rose + Pearl"],
       wardrobe: [
         "simple elegant classic outfit with subtle embroidery (age-appropriate, not costume)",
         "soft premium fabric with gentle folds (linen/satin look), tasteful and minimal"
       ],
-      mood: `**STYLE SIGNATURE:** luminous, tender, timeless — not dramatic darkness.`
+      mood: `**STYLE SIGNATURE:** luminous, tender, timeless — clean and bright.`
     },
     nobleza: {
-      role: "**Little Royalty (Modern Fine-Art)** — premium, elegant, but cute and approachable.",
-      palettes: ["Royal Blue (soft) + Warm Gold", "Burgundy (lightened) + Cream", "Emerald (muted) + Ivory"],
+      role: "**Little Royalty (Modern Fine-Art)** — prestige + sweetness, very wearable.",
+      palettes: ["Soft Royal Blue + Warm Gold", "Light Burgundy + Cream", "Muted Emerald + Ivory"],
       wardrobe: [
-        "tasteful regal-inspired outfit with subtle gold accents (NOT heavy armor/costume)",
+        "tasteful regal-inspired outfit with subtle gold accents (NOT heavy costume)",
         "classic dress/tunic with premium texture, minimal jewelry (tiny heirloom touch only)"
       ],
-      mood: `**STYLE SIGNATURE:** prestige + sweetness. Parents feel proud, not weirded out.`
+      mood: `**STYLE SIGNATURE:** proud and adorable — never theatrical.`
     },
     barroco: {
-      role: "**Classic Studio Baroque (Softened)** — controlled contrast, still bright on face.",
+      role: "**Classic Studio Depth (Soft Baroque)** — gentle depth without gloom.",
       palettes: ["Warm Umber + Cream Highlights", "Deep Blue + Soft Silver", "Wine + Ivory"],
       wardrobe: [
-        "dark premium fabric with clean tailoring, but face and hands stay bright",
-        "elegant satin/velvet texture kept subtle (no heavy shadow swallowing the body)"
+        "dark premium fabric with clean tailoring, face/hands remain bright and clear",
+        "elegant satin/velvet texture kept subtle (no shadow swallowing the body)"
       ],
-      mood: `**STYLE SIGNATURE:** classic depth without gloom. Never a black void.`
+      mood: `**STYLE SIGNATURE:** refined depth, still bright, no black void.`
     }
   };
 
@@ -158,19 +151,16 @@ module.exports = function (style, numSubjects, isGroup) {
 
   const preset = STYLE_PRESETS[styleKey];
 
-  // ---------- 5) Lighting (make it irresistible) ----------
-  const lightingOptions = profile.lighting;
-
-  // ---------- 6) Group composition that feels like a FAMILY TREASURE ----------
+  // 5) Composición (grupos con amor real, sin “shadow people”)
   const groupComposition = `
 **GROUP COMPOSITION (SIBLINGS / PETS / FAMILY):**
-- Keep everyone **at eye-level**, warm connection, natural closeness.
-- **Siblings:** seated close, gentle interaction (hands touching, leaning in, shared smile).
-- **Pets:** at knee level / on lap / beside them, affectionate and calm.
+- Eye-level, warm closeness, natural connection.
+- Siblings: seated close, gentle interaction (hands touching, leaning in).
+- Pets: at knee level / on lap / beside them, affectionate and calm.
 - If a parent is visible in source:
-  - Either crop out OR render softly in the background with **normal light** (not shadow).
-  - Parent should feel supportive and loving, never “mysterious silhouette”.
-- Use a **medium shot** or **3/4 portrait** so faces are clear and likeness is strong.
+  - Crop out OR render softly with normal light and minimal detail (supportive, not dominant).
+- Medium shot / 3/4 portrait: faces must be clear, true likeness prioritized.
+- **Strict count:** exactly ${numSubjects} subject(s). No extras.
 `;
 
   const soloComposition = `
@@ -179,22 +169,32 @@ module.exports = function (style, numSubjects, isGroup) {
 - Pose: ${pick(profile.poses)}
 - Props: ${pick(profile.props)}
 - Shot: eye-level, premium portrait framing (head/shoulders to 3/4).
-- Expression: warm, sweet, authentic (tiny smile or calm curiosity).
+- Expression: warm, authentic, calm curiosity or gentle closed-mouth smile.
 `;
 
-  // ---------- 7) Final style description ----------
+  // 6) Descripción final (con NEGATIVE inline para ganar la pelea al modelo)
+  const negativeBlock = `
+**NEGATIVE (DO NOT DO):**
+- no doll face, no uncanny valley, no porcelain/wax/plastic skin, no airbrushed smoothing,
+- no oversized eyes, no exaggerated head scale, no hyper-symmetry,
+- no weird mouth/teeth/tongue, no adult hands on baby, no deformed fingers,
+- no extra faces/people/bodies, no invented subjects,
+- no dark void background, no heavy vignette, no harsh shadows, no uplighting,
+- no theatrical costume, no armor, no dramatic vintage leather book for babies.
+`;
+
   const styleDescription = `
 **ROLE:** ${preset.role}
-**AGE PROFILE:** ${profileKey.toUpperCase()} — adapt naturally to the child's visible age cues.
-**BACKDROP:** ${pick(brightBackdrops)}.
+**AGE PROFILE:** ${profileKey.toUpperCase()} — adapt to visible age cues naturally.
+**BACKDROP:** ${pick(profile.backdrops)}.
 **PALETTE:** ${pick(preset.palettes)}.
 **WARDROBE:** ${pick(preset.wardrobe)}.
-**LIGHTING:** ${pick(lightingOptions)}.
+**LIGHTING:** ${pick(profile.lighting)}.
 ${preset.mood}
 ${categoryGuardrails}
+${negativeBlock}
 `;
 
   const framing = isMulti ? groupComposition : soloComposition;
-
   return masterPrompt(numSubjects, styleDescription, framing);
 };
