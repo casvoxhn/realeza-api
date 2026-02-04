@@ -1,6 +1,6 @@
 // ARCHIVO: mujer.js
-// CATEGORÍA: Mujer - V3.1 (Surrealum BUYER-WOW + Identity-Safe)
-// Objetivo: “Se ve igualita” + WOW editorial premium (no filtro, no muñeca IA) + lujo vendible para colgar en sala.
+// CATEGORÍA: Mujer - V3.2 (DRAMA PREMIUM + WOW REACTION + Identity Locked)
+// Objetivo: Reacción inmediata: “WOW, soy yo pero version obra maestra”. Drama, profundidad, lujo, sin cara/filtro IA.
 
 const masterPrompt = require('./masterPrompt');
 
@@ -8,143 +8,144 @@ module.exports = function (style, numSubjects, isGroup) {
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
   const isMulti = numSubjects > 1 || !!isGroup;
 
-  // 1) Guardrails: Identidad + Feminidad vendible + Anti-filtro
+  // 1) Guardrails: Identidad intacta + “glamour real” + anti-plano
   const categoryGuardrails = `
-**CATEGORY GUARDRAILS (WOMAN / BUYER-WOW MASTERPIECE):**
-- **ABSOLUTE LIKENESS:** Preserve the woman's exact facial geometry and identity from the reference. No face sculpting.
-  - NO almond-eye conversion, NO slimming cheeks, NO jaw narrowing, NO “model face”.
-  - Preserve natural asymmetries, eyelids, cheek volume, nose/lips shape, chin/jawline.
+**CATEGORY GUARDRAILS (WOMAN / PREMIUM WOW MASTERPIECE):**
+- **ABSOLUTE LIKENESS (NON-NEGOTIABLE):** Preserve exact facial geometry and identity from the reference.
+  - NO almond-eye conversion, NO slimming cheeks, NO jaw narrowing, NO “modelize” face.
+  - Preserve eyelids, eye spacing, cheek volume, nose/lips shape, chin/jawline, and natural asymmetries.
   - **HAIR LOCK:** Preserve hairline, length, texture, part/bangs, and overall hairstyle. Do not restyle hair.
-- **BEAUTIFUL BUT REAL SKIN (NO FILTER):** Natural skin micro-texture, subtle pores, believable tonal variation.
-  - Soft flattering finish is allowed, but **NO porcelain/wax/plastic**, NO airbrushed smoothing, NO CGI highlights.
-- **EYES:** Natural eye size. Clear controlled catchlights (not “doll eyes”, not overly glossy).
-- **POSTURE:** Elegant neck, relaxed shoulders, natural breathing. No stiffness, no mannequin posing.
-- **WARDROBE (SELLABLE LUXURY):** Museum-grade fabrics, but wearable and tasteful. No cosplay.
-  - Neckline should reveal collarbones/neck softly for elegance (square / off-shoulder / modest V).
-  - Avoid high stiff collars unless explicitly requested.
-  - NO cheap costume jewelry, NO plastic tiaras, NO exaggerated collarines.
-  - NO aggressive push-up/corset exaggeration; shape should feel refined and natural.
-- **BACKGROUND MOOD:** Premium gallery look: refined depth, warm elegance. Never horror, never void-only.
-- **WOW RULE (NOT A FILTER):** This must be a new fine-art portrait (new pose/angle/wardrobe/setting/lighting), not a painted copy of the same photo.
+- **GLAMOUR REAL (NOT FILTER):**
+  - Skin must look alive: natural micro-texture, subtle pores, tonal variation, believable blush.
+  - Allowed: painterly glow from lighting and glazing (oil painting), NOT digital smoothing.
+  - NO wax/plastic, NO airbrushed beauty filter, NO CGI shine.
+- **EYES:** Must feel alive and magnetic. Catchlights controlled (one main + subtle secondary), not “doll eyes”.
+- **POSTURE / FEMININE POWER:** Elegant elongated neck, relaxed shoulders, natural breathing. Feminine, confident, not stiff.
+- **WARDROBE (SELLABLE LUXURY):** Museum-grade fabrics, heavy and tactile. Elegant neckline (square / off-shoulder / tasteful V).
+  - NO cheap costume jewelry, NO plastic tiaras, NO clown sparkles.
+  - Jewelry: ONE hero piece maximum (necklace OR earrings).
+- **WOW REQUIREMENT:** The result must look like a **commissioned masterpiece** with cinematic depth: rich shadows, luminous highlights, premium atmosphere.
+  - Avoid flat lighting and bland backgrounds.
 `;
 
-  // 2) Backdrops (mezcla: premium luminoso + opción depth, sin “void” obligatorio)
+  // 2) Backdrops (regresamos “obra” con profundidad, sin void feo)
   const backdrops = [
-    "a luminous warm-ivory museum backdrop with soft painterly gradient and airy depth (gallery look)",
-    "a refined warm neutral studio background with creamy bokeh and gentle haze (editorial premium)",
-    "a classy interior with soft window light and elegant blur (subtle, expensive, not busy)",
-    "a warm umber museum backdrop with controlled depth (classic, not near-black)",
-    "a deep but refined baroque interior where the background stays readable in low detail (no void)"
+    "a rich warm-umber museum backdrop with subtle painterly gradient and atmospheric depth (Old Masters gallery feel)",
+    "a refined baroque interior suggested in soft low-detail shadow (arches/drapery hinted), not black void",
+    "a deep olive-brown studio backdrop with warm haze and velvet-like depth, refined and premium",
+    "a candle-warm classical atelier ambience with layered shadows and subtle golden air (no horror, no void edges)",
+    "a luxurious dark backdrop with controlled falloff and soft vignette that feels like a museum spotlight (tasteful, not heavy)"
   ];
 
-  // 3) Props (más vendibles, menos “emerging from void”)
+  // 3) Props (premium narrativa, sin “cosas raras”)
   const props = [
-    "an elegant **velvet-upholstered chair** (dark wood) providing a resting place for an arm (natural, relaxed)",
-    "a heavy velvet drape pooling on a side table (minimal prop, adds texture, not distracting)",
-    "a classical balustrade hinted softly in the background (subtle structure, not dominant)",
-    "no props; a clean gallery portrait setup with refined background depth (editorial feel)"
+    "an elegant **velvet-upholstered chair** (dark wood) supporting a relaxed arm, classic portrait language",
+    "a heavy velvet drape pooling on a side table (minimal, adds texture and depth)",
+    "a subtle classical balustrade hinted in shadow behind, giving architecture without distraction",
+    "no props; a pure gallery portrait setup with layered atmosphere and refined depth"
   ];
 
-  // 4) Iluminación (premium favorecedora, sin glow plástico)
+  // 4) Iluminación (impacto: chiaroscuro controlado + rim light sutil + cara limpia)
   const lightingOptions = [
-    "**SOFT WINDOW DAYLIGHT:** Diffused natural window light from above/side; flattering, even, clean skin tones; gentle shadows only.",
-    "**BRIGHT SOFT STUDIO LIGHT:** Large soft source, smooth wrap, natural highlights (no glow), controlled catchlights.",
-    "**WARM DAYLIGHT (SUBTLE):** Warm flattering light on face and collarbones with gentle falloff into a warm backdrop (no black edges).",
-    "**GENTLE PAINTERLY VOLUME:** Mild contrast for depth in fabrics/neckline while keeping the face bright, clean, and identity-accurate."
+    "**CONTROLLED CHIAROSCURO (MASTERPIECE):** Directional key light from side-front/top, sculpting cheekbones and neck gently WITHOUT changing facial anatomy. Shadows are rich but clean.",
+    "**CINEMATIC KEY + SOFT FILL:** Strong key light + subtle fill to keep the face readable. Deep background, luminous skin highlights, no harsh shadow patches.",
+    "**REMBRANDT LUX (SOFTENED):** Classic Rembrandt triangle on the cheek, warm glazing-like highlights, refined depth, not a black void.",
+    "**GALLERY SPOTLIGHT (TASTEful):** Museum spotlight on face/collarbones, gentle falloff; background remains atmospheric and premium, not flat."
   ];
 
-  // 5) Poses (más editorial, más “wow”, sin rigidez)
+  // 5) Poses (wow femenino: intención, cuello, manos, sin rigidez)
   const soloPoses = [
-    "seated portrait, body angled 3/4, one hand lightly touching the collarbone or fabric fold, head slightly tilted, calm confident gaze",
-    "seated comfortably in a velvet chair, one arm resting naturally on the chair arm, shoulders relaxed, chin slightly down for intimacy, eyes to camera",
-    "standing 3/4 with relaxed posture, looking back over the shoulder softly, neckline and earrings visible, elegant and timeless (no stiff twist)",
-    "forward-facing portrait with relaxed shoulders, off-shoulder or square neckline, subtle closed-mouth smile, confident and feminine",
-    "half-body portrait, one hand gently holding a small pendant or touching a sleeve cuff, calm luxury expression (quiet confidence)"
+    "seated 3/4 portrait, chin slightly down, eyes to camera, one hand resting lightly on the chair arm, the other softly touching a fabric fold (quiet luxury)",
+    "standing 3/4, shoulders relaxed, head turned toward the light, a subtle closed-mouth smile, neckline visible, confident feminine presence",
+    "seated, torso angled, one hand near collarbone/necklace area (no tension), gaze soft but powerful (magnetic)",
+    "over-shoulder look with minimal twist (no extreme turn), neck elongated, earrings visible, expression calm and expensive",
+    "half-body portrait, hands minimal and natural, posture tall, gaze direct and warm (the ‘I own the room’ look)"
   ];
 
-  // Grupo (conexión natural pero sin tapar caras)
   const groupInteractions = [
-    "subjects seated/standing very close, warm sisterly bond, heads slightly leaning in; NO face occlusion; all faces equally visible and sharp",
-    "one seated, the other standing behind with hands softly on shoulders; keep faces fully visible and properly lit",
-    "arm-in-arm pose, comfortable intimacy, slight lean-in; natural smiles or calm gazes; no stiff symmetry",
-    "if a pet is present: the woman holds the pet comfortably on her lap or by her side; the pet is calm; her face remains fully visible and well-lit"
+    "subjects physically close with warm elegant connection; NO face occlusion; both faces fully visible and equally premium-lit",
+    "one seated, one standing behind with hands gently on shoulders; keep faces fully visible and cleanly lit",
+    "arm-in-arm with subtle lean-in, calm luxury expressions; avoid stiff symmetry; keep hair identity intact",
+    "if a pet is present: the woman holds the pet calmly on lap/side; her face remains the secondary hero, fully visible and properly lit"
   ];
 
-  // 6) Estilos (ajustados para vender: menos cosplay, más lujo usable)
+  // 6) Estilos (re-enfocados a “obra comprable”, sin cosplay)
   const STYLE_PRESETS = {
     musa: {
-      role: "**La Musa Atemporal** (Fine-Art, Renacimiento Suave, Editorial).",
+      role: "**Musa Atemporal (Old Masters Romantic Luxury)** — poetic, warm, museum-grade.",
       palette: [
-        "Dusty Rose + Antique Gold + Warm Cream skin tones",
-        "Pearl White + Champagne + Soft Earth browns",
-        "Muted Emerald + Bronze + Warm shadows"
+        "Dusty Rose + Antique Gold + Warm Umber shadows",
+        "Pearl Cream + Champagne + Soft Earth browns",
+        "Muted Emerald + Bronze + Warm shadow depth"
       ],
       wardrobe: [
-        "a renaissance-inspired gown with a **square neckline** revealing the collarbones, made of heavy crushed velvet (wearable, not costume)",
-        "a soft silk dress draped elegantly off the shoulders (refined, not revealing), romantic silhouette",
-        "a satin-and-lace gown with gentle structure, vintage and ethereal, premium tailoring (not stiff)"
+        "a renaissance-inspired gown with a **square neckline** revealing collarbones, heavy crushed velvet, tailored and premium (not costume)",
+        "a silk dress draped elegantly off the shoulders (refined, tasteful), with soft folds and heirloom feel",
+        "a satin gown with subtle lace sleeves and premium tailoring, ethereal but realistic"
       ],
       accessories: [
-        "a delicate pearl necklace resting naturally on the skin (one hero piece only)",
-        "small drop earrings catching the light (controlled sparkle)",
-        "minimal heirloom jewelry (no heavy stacks)"
+        "a delicate pearl necklace resting naturally on the skin (one hero piece)",
+        "small drop earrings with controlled sparkle (secondary)",
+        "minimal heirloom jewelry (one accent only)"
       ],
-      mood: `**STYLE SIGNATURE:** Romantic, luminous, tender realism. Painterly finish without changing facial anatomy.`
+      mood: `**STYLE SIGNATURE:** Romantic depth + luminous highlights. Feels like a real commissioned painting.`
     },
 
     realeza: {
-      role: "**La Reina** (Luxury, Prestige, Wearable Royal).",
+      role: "**Reina (Power Luxury, Wearable Royal)** — commanding, expensive, timeless.",
       palette: [
         "Deep Royal Blue + Warm Gold + Cream highlights",
-        "Rich Burgundy Velvet + Gold embroidery + Warm neutrals",
-        "Black Velvet + Pearls + Soft contrast"
+        "Rich Burgundy Velvet + Gold embroidery + Warm umber shadows",
+        "Black Velvet + Pearls + Controlled contrast"
       ],
       wardrobe: [
         "a heavy velvet royal gown with a refined deep neckline framed by tasteful gold embroidery (elegant, not exaggerated)",
-        "a structured brocade dress with premium tailoring and a feminine silhouette (no extreme corset push-up)",
-        "a dark satin gown with lace sleeves, expensive and commanding, neckline keeps collarbones visible"
+        "a structured brocade dress with premium tailoring (no extreme corset), feminine silhouette",
+        "a dark satin gown with lace sleeves, expensive and commanding, collarbones visible"
       ],
       accessories: [
-        "one statement heirloom necklace OR refined drop earrings (choose one, not both)",
-        "a very subtle tasteful tiara ONLY if explicitly requested (otherwise no tiara)",
-        "luxurious details that sparkle softly, never flashy"
+        "ONE hero piece: statement heirloom necklace OR refined drop earrings (not both)",
+        "no tiara unless explicitly requested",
+        "luxury sparkle is subtle and controlled"
       ],
-      mood: `**STYLE SIGNATURE:** Expensive presence. Prestige without costume vibes.`
+      mood: `**STYLE SIGNATURE:** Authority + elegance. Dramatic depth without losing likeness.`
     },
 
     empoderada: {
-      role: "**Mujer Empoderada** (Modern-Classical Power, Clean Luxury).",
+      role: "**Empoderada (Modern-Classical Editorial Drama)** — sharp presence, clean luxury.",
       palette: [
-        "Midnight Navy + Soft Silver + Warm skin tones",
-        "Onyx Black + Warm Gold accents + Refined contrast",
-        "Dark Plum + Bronze + Moody elegance (still clean)"
+        "Midnight Navy + Antique Silver + Warm shadow depth",
+        "Onyx Black + Warm Gold accents + Rich umber atmosphere",
+        "Dark Plum + Bronze + Cinematic contrast"
       ],
       wardrobe: [
-        "a couture dark velvet gown with a clean elegant silhouette, refined shoulders (not exaggerated)",
-        "a structured corset-inspired bodice with a flowing skirt, elegant and feminine (natural fit, not extreme)",
-        "a deep V-neck silk dress in dark tones (modest V), confident and timeless"
+        "a couture velvet gown with clean silhouette and refined shoulders (not exaggerated), neckline tasteful",
+        "a structured bodice with flowing skirt, elegant femininity (natural fit, not extreme)",
+        "a silk dress with a tasteful V neckline (modest), confident and timeless"
       ],
       accessories: [
-        "a refined watch OR single gold bracelet (minimal, expensive)",
-        "a minimalist pendant (one hero piece)",
-        "classic earrings, nothing distracting"
+        "a refined watch OR a single gold bracelet (minimal, expensive)",
+        "a minimalist pendant (if no earrings hero piece)",
+        "classic earrings (if no necklace hero piece)"
       ],
-      mood: `**STYLE SIGNATURE:** Quiet power. Premium editorial lighting. Sharp focus on eyes without stylization.`
+      mood: `**STYLE SIGNATURE:** Editorial drama + museum finish. Face stays real, scene feels powerful.`
     }
   };
 
   const preset = STYLE_PRESETS[style] || STYLE_PRESETS.empoderada;
 
-  // 7) Receta técnica WOW (sin triggers de muñeca / filtro)
+  // 7) Negativos: cortan lo “plano” y lo “muñeca” sin matar drama
   const negativeBlock = `
 **NEGATIVE (DO NOT DO):**
 - no face slimming, no jaw narrowing, no cheekbone sharpening, no almond-eye conversion
-- no “beauty filter”, no porcelain/wax/plastic skin, no airbrushed smoothing, no CGI shine
-- no doll eyes, no hyper-glossy eyes, no exaggerated catchlights
-- no stiff mannequin posture, no extreme corset push-up, no cheap tiaras/costume jewelry
-- no near-black void-only background, no heavy vignette, no harsh shadows, no uplighting
+- no digital beauty filter, no airbrushed smoothing, no wax/plastic skin, no CGI shine
+- no hyper-glossy doll eyes, no oversized catchlights, no “anime” or stylized features
+- no flat lighting, no bland studio-white vibe, no washed-out colors
+- no cheap costume jewelry, no plastic tiaras, no clown sparkle overload
+- no harsh shadow blotches on face, no uplighting, no heavy dirty vignette
 `;
 
+  // 8) Receta final: vuelve el “arte” y el “impacto”
   const styleDescription = `
 **ROLE:** ${preset.role}
 **BACKDROP:** ${pick(backdrops)}.
@@ -157,22 +158,23 @@ ${preset.mood}
 ${categoryGuardrails}
 ${negativeBlock}
 
-**ULTRA-REALISTIC "SURREALUM" FINISH (BUYER WOW):**
-- **Skin:** believable micro-texture + subtle natural blush (no artificial smoothing).
-- **Materials:** velvet pile, silk sheen, lace weave visible and premium (tactile realism).
-- **Depth:** clean separation between subject and background; background stays refined and soft.
-- **Print-ready:** crisp face, no oversharpening, no HDR look, no digital filter vibe.
+**ULTRA-REALISTIC "SURREALUM" FINISH (IMPACT WOW):**
+- **Oil Painting Depth:** layered glazing, pigment richness, museum varnish (subtle), real canvas feel (very subtle).
+- **Skin:** alive micro-texture + warm luminous highlights from lighting (not smoothing). Natural blush on cheeks.
+- **Materials:** velvet pile + silk sheen + lace weave must read as premium and tactile.
+- **Cinematic Separation:** face and neckline are the hero; background stays atmospheric and expensive.
+- **Print-Ready Presence:** crisp face (no oversharpen), rich tonal range, no flatness.
 `;
 
-  // 8) Composición (más variedad real)
+  // 9) Composición: más “portada premium”, menos foto normal
   const soloFramings = [
-    `**SOLO COMPOSITION:** ${pick(soloPoses)}. Eye-level. 50–85mm portrait feel. Head/shoulders to 3/4 portrait. Focus on eyes and skin realism.`,
-    `**SOLO COMPOSITION:** Medium shot (waist up). Body angled 3/4, face turns to viewer. Elegant, breathable, editorial premium.`
+    `**SOLO COMPOSITION:** ${pick(soloPoses)}. Eye-level. 50–85mm portrait feel. 3/4 portrait (head to mid-torso). Strong presence, not stiff.`,
+    `**SOLO COMPOSITION:** Medium shot (waist up). Body angled 3/4, face turns to viewer. Keep neckline visible and elegant. Cinematic depth.`
   ];
 
   const groupFramings = [
-    `**GROUP COMPOSITION:** ${pick(groupInteractions)}. Medium shot. Balanced spacing. ALL faces visible and equally sharp. No face occlusion.`,
-    `**GROUP COMPOSITION:** Two subjects sharing the frame naturally, physically close (leaning/touching) to show connection. Keep lighting clean and flattering on both faces.`
+    `**GROUP COMPOSITION:** ${pick(groupInteractions)}. Medium shot. Balanced spacing. ALL faces visible and equally premium-lit. No face occlusion.`,
+    `**GROUP COMPOSITION:** Two subjects sharing frame naturally, physically close. Keep cinematic depth and ensure both faces remain identity-locked.`
   ];
 
   const framing = (isMulti ? pick(groupFramings) : pick(soloFramings));
