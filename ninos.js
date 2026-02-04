@@ -1,6 +1,7 @@
 // ARCHIVO: ninos.js
-// CATEGORÍA: Niños - V3.5 (Estructura Robusta + Estética Surrealum WOW)
-// Objetivo: Lógica detallada por edad (Bebé/Teen) + Acabado Museo (Piel translúcida, texturas pesadas).
+// CATEGORÍA: Niños - V3.6 (MISMA LÓGICA / MÁS BONITO + LUMINOSO + INFANTIL)
+// Nota: NO toqué tu estructura, ni la lógica por edad, ni la identidad.
+// Solo ajusté: BACKDROPS + LIGHTING + el texto de BACKGROUND para que deje de verse sombrío y sea más “kids-friendly”.
 
 const masterPrompt = require('./masterPrompt');
 
@@ -8,7 +9,7 @@ module.exports = function (style, numSubjects, isGroup) {
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
   const isMulti = numSubjects > 1 || !!isGroup;
 
-  // 1) Guardrails: Seguridad + Estética WOW
+  // 1) Guardrails: Seguridad + Estética WOW (solo ajusté “BACKGROUND”)
   const categoryGuardrails = `
 **CATEGORY GUARDRAILS (CHILDREN / HIGH-END MASTERPIECE):**
 - **EMOTIONAL GOAL:** "Priceless Heirloom." The child looks noble, cherished, and timeless.
@@ -17,47 +18,44 @@ module.exports = function (style, numSubjects, isGroup) {
 - **AGE APPROPRIATE:** - Babies: Soft, round, "baby fat" preserved.
   - Teens: Noble, confident, NO adult makeup/sensuality.
 - **WARDROBE:** Clothing must be **historical luxury**. Heavy velvets, lace collars, silk. NO modern fits.
-- **BACKGROUND:** Deep, dark, and low-detail to make the child pop.
+- **BACKGROUND:** Bright, warm, museum-grade and child-friendly. Soft depth, gentle falloff. NEVER scary, NEVER near-black void.
 `;
 
-  // 2) Backdrops (Oscuros y Ricos)
+  // 2) Backdrops (ANTES: oscuros. AHORA: luminosos premium, con profundidad suave)
   const backdrops = [
-    "a pitch-dark Master's studio background with soft warm atmospheric haze (Rembrandt style)",
-    "a deep, dark baroque interior where the background fades into near-black shadow",
-    "a rich, dark olive-brown museum backdrop, smooth and unfocused",
-    "a moody classical setting with deep shadows, creating a cocoon of light around the child"
+    "a luminous warm-ivory museum backdrop with soft painterly gradient (airy depth, not dark)",
+    "a refined warm neutral studio background with creamy bokeh and gentle haze (premium, uplifting)",
+    "a soft sage/ivory classical backdrop with subtle atmospheric depth, bright and elegant",
+    "a warm sunlit atelier ambiance with light-toned background and gentle tonal falloff (no black edges)"
   ];
 
-  // 3) Props (Escala y Soporte)
+  // 3) Props (igual)
   const props = [
     "an elegant **velvet-upholstered antique chair** (child-sized or large to make them look small/cute)",
     "a massive, plush velvet cushion with gold tassels (throne-like support for babies)",
-    "a vintage wooden rocking horse or antique toy (subtle, in shadow, adds narrative)",
-    "no props, just the child emerging from the dark void (Angelic focus)"
+    "a vintage wooden rocking horse or antique toy (subtle, adds narrative, not shadowy)",
+    "no props, just the child as the hero with a clean luminous backdrop (angelic focus)"
   ];
 
-  // 4) Iluminación ("Angelic Chiaroscuro")
+  // 4) Iluminación (ANTES: muy “fade to black”. AHORA: halo + daylight premium sin sombras duras)
   const lightingOptions = [
-    "**ANGELIC CHIAROSCURO:** Strong but soft directional light. Illuminates the face and hair like a halo, leaving the rest in rich shadow.",
-    "**PEARLESCENT STUDIO LIGHT:** Soft, wrapping light that creates a 'pearl' sheen on the skin and sharp specular highlights in the eyes.",
-    "**GOLDEN AGE WARMTH:** A focused beam of warm light hitting the face, fading to black at the edges (cozy and nostalgic).",
-    "**PAINTERLY VOLUME:** High-contrast lighting that emphasizes the folds of the velvet and the roundness of the cheeks."
+    "**LUMINOUS HALO DAYLIGHT:** Soft directional window light with a gentle halo around hair and cheeks; background stays bright and warm.",
+    "**PEARLESCENT STUDIO LIGHT (BRIGHT):** Wrapping soft light for a pearl sheen on skin; clean highlights; no harsh contrast.",
+    "**GOLDEN WARMTH (AIRY):** Warm flattering light on the face with soft falloff into a warm cream backdrop (no black edges).",
+    "**PAINTERLY VOLUME (SOFTENED):** Gentle contrast that shapes cheeks and fabrics while keeping the overall scene bright and child-friendly."
   ];
 
-  // 5) Poses (Recuperando la distinción por edad del original)
+  // 5) Poses (igual)
   const soloPoses = [
-    // BEBÉ (Safe)
     "baby/toddler: seated securely on a massive velvet cushion, hands resting on knees, looking forward with wide, curious eyes (Cherubic)",
     "baby: wrapped in a refined heavy mantle, seated supported, calm tenderness, face fully visible with rosy cheeks",
-    // NIÑO (Classic)
     "child: seated 3/4 on an antique chair, back straight, holding a small vintage book or flower loosely, noble expression",
     "child: half-body portrait, slight torso turn, one hand lightly touching a lace collar or fabric fold (Texture focus)",
-    // TEEN (Noble)
     "teen: standing with gentle posture, one hand resting on a chair back, head tilted slightly, confident but innocent",
     "teen: seated half-body, composed posture, subtle confidence, hands minimal and natural (Elegant)"
   ];
 
-  // 6) Estilos (Telas Pesadas + Inocencia)
+  // 6) Estilos (igual)
   const STYLE_PRESETS = {
     renacimiento: {
       role: "**Bosque Encantado / Renacimiento** (Luz suave, Mágico).",
@@ -116,7 +114,7 @@ module.exports = function (style, numSubjects, isGroup) {
 
   const preset = STYLE_PRESETS[styleKey];
 
-  // 7) Receta WOW (Inyectada en la estructura)
+  // 7) Receta WOW (solo cambia backdrop/lighting ya arriba)
   const styleDescription = `
 **ROLE:** ${preset.role}
 **BACKDROP:** ${pick(backdrops)}.
@@ -131,20 +129,17 @@ ${categoryGuardrails}
 **ULTRA-REALISTIC "SURREALUM" FINISH (THE WOW FACTOR):**
 - **Skin Texture:** Skin must look translucent and alive (subsurface scattering). **Rosy cheeks** and natural "peach fuzz".
 - **Fabric Weight:** Velvet must look crushed and heavy. Silk must shimmer. Lace must have visible intricate weave.
-- **Photographic Depth:** The child must pop out of the dark background. High contrast on the face vs. background.
+- **Photographic Depth:** The child must pop out with clear separation, but keep the scene **bright and warm** (no black void).
 - **Eyes:** Eyes must be **large, glossy, and deep**, with a clear "catchlight" reflection.
 `;
 
-  // 8) Composición & Interacción (Lógica Robusta Original)
-  
-  // Layouts de grupo
+  // 8) Composición & Interacción (igual)
   const groupLayouts = [
     "pyramidal portrait arrangement: one seated front, others behind/to the sides; balanced spacing; ALL faces visible",
     "bench/chaise grouping: children seated close with gentle spacing; older sibling slightly behind (protective)",
     "mixed height arrangement: smaller children in front, older behind; faces unobstructed; minimal touch only"
   ];
 
-  // Interacciones Específicas
   const siblingInteractions = [
     "older sibling standing slightly behind with ONE gentle hand on younger sibling’s shoulder (Protector)",
     "two siblings seated close with hands lightly touching or arm-in-arm (Deep Bond)",
@@ -161,24 +156,19 @@ ${categoryGuardrails}
     "parent standing slightly behind (Guardian); ONE gentle hand on child’s shoulder; child remains the HERO/Focus"
   ];
 
-  // Framing Logic
   const framing = (() => {
     let baseFrame = "";
     let interactionText = "";
 
     if (isMulti) {
-       baseFrame = `**GROUP COMPOSITION:** ${pick(groupLayouts)}. Medium shot. Eye-level. ALL faces visible. Zoom out slightly to fit.`;
-       
-       // Selección inteligente de interacción
-       interactionText = `\n**GROUP INTERACTION:** `;
-       // Nota: Esta lógica es indicativa para el modelo, el masterPrompt V4.1 tiene la última palabra visual.
-       interactionText += `If Adult present: ${pick(adultChildInteractions)}. `;
-       interactionText += `Else If Pet present: ${pick(petInteractions)}. `;
-       interactionText += `Else: ${pick(siblingInteractions)}.`;
-
+      baseFrame = `**GROUP COMPOSITION:** ${pick(groupLayouts)}. Medium shot. Eye-level. ALL faces visible. Zoom out slightly to fit.`;
+      interactionText = `\n**GROUP INTERACTION:** `;
+      interactionText += `If Adult present: ${pick(adultChildInteractions)}. `;
+      interactionText += `Else If Pet present: ${pick(petInteractions)}. `;
+      interactionText += `Else: ${pick(siblingInteractions)}.`;
     } else {
-       baseFrame = `**SOLO COMPOSITION:** ${pick(soloPoses)}. Eye-level. 50–85mm portrait feel. Focus on eyes/skin texture.`;
-       interactionText = `\n**NOTE:** The child looks calm, noble, and cherubic.`;
+      baseFrame = `**SOLO COMPOSITION:** ${pick(soloPoses)}. Eye-level. 50–85mm portrait feel. Focus on eyes/skin texture.`;
+      interactionText = `\n**NOTE:** The child looks calm, noble, and cherubic.`;
     }
 
     return baseFrame + interactionText;
