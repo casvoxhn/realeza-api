@@ -1,11 +1,11 @@
 // ARCHIVO: mascotas.js
-// CATEGORÍA: Mascotas (PET-FIRST) - V3.2 (WOW Factor + Child/Baby Logic)
-// Objetivo: Texturas hiperrealistas + Capas abiertas + Lógica específica para Bebés vs Adultos.
+// CATEGORÍA: Mascotas (PET-FIRST) - V3.4 (Vibrancy Boost + Zoom Logic)
+// Objetivo: Colores vivos en la ropa, composiciones más ricas y variedad de planos.
 
 const masterPrompt = require('./masterPrompt');
 
 module.exports = function (style, numSubjects, isGroup) {
-  // Random helpers
+  // Helpers
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
   const weightedPick = (items) => {
     const total = items.reduce((sum, it) => sum + (it.weight || 1), 0);
@@ -19,167 +19,154 @@ module.exports = function (style, numSubjects, isGroup) {
 
   const isMulti = numSubjects > 1 || !!isGroup;
 
-  // 1) Guardrails: Identidad + MODESTIA + Vida
+  // 1) Guardrails: Identidad + MODESTIA
   const petGuardrails = `
-**CATEGORY GUARDRAILS (PETS / HIGH-END MASTERPIECE):**
-- **PET-FIRST:** The animal is the absolute king/queen of the image.
-- **IDENTITY:** Preserve coat color, pattern, markings, and specific ear shape exactly.
-- **AESTHETIC MODESTY (CRITICAL):** Use natural posing to conceal intimate areas. Use a crossed paw, the tail, the deep shadow of the cushion, or a draped fold of the cape to block the view of genitals/anus naturally. The result must be elegant and dignified.
-- **ALIVENESS:** The pet must NOT look like a taxidermy statue. 
-  - Eyes must have "wetness" and specular highlights (catchlights).
-  - Posture must show "weight" (sinking slightly into the cushion).
+**CATEGORY GUARDRAILS (PETS / VIBRANT MASTERPIECE):**
+- **PET-FIRST:** The animal is the absolute monarch of the image.
+- **IDENTITY:** Preserve coat color/pattern and ear shape exactly.
+- **AESTHETIC MODESTY:** Use shadow, tail, crossed paws, or fabric drapery to conceal intimate areas naturally.
+- **VIBRANCY:** Do not make the image desaturated. The fabrics must look rich and colorful.
 `;
 
-  // 2) Backdrops (Oscuros y ricos para contraste WOW)
-  const backdrops = [
-    "a pitch-dark Master's studio background with minimal warm atmospheric haze",
-    "a deep, dark baroque interior where the background fades into near-black shadow",
-    "a rich, dark olive-brown museum backdrop, smooth and unfocused to make the subject pop",
-    "a moody classical setting with deep shadows, emphasizing the light on the subject"
+  // 2) Props & Backdrops (Específicos por Estilo para mejorar composición)
+  const getEnvironment = (styleKey) => {
+      if (styleKey === 'realeza') {
+          // REALEZA: Más arquitectónico y lujoso
+          return {
+              bg: pick([
+                  "a blurred background suggestive of a palace throne room with majestic columns",
+                  "a rich backdrop of heavy red and gold curtains creating a royal stage",
+                  "a grand interior with golden architectural details fading into shadow"
+              ]),
+              prop: pick([
+                  "a massive, high-backed velvet throne cushion with gold tasseled trim",
+                  "a regal podium covered in layers of expensive ermine and silk",
+                  "a luxurious royal seat with intricate gold carvings visible at the edges"
+              ])
+          };
+      }
+      // Otros estilos (Renacimiento/Barroco)
+      return {
+          bg: pick([
+              "a textured, painterly dark studio background with atmospheric depth",
+              "a soft, dreamy forest-edge vibe (blurred) mixed with studio darkness",
+              "a classic museum backdrop, dark olive/brown tones"
+          ]),
+          prop: pick([
+              "a plush, oversized velvet pillow that the pet sinks into",
+              "a soft antique cushion with subtle floral embroidery",
+              "a grand pedestal draped in flowing, heavy fabric"
+          ])
+      };
+  };
+
+  // 3) Lógica de Cámara (Zoom Variado)
+  const cameraLogic = weightedPick([
+      { 
+          value: "**MEDIUM SHOT (The Majestic):** Framing the pet from the chest/paws up, showing the interaction with the luxurious cushion and the drape of the cape.", 
+          weight: 70 
+      },
+      { 
+          value: "**CLOSE-UP PORTRAIT (The Soul):** A tighter crop focusing on the head and shoulders. Intense detail on the eyes, nose texture, and the intricate collar/jewelry. Background is creamy bokeh.", 
+          weight: 30 
+      }
+  ]);
+
+  // 4) Iluminación (Resaltar colores)
+  const lighting = [
+    "**JEWEL LIGHTING:** Directional, high-quality light that makes the colors of the wardrobe pop and creates sparkles in the eyes.",
+    "**REMBRANDT WITH KICK:** Classic side lighting, but with a rim light (backlight) to separate the fur from the background.",
+    "**SOFT GLOW:** A warm, golden light bathing the subject, enhancing the richness of the velvet and gold."
   ];
 
-  // 3) Props (El cojín pesado y lujoso es clave)
-  const props = [
-    "a **massive, luxurious velvet cushion** (throne-like) with heavy gold tassels and deep button tufting",
-    "a large, plush antique pillow with crushed velvet texture and gold braided trim",
-    "a grand upholstered pedestal covered in heavy, draped fabrics that pool on the floor"
+  // 5) Poses (Nobleza)
+  const petPoses = [
+    "lying in a 'sphinx' pose, chest puffed out proudly between the open cape",
+    "seated upright with regal posture, looking slightly off-camera with dignity",
+    "lounging elegantly, body sinking into the cushion, head turned towards the light",
+    "lying down but with head held high, portraying confidence and ownership of the throne"
   ];
 
-  // 4) Iluminación (La clave del realismo fotográfico)
-  const lightingOptions = [
-    "**DRAMATIC CHIAROSCURO:** Strong, directional light from the side-front. Illuminates the face and chest fur, leaving the rest in rich shadow.",
-    "**PHOTOGRAPHIC STUDIO LIGHT:** Soft but directional 'beauty dish' style lighting that creates sharp specular highlights in the eyes and fur.",
-    "**GOLDEN AGE DRAMA:** A beam of light focusing strictly on the subject's head and open chest, fading to black at the edges.",
-    "**HIGH-CONTRAST TEXTURE LIGHT:** Lighting specifically positioned to reveal the micro-texture of the fur and the weave of the velvet."
-  ];
-
-  // 5) Poses (Dinámicas + Modestia + Pecho Visible)
-  const petLyingPoses = [
-    "hero pet lying in a 'sphinx' pose on the cushion, front paws extended elegantly, chest puffed out and visible between the cape folds, head alert",
-    "hero pet lying comfortably on its side, front paws crossed gracefully, head turned towards the viewer, the body sinking into the plush cushion",
-    "hero pet lying with dynamic tension (ready to rise), head high and noble, cape flowing backwards over shoulders revealing the full chest",
-    "hero pet settled deep into the cushion, one paw draping over the edge naturally, looking off-camera with a noble, wet-eyed gaze"
-  ];
-
-  const petSeatedPoses = [
-    "hero pet seated regally, back straight, chest proud and visible (cape pushed back), tail wrapped around paws neatly",
-    "hero pet seated with a slight lean, head cocked with intelligence, front paws placed firmly, confident and alive"
-  ];
-
-  // Weighted: 70% Acostado (Mejor para modestia y look "Surrealum"), 30% Sentado
-  const petSoloPoseWeighted = () =>
-    weightedPick([
-      { value: pick(petLyingPoses), weight: 70 },
-      { value: pick(petSeatedPoses), weight: 30 }
-    ]);
-
-  // 6) Multi-Subject Logic (Mascotas VS Humanos VS Niños)
-  const multiPetArrangements = [
-    "hero pet centered on the main cushion; secondary pets lounging naturally around/behind, forming a pyramid composition",
-    "all pets sharing the massive cushion, arranged by size, with the hero pet slightly forward and brighter",
-    "a cozy, organic pile of pets on the throne-cushion, heads distinct, bodies overlapping naturally"
-  ];
-
-  const humanWarmInteractions = [
-    "**ADULT ROLE:** Noble guardian. Dark formal period attire. Standing slightly behind or seated next to cushion. Hand on pet's back.",
-    "**CHILD/BABY ROLE:** Innocent companion or 'Little Prince/Princess'. Soft period clothing (creams, white, soft velvet).",
-    "**CHILD/BABY POSE:** Child seated ON the cushion with the pet, or hugging the pet gently. Eye level with the animal. Angelic lighting on the child."
-  ];
-
-  // 7) Anti-clone en grupos
-  const multiPetUniqueness = `
-**MULTI-SUBJECT LOGIC:**
-- **If multiple pets:** Keep harmony (same era materials) but vary accessories slightly (e.g., different collar styles). NO CLONES.
-- **If Humans are present:** - Adults: Dignified, protective, dark/rich colors.
-  - Children: Soft, angelic, lighter colors (cream/gold/pastel). 
-  - Humans do NOT wear the pet's cape. They frame the pet.
-`;
-
-  // 8) Estilos (CAPAS ABIERTAS OBLIGATORIAS)
+  // 6) Estilos (¡AHORA CON MÁS COLOR Y VIDA!)
   const STYLE_PRESETS = {
     renacimiento: {
-      role: "**Bosque Encantado / Renacimiento** (Luz suave, mágico).",
+      role: "**Bosque Encantado / Renacimiento** (Mágico, Suave, Natural).",
       palette: [
-        "Soft Emerald + Antique Gold + Warm Creams",
-        "Dusty Rose + Champagne + Pearl White",
-        "Nature tones: Moss Green + Earthy Browns + Soft Gold"
+        "**Vibrant Emerald Green** + Gold Leaf + Cream",
+        "**Rich Terracotta** + Pearl White + Soft Blue",
+        "**Deep Moss** + Antique Gold + Warm Earth Tones"
       ],
       wardrobe: [
-        "a soft velvet cape **draped loosely over the shoulders and open at the front**, revealing the chest fur",
-        "a renaissance mantle thrown back casually, showing the animal's neck and chest",
-        "a delicate silk cloak pinned only at the shoulders, leaving the front body exposed and natural"
+        "a soft velvet cape in nature tones, draped loosely to reveal the chest",
+        "a renaissance mantle with botanical gold embroidery, thrown back casually",
+        "a flowing silk cloak pinned at the shoulders, open front"
       ],
-      accessories: ["a delicate pearl string (loose)", "a small nature-inspired brooch", "no heavy collar"],
-      mood: `**STYLE SIGNATURE:** Ethereal, soft focus background but sharp fur. Magic light.`
+      accessories: ["a string of lustrous pearls", "a gold leaf brooch", "no heavy collar, keep it organic"],
+      mood: `**VIBE:** Ethereal, dreamy, soft focus but sharp details on the pet.`
     },
 
     realeza: {
-      role: "**Pequeña Nobleza / Realeza** (Poder, Lujo, Orgullo).",
+      role: "**Coronación Imperial / Realeza** (VIBRANTE, LUJOSO, PODEROSO).",
       palette: [
-        "Deep Royal Blue + Heavy Gold + White Fur trim",
-        "Rich Burgundy + Gold Bullion + Dark Shadows",
-        "Purple Velvet + Diamond accents + Stark Contrast"
+        "**Electric Royal Blue** + Shimmering Gold + White Ermine (spotted fur)",
+        "**Deep Crimson Red** + Heavy Gold Bullion + Black Velvet accents",
+        "**Imperial Purple** + Sparkling Diamonds + Gold Thread"
       ],
       wardrobe: [
-        "a heavy royal velvet mantle with ermine (spotted fur) trim, **draped wide open** to show the proud chest",
-        "a king's cloak thrown over the back, pooling on the cushion behind, leaving the front unobstructed",
-        "a brocade cape resting on the shoulders but unclasped or very loosely clasped to reveal the neck"
+        "a majestic coronation mantle made of **heavy, vibrant velvet**, draped WIDE OPEN to show the proud chest",
+        "a king's robe with thick white fur trim (ermine), cascading over the cushion",
+        "a high-collar royal cape, heavily embroidered with gold symbols, unclasped to show the fur"
       ],
-      accessories: ["a small, tasteful crown (optional) or jeweled chain", "a heavy gold medallion on the chest", "a thick royal collar"],
-      mood: `**STYLE SIGNATURE:** Heavy, expensive fabrics. High contrast. The pet looks like a King/Queen.`
+      accessories: ["a miniature gold crown (optional)", "a massive gold chain of office with gemstones", "a jeweled medal pinned to the chest"],
+      mood: `**VIBE:** Maximum luxury. The fabric must look expensive and highly saturated. The gold must shine.`
     },
 
     barroco: {
-      role: "**Estudio Barroco** (Dramático, Museo, Oscuro).",
+      role: "**Estudio Barroco** (Dramático, Intenso, Textura).",
       palette: [
-        "Onyx Black + Burnished Gold + Deep Red",
-        "Dark Chocolate + Bronze + Warm Light",
-        "Midnight Blue + Silver + Candlelight"
+        "**Jet Black** + Burnished Bronze + Deep Ruby",
+        "**Midnight Blue** + Silver + Candlelight Orange",
+        "**Dark Chocolate** + Gold + Warm Highlights"
       ],
       wardrobe: [
-        "a dark, textured velvet cloak **falling off the shoulders**, completely revealing the chest and neck texture",
-        "a dramatic black and gold cape draped artistically around the back, not covering the front",
-        "a heavy period costume jacket worn open, showing the fur texture underneath"
+        "a textured black velvet cloak falling off the shoulders, catching the light",
+        "a dramatic period cape with rich gold lining, draped artistically",
+        "a heavy brocade jacket worn open, emphasizing the texture of the fabric vs the fur"
       ],
-      accessories: ["a simple antique chain", "a dark jewel brooch", "minimal accessories to focus on the face"],
-      mood: `**STYLE SIGNATURE:** Rembrandt lighting. Deepest shadows. Most realistic texture.`
+      accessories: ["an antique gold chain", "a dark cameo brooch", "minimalistic but expensive"],
+      mood: `**VIBE:** Chiaroscuro. High contrast between light and dark. Very painterly.`
     }
   };
 
-  const preset = STYLE_PRESETS[style] || STYLE_PRESETS.renacimiento;
+  // Fallback
+  const styleKey = STYLE_PRESETS[style] ? style : 'renacimiento';
+  const preset = STYLE_PRESETS[styleKey];
+  const env = getEnvironment(styleKey);
 
-  // 9) La receta técnica para el "WOW"
+  // 9) La Receta Técnica
   const styleDescription = `
 **ROLE:** ${preset.role}
-**BACKDROP:** ${pick(backdrops)}.
-**STAGING:** ${pick(props)}.
-**PALETTE:** ${pick(preset.palette)}.
-**WARDROBE:** ${pick(preset.wardrobe)}. **IMPORTANT: Fabric must look heavy and real, not floating.**
+**COMPOSITION:** ${cameraLogic}
+**BACKDROP:** ${env.bg}.
+**PROPS:** ${env.prop}. **Physics Note:** The pet must visually **sink** into the soft surface due to weight.
+**COLOR PALETTE:** ${pick(preset.palette)}. **Make the colors rich, deep, and vibrant.**
+**WARDROBE:** ${pick(preset.wardrobe)}. **Texture:** Visible weave, embroidery, and weight in the fabric.
 **ACCESSORIES:** ${pick(preset.accessories)}.
-**LIGHTING:** ${pick(lightingOptions)}.
+**LIGHTING:** ${pick(lighting)}.
 ${preset.mood}
 ${petGuardrails}
-${isMulti ? multiPetUniqueness : ""}
 
-**ULTRA-REALISTIC "SURREALUM" FINISH (THE WOW FACTOR):**
-- **Texture is King:** The fur must look **touchable**. Paint individual stray hairs catching the light.
-- **Material Contrast:** Contrast the softness of the fur against the heavy, crushed texture of the velvet cushion and the metallic shine of gold/jewels.
-- **Photographic Depth:** The subject must pop out of the dark background. High contrast on the face.
-- **Life in Eyes:** The eyes must be glossy, deep, and have a clear reflection of the light source.
+**VISUAL QUALITIES (THE WOW FACTOR):**
+- **Vibrant Materials:** The velvet should look crushed and lush. The gold should gleam. Avoid dull colors.
+- **Tactile Fur:** Use light to reveal individual hairs on the ears and chest (subsurface scattering).
+- **Alive Eyes:** The eyes must be glossy, wet, and have a sharp reflection (catchlight).
 `;
 
-  // 10) Composición Inteligente (Humanos vs Mascotas vs Niños)
-  const groupLogic = `
-**GROUP SCENARIO:**
-- **IF MULTIPLE PETS:** ${pick(multiPetArrangements)}. 
-- **IF HUMAN(S) + PET:** ${pick(humanWarmInteractions)}.
-- **COMPOSITION:** 4:5 Vertical fit. Zoom out slightly to fit the cushion and subjects comfortably.
-`;
-
+  // 10) Framing Final
   const framing = (isMulti 
-    ? groupLogic
-    : `**SOLO COMPOSITION:** ${petSoloPoseWeighted()}. 4:5 Vertical. **Eye-level view**. Focus on texture.`) + 
-    `\n**FINAL TOUCH:** The image must feel like a priceless heirloom found in a castle.`;
+    ? `**GROUP SHOT:** Multiple pets arranged naturally on the large cushion. Varying poses but all regal.` 
+    : `**SOLO SHOT:** Hero pet posing: ${pick(petPoses)}.`) + 
+    `\n**FINAL POLISH:** Cinematic color grading, sharp focus on the face, creamy background blur.`;
 
   return masterPrompt(numSubjects, styleDescription, framing);
 };
