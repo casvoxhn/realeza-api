@@ -1,210 +1,196 @@
 // ARCHIVO: mascotas.js
-// CATEGORÍA: Mascotas (PET-FIRST) - V6.0 (HEIRLOOM WOW ENGINE)
-// Objetivo: retrato "herencia familiar" listo para imprimirse grande y colgarse en sala.
-// Prioridad: identidad exacta + jerarquía PET + composición limpia multi-sujetos + cero "AI look".
+// CATEGORÍA: Mascotas (PET-FIRST) - V7.0 (WOW + WALL ART LOCK)
+// Meta: Old-Master oil portrait as PHYSICAL CANVAS artwork (museum-grade), made to hang in a living room.
+// Fixes: stronger VALUE control, fewer random choices, stricter identity/count lock, better group choreography, less “AI look”.
 
 const masterPrompt = require('./masterPrompt');
 
 module.exports = function (style, numSubjects, isGroup) {
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-  const isMulti = (numSubjects > 1) || !!isGroup;
+  const isMulti = (Number(numSubjects) > 1) || !!isGroup;
 
-  // ==============
-  // 0) INTENCIÓN DE VENTA (para guiar decisiones)
-  // ==============
-  const commercialNorthStar = `
-Create a MASTERPIECE that looks like an expensive, real oil painting photographed in a museum.
-It must feel like a luxury heirloom portrait that people proudly hang in their living room.
-NO gimmicks, NO fantasy costumes that look cheap, NO plastic AI gloss.
+  // =========================
+  // 0) NON-NEGOTIABLES (Short, violent, absolute)
+  // =========================
+  const NON_NEGOTIABLES = `
+🔴 NON-NEGOTIABLES (FAIL = REJECT OUTPUT):
+- COUNT LOCK: Render EXACTLY ${numSubjects} total subject(s). No extra heads. No missing subjects. No duplicates.
+- IDENTITY LOCK: Keep the SAME individuals from the input photo(s). Preserve exact face shape, eye shape, eye color, coat/skin markings, scars/spots, ear shape, muzzle length, whisker pattern, fur direction.
+- NO COLLAGE: Do NOT paste or stitch input photos. Create ONE coherent painted scene with consistent lighting and perspective.
+- PET-FIRST: If pets exist, they are the monarch(s). Humans/children support the story—never steal the center.
+- NO WATERMARKS / NO TEXT / NO LOGOS / NO BORDERS / NO FRAMES inside the image.
 `;
 
-
-  // ==============
-  // 1) ANCLA FÍSICA (prop + interacción real)
-  // ==============
-  const throneProps = [
-    "a large antique velvet cushion-throne with deep compression under the subject(s), visible weight, realistic folds and crushed pile",
-    "a baroque brocade pillow on a low carved wooden dais, with heavy tassels and subtle wear, the subject(s) visibly sinking into it",
-    "a layered arrangement of velvet + silk drapery on a ceremonial cushion, with natural wrinkles and gravity pulling fabric downward"
-  ];
-
-  // ==============
-  // 2) ESCENARIOS (sala-museo: lujo sin kitsch)
-  // ==============
-  const environments = [
-    "a dimly lit old-master studio interior with subtle architectural hints (arches, carved wood), background falling into warm darkness",
-    "a museum-like backdrop with aged painted plaster texture, deep olive/umber tones, subtle vignetting, no distracting details",
-    "an elegant palace corner suggested through soft shapes and shadow (no sharp background objects), purely atmospheric depth"
-  ];
-
-  // ==============
-  // 3) LUZ (wow real: volumen + ojos vivos + materiales)
-  // ==============
-  const lighting = `
-**LIGHTING (WOW HEIRLOOM):**
-- One motivated key light from side-front (Rembrandt-like), plus a soft, faint fill from opposite side.
-- Shadows are deep, warm, and rich (never dead black).
-- Eyes are the selling point: glossy wet eyes, crisp catchlights, subtle tearline highlight.
-- Subsurface scattering: ears / thinner skin / fur edges glow gently.
-- Micro-contrast on fur, but smooth painterly transitions on skin and fabric.
-`;
-
-  // ==============
-  // 4) ESTILOS (menos disfraces, más lujo real)
-  // ==============
+  // =========================
+  // 1) STYLE PRESETS (Less random, more “sellable”)
+  // =========================
   const STYLE_PRESETS = {
     realeza: {
-      label: "**Regal Heirloom Portrait**",
-      wardrobe: [
-        "a deep crimson velvet mantle with refined ermine trim (tasteful, not costume-like), naturally draped",
-        "an imperial purple velvet cloak with subtle gold embroidery, heavy and realistic",
-        "a burgundy brocade drape with antique gold accents, elegant and restrained"
-      ],
-      accessories: [
-        "a refined antique gold chain with a small medallion (minimal, premium)",
-        "a single jeweled brooch with realistic metal reflections (not oversized)",
-        "no crown; if any regal cue, it is implied through fabric + composition"
-      ],
-      palette: "**Palette:** deep crimson, imperial purple, antique gold, warm shadows."
+      label: "ROYAL HEIRLOOM PORTRAIT (Old-Master, high prestige)",
+      palette: "deep crimson, antique gold, warm umber shadows, soft ivory highlights",
+      robe: "deep crimson velvet mantle with ermine trim, heavy realistic folds, expensive not costume",
+      jewel: "refined gold chain with a single modest medallion (one statement piece only)"
     },
     barroco: {
-      label: "**Baroque Power Portrait**",
-      wardrobe: [
-        "a midnight-blue velvet drape with high-quality crushed pile and deep folds",
-        "a black-and-gold brocade mantle (stiff, heavy, expensive-looking)",
-        "a dark chocolate velvet cloak with antique bronze trims, subtle and premium"
-      ],
-      accessories: [
-        "a dark gemstone brooch, small and luxurious",
-        "a thin gold chain, understated",
-        "no theatrical props"
-      ],
-      palette: "**Palette:** onyx, midnight blue, bronze, warm umber shadows."
+      label: "BAROQUE ARISTOCRAT (dramatic power, chiaroscuro)",
+      palette: "onyx black, midnight blue, bronze, warm shadow browns",
+      robe: "midnight velvet cloak with subtle antique-gold embroidery, thick fabric weight",
+      jewel: "one dark gemstone brooch (small, elegant, not glitter)"
     },
     renacimiento: {
-      label: "**Renaissance Elegance Portrait**",
-      wardrobe: [
-        "a moss-green velvet drape with soft painterly folds, organic and elegant",
-        "a terracotta mantle with delicate gold thread, refined not loud",
-        "a champagne silk drape pinned with a small antique brooch"
-      ],
-      accessories: [
-        "a subtle pearl strand (small scale, realistic)",
-        "a simple aged gold medallion",
-        "avoid heavy collars that distort identity"
-      ],
-      palette: "**Palette:** earthy greens, warm terracotta, antique gold, pearl highlights."
+      label: "RENAISSANCE ELEGANCE (warm, timeless, tender luxury)",
+      palette: "earth greens, terracotta, antique gold, pearl highlights",
+      robe: "warm terracotta or moss velvet drape, soft painterly folds, refined and organic",
+      jewel: "short pearl strand OR aged gold locket (tiny, natural scale)"
     }
   };
 
   const styleMapping = {
-    realeza: 'realeza', rey: 'realeza', royal: 'realeza',
-    barroco: 'barroco', baroque: 'barroco',
-    renacimiento: 'renacimiento', renaissance: 'renacimiento'
+    realeza: "realeza",
+    rey: "realeza",
+    barroco: "barroco",
+    renacimiento: "renacimiento"
   };
 
-  const targetStyle = styleMapping[style] || 'realeza';
+  const targetStyle = styleMapping[style] || "realeza";
   const preset = STYLE_PRESETS[targetStyle];
 
+  // =========================
+  // 2) THRONE + BACKGROUND (What your refs are actually doing)
+  // =========================
+  const throneProps = [
+    "a grand antique velvet cushion-throne with heavy compression folds; the subject’s weight visibly sinks the fabric, with realistic creases and tension",
+    "a baroque brocade dais pillow with gold tassels and rope trim; the body pressure creates believable dents and fabric stress",
+    "a museum-grade upholstered ottoman draped with velvet + silk layers; edges never float, everything has gravity"
+  ];
 
-  // ==============
-  // 5) COMPOSICIÓN (esto es lo que te faltaba)
-  // ==============
-  const compositionSolo = pick([
-    "a noble sphinx pose, chest forward, head slightly turned into the light",
-    "seated upright like a statue, calm authority, eyes engaging the viewer",
-    "lounging with dignified ease, weight sinking into the cushion, elegant silhouette"
-  ]);
+  const backgrounds = [
+    "a dark Old-Master studio backdrop with a warm olive/umber/charcoal gradient, subtle vignette, and faint aged texture",
+    "a shadowy painter’s backdrop with atmospheric depth; background stays quiet and understated, never busy",
+    "a timeless Old-Master background with soft haze separation behind the subjects (no modern scenery)"
+  ];
 
-  const compositionGroup = `
-**GROUP COMPOSITION (STRICT):**
-- Build a clean triangle/pyramid composition.
-- The main pet is centered and closest to camera (the monarch).
-- Secondary pets slightly behind/side, touching naturally (no floating heads).
-- Humans are behind the cushion/dais, supporting the story, never stealing focus.
-- Ensure every subject is visible and recognizable (no cropped faces, no merged bodies).
+  // =========================
+  // 3) VALUE + LIGHT (The real “wow engine”)
+  // =========================
+  const lighting = `
+🎨 VALUE + LIGHT (MAKE IT LOOK EXPENSIVE):
+- Chiaroscuro Old-Master: background dark, subject luminous. Clear value separation (silhouette reads from 10 feet away).
+- One motivated key light from 3/4 front side. Soft falloff. No flat lighting.
+- Shadows are warm and detailed (no crushed blacks). Dark fur retains texture.
+- Subtle rim/bounce to separate fur/skin from background (NO halo outline).
+- EYES SELL: crisp wet specular catchlight, sharp iris detail, micro-contrast around eyelids/tearline, natural gaze (not cross-eyed).
 `;
 
-  const framing = isMulti
-    ? "**FRAMING:** 4:5 Vertical. Medium-wide group portrait. Show full cushion/throne and enough negative space for a premium print."
-    : "**FRAMING:** 4:5 Vertical. Classic portrait, eye-level, slightly wider than headshot to include mantle + cushion.";
+  // =========================
+  // 4) COMPOSITION (Wall-art readable, not chaotic)
+  // =========================
+  const composition = isMulti
+    ? `
+🧠 GROUP COMPOSITION (ELEGANT, READABLE, SELLABLE):
+- Arrange subjects in a clean pyramid/arc. No chaotic stacking.
+- Every face must be fully readable: no cropped ears, no hidden snouts, no cut-off heads.
+- Depth staging: primary subject slightly forward; others staggered behind with gentle overlap.
+- Interaction: subtle touch/close bond (paws touching, child hand resting gently), never comedic.
+- Consistent scale and perspective across all subjects (no “giant head” errors).
+`
+    : `
+🧠 SOLO COMPOSITION (ICONIC):
+- Regal, calm posture. Strong silhouette. Slight head turn toward the key light.
+- Eyes are the focal point. Everything supports the face.
+`;
 
-  const poseLogic = isMulti ? compositionGroup : `**POSE:** ${compositionSolo}`;
-
-
-  // ==============
-  // 6) LÓGICA HUMANA / BEBÉS / NIÑOS (controlado, vendible)
-  // ==============
+  // =========================
+  // 5) HUMAN LOGIC (Only if humans are included in the input)
+  // =========================
   const humanLogic = `
-**HUMANS / BABIES / KIDS (ONLY IF PRESENT):**
-- Hierarchy: PET is the monarch (front/center). Humans are guardians/supporting cast.
-- Adults wear subtle, dark, period-inspired clothing (no loud jewelry, no modern logos).
-- Kids/babies wear soft cream/white linen/silk, minimal details, safe positioning.
-- Interaction must feel real: gentle hand on the cushion edge, protective closeness, calm expressions.
-- No one wears the pet’s mantle. No matching “costume party”.
+👤 HUMANS (ONLY IF HUMANS EXIST IN INPUT):
+- Humans are part of the ${numSubjects} total. No extra people added.
+- Wardrobe: understated period-inspired clothing. Adults in dark refined fabrics; children/babies in soft cream/ivory linen/silk.
+- Placement: humans slightly behind/beside the pet(s), never centered above the pet’s face.
+- Skin: natural texture, not plastic. Preserve identity (no “beauty face swap”).
 `;
 
-
-  // ==============
-  // 7) FÍSICA DE MATERIALES (wow táctil)
-  // ==============
-  const materialPhysics = `
-**MATERIAL PHYSICS (NON-NEGOTIABLE):**
-1) Fur: individual strands, believable density, tactile softness. Preserve exact coat pattern and markings.
-2) Velvet: heavy, crushed pile, absorbs light with deep gradients (not flat).
-3) Gold/metal: sharp specular highlights, real reflections, no plastic shine.
-4) Eyes: wet, glossy, lifelike with crisp catchlights and depth.
-5) Gravity: everything must feel heavy and grounded. No floating subjects.
+  // =========================
+  // 6) MATERIAL TRUTH (The textures that convince buyers)
+  // =========================
+  const materialTruth = `
+✨ MATERIAL TRUTH (WHAT MAKES PEOPLE BUY):
+- Fur: individual strands where needed, correct growth direction, accurate markings; soft tactile realism.
+- Velvet: heavy light-absorbing velvet with controlled highlights, deep folds, real weight.
+- Ermine/Fur trim: believable, not noisy, not synthetic.
+- Metals/Jewels: crisp specular highlights, real reflections, NEVER glitter.
+- Cushion/Throne: gravity + pressure = dents, creases, and fabric tension (no floating body).
 `;
 
-
-  // ==============
-  // 8) ANTI-IA LOOK + CONTROL DE CALIDAD (mata lo falso)
-  // ==============
-  const antiAi = `
-**ANTI-AI LOOK (STRICT):**
-- No extra limbs, no duplicated faces, no melted fur, no warped jewelry.
-- No hyper-smooth skin, no plastic rendering, no neon colors, no cheap fantasy costume vibe.
-- No text, no watermark, no frame, no UI, no collage, no stitched photos.
-- Painterly realism: visible brushwork only in midtones, fine detail in eyes/fur/jewels.
-- Must look like a real oil painting photographed under museum lighting with subtle varnish.
+  // =========================
+  // 7) PHYSICAL ART FINISH (Kill the “AI look”)
+  // =========================
+  const physicalFinish = `
+🖼️ PHYSICAL ARTWORK FINISH (NOT DIGITAL):
+- A museum-grade oil painting photographed as a real physical canvas/linen artwork.
+- Subtle canvas weave + micro varnish sheen + extremely subtle aged patina/craquelure (tasteful, not heavy).
+- Brushwork: controlled Old-Master realism. Sharp only where it matters (eyes/nose/whiskers), softer painterly falloff elsewhere.
+- No hyper-HDR, no over-sharpening, no plastic highlights.
 `;
 
-  const guardrails = `
-**GUARDRAILS:**
-- Identity lock: preserve exact face structure, ear shape, coat pattern, and unique markings for every subject.
-- Strict count: render exactly the provided number of subjects. Do NOT invent extra pets/people.
-- Modesty for pets: use drapery/shadows/tail naturally; no explicit anatomy.
+  // =========================
+  // 8) FRAMING (Ad-friendly but wall-art first)
+  // =========================
+  const framing = isMulti
+    ? "**FRAMING:** 4:5 vertical, group portrait. Slightly wider to include throne + full silhouettes + clean negative space."
+    : "**FRAMING:** 4:5 vertical, solo portrait. Head + upper body with breathing room, gallery-ready negative space.";
+
+  // =========================
+  // 9) HARD NEGATIVES (Common failure modes)
+  // =========================
+  const negatives = `
+🚫 HARD NEGATIVES (DO NOT):
+- extra animals/people, missing subjects, duplicated faces
+- collage, split-screen, stitched photos, pasted inputs, multiple panels
+- cartoon, anime, CGI, “AI illustration look”, plastic skin, neon, glitter, cheap costume
+- modern objects (phones, leashes, sunglasses), modern clothing (hoodies, tshirts)
+- text, logos, watermarks, signatures, borders, frames inside the image
+- warped anatomy, melted fur, floating paws, broken whiskers, cross-eyed gaze
 `;
 
+  // =========================
+  // 10) POSE LOGIC (Controlled, sellable)
+  // =========================
+  const poseLogic = isMulti
+    ? "All subjects posed calmly and regally; faces oriented toward the light/camera with natural overlap and clear separation."
+    : pick([
+        "noble sphinx pose, chest forward, calm confidence, paws relaxed",
+        "regal seated pose like a statue, slight head turn toward the key light",
+        "dignified lounge on the cushion, weight sinking naturally, relaxed but powerful"
+      ]);
 
-  // ==============
-  // 9) SALIDA FINAL (compacta + potente)
-  // ==============
+  // =========================
+  // 11) FINAL STYLE DESCRIPTION (The actual prompt payload)
+  // =========================
   const styleDescription = `
-${commercialNorthStar}
+${NON_NEGOTIABLES}
 
-**AESTHETIC:** 17th-century Dutch Golden Age oil painting (Rembrandt/Vermeer spirit) blended with museum-grade photographic documentation of a real painting (linen/canvas texture + subtle varnish).
+**AESTHETIC GOAL:** ${preset.label}. A priceless heirloom portrait designed to hang in a living room.
+**SUBJECTS:** Render EXACTLY ${numSubjects} subject(s). Preserve identity with forensic accuracy.
+**THRONE:** ${pick(throneProps)}.
+**BACKGROUND:** ${pick(backgrounds)}.
+**COLOR PALETTE:** ${preset.palette}.
+**WARDROBE/DRAPE:** ${preset.robe}.
+**JEWELRY:** ${preset.jewel}.
 
-**STYLE THEME:** ${preset.label}
-**ANCHOR / THRONE:** ${pick(throneProps)}
-**ENVIRONMENT:** ${pick(environments)}
-
-**WARDROBE (PREMIUM):** ${pick(preset.wardrobe)}
-**ACCESSORY (MINIMAL LUXURY):** ${pick(preset.accessories)}
-**PALETTE:** ${preset.palette}
-
+${composition}
 ${lighting}
-${materialPhysics}
-
-${guardrails}
-${antiAi}
-
+${materialTruth}
+${physicalFinish}
 ${isMulti ? humanLogic : ""}
 
-**FINAL CHECK (SELLING TEST):**
-This must feel like a priceless family heirloom portrait with depth, emotion, and lifelike eyes.
-If it looks like a digital render, it FAILS.
+✅ FINAL QUALITY GATE:
+- Eyes feel alive and sharp.
+- Strong silhouette and clean negative space.
+- No AI artifacts.
+- One coherent scene, museum-grade wall art.
+${negatives}
 `;
 
   return masterPrompt(numSubjects, styleDescription, `${framing} ${poseLogic}`);
