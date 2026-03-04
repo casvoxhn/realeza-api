@@ -23,7 +23,7 @@ app.use(express.json({ limit: '100mb' }));
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
-const MODEL_ID = "gemini-3-pro-image-preview";
+const MODEL_ID = "gemini-3.1-flash-image-preview";
 
 async function uploadBufferToSupabase(buffer, prefix) {
     const fileName = `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.jpg`;
@@ -111,3 +111,4 @@ app.post('/generate', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor V77 (Mujer + Retratos + Parejas + Niños + Familia + Mascotas) LISTO en puerto ${PORT}`);
 });
+
