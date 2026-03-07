@@ -35,7 +35,7 @@ async function uploadBufferToSupabase(buffer, prefix) {
 
 app.post('/generate', async (req, res) => {
     try {
-        const { images, style, category } = req.body;
+        const { images, style, category, gender } = req.body; // <--- AÑADIDO: gender
         const numSubjects = images.length;
         const isGroup = numSubjects > 1;
         
@@ -84,7 +84,8 @@ app.post('/generate', async (req, res) => {
             const identityInstruction = isGroup
                 ? `Capture the unique characteristics and likeness of **EVERY SINGLE ONE of the ${numSubjects} SUBJECTS**.`
                 : "Capture the unique characteristics and overall likeness of the subject.";
-            const petRules = getMascotasPrompt(style, numSubjects, isGroup, identityInstruction);
+            // AÑADIDO: Pasamos el parámetro gender a mascotas.js
+            const petRules = getMascotasPrompt(style, numSubjects, isGroup, identityInstruction, gender);
             masterPrompt = `${baseInstruction}\n${petRules}`;
         }
         
@@ -111,4 +112,5 @@ app.post('/generate', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Servidor V77 (Mujer + Retratos + Parejas + Niños + Familia + Mascotas) LISTO en puerto ${PORT}`);
 });
+
 
