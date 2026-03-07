@@ -5,7 +5,8 @@
 
 const masterPrompt = require('./masterPrompt');
 
-module.exports = function (style, numSubjects, isGroup) {
+// AÑADIDO: Recibimos identityInstruction (que ya mandaba el server) y gender (nuevo)
+module.exports = function (style, numSubjects, isGroup, identityInstruction, gender) {
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
   const weightedPick = (items) => {
     const total = items.reduce((sum, it) => sum + (it.weight || 1), 0);
@@ -181,9 +182,18 @@ ${humanIdentityLock}
 
   const preset = STYLE_PRESETS[style] || STYLE_PRESETS.renacimiento;
 
+  // NUEVO: Modificador inyectable según el género seleccionado en el frontend
+  let genderModifier = "";
+  if (gender === 'masculine') {
+    genderModifier = "**GENDER MODIFIER (CRITICAL):** The subject is MASCULINE. Use handsome, majestic male aesthetic (e.g., king attire, masculine royal crown, bold posture).";
+  } else if (gender === 'feminine') {
+    genderModifier = "**GENDER MODIFIER (CRITICAL):** The subject is FEMININE. Use beautiful, noble female aesthetic (e.g., queen gown, elegant tiara, graceful posture).";
+  }
+
   // 10) Recipe (clave: incluimos instrucciones de “si hay humanos” para usar fondos/luces human-safe)
   const styleDescription = `
 **ROLE:** ${preset.role}
+${genderModifier}
 
 **IF A HUMAN CHILD/BABY IS PRESENT:** Use a bright warm museum backdrop and soft flattering daylight (human-safe). Do not use near-black backgrounds on the child.
 **IF ONLY PETS:** You may use darker dramatic museum backdrops for maximum fur contrast.
