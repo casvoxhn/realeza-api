@@ -19,10 +19,13 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
 
   // ─── 1. CARGAR ESTILO ────────────────────────────────────────────────────
   const styleMap = {
+    // Keys del backend
     renacimiento: renacimientoStyle,
     realeza: realezaStyle,
     barroco: barrocoStyle,
-    // Aliases para los nombres del frontend
+    // Keys exactos que envía el frontend de Shopify
+    rey: realezaStyle,           // Imperial Coronation → realeza
+    // Aliases adicionales por si acaso
     museum_elegance: renacimientoStyle,
     imperial_coronation: realezaStyle,
     baroque_drama: barrocoStyle,
@@ -86,6 +89,13 @@ The subject carries feminine energy throughout:
 `;
   }
 
+  // ─── 4.5. RESOLVER DE WOW KEY ────────────────────────────────────────────
+  // Normaliza todos los aliases del frontend a las 3 keys de wowLayer
+  const wowKey = ['rey', 'realeza', 'imperial_coronation'].includes(styleKey) ? 'realeza'
+    : ['museum_elegance'].includes(styleKey) ? 'renacimiento'
+    : ['baroque_drama'].includes(styleKey) ? 'barroco'
+    : styleKey; // renacimiento y barroco pasan directo
+
   // ─── 5. SCALE INSTRUCTION ────────────────────────────────────────────────
   const scaleInstruction = `
 **SCALE & FRAME CONTROL:**
@@ -133,7 +143,7 @@ ${S.mood}
 
 ${scaleInstruction}
 
-${wowLayer(styleKey === 'museum_elegance' ? 'renacimiento' : styleKey === 'imperial_coronation' ? 'realeza' : styleKey === 'baroque_drama' ? 'barroco' : styleKey)}
+${wowLayer(wowKey)}
 
 ${visualAnalysis()}
 
