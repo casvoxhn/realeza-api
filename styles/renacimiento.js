@@ -1,8 +1,7 @@
 // ARCHIVO: styles/renacimiento.js
-// ESTILO: "Jardín Dorado"
+// ESTILO: "Jardín Dorado" — V8.1
 // Mood: noble, cálido, accesible — el más regalable del catálogo
 // Referencia visual: Gainsborough, Lawrence, jardines del siglo XVIII
-// Hora de luz: mañana dorada (4500K) — Vermeer + luz de jardín
 
 const { pick } = require('../utils/pick');
 
@@ -15,68 +14,67 @@ module.exports = function renacimiento(gender) {
   ];
 
   const backdrops = [
-    "a sunlit palace garden backdrop: soft-focus stone balustrade with climbing roses, warm morning light filtering through tall trees from the left, atmospheric golden haze — background fully out of focus, subject pops with maximum separation",
-    "a luminous garden terrace: warm ivory stone columns suggested in soft bokeh, dappled golden morning light creating natural depth — NO sharp background details, all atmosphere",
-    "a romantic manor garden setting: ancient oak trees in soft focus, warm golden morning light backlighting the foliage edges, creating a glowing halo around the scene — lush but not distracting"
+    "a sunlit palace garden backdrop: soft-focus stone balustrade with climbing roses suggested in the distance, warm morning light filtering through tall oaks from the upper-left — background is entirely soft focus, an atmospheric golden-green haze. NO sharp background details. Pure painterly atmosphere.",
+    "a luminous garden terrace: warm ivory stone columns barely suggested in deep bokeh, dappled golden morning light creating natural depth — the background is pure Gainsborough haze, green and gold and absolutely out of focus",
+    "a romantic manor garden: ancient oak trees in soft atmospheric blur, warm golden morning light backlighting the foliage edges creating a glowing corona — lush color but zero competing detail"
   ];
 
   const wardrobe_neutral = [
-    "a rich forest-green velvet cape draped loosely open across the shoulders and back — fully revealing the chest and natural fur texture. The cape falls naturally with visible weight and pile direction. ONE gold leaf-motif brooch at the shoulder as the only fastening.",
-    "a deep emerald velvet mantle pinned only at the throat, cascading behind the subject — open at the front to show the full chest. Heavy fabric pooling naturally. Antique gold chain border along the edge.",
-    "a dark olive-green brocade cape, worn like a king's hunting mantle — open front, draped with natural gravity. Subtle gold embroidery at the collar. The animal's natural fur is the centerpiece."
+    "a rich forest-green velvet cape draped loosely open across the shoulders — fully revealing the chest and natural fur. The cape has REAL WEIGHT: pile direction visible, deep fold shadows, the hem pools behind. ONE antique gold leaf-motif brooch at the shoulder. Painted with broad confident strokes, the velvet's pile catching light on its raised surface.",
+    "a deep emerald velvet mantle pinned only at the throat, cascading open behind — the front entirely open showing the natural chest. Gold chain border along the edge catches the morning light in thick impasto strokes. The fabric's weight pulls it down naturally.",
+    "a dark olive-green brocade cape worn open at the front — showing the full natural chest. Subtle gold embroidery at the collar, each thread catching light individually. The animal's fur is the centerpiece, the cape merely frames it."
   ];
 
   const wardrobe_masculine = [
-    "a deep forest-green velvet doublet worn OPEN at the chest — showing the natural fur underneath. Heavy gold epaulettes at the shoulders. The garment reads as powerful and masculine without concealing the animal.",
-    "a hunter-green brocade coat, tailored but open — masculine silhouette with gold button details and a heavy gold medallion on the chest. Coat falls open naturally revealing the subject's chest fur."
+    "a deep forest-green velvet doublet worn OPEN at the chest — natural fur fully visible underneath. Heavy gold epaulettes at the shoulders. Masculine, commanding. The velvet has real pile depth painted with directional brushstrokes.",
+    "a hunter-green brocade coat, tailored but open — gold button details and a heavy gold medallion on the chest. Coat falls open naturally. The brocade pattern is visible but not dominating."
   ];
 
   const wardrobe_feminine = [
-    "a soft sage-green silk cape trimmed with delicate gold leaf embroidery — draped elegantly across the shoulders, open at the front. A single pearl-and-gold brooch at the collar. Graceful and refined.",
-    "an emerald green velvet mantle with champagne gold lace trim at the edges — feminine and noble. Open front with a gentle drape. A small floral gold coronet accessory if the subject's head allows."
+    "a soft sage-green silk cape trimmed with delicate gold leaf embroidery — draped elegantly across the shoulders, fully open at the front. A single pearl-and-gold brooch at the collar. The silk sheen is painted with long smooth strokes contrasting against the fur's texture.",
+    "an emerald green velvet mantle with champagne gold lace trim — feminine and noble, open front with gentle drape. A small floral gold coronet if anatomy allows."
   ];
 
   const accessories_neutral = [
-    "a delicate gold chain collar with a single antique medallion — light, elegant, not heavy",
-    "a small nature-inspired gold brooch (leaf or acorn motif) as the single accent piece",
-    "a thin woven gold cord as a collar — minimal, refined, historically grounded"
+    "a delicate antique gold chain collar with a single sun-motif medallion — light, elegant. The gold is painted with warm impasto highlights on the raised surfaces, cooler glaze in the recesses.",
+    "a small nature-inspired gold brooch (oak leaf motif) as the single accent — each carved detail catching the morning light",
+    "a thin woven gold cord collar — minimal, refined, a single glinting line against the fur"
   ];
 
   const accessories_masculine = [
-    "a heavy gold medallion on the chest — center of gravity, weight visible",
-    "a gold and leather collar with a shield-shaped pendant — masculine and grounded"
+    "a heavy gold medallion on the chest — center of visual gravity. The gold is painted with thick warm impasto on light-struck surfaces, deep amber glaze in the engraved recesses. It has WEIGHT.",
+    "a gold and leather collar with a shield-shaped pendant — masculine and grounded, the leather matte against the gold's shine"
   ];
 
   const accessories_feminine = [
-    "a delicate pearl-and-gold collar piece — light, elegant, feminine",
-    "a small floral gold coronet sitting naturally on the head — if anatomy allows, subtle and refined"
+    "a delicate pearl-and-gold collar piece — each pearl a small sphere of luminosity against the fur. Light, elegant, feminine.",
+    "a small floral gold coronet sitting naturally on the head — if anatomy allows. Refined, not costume."
   ];
 
   const lighting = [
-    "**MORNING GARDEN LIGHT (VERMEER + GAINSBOROUGH):** Soft, directional morning light entering from the upper-left. Warm golden temperature (4500K). Creates gentle modeling on the face without harsh shadows. The subject is bathed in natural warmth — fur glows, eyes sparkle. Background receives less light, creating natural separation. Fill light from the right side (reflected garden ambient) keeps the shadow side luminous, never dead.",
-    "**GOLDEN HOUR GARDEN LIGHT:** Warm, angled morning sun from side-front. The light kisses the top of the head and one shoulder, creating a natural crown of light. Eyes catch the warmth. Shadows are long and clean — warm in the lights, cool in the shadows for painterly depth.",
-    "**SOFT GARDEN DAYLIGHT:** Large, diffused natural light source (overcast garden morning). Even but directional — slightly stronger from the left. Reveals fur texture beautifully without dramatic shadows. Eyes are fully readable and alive. The most flattering light in the catalog."
+    "**GAINSBOROUGH MORNING LIGHT:** Soft directional light from the upper-LEFT at roughly 10 o'clock. Warm golden temperature (4500K). The light enters the scene like morning sun through trees — not harsh, not flat, but beautifully modeled. The FUR is the primary recipient: each strand in the light zone catches warmth individually. The EYES receive the light as a single small controlled catchlight at upper-left. The shadow side of the face is warm and luminous — lit by garden ambient, never dead. Background receives LESS light than the subject — the subject GLOWS relative to its surroundings.",
+    "**GOLDEN HOUR GARDEN LIGHT:** Warm angled morning sun from side-front (upper-left). The light crowns the top of the head and one shoulder. Eyes sparkle. Shadows are long and clean — warm in the lights, cool-green in the shadows for painterly contrast. The medallion or brooch catches a bright impasto highlight.",
+    "**SOFT GARDEN DAYLIGHT (LARGE SOURCE):** A large, beautifully diffused natural light — overcast garden morning with the sun behind clouds. Slightly stronger from the left. Reveals fur texture in extraordinary detail — every strand visible in the light zones. Eyes are fully readable, alive, depth visible. The most flattering light in the catalog."
   ];
 
   const poses_dog = [
-    "seated with alert, noble posture — head held high, ears naturally positioned, a slight tilt of the head suggesting intelligence and curiosity. One front paw slightly advanced. Tail settled neatly. Body weight resting naturally.",
-    "3/4 seated position, body angled slightly away, face turning to look directly at the viewer — creating depth and engagement simultaneously. The classic aristocratic portrait pose.",
-    "relaxed sphinx pose on a garden cushion — front paws extended elegantly, chest visible and proud, head erect and alert. The pose of a dog that knows its worth."
+    "seated with alert noble posture — head high, ears naturally positioned, a slight curious tilt. One front paw slightly advanced. Tail settled. Body weight natural. The CHEST is open and forward.",
+    "3/4 seated — body angled slightly away, face turning directly toward viewer. The classic aristocratic portrait pose. Creates depth and engagement simultaneously.",
+    "relaxed sphinx pose on the garden cushion — front paws extended elegantly, chest visible, head erect. The pose of a dog that has always known its worth."
   ];
 
   const poses_cat = [
-    "seated upright with perfect natural posture — tail wrapped around the front paws, chest open, gaze direct and imperious. The natural regal cat pose requiring no adjustment.",
-    "3/4 seated, body turned slightly, head angled toward the viewer with characteristic feline composure — one ear slightly forward, the other relaxed. Quietly commanding.",
-    "loaf position elevated on a garden cushion — paws tucked, perfectly composed, gaze level and confident. Serene authority."
+    "seated upright with perfect natural posture — tail wrapped around front paws, chest open, gaze direct and imperious. The natural regal cat pose requiring zero adjustment.",
+    "3/4 seated, body turned slightly, head angled toward viewer — one ear slightly forward, the other relaxed. Quietly commanding.",
+    "loaf position elevated on the garden cushion — paws tucked, perfectly composed, gaze level and confident. Serene authority."
   ];
 
   const props = [
-    "a large velvet garden cushion in deep burgundy with gold tassel trim — subject seated upon it as on a garden throne",
-    "an ornate stone garden bench with a velvet cushion — weathered stone base, luxurious seat, natural garden setting",
-    "a plush emerald velvet cushion with gold fringe — substantial and throne-like, positioned on a garden terrace"
+    "a large garden cushion in deep burgundy velvet with gold tassel trim at each corner — the velvet painted with directional brushstrokes showing pile direction, the tassels in warm gold impasto",
+    "an ornate stone garden bench with velvet cushion — weathered stone base with moss suggestions in the shadows, luxurious velvet seat",
+    "a plush emerald velvet cushion with gold fringe — substantial, throne-like, positioned on a garden terrace stone surface"
   ];
 
-  // Select wardrobe and accessories based on gender
   const selectedWardrobe = gender === 'masculine'
     ? pick(wardrobe_masculine)
     : gender === 'feminine'
@@ -90,14 +88,14 @@ module.exports = function renacimiento(gender) {
       : pick(accessories_neutral);
 
   const genderPoseNote = gender === 'masculine'
-    ? "**MASCULINE ENERGY:** Posture projects strength and confidence. Broad chest forward. Direct, authoritative gaze."
+    ? "**MASCULINE ENERGY:** Posture projects strength. Broad chest forward. Direct, authoritative gaze."
     : gender === 'feminine'
-      ? "**FEMININE ENERGY:** Posture is graceful and composed. Elegant neck line. Warm, serene gaze with quiet dignity."
+      ? "**FEMININE ENERGY:** Posture is graceful and composed. Warm, serene gaze with quiet dignity."
       : "";
 
   return {
     name: "Jardín Dorado",
-    role: "**JARDÍN DORADO — Morning Light Aristocratic Garden Portrait**\nMood: Noble, warm, accessible. The most giftable style in the catalog.\nReference energy: Gainsborough's Blue Boy meets a royal garden at dawn.",
+    role: "**JARDÍN DORADO — Morning Light Aristocratic Garden Portrait**\nMood: Noble, warm, luminous. The most emotionally accessible style in the catalog.\nReference energy: Gainsborough's aristocratic garden portraits — warm light, green atmosphere, timeless dignity.",
     palette: pick(palettes),
     backdrop: pick(backdrops),
     wardrobe: selectedWardrobe,
@@ -107,6 +105,6 @@ module.exports = function renacimiento(gender) {
     poses_cat: poses_cat,
     props: pick(props),
     genderNote: genderPoseNote,
-    mood: `**STYLE SIGNATURE:** Warm, painterly, luminous. The owner should feel their pet belongs in Versailles. The golden light makes everything precious. This style converts on emotion — it feels like a gift.`
+    mood: `**STYLE SIGNATURE & HERO DETAIL:** The single most important element in this painting is a RAY OF GOLDEN MORNING LIGHT landing across the subject's fur — visible as individual illuminated strands, painted with thin warm glazes over a lighter ground. This ray must appear to travel THROUGH the scene, not just illuminate from above. The owner should feel their pet belongs in Versailles. This style converts on emotion — it feels like the most beautiful gift imaginable.`
   };
 };
