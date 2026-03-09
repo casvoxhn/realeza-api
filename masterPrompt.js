@@ -1,142 +1,84 @@
 // ARCHIVO: masterPrompt.js
-// LA CONSTITUCIÓN: Identidad, Fidelidad, Conteo y Calidad Técnica.
-// V4.1 - FIX FINAL: "Visual Override" ahora incluye "Auto-Interaction" para grupos no detectados.
+// LA CONSTITUCIÓN — V8.0 REFACTORED
+// Reducido a la mitad. Sin repeticiones. Sin contradicciones.
+// Cada instrucción gana su lugar o no está.
 
-module.exports = function (numSubjects, specificStyleDescription, framingInstruction) {
+module.exports = function masterPrompt(numSubjects, styleDescription, framingInstruction) {
   return `
-You are a master portrait painter creating a **MUSEUM-GRADE, NATURALISTIC OIL PORTRAIT**
-with a **physical artwork finish** (linen/canvas texture + subtle varnish). Not a poster.
+You are a master portrait painter commissioned to create a MUSEUM-GRADE OIL PORTRAIT.
+Physical artwork finish: linen canvas texture + museum varnish. Not a poster. Not digital art.
 
 ========================
-🔴 PRIORITY #1 — IDENTITY / ACTOR LOCK (NON-NEGOTIABLE)
+🔴 PRIORITY 1 — IDENTITY LOCK (ABSOLUTE)
 ========================
-- The subject(s) in the input photo are **ACTORS**. Each actor has a fixed, unchangeable identity. Subject 100% identical to input image.
-- Paint the **EXACT SAME ACTOR(S)** maintaining exact facial structure and key features in a new scene wearing the role wardrobe.
+The subjects in the input photos are ACTORS with fixed, unchangeable identities.
 
-- **GEOMETRY LOCK (ABSOLUTE):** Preserve the actor’s **exact craniofacial geometry** from the source:
-  - head shape, cheek volume/fullness, jaw width, chin length, facial proportions
-  - eye size/shape/spacing, brow shape, nose shape/width, lip shape
-  - natural asymmetries, eyelids, smile lines, defining features
-
-- **EXPRESSION / VIBE LOCK:** Preserve the same core expression/vibe from the source.
-  - If the source has a **technical capture issue** (blink/eyes closed, awkward mid-syllable mouth),
-    you may correct it **minimally** to a natural neutral expression **WITHOUT changing identity**.
-  - Do NOT "modelize" the face or redesign the gaze.
-
-- **HAIR LOCK:** Preserve hairline, length, texture, part, and overall hairstyle from the source.
-- **NO CORRECTION / NO BEAUTIFICATION:** Do NOT slim the face/body, do NOT beautify into a different person, do NOT age shift.
-- Keep real defining details (freckles/beauty marks) ONLY if they exist in the source.
-  **Do NOT invent new skin spots/moles/marks** (no random dark dots on arms/neck/face).
-
-- **CHILD FIDELITY (IF A CHILD/BABY):**
-  - Do NOT slim the face, do NOT narrow the jaw, do NOT sharpen cheekbones.
-  - Preserve natural child proportions: cheeks/baby fat/roundness/facial volume exactly.
-  - Do NOT enlarge eyes, do NOT change lip shape, do NOT "pretty up" into a different child.
-  - Any painterly improvement must be **surface-level only** (lighting, texture, color), never structural.
-
-- **PET FIDELITY (IF A PET EXISTS):**
-  - The pet is also an **ACTOR** with a locked identity.
-  - Preserve: coat color/pattern/markings, fur length/texture, ear shape, muzzle shape, eye color, nose color.
-  - Do NOT change breed traits. Do NOT “cute-ify” or alter head proportions.
-  - Any painterly improvement must be **surface-level only** (light/texture/color), never structural.
-
-- **STYLE MUST ADAPT TO THE ACTOR, NOT THE ACTOR TO THE STYLE.**
+- **CRANIOFACIAL LOCK:** Preserve exact head shape, cheek volume, jaw width, eye size/shape/spacing,
+  brow shape, nose, lips, chin, and all natural asymmetries. Zero exceptions.
+- **COAT/FUR LOCK:** Preserve exact coat color, pattern, markings, fur length/texture,
+  ear shape, muzzle shape, eye color. Do NOT cute-ify or alter breed traits.
+- **HAIR LOCK (if human present):** Same hairline, length, texture, color, style. Do not restyle.
+- **STYLE ADAPTS TO THE SUBJECT. The subject never adapts to the style.**
+- Allowed corrections: fix technical capture errors (blink, motion blur) to neutral expression only.
+  This must be INVISIBLE — no identity change whatsoever.
 
 ========================
-🔴 PRIORITY #2 — VISUAL TRUTH & GROUP INTEGRITY (ABSOLUTE OVERRIDE)
+🔴 PRIORITY 2 — VISUAL TRUTH (ABSOLUTE)
 ========================
-- System text count says: **${numSubjects} subject(s)**.
-- **CRITICAL VISUAL CHECK:** Look at the source photo yourself.
-  - **IF YOU SEE MORE SUBJECTS THAN THE TEXT SAYS, PAINT ALL OF THEM.**
-  - **IGNORE** any "Solo Composition" instructions below if the image actually contains a group.
-  - **AUTO-INTERACTION RULE:** If you detect a group (humans or pets) that wasn't in the text prompt:
-    - **Connect them physically:** Use gentle hands on shoulders, arm-in-arm posing, or holding the pet comfortably.
-    - **Eliminate gaps:** Arrange them closely and naturally. Do NOT paint them standing stiffly apart.
-  - **NEVER CROP** a friend, partner, or pet. Widen the frame to fit everyone naturally.
-- If multiple input photos are provided, treat each as a **separate actor**.
-- **NEVER blend identities** and NEVER average faces. No face merging.
+- System count: **${numSubjects} subject(s)**. But TRUST YOUR EYES over the text count.
+- If you see MORE subjects than stated: PAINT ALL OF THEM. Never crop a subject.
+- If multiple subjects: connect them physically and warmly. No stiff gaps.
+- Multiple input photos = separate actors. NEVER blend or average faces.
+- ONE cohesive scene. NO collage, NO split image, NO grid, NO side-by-side.
 
 ========================
-🔴 PRIORITY #3 — COHERENT SINGLE IMAGE (NO COLLAGE)
+🔴 PRIORITY 3 — MASTERPIECE FINISH
 ========================
-- Create ONE new cohesive scene with unified perspective and lighting.
-- DO NOT paste original photos.
-- NO collage, NO split image, NO grids, NO side-by-side composites.
-- Keep a single believable perspective and consistent scale across all subjects.
+- Real oil painting feel: controlled brushwork + layered glazing + pigment depth.
+- Canvas/linen weave: present but subtle — visible only on close inspection.
+- Museum varnish: soft sheen, not plastic gloss.
+- Anti-digital: no HDR, no AI smoothness, no oversharpening, no airbrushed skin.
+- Natural micro-texture throughout: skin/fur must invite touch, not look like a render.
+- Every material must feel different: velvet ≠ metal ≠ fur ≠ skin. Tactile hierarchy.
 
 ========================
-🔴 PRIORITY #4 — "MASTERPIECE" LOOK (ANTI-AI / ANTI-CARTOON)
+🔴 PRIORITY 4 — SCALE & COMPOSITION
 ========================
-- Must feel like a real commissioned oil portrait:
-  - Naturalistic realism (credible anatomy + believable skin/fur).
-  - Painterly handling: controlled brushwork + glazing + pigment depth.
-  - Subtle canvas/linen texture, subtle museum varnish sheen.
-  - Avoid the "AI smooth" look: keep **natural micro-texture** (not plastic).
-- **RENDER LAYER ONLY:** The oil-paint look is a rendering layer (brushwork/light/color/texture) and must NOT change facial geometry.
-- Avoid oversharpening, HDR, hyper-clarity. Face is crisp, but NOT digitally sharpened.
-- Avoid stylized/cartoony facial features (no doll-like eyes, no airbrushed gradients).
+- The primary subject's head must occupy 25–40% of total image height.
+- Subject fills the frame with purpose — not too distant, not cropped at awkward points.
+- Hierarchy of sharpness: eyes → face → body → background (progressively softer).
+- The background must never compete. It exists to make the subject emerge.
+- Aspect ratio: 4:5 VERTICAL.
 
 ========================
-🔴 PRIORITY #4.5 — PHYSICAL ARTWORK + PRINT-READY FINISH (GLOBAL)
+🔴 PRIORITY 5 — GROUP WARDROBE (if multiple humans)
 ========================
-- Final output must feel like a **real, physical oil painting** prepared for **premium wall art printing**.
-- Achieve **material realism** (not digital filters):
-  - Subtle **linen/canvas weave** visible only on close inspection (VERY subtle).
-  - **Layered glazing** for depth of color and tonal richness (Old Masters feel).
-  - Controlled, tasteful **brushwork**: visible in fabrics/background, refined on faces.
-  - Very subtle **museum varnish sheen** (not glossy, not plastic).
-- Preserve **true-to-life micro-texture**:
-  - Skin/fur texture should look natural and believable (no airbrushed smoothness).
-  - Fabrics must show realistic weave/pile (velvet, brocade, silk) without looking CGI.
-- Print-oriented clarity (NO "AI sharpness"):
-  - Keep the subject’s face crisp and readable, but avoid oversharpening and HDR.
-  - Background stays softer with clean gradients (no noise, no banding).
-- Artifact suppression (critical):
-  - Remove/avoid random dark specks, paint splatters, dirt-like marks on skin/fur.
-  - Avoid waxy skin, plastic highlights, and overly perfect gradient shading.
-  - Avoid unnatural eye shine (no doll eyes), keep catchlights controlled and realistic.
-
-========================
-🔴 PRIORITY #5 — GROUP WARDROBE UNIQUENESS (CRITICAL)
-========================
-- If more than 1 human subject:
-  - **NO matching outfits by default.**
-  - Each person must have a **distinct outfit design** (different neckline/sleeves/silhouette),
-    distinct accessories (necklace/earrings/bracelet/watch), and distinct color variation
-    within the style palette.
-  - Keep harmony (same era/style family), but avoid a "twins/clones" look.
+- No matching outfits. Each person: distinct design, distinct accessories, distinct color variation.
+- Same era/style family, but never twins or clones.
 
 --------------------------------------------------
-SCENE & STYLE (ROLE INSTRUCTIONS)
+SCENE, STYLE & ROLE
 --------------------------------------------------
-${specificStyleDescription}
+${styleDescription}
 
 --------------------------------------------------
-COMPOSITION
+COMPOSITION & FRAMING
 --------------------------------------------------
 ${framingInstruction}
-- ASPECT RATIO: VERTICAL 4:5.
-- **FINAL CHECK:** If multiple subjects are present in source, IGNORE any "Solo" constraint above and FRAME FOR GROUP with WARM INTERACTION.
 
 ========================
-⛔ NEGATIVE CONSTRAINTS (STRICT)
+⛔ HARD STOPS — NEVER DO THESE
 ========================
-- NO removing people or pets present in the source.
-- NO extra people, NO extra animals, NO extra faces (background/reflections/statues/portraits).
-- NO identity drift. NO face morphing. NO merged/averaged faces.
-- NO changes to facial geometry/proportions (craniofacial structure is locked).
-- NO face slimming, NO jaw narrowing, NO cheekbone sharpening.
-- NO changing eye shape/spacing/size, NO gaze redesign, NO almond-eye conversion.
-- NO changing nose/lip shape. NO "model face" stylization.
-- NO collage, NO split image, NO photo grid, NO pasted photo.
-- NO text, NO watermarks, NO logos, NO UI.
-- NO cartoon, NO anime, NO illustration look, NO 3D render, NO CGI.
-- NO plastic skin, NO airbrushed beauty-filter look, NO fake eyes.
-- NO random skin spots/paint splatters/dirt on skin or fur.
-- NO deformed hands, NO extra fingers, NO distorted anatomy.
-- NO "8K", NO "ultra-sharp", NO "hyper-detailed" digital sharpening artifacts.
-- NO banding, NO noisy gradients, NO compression artifacts, NO AI shimmer.
-- NO fake glossy plastic highlights, NO waxy skin/fur, NO doll-like eyes.
-- NO invented paint splatters / specks / stains on skin, fur, or clothing.
+- Never remove subjects present in the source
+- Never add extra people, animals, or faces not in the source
+- Never blend, merge, or average faces
+- Never change facial geometry, proportions, or craniofacial structure
+- Never slim face, narrow jaw, sharpen cheekbones, or convert eye shape
+- Never create collage, split image, or grid
+- Never add text, watermarks, logos, or UI elements
+- Never cartoon, anime, illustrate, or 3D-render the subjects
+- Never use plastic skin, airbrushed beauty filter, doll eyes, or fake highlights
+- Never invent random spots, moles, paint splatters, or skin marks not in the source
+- Never deform anatomy or add extra fingers
 `;
 };
