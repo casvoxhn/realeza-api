@@ -1,4 +1,4 @@
-// ARCHIVO: utils/humanGuard.js 
+// ARCHIVO: utils/humanGuard.js
 // Se activa SOLO cuando el visual analysis detecta humanos/niños junto a la mascota.
 // Dos misiones: identity lock del humano + luz separada para no destruir al niño.
 
