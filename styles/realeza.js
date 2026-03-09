@@ -1,78 +1,78 @@
 // ARCHIVO: styles/realeza.js
-// ESTILO: "Rey / Reina Absoluto" — V8.1
-// Mood: poder intimidante, máxima ostentación, el más dramático del catálogo
-// Referencia visual: Hyacinthe Rigaud, Velázquez — coronation portraits
+// ESTILO: "Rey / Reina Absoluto" — V8.2
+// Mood: poder, ostentación, el más dramático del catálogo
+// Referencia: Hyacinthe Rigaud, Velázquez — retratos de coronación
 
 const { pick } = require('../utils/pick');
 
 module.exports = function realeza(gender) {
 
   const palettes = [
-    "Deep Crimson Velvet + Heavy Antique Gold + Pure White Ermine + Warm Umber shadows",
-    "Imperial Royal Blue + Burnished Gold + Ivory + Deep Shadow Brown",
-    "Rich Burgundy + Gold Bullion + Stark White + Candlelight warmth"
+    "Deep Crimson Velvet (madder + burnt umber, NOT pure red) + Antique Gold (ochre + raw sienna, oxidized edges in burnt umber) + Ivory Ermine (lead white + yellow ochre, NOT pure white) + Warm Umber shadows — all desaturated and earth-toned",
+    "Imperial Blue (ultramarine + ivory black + white, muted and deep) + Burnished Gold (raw sienna + burnt umber highlights) + Ivory + Deep Shadow Brown — period-accurate pigments",
+    "Rich Burgundy (alizarin + burnt umber + ivory black) + Antique Gold (ochre, never pure yellow) + Warm Ivory + Candlelight warmth — Rigaud's actual palette"
   ];
 
   const backdrops = [
-    "a grand throne room interior: massive marble columns suggested in deep shadow on either side, heavy crimson velvet drapes barely visible at the edges, the background dark and atmospheric. ALL architectural detail soft and out of focus — the subject is the only sharp element in a sea of expensive shadow. Painted with loose confident atmospheric strokes.",
-    "a palatial hall backdrop: gilded ceiling details caught in warm torchlight at the very top of frame, heavy darkness below — the subject is the only illuminated element. Background is pure atmosphere, painted as warm dark glazes with barely suggested architectural forms.",
-    "a royal chamber setting: dark paneled walls with barely visible tapestry suggestion, a hint of a gilded throne edge in the background — everything in shadow except the subject, who commands the light absolutely"
+    "a grand throne room — massive columns suggested in warm umber shadow, crimson drapes barely visible at edges. The background is pure ATMOSPHERE — warm dark, painted in loose confident strokes of burnt umber and warm black. NO sharp architectural detail. The subject is the only element in focus. Canvas texture visible in the darkest zones.",
+    "a palatial hall — gilded ceiling detail as a warm gold smear at the very top of frame, heavy darkness everywhere else. The background is a painting of expensive darkness. The subject is illuminated. Everything else recedes.",
+    "a royal chamber — dark paneled walls as warm brown atmosphere, a barely suggested gilded throne edge in deep shadow. Everything in warm dark. The subject commands the light absolutely."
   ];
 
   const wardrobe_neutral = [
-    "a magnificent crimson velvet coronation mantle lined with white ermine fur — black tail-tips clearly visible as individual painted strokes against the white. The mantle is OPEN at the front revealing the subject's natural chest. REAL WEIGHT: the velvet pile is painted with directional brushstrokes, deep fold shadows with dark cool glazes, the ermine border painted with careful individual tip-marks in near-black.",
-    "a royal blue velvet coronation robe with thick ermine collar — open at the front, the ermine collar painted with individual hair strokes, each black tail-tip a deliberate mark. Gold brocade interior lining visible where the robe opens.",
-    "a deep burgundy velvet throne mantle with ivory ermine trim — open-front construction. Gold tassel fastenings at the shoulder painted in warm impasto. The velvet has visible weight and pile direction."
+    "a magnificent crimson velvet coronation mantle — painted in madder mixed with burnt umber, NOT pure red. Lined with white ermine: the ermine is ivory-cream (white + yellow ochre), NOT pure white. The black tail-tips are painted as individual deliberate marks in warm near-black. The mantle OPEN at the front revealing the subject's natural chest and fur. REAL WEIGHT: pile direction in the velvet brushstrokes, deep fold shadows in dark madder-umber glaze.",
+    "a royal blue velvet coronation robe — ultramarine + ivory black, muted and deep, NOT saturated blue. Thick ermine collar with individually painted tail-tips. Open at front. Gold brocade interior lining in ochre and raw sienna.",
+    "a deep burgundy velvet throne mantle — alizarin + burnt umber + black. Ivory ermine trim. Gold tassel fastenings in raw sienna with burnt umber shadows. Open front. The velvet has real weight and pile direction."
   ];
 
   const wardrobe_masculine = [
-    "a king's crimson velvet coronation mantle — wide open at the front showing the broad chest, heavy ermine lining with visible black tail-tips individually painted, thick gold chain of state across the chest. Masculine, dominant, absolute.",
-    "a royal commander's mantle: deep navy velvet with gold military braiding at the shoulders, ermine border, open front — the garment of a ruler who is also a warrior."
+    "a king's crimson velvet coronation mantle — wide open at front, broad chest visible. Ermine with individually painted black tail-tips. Thick gold chain of state: each link in warm ochre impasto with umber recesses. Masculine, dominant, absolute.",
+    "a royal commander's mantle: deep navy velvet (muted, not saturated) with gold military braiding at shoulders, ermine border, open front — the garment of a ruler who is also a warrior."
   ];
 
   const wardrobe_feminine = [
-    "a queen's coronation gown: deep crimson velvet with delicate gold embroidery at the neckline, ermine-trimmed cape draping from the shoulders — open and elegant, revealing the graceful chest. A queen's bearing.",
-    "a royal blue satin court gown with gold brocade bodice, ermine-trimmed mantle cascading behind — the garment of a queen regnant. Elegant, powerful, unmistakably feminine and royal."
+    "a queen's coronation gown: deep crimson velvet with delicate gold embroidery at neckline — the gold threads in ochre, not bright yellow. Ermine-trimmed cape from shoulders, open and elegant. A queen's bearing, not a costume.",
+    "a royal blue satin court gown with gold brocade bodice — the blue muted (ultramarine + ivory black), the gold in raw sienna. Ermine-trimmed mantle cascading behind. Elegant, powerful, unmistakably feminine and royal."
   ];
 
   const crown_neutral = [
-    "a substantial imperial crown sitting naturally and securely on the head — NOT floating, NOT tilted. Heavy gold base with alternating ruby and sapphire cabochons painted with deep color glazes and bright facet highlights. White ermine band at the base. Each gemstone is painted as a window of light: dark core, bright edge catchlight. The crown casts a real shadow on the fur beneath it.",
-    "a royal crown with a CENTRAL LARGE GEMSTONE — a deep ruby cabochon that appears lit from within: dark violet-red at the core lightening to bright ruby at the edges, a single bright impasto catchlight at the top. Flanked by smaller diamonds painted as points of pure white light. Gold filigree between the points painted in warm impasto.",
-    "a golden state crown: alternating fleur-de-lis and cross points, large central emerald painted with deep green glazes and a bright surface highlight, smaller gem accents. Museum-authentic weight and proportion."
+    "a substantial imperial crown sitting NATURALLY on the head — pressing slightly into the fur with real weight, casting a real shadow beneath it. NOT floating. Heavy gold base in ochre + raw sienna. Central gemstone (deep ruby): painted with layered transparent glazes — dark crimson at the core, brightening to warm ruby-red at the rim, a single brilliant impasto catchlight at the highest point. This gemstone appears lit from within. Each smaller gem painted with the same layered approach. Ermine base band with individually painted black tail-tips.",
+    "a royal crown with a LARGE CENTRAL RUBY as the hero of the painting — this ruby must appear to glow with internal fire. Painted in multiple transparent glaze layers: deep alizarin at core, mid-value crimson at mid-tone, bright warm red at the rim, single impasto highlight. The gold in ochre and raw sienna, filigree details visible in raking light.",
+    "a golden state crown: alternating fleur-de-lis and cross points, large central emerald painted with deep viridian glaze layers and bright surface highlight. Museum-authentic weight. Sits INTO the head with real mass."
   ];
 
   const crown_masculine = [
-    "a king's imperial crown: tall heavy gold structure with LARGE CENTRAL RUBY — the ruby is the hero of the painting, painted with deep crimson glaze at its heart lightening to bright warm red at the rim, a single brilliant catchlight. Ermine base band. Unambiguously a ruler's crown.",
-    "a warrior-king crown: gold with laurel relief detail and central sapphire — powerful and masculine. The gold is painted in warm impasto, the sapphire a deep blue glaze with bright surface highlight."
+    "a king's imperial crown — tall, heavy gold structure (ochre + raw sienna, never bright yellow). LARGE CENTRAL RUBY: the hero of the painting, painted with layered crimson glazes building to a single brilliant warm highlight. Ermine base band with individual tail-tip marks. Unambiguously a ruler's crown. It has real weight.",
+    "a warrior-king crown: gold with laurel relief (ochre impasto, umber shadows) and central deep sapphire — painted with ultramarine glaze layers and bright blue-white surface highlight. Powerful, masculine, earned."
   ];
 
   const crown_feminine = [
-    "an elegant queen's crown: lower profile than a king's crown but unmistakably regal — delicate gold filigree with central diamond painted as a point of pure white light with a subtle prismatic halo. Small gem accents throughout. Graceful authority.",
-    "a tiara-crown hybrid: arched gold setting with graduated pearl and diamond points — each pearl a luminous sphere with a single impasto highlight, each diamond a point of white fire. Museum-authentic, not costume."
+    "an elegant queen's crown — lower profile than a king's, unmistakably regal. Delicate gold filigree in ochre. Central diamond: painted as a point of near-white light with subtle prismatic warm-to-cool transition. Each small gem a layered glaze with single catchlight. Graceful authority without excess.",
+    "a tiara-crown hybrid: arched gold setting with graduated pearl and diamond points. Each pearl painted as a luminous ivory sphere — warm impasto highlight at top, cool grey shadow beneath. Each diamond a point of refracted white fire. Museum-authentic."
   ];
 
   const lighting = [
-    "**THRONE ROOM GLORY LIGHT:** A powerful directional beam from the UPPER-RIGHT illuminates the crown first — the gold catches fire, the gemstones appear internally lit. The beam then falls on the shoulders and face with warm golden light (3200K). The ERMINE FUR catches the light on each individual tip, painted as tiny warm impasto marks against the cool white base. The background recedes into expensive shadow. A very subtle fill from the left prevents the shadow side from going dead — just enough warm ambient to see the velvet depth.",
-    "**CORONATION PORTRAIT LIGHT:** Dramatic top-front lighting emphasizing the CROWN above all else — the gold is the hottest point in the painting, rendered in thick warm impasto with deep glaze recesses. The face is fully readable beneath it. Warm candlelight temperature (3200K) throughout. Deep clean shadows on either side create maximum three-dimensional presence.",
-    "**ROYAL CHIAROSCURO:** Strong directional key light from the LEFT-FRONT — sculpts the face powerfully. The crown glows. The ermine glows. The subject emerges from shadow like a monarch stepping into history. The shadow side is warm umber — you can still see the velvet's depth and color."
+    "**THRONE ROOM GLORY LIGHT — UNIFIED WARM TEMPERATURE:** Powerful directional beam from UPPER-RIGHT, 3200K warm throughout the ENTIRE painting — no zone has a different color temperature. The CROWN catches the light first: gold fires up, gemstone appears internally lit. Then the shoulders, then the face. The ERMINE in the light zone: individual tips painted as warm ivory impasto marks. The shadow side in rich warm umber — still showing velvet depth and color. One small warm catchlight in the eye from the upper-right position.",
+    "**CORONATION PORTRAIT LIGHT — WARM AND UNIFIED:** Dramatic top-front lighting, 3200K throughout. The CROWN is the hottest point in the painting — thick warm impasto on the gold, deep umber glaze in the recesses, gemstone glowing. Face fully readable beneath it. Clean warm shadows on either side. One catchlight in the eye at the top position.",
+    "**ROYAL CHIAROSCURO — RIGAUD LIGHT:** Strong directional key from LEFT-FRONT, 3200K warm throughout. Sculpts the face powerfully. The crown glows. The ermine glows. The subject emerges from warm shadow like a monarch entering history. Shadow side in warm umber — form visible, never dead. One catchlight in the eye from the upper-left."
   ];
 
   const poses_dog = [
-    "seated upright on the throne cushion with maximum authority — chest forward and proud, head held high with the crown perfectly centered and level (it BELONGS there), front paws placed firmly side by side, tail positioned neatly. The pose of a dog that has always been royalty.",
-    "3/4 seated royal pose — body slightly angled, face turned toward the viewer with regal directness. One paw slightly forward. The crown tilts not at all.",
-    "enthroned seated pose — deep in the throne cushion, slight forward lean of the head, gaze absolutely direct and commanding. Every element communicates: this is the ruler."
+    "seated upright on throne cushion with maximum authority — chest forward and proud, head high, crown perfectly centered and level (it BELONGS there, it PRESSES into the fur). Front paws firmly side by side. Tail positioned neatly. Mouth CLOSED. Calm, dominant expression. The pose of a dog that has always been royalty.",
+    "3/4 seated royal pose — body slightly angled, face turned toward viewer with regal directness. Crown centered. Mouth CLOSED. One paw slightly forward.",
+    "enthroned seated pose — deep in the throne cushion, slight forward lean of the head, gaze absolutely direct. Mouth CLOSED. Every element of the body language communicates: this is the ruler."
   ];
 
   const poses_cat = [
-    "seated perfectly upright — natural cat posture that already reads as royal. Crown centered and level. Tail wrapped precisely around front paws. Gaze direct and imperious. A cat that has always known it was royalty.",
-    "sphinx-adjacent seated pose: upright with natural commanding cat stillness. Front paws forward, chest open, crown perfectly balanced. The gaze sees everything.",
-    "elevated seated pose on the throne cushion — slightly above the viewer's eye level, looking down with benevolent authority. The angle emphasizes the crown."
+    "seated perfectly upright — natural cat posture that already reads as royal. Crown centered, pressing naturally into the fur. Tail wrapped around front paws. Gaze direct and imperious. Mouth CLOSED. A cat that has always known it was royalty.",
+    "sphinx-adjacent seated pose: upright with commanding cat stillness. Front paws forward, chest open, crown perfectly balanced and weighted. Mouth CLOSED. The gaze sees everything and judges accordingly.",
+    "elevated seated pose — slightly above viewer's eye level, looking down with benevolent authority. Crown within frame. Mouth CLOSED. The angle emphasizes the crown and commanding presence."
   ];
 
   const props = [
-    "a massive throne cushion: deep crimson velvet with heavy gold tassels at all four corners, deep button tufting painted with dark round shadows, the fabric clearly expensive — the subject sits upon it as upon a throne",
-    "a royal velvet cushion in deep purple with gold rope trim and large corner tassels — opulent and throne-like, painted with deep cool-violet shadows and warm gold impasto highlights on the tassels",
-    "a gold-legged throne chair partially visible: crimson velvet seat, carved gold armrests — the subject seated front and center, the throne framing them from behind"
+    "a massive throne cushion: deep crimson velvet (madder + burnt umber, not pure red) with heavy antique gold tassels (ochre + burnt sienna) at all four corners, deep button tufting with dark round shadow pools. The subject sits upon it with real weight.",
+    "a royal velvet cushion in deep purple-burgundy with antique gold rope trim and large corner tassels — opulent and throne-like. Painted in muted, earth-toned palette — not saturated digital colors.",
+    "a gold-legged throne chair partially visible: crimson velvet seat in madder-umber, carved gold armrests in ochre — the subject seated front and center, the throne framing from behind in warm dark shadow."
   ];
 
   const selectedWardrobe = gender === 'masculine'
@@ -88,14 +88,14 @@ module.exports = function realeza(gender) {
       : pick(crown_neutral);
 
   const genderPoseNote = gender === 'masculine'
-    ? "**MASCULINE ROYAL ENERGY:** The king. Broad, dominant, unquestionable authority. Direct gaze that commands. The crown is a statement of absolute power."
+    ? "**MASCULINE ROYAL ENERGY:** The king. Broad, dominant, unquestionable authority. Direct commanding gaze. Mouth closed."
     : gender === 'feminine'
-      ? "**FEMININE ROYAL ENERGY:** The queen regnant. Elegant authority — power expressed through composure. The crown is worn with natural grace."
+      ? "**FEMININE ROYAL ENERGY:** The queen regnant. Elegant authority — power through composure. Crown worn with natural grace. Mouth closed."
       : "";
 
   return {
     name: "Rey / Reina Absoluto",
-    role: "**REY / REINA ABSOLUTO — Coronation Portrait**\nMood: Intimidating opulence. Absolute power. The most dramatic style in the catalog.\nReference energy: Hyacinthe Rigaud's Louis XIV — but it is their pet.",
+    role: "**REY / REINA ABSOLUTO — Coronation Portrait, 17th–18th Century**\nMood: Absolute power. Intimidating opulence. The most dramatic style in the catalog.\nReference: Hyacinthe Rigaud's Louis XIV portrait — the most powerful royal portrait ever painted. But it is their pet.",
     palette: pick(palettes),
     backdrop: pick(backdrops),
     wardrobe: selectedWardrobe,
@@ -105,6 +105,6 @@ module.exports = function realeza(gender) {
     poses_cat: poses_cat,
     props: pick(props),
     genderNote: genderPoseNote,
-    mood: `**STYLE SIGNATURE & HERO DETAIL:** The single most important element in this painting is the CROWN'S CENTRAL GEMSTONE — a large precious stone (ruby, sapphire, or emerald depending on the palette) painted with layered glazes that give it internal depth and a single brilliant catchlight that appears to come from within. When the owner zooms in, they see the gem glowing. The crown must look like it weighs something real. The ermine must look touchable — individual tail-tips painted as deliberate marks. This style converts on pride: "my pet, the king/queen."`
+    mood: `**STYLE SIGNATURE & HERO DETAIL:** The single most important element in this painting is the CROWN'S CENTRAL GEMSTONE — painted with multiple transparent glaze layers that give it internal depth and luminosity, culminating in a single brilliant impasto catchlight that appears to radiate from within the stone. When the owner zooms in, the gem glows. The ermine tail-tips are painted as individual deliberate marks — the owner can count them. The crown presses into the fur — it has real weight. This style converts on pride: the owner sees their pet and thinks "my animal, the king." They will buy this on first sight.`
   };
 };
