@@ -108,13 +108,11 @@ app.post('/generate', async (req, res) => {
     }));
 
     // ─── 4. LLAMAR A GEMINI CON GENERATIONCONFIG ────────────────────────────
+    // Nota: outputResolution solo está disponible en Vertex AI SDK, no en @google/generative-ai
     const model = genAI.getGenerativeModel({
       model: MODEL_ID,
       generationConfig: {
         responseModalities: ["IMAGE", "TEXT"],
-        // 2K resolution — balance entre calidad premium y velocidad de generación
-        // Opciones disponibles: "0.5k" | "1k" (default) | "2k" | "4k"
-        outputResolution: "2k",
       }
     });
 
