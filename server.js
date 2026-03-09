@@ -1,5 +1,11 @@
 // ARCHIVO: server.js
-// V77 - ECOSISTEMA COMPLETO (Mascotas, Familia, Niños, Parejas, Retratos, MUJER)
+// V8.0 — MASCOTAS FOCUS
+// Cambios vs V77:
+// - generationConfig con outputResolution 2k
+// - style key pasado limpiamente al módulo de mascotas
+// - gender solo inyectado cuando viene en el request (retry flow)
+// - logging estructurado de opciones seleccionadas
+// - módulos inactivos importados pero no modificados
 
 const express = require('express');
 const cors = require('cors');
@@ -7,13 +13,15 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
-// --- IMPORTAMOS LOS MÓDULOS ---
+// ─── MÓDULO ACTIVO ────────────────────────────────────────────────────────────
 const getMascotasPrompt = require('./mascotas');
+
+// ─── MÓDULOS CONGELADOS (no se modifican, no se usan activamente) ─────────────
 const getFamiliaPrompt = require('./familia');
 const getNinosPrompt = require('./ninos');
 const getParejasPrompt = require('./parejas');
 const getRetratosPrompt = require('./retratos');
-const getMujerPrompt = require('./mujer'); // <--- NUEVO IMPORT: MUJER
+const getMujerPrompt = require('./mujer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,94 +31,143 @@ app.use(express.json({ limit: '100mb' }));
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+
+// Modelo actual — gemini-3.1-flash-image-preview es el correcto y más reciente
 const MODEL_ID = "gemini-3.1-flash-image-preview";
 
+// ─── SUPABASE UPLOAD ──────────────────────────────────────────────────────────
 async function uploadBufferToSupabase(buffer, prefix) {
-    const fileName = `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.jpg`;
-    const { error } = await supabase.storage.from('generated-art').upload(fileName, buffer, { contentType: 'image/jpeg' });
-    if (error) throw error;
-    const { data } = supabase.storage.from('generated-art').getPublicUrl(fileName);
-    return data.publicUrl;
+  const fileName = `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.jpg`;
+  const { error } = await supabase.storage
+    .from('generated-art')
+    .upload(fileName, buffer, { contentType: 'image/jpeg' });
+  if (error) throw error;
+  const { data } = supabase.storage.from('generated-art').getPublicUrl(fileName);
+  return data.publicUrl;
 }
 
+// ─── GENERATE ENDPOINT ───────────────────────────────────────────────────────
 app.post('/generate', async (req, res) => {
-    try {
-        const { images, style, category, gender } = req.body; // <--- AÑADIDO: gender
-        const numSubjects = images.length;
-        const isGroup = numSubjects > 1;
-        
-        // Default a mascota si no se especifica
-        const currentCategory = category || 'mascota'; 
+  try {
+    const { images, style, category, gender } = req.body;
 
-        console.log(`👑 V77 (WOMAN MODULE ACTIVE). Cat: ${currentCategory} | Estilo: ${style}`);
+    const numSubjects = images.length;
+    const isGroup = numSubjects > 1;
+    const currentCategory = category || 'mascota';
 
-        // 1. Subir imágenes originales
-        const originalUrls = await Promise.all(images.map(async (img, i) => {
-            const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
-            return await uploadBufferToSupabase(buffer, `ref_${i}`);
-        }));
+    // Gender solo está presente en el retry flow (cuando el usuario lo elige)
+    const hasGender = gender && (gender === 'masculine' || gender === 'feminine');
 
-        const model = genAI.getGenerativeModel({ model: MODEL_ID });
+    console.log(`🎨 V8.0 | Category: ${currentCategory} | Style: ${style} | Gender: ${hasGender ? gender : 'neutral'} | Subjects: ${numSubjects}`);
 
-        let masterPrompt = "";
-        const baseInstruction = `You are a Master Painter creating a museum-quality oil painting. Analyze the ${numSubjects} input image(s). Create a cohesive composition applying the rules below. Apply a rich oil painting texture.`;
+    // ─── 1. SUBIR IMÁGENES ORIGINALES ───────────────────────────────────────
+    const originalUrls = await Promise.all(
+      images.map(async (img, i) => {
+        const buffer = Buffer.from(
+          img.replace(/^data:image\/\w+;base64,/, ""),
+          'base64'
+        );
+        return await uploadBufferToSupabase(buffer, `ref_${i}`);
+      })
+    );
 
-        // === EL CEREBRO SELECTOR ===
-        
-        if (currentCategory === 'mujer') {
-            // Lógica MUJER (Nueva)
-            const mujerRules = getMujerPrompt(style, numSubjects, isGroup);
-            masterPrompt = `${baseInstruction}\n${mujerRules}`;
-        }
-        else if (currentCategory === 'retratos') {
-            // Lógica RETRATOS (Hombres/General)
-            const retratosRules = getRetratosPrompt(style, numSubjects, isGroup);
-            masterPrompt = `${baseInstruction}\n${retratosRules}`;
-        }
-        else if (currentCategory === 'parejas') {
-            const parejasRules = getParejasPrompt(style, numSubjects, isGroup);
-            masterPrompt = `${baseInstruction}\n${parejasRules}`;
-        }
-        else if (currentCategory === 'ninos') {
-            const ninosRules = getNinosPrompt(style, numSubjects, isGroup);
-            masterPrompt = `${baseInstruction}\n${ninosRules}`;
-        } 
-        else if (currentCategory === 'familia') {
-            const familyRules = getFamiliaPrompt(style, numSubjects, isGroup);
-            masterPrompt = `${baseInstruction}\n${familyRules}`;
-        } 
-        else {
-            // Lógica MASCOTAS (Default)
-            const identityInstruction = isGroup
-                ? `Capture the unique characteristics and likeness of **EVERY SINGLE ONE of the ${numSubjects} SUBJECTS**.`
-                : "Capture the unique characteristics and overall likeness of the subject.";
-            // AÑADIDO: Pasamos el parámetro gender a mascotas.js
-            const petRules = getMascotasPrompt(style, numSubjects, isGroup, identityInstruction, gender);
-            masterPrompt = `${baseInstruction}\n${petRules}`;
-        }
-        
-        const imageParts = images.map(img => ({ inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }}));
-        
-        const result = await model.generateContent([ ...imageParts, masterPrompt ]);
-        const response = await result.response;
-        
-        if (!response.candidates || !response.candidates[0].content) throw new Error("Fallo en generación.");
+    // ─── 2. CONSTRUIR PROMPT ─────────────────────────────────────────────────
+    let masterPromptText = "";
 
-        const base64Gemini = response.candidates[0].content.parts[0].inlineData.data;
-        const imageBuffer = Buffer.from(base64Gemini, 'base64');
-        const finalUrl = await uploadBufferToSupabase(imageBuffer, `MASTER_V77_${currentCategory.toUpperCase()}`);
-        
-        console.log(`✅ Resultado V77 OK (${currentCategory})`);
-        res.json({ success: true, imageUrl: finalUrl, originalUrls: originalUrls });
-
-    } catch (error) {
-        console.error('⚠️ ERROR:', error);
-        res.status(500).json({ success: false, error: error.message });
+    if (currentCategory === 'mujer') {
+      const mujerRules = getMujerPrompt(style, numSubjects, isGroup);
+      masterPromptText = mujerRules;
+    } else if (currentCategory === 'retratos') {
+      const retratosRules = getRetratosPrompt(style, numSubjects, isGroup);
+      masterPromptText = retratosRules;
+    } else if (currentCategory === 'parejas') {
+      const parejasRules = getParejasPrompt(style, numSubjects, isGroup);
+      masterPromptText = parejasRules;
+    } else if (currentCategory === 'ninos') {
+      const ninosRules = getNinosPrompt(style, numSubjects, isGroup);
+      masterPromptText = ninosRules;
+    } else if (currentCategory === 'familia') {
+      const familyRules = getFamiliaPrompt(style, numSubjects, isGroup);
+      masterPromptText = familyRules;
+    } else {
+      // ── MASCOTAS (activo y refactorizado) ──
+      masterPromptText = getMascotasPrompt(
+        style,
+        numSubjects,
+        isGroup,
+        hasGender ? gender : null  // null = neutral (primer intento sin género)
+      );
     }
+
+    // ─── 3. PREPARAR IMÁGENES PARA GEMINI ────────────────────────────────────
+    const imageParts = images.map(img => ({
+      inlineData: {
+        data: img.replace(/^data:image\/\w+;base64,/, ""),
+        mimeType: "image/jpeg"
+      }
+    }));
+
+    // ─── 4. LLAMAR A GEMINI CON GENERATIONCONFIG ────────────────────────────
+    const model = genAI.getGenerativeModel({
+      model: MODEL_ID,
+      generationConfig: {
+        responseModalities: ["IMAGE", "TEXT"],
+        // 2K resolution — balance entre calidad premium y velocidad de generación
+        // Opciones disponibles: "0.5k" | "1k" (default) | "2k" | "4k"
+        outputResolution: "2k",
+      }
+    });
+
+    const result = await model.generateContent([...imageParts, masterPromptText]);
+    const response = await result.response;
+
+    if (!response.candidates || !response.candidates[0]?.content) {
+      throw new Error("Gemini devolvió respuesta vacía — sin candidatos.");
+    }
+
+    // ─── 5. EXTRAER IMAGEN GENERADA ──────────────────────────────────────────
+    const parts = response.candidates[0].content.parts;
+    const imagePart = parts.find(p => p.inlineData?.data);
+
+    if (!imagePart) {
+      throw new Error("Gemini no devolvió imagen en la respuesta.");
+    }
+
+    const base64Gemini = imagePart.inlineData.data;
+    const imageBuffer = Buffer.from(base64Gemini, 'base64');
+
+    // ─── 6. SUBIR RESULTADO A SUPABASE ──────────────────────────────────────
+    const styleLabel = style?.toUpperCase().replace(/\s+/g, '_') || 'UNKNOWN';
+    const genderLabel = hasGender ? `_${gender.toUpperCase()}` : '';
+    const prefix = `V8_${currentCategory.toUpperCase()}_${styleLabel}${genderLabel}`;
+
+    const finalUrl = await uploadBufferToSupabase(imageBuffer, prefix);
+
+    console.log(`✅ V8.0 OK | ${prefix} | URL: ${finalUrl}`);
+
+    res.json({
+      success: true,
+      imageUrl: finalUrl,
+      originalUrls: originalUrls
+    });
+
+  } catch (error) {
+    console.error('⚠️ ERROR V8.0:', error.message);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+// ─── HEALTH CHECK ────────────────────────────────────────────────────────────
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', version: 'V8.0', model: MODEL_ID });
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor V77 (Mujer + Retratos + Parejas + Niños + Familia + Mascotas) LISTO en puerto ${PORT}`);
+  console.log(`🚀 Servidor V8.0 listo en puerto ${PORT}`);
+  console.log(`📦 Modelo: ${MODEL_ID}`);
+  console.log(`🎨 Categoría activa: MASCOTAS (renacimiento | realeza | barroco)`);
+  console.log(`❄️  Módulos congelados: mujer | retratos | parejas | ninos | familia`);
 });
-
-
