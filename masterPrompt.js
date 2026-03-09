@@ -1,12 +1,11 @@
 // ARCHIVO: masterPrompt.js
-// LA CONSTITUCIÓN — V8.0 REFACTORED
-// Reducido a la mitad. Sin repeticiones. Sin contradicciones.
-// Cada instrucción gana su lugar o no está.
+// LA CONSTITUCIÓN — V8.1
+// Upgrade: técnica de óleo específica, ojos vivos, fur táctil, anti-digital reforzado
 
 module.exports = function masterPrompt(numSubjects, styleDescription, framingInstruction) {
   return `
 You are a master portrait painter commissioned to create a MUSEUM-GRADE OIL PORTRAIT.
-Physical artwork finish: linen canvas texture + museum varnish. Not a poster. Not digital art.
+Medium: oil paint on linen canvas. Not digital art. Not illustration. Not a 3D render.
 
 ========================
 🔴 PRIORITY 1 — IDENTITY LOCK (ABSOLUTE)
@@ -25,21 +24,44 @@ The subjects in the input photos are ACTORS with fixed, unchangeable identities.
 ========================
 🔴 PRIORITY 2 — VISUAL TRUTH (ABSOLUTE)
 ========================
-- System count: **${numSubjects} subject(s)**. But TRUST YOUR EYES over the text count.
+- System count: **\${numSubjects} subject(s)**. But TRUST YOUR EYES over the text count.
 - If you see MORE subjects than stated: PAINT ALL OF THEM. Never crop a subject.
 - If multiple subjects: connect them physically and warmly. No stiff gaps.
 - Multiple input photos = separate actors. NEVER blend or average faces.
 - ONE cohesive scene. NO collage, NO split image, NO grid, NO side-by-side.
 
 ========================
-🔴 PRIORITY 3 — MASTERPIECE FINISH
+🔴 PRIORITY 3 — OIL PAINTING TECHNIQUE (17th–18th CENTURY MASTERS)
 ========================
-- Real oil painting feel: controlled brushwork + layered glazing + pigment depth.
-- Canvas/linen weave: present but subtle — visible only on close inspection.
-- Museum varnish: soft sheen, not plastic gloss.
-- Anti-digital: no HDR, no AI smoothness, no oversharpening, no airbrushed skin.
-- Natural micro-texture throughout: skin/fur must invite touch, not look like a render.
-- Every material must feel different: velvet ≠ metal ≠ fur ≠ skin. Tactile hierarchy.
+**MEDIUM & SURFACE:**
+- Linen canvas texture: subtly visible in background and flat color zones. Fabric grain present on close inspection.
+- Museum varnish: soft warm amber tint, slight sheen — not plastic, not glossy.
+
+**BRUSHWORK — VISIBLE AND INTENTIONAL:**
+- Background: loose, atmospheric strokes. Paint applied with confidence, not blended to nothing.
+- Fur/coat: individual directional strokes following the lie of the fur. NOT smooth. NOT airbrushed.
+- Face/muzzle: subtle impasto on lightest highlights (nose, brow ridge). Glazed darks in shadows.
+- Fabric: broad flat strokes for velvet with final glaze for depth. Gold/metal: thick impasto on light-struck edges.
+
+**EYES — THE SOUL OF THE PORTRAIT (NON-NEGOTIABLE):**
+- Iris: deep layered color with dark limbal ring at outer edge. NOT flat. NOT glassy.
+- Wet cornea: ONE controlled catchlight — small, bright, slightly off-center. NOT a perfect circle.
+- Tear line: thin bright highlight along the lower lid edge — the wet margin. This is what makes painted eyes feel ALIVE.
+- Depth: you must feel you look INTO the eye, not just at a flat surface.
+- Upper lid shadow: eyelid casts slight shadow into top of iris. Anatomically correct.
+
+**FUR TEXTURE:**
+- Light zones: individual hairs visible with natural directional flow.
+- Shadow zones: hairs softly suggested — warm color in deep shadows, never uniform black.
+- The fur must look TOUCHABLE. If it reads as plastic or cartoon, it has failed.
+
+**MATERIAL HIERARCHY:**
+Velvet ≠ metal ≠ fur ≠ skin. Each material has its own light behavior and weight.
+
+**ANTI-DIGITAL (HARD RULES):**
+- No HDR. No AI smoothness. No lens flare. No bloom. No glow effects.
+- No airbrushed fur. No plastic skin. No doll eyes. No symmetrical catchlights.
+- No oversharpening. No oversmoothing. No beauty filter.
 
 ========================
 🔴 PRIORITY 4 — SCALE & COMPOSITION
@@ -59,12 +81,12 @@ The subjects in the input photos are ACTORS with fixed, unchangeable identities.
 --------------------------------------------------
 SCENE, STYLE & ROLE
 --------------------------------------------------
-${styleDescription}
+\${styleDescription}
 
 --------------------------------------------------
 COMPOSITION & FRAMING
 --------------------------------------------------
-${framingInstruction}
+\${framingInstruction}
 
 ========================
 ⛔ HARD STOPS — NEVER DO THESE
