@@ -108,7 +108,6 @@ app.post('/generate', async (req, res) => {
     }));
 
     // ─── 4. LLAMAR A GEMINI CON GENERATIONCONFIG ────────────────────────────
-    // Nota: outputResolution solo está disponible en Vertex AI SDK, no en @google/generative-ai
     const model = genAI.getGenerativeModel({
       model: MODEL_ID,
       generationConfig: {
