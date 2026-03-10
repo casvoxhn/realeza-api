@@ -59,7 +59,7 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
 
     framingInstruction = `${attitudeInstruction} ${gaze} Preserve the exact body proportions of the animal from the photo. Cushion visible at the bottom edge. ${camera} Aspect ratio 4:5 vertical.`.replace(/\s+/g, ' ').trim();
   } else {
-    framingInstruction = `Both animals rest together on the same cushion — settled and at ease in their own natural positions, bodies close. Both faces readable. Cushion visible at the bottom edge. Camera slightly elevated, centered. Aspect ratio 4:5 vertical.`;
+    framingInstruction = `Look at each animal in the photo individually. Choose the attitude from the following options that best matches the natural character and posture of each one: ${attitudes}. Each animal may have a different attitude. Both animals on the same cushion, bodies close together. Both faces readable. Cushion visible at the bottom edge. Camera slightly elevated, centered. Aspect ratio 4:5 vertical.`;
   }
 
   const styleDescription = S.role;
