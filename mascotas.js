@@ -29,7 +29,7 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
   // Poses predefinidas — perros
   const poses_dog = [
     "The dog lies relaxed on the cushion, chest down, front paws extended loosely forward — completely at ease, its natural resting character preserved.",
-    "The dog sits naturally on the cushion — upright but relaxed, front paws down, body at ease, tail visible to one side.",
+    "The dog sits naturally on the cushion — upright but relaxed, front paws down, body at ease.",
     "The dog reclines on the cushion with quiet confidence — one paw tucked, one extended, head slightly turned, naturally asymmetric.",
     "The dog lies on the cushion with its body low and comfortable, head raised, paws loosely forward — unhurried and warm.",
   ];
