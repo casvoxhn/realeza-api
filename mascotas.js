@@ -31,7 +31,7 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
 
   let framingInstruction;
   if (!isMulti) {
-    framingInstruction = `${dogPose.includes('dog') ? `If the subject is a dog: ${dogPose}` : ''} ${catPose.includes('cat') ? `If the subject is a cat: ${catPose}` : ''} The animal's head is prominent in the upper portion of the frame. The front paws are visible and extended forward on the cushion surface. The frame is completely filled — the subject from head to front paws occupies the full composition, with the cushion visible at the bottom edge. Camera is at the animal's eye level. Aspect ratio 4:5 vertical.`;
+    framingInstruction = `${dogPose.includes('dog') ? `If the subject is a dog: ${dogPose}` : ''} ${catPose.includes('cat') ? `If the subject is a cat: ${catPose}` : ''} Preserve the exact body proportions of the animal from the photo — do not enlarge the head or fatten the body. The animal fits naturally on the cushion. Front paws visible on the cushion surface. Cushion visible at the bottom edge. Camera at the animal's eye level. Aspect ratio 4:5 vertical.`;
   } else {
     framingInstruction = `Both animals lie in sphinx poses on the same cushion, bodies touching or very close, both sets of front paws visible and extended forward. All faces are readable. The frame is completely filled. Camera at eye level. Aspect ratio 4:5 vertical.`;
   }
