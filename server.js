@@ -30,7 +30,7 @@ function loadReferenceImages() {
   const refs = [];
   const refDir = path.join(__dirname, 'references');
   if (!fs.existsSync(refDir)) return refs;
-  for (const file of ['ref_dachshunds.jpg', 'ref_poodle.jpg']) {
+  for (const file of ['ref_golden.jpg', 'ref_doberman.jpg', 'ref_poodle.jpg', 'ref_dachshunds.jpg']) {
     const fp = path.join(refDir, file);
     if (fs.existsSync(fp)) {
       refs.push({
@@ -88,9 +88,9 @@ app.post('/generate', async (req, res) => {
     const parts = [];
 
     if (isMascotas && STYLE_REFS.length > 0) {
-      parts.push({ text: "STYLE REFERENCE IMAGES — match this exact aesthetic, composition, and color palette:" });
+      parts.push({ text: "STYLE REFERENCE IMAGES — study these for: how the royal robe falls open at the chest and drapes to the sides (never wrapping around the body), the cushion volume and shape, the dark atmospheric background, the craquelure pattern on the canvas surface, and the overall oil painting quality. Do not copy the specific animals, colors, or accessories shown:" });
       parts.push(...STYLE_REFS);
-      parts.push({ text: "CLIENT PET PHOTO — paint this animal in the style shown above:" });
+      parts.push({ text: "CLIENT PET PHOTO — paint this specific animal in the style shown above:" });
     }
 
     // Imágenes del cliente
