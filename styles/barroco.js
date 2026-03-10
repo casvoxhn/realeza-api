@@ -11,8 +11,8 @@ module.exports = function barroco(gender) {
   ];
 
   const robes_m = [
-    "a black velvet doublet with ermine collar — draped around the body — a single elegant thin gold chain, each link refined and antique",
-    "a dark burgundy velvet robe with ermine — draped around the body — one delicate antique gold chain"
+    "a near-black velvet cloak with wide ermine collar — black tail-tips individually painted — draped around the body, chest visible, a single thin elegant antique gold chain",
+    "a dark burgundy velvet mantle with ermine — draped around the body — one delicate antique gold chain"
   ];
 
   const robes_f = [
