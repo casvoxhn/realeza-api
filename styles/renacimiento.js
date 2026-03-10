@@ -29,14 +29,14 @@ module.exports = function renacimiento(gender) {
 
   const poses_dog = [
     "The dog lies in sphinx pose — chest down on the cushion, both front paws extended flat forward, head raised looking at the viewer.",
-    "The dog sits naturally on the cushion — upright, front paws down, body relaxed, looking at the viewer.",
-    "The dog rests chest-down on the cushion, front paws forward, head raised with warm dignity."
+    "The dog sits naturally on the cushion — upright, front paws down, body relaxed, gaze turned slightly to one side with warm composure.",
+    "The dog rests chest-down on the cushion, front paws forward, head in three-quarter profile — looking gently away with noble ease."
   ];
 
   const poses_cat = [
     "The cat lies in sphinx pose — chest down on the cushion, front paws extended flat forward, head raised looking at the viewer.",
-    "The cat sits naturally on the cushion — upright and compact, paws together, looking at the viewer.",
-    "The cat rests chest-down, front paws forward, head raised with serene confidence."
+    "The cat sits naturally on the cushion — upright and compact, paws together, gaze directed softly to one side.",
+    "The cat rests chest-down, front paws forward, head turned in a gentle three-quarter profile — gazing away with serene aristocratic calm."
   ];
 
   const selectedCape = gender === 'masculine' ? pick(capes_m)
