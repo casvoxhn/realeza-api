@@ -1,5 +1,5 @@
-// mascotas.js — V17.1
-// Fix: isMulti ahora dice explícitamente "paint ALL of them"
+// mascotas.js — V17.2
+// Inteligente: pinta TODOS los animales visibles en TODAS las fotos
 const masterPrompt = require('./masterPrompt');
 const { pick } = require('./utils/pick');
 const renacimientoStyle = require('./styles/renacimiento');
@@ -23,29 +23,29 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
 
   // Poses predefinidas — perros (6)
   const poses_dog = [
-    "The dog lies relaxed on the cushion, chest down, front paws extended loosely forward — completely at ease, natural resting character.",
-    "The dog sits naturally on the cushion — upright but relaxed, front paws down, body at ease.",
-    "The dog reclines on the cushion with quiet confidence — one paw tucked, one extended, head slightly turned, naturally asymmetric.",
-    "The dog lies on the cushion, body low and comfortable, head raised, paws loosely forward — unhurried and warm.",
-    "The dog is alert and poised on the cushion — slightly raised, attentive but calm, full of contained energy.",
-    "The dog lounges deeply on the cushion — body sprawled with complete ease, fully relaxed, almost drowsy.",
+    "lies relaxed, chest down, front paws extended loosely forward — completely at ease.",
+    "sits naturally — upright but relaxed, front paws down, body at ease.",
+    "reclines with quiet confidence — one paw tucked, one extended, head slightly turned, naturally asymmetric.",
+    "lies with body low and comfortable, head raised, paws loosely forward — unhurried and warm.",
+    "is alert and poised — slightly raised, attentive but calm, full of contained energy.",
+    "lounges deeply — body sprawled with complete ease, fully relaxed, almost drowsy.",
   ];
 
   // Poses predefinidas — gatos (6)
   const poses_cat = [
-    "The cat lies on the cushion with its paws tucked neatly under its body — the classic loaf position, perfectly self-contained.",
-    "The cat sits upright on the cushion — compact, composed, front paws together.",
-    "The cat reclines on the cushion, chest down, one paw tucked in and one extended — naturally asymmetric and alive.",
-    "The cat lounges on the cushion, body low and relaxed, head resting gently on its front paws — drowsy and soft.",
-    "The cat is alert on the cushion — ears up, body poised, quietly attentive with contained feline energy.",
-    "The cat sits asymmetrically — one paw forward, one tucked, body slightly turned, naturally imperfect.",
+    "lies with paws tucked neatly under its body — the classic loaf position, perfectly self-contained.",
+    "sits upright — compact, composed, front paws together.",
+    "reclines chest down, one paw tucked in and one extended — naturally asymmetric and alive.",
+    "lounges with body low and relaxed, head resting gently on its front paws — drowsy and soft.",
+    "sits alert — ears up, body poised, quietly attentive with contained feline energy.",
+    "sits asymmetrically — one paw forward, one tucked, body slightly turned, naturally imperfect.",
   ];
 
   // Miradas
   const gazes = [
-    "The animal looks directly and calmly into the viewer's eyes.",
+    "Each animal looks directly and calmly into the viewer's eyes.",
     "",
-    "The gaze is directed slightly away — into the middle distance, thoughtful and self-contained.",
+    "The gaze of each animal is directed slightly away — into the middle distance, thoughtful and self-contained.",
   ];
 
   // Ángulos de cámara
@@ -55,16 +55,17 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
     "Camera slightly elevated, angled 30 degrees — adds depth and dimension.",
   ];
 
-  let framingInstruction;
+  const gaze = pick(gazes);
+  const camera = pick(cameraAngles);
+  const dogPose = pick(poses_dog);
+  const catPose = pick(poses_cat);
 
-  if (!isMulti) {
-    const gaze = pick(gazes);
-    const camera = pick(cameraAngles);
-    framingInstruction = `If the subject is a dog: ${pick(poses_dog)} If the subject is a cat: ${pick(poses_cat)} ${gaze} Preserve the exact body proportions and facial expression of the animal from the photo. Cushion visible only at the bottom third of the frame. ${camera} Aspect ratio 4:5 vertical.`.replace(/\s+/g, ' ').trim();
-  } else {
-    // FIX: instrucción explícita de pintar TODOS los animales
-    framingInstruction = `There are ${numSubjects} animals in the client photos — paint ALL of them together on the same cushion. Each animal keeps its exact appearance from its photo. For the dog: ${pick(poses_dog)} For the cat: ${pick(poses_cat)} Both animals are clearly visible, both faces readable. Cushion visible at the bottom edge. Camera slightly elevated, centered. Aspect ratio 4:5 vertical.`;
-  }
+  // Instrucción universal: cuenta y pinta TODOS los animales en TODAS las fotos
+  const countInstruction = `Look at ALL photos provided. Identify and count EVERY animal visible across all images. Paint ALL of them together in a single portrait on the same cushion — no animal should be left out.`;
+
+  const poseInstruction = `For each dog in the photos: it ${dogPose} For each cat in the photos: it ${catPose} If two animals of the same species appear, give each a slightly different pose so both are clearly visible. All faces must be readable. Preserve the exact appearance and proportions of each animal from the photos.`;
+
+  const framingInstruction = `${countInstruction} ${poseInstruction} ${gaze} Cushion visible at the bottom of the frame. ${camera} Aspect ratio 4:5 vertical.`.replace(/\s+/g, ' ').trim();
 
   const styleDescription = S.role;
   return masterPrompt(numSubjects, styleDescription, framingInstruction);
