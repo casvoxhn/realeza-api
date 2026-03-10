@@ -38,21 +38,21 @@ module.exports = function realeza(gender) {
 
   // Combinaciones elegantes cojín + capa — colores complementarios, no iguales
   const cushions = [
-    "a large opulent gold velvet cushion — full and generously inflated — with gold cord trim and corner tassels, on a marble stone ledge",
-    "a large ivory silk damask cushion — full and luxurious — with gold tassel, on a stone ledge",
-    "a large deep teal velvet cushion — inflated and generous — gold embroidered border and tassels, on a marble ledge"
+    "a large opulent gold velvet cushion — thick and heavily stuffed, visibly plump — gold cord trim and corner tassels, on a marble stone ledge",
+    "a large ivory silk damask cushion — thick and deeply cushioned, almost square in its fullness — gold tassel, on a stone ledge",
+    "a large deep teal velvet cushion — thick and round with volume, heavily stuffed — gold embroidered border and corner tassels, on a marble ledge"
   ];
 
   const poses_dog = [
     "The dog lies in sphinx pose — chest down on the cushion, both front paws extended flat forward, head raised looking at the viewer.",
-    "The dog sits naturally on the cushion — upright, both front paws down, body straight, looking directly at the viewer.",
-    "The dog rests on the cushion chest-down, front paws forward, head turned slightly with dignity."
+    "The dog sits naturally on the cushion — upright, both front paws down, body straight, gaze directed slightly to one side with composed dignity.",
+    "The dog rests on the cushion chest-down, front paws forward, head turned three-quarters away from the viewer — a classic aristocratic profile."
   ];
 
   const poses_cat = [
     "The cat lies in sphinx pose — chest down on the cushion, front paws extended flat forward, head raised looking at the viewer.",
-    "The cat sits naturally on the cushion — upright and compact, front paws together, looking directly at the viewer.",
-    "The cat rests chest-down, front paws forward, head raised with absolute regal stillness."
+    "The cat sits naturally on the cushion — upright and compact, front paws together, gaze directed slightly off to one side with serene detachment.",
+    "The cat rests chest-down, front paws forward, head turned in a three-quarter profile — chin slightly raised, gaze directed away with absolute regal stillness."
   ];
 
   const selectedMantle = gender === 'masculine' ? pick(mantles_m)
