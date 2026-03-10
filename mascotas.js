@@ -30,7 +30,7 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
   const attitudes = [
     "The animal rests on the cushion in whatever position feels most natural to its character — settled, at ease, unhurried. Paws visible or partially visible.",
     "The animal is relaxed on the cushion, completely at home — it may have its paws tucked, extended, or curled as it naturally would. The face is readable.",
-    "The animal sits or reclines on the cushion with quiet self-possession — no forced pose, just its own natural way of being still.",
+    "The animal sits upright on the cushion with quiet self-possession — composed and still, in its own natural way of being present.",
   ];
 
   // Miradas — 1 directa, 2 libres
