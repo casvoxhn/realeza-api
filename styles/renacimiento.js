@@ -1,4 +1,4 @@
-// styles/renacimiento.js — V15.0
+// styles/renacimiento.js — V17.1
 
 const { pick } = require('../utils/pick');
 
@@ -27,25 +27,13 @@ module.exports = function renacimiento(gender) {
     "a large deep crimson velvet cushion — full and generous — antique gold trim and tassels, on a stone ledge"
   ];
 
-  const poses_dog = [
-    "The dog lies in sphinx pose — chest down on the cushion, both front paws extended flat forward, head raised looking at the viewer.",
-    "The dog sits naturally on the cushion — upright, front paws down, body relaxed, gaze turned slightly to one side with warm composure.",
-    "The dog rests chest-down on the cushion, front paws forward, head in three-quarter profile — looking gently away with noble ease."
-  ];
-
-  const poses_cat = [
-    "The cat lies in sphinx pose — chest down on the cushion, front paws extended flat forward, head raised looking at the viewer.",
-    "The cat sits naturally on the cushion — upright and compact, paws together, gaze directed softly to one side.",
-    "The cat rests chest-down, front paws forward, head turned in a gentle three-quarter profile — gazing away with serene aristocratic calm."
-  ];
-
   const selectedCape = gender === 'masculine' ? pick(capes_m)
     : gender === 'feminine' ? pick(capes_f)
     : pick(capes);
 
   return {
     name: "Jardín Dorado",
-    role: `Style: Gainsborough warm aristocratic portrait — 18th century. The animal wears ${selectedCape}. It rests on ${pick(cushions)}. Background is warm golden blur — soft amber and ochre completely out of focus, no architecture, no trees, no objects — pure warm atmospheric color. Soft warm golden light from upper left. The fur glows at the tips. No necklaces or hanging accessories.`,
+    role: `Style: Gainsborough warm aristocratic portrait — 18th century. The animal wears ${selectedCape}. It rests on ${pick(cushions)}. Background near-black at corners graduating to warm deep umber behind the head — no detail, pure atmospheric darkness. Soft warm light from upper left. No necklaces or hanging accessories.`,
     poses_dog,
     poses_cat
   };
