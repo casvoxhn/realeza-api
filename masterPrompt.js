@@ -1,65 +1,61 @@
-// masterPrompt.js — V10.0
-// Basado en checklist aprobada
+// masterPrompt.js — V11.0
+// Basado en análisis del competidor + checklist aprobada
 
 module.exports = function masterPrompt(numSubjects, styleDescription, framingInstruction) {
   return `
-A 17th-century oil portrait painting on aged linen canvas — Rigaud, Rembrandt, Gainsborough. A physical painting found in a manor house or museum. Not digital art. Not illustration.
+A 17th-century oil portrait painting — the quality of the Dutch and Flemish masters. Museum-grade. A physical painting with age and history, not digital art.
 
-SUBJECT IDENTITY
-The animal in the photo is the subject. Its face, skull, eye color, coat pattern and markings are fixed and sacred.
-- Preserve exactly: skull shape, muzzle, eye color and shape, coat color and every marking, ear shape
-- The style dresses the subject. The subject never changes for the style.
-- Expression: natural and dignified — whatever is appropriate for the portrait
+SUBJECT IDENTITY — NEVER CHANGES
+The animal in the photo is the subject. Preserve exactly:
+- Skull shape, muzzle length, eye color and shape
+- Coat color, pattern, and every marking
+- Ear shape and size
+The style dresses the subject. The subject never changes for the style.
 
-PAINTING SURFACE
-- Aged linen canvas with visible weave texture, especially in the background
-- Craquelure visible in thick paint areas — natural, not exaggerated
-- Warm amber varnish over the entire surface — unifies everything, ages everything
-- Brushwork visible and intentional: loose in background, more resolved on the face
+PAINTING QUALITY — HYPERREALISTIC OIL
+- The animal is painted with hyperrealistic precision — almost photographic in sharpness on the face and fur
+- Individual hairs visible throughout, with warm light catching the tips
+- The background has painterly texture and brushwork — but the subject is razor sharp
+- Oil on aged linen canvas. Craquelure visible in background and thick paint areas.
+- Warm amber varnish unifies the entire surface
 
-EYES
-- Wet cornea with one small off-center catchlight
-- Tear line visible along the lower lid
-- Depth you look INTO — not a flat surface
-- Iris color preserved exactly from the source photo
+EYES — THE MOST IMPORTANT ELEMENT
+- Wet cornea. One small catchlight slightly off-center.
+- Tear line visible along the lower lid.
+- Depth you look INTO — complex iris with multiple tones.
+- The eyes must look alive. The owner must feel their pet looking back at them.
 
-FUR
-- Individual strands visible in light zones, direction changes naturally across the body
-- Warm color in shadows — never flat black
-- Translucent at lit edges
-- Tactile — looks touchable
+FUR & COAT
+- Hyperrealistic individual strands — each hair rendered
+- Warm light catches the tips of the fur, creating luminous edges
+- Color preserved exactly from the source — no generalization
+- The coat is the tactile centerpiece of the painting
 
-COLOR & PALETTE
-- Desaturated, earth-toned, pigment-based throughout
-- Unified warm temperature — no zone has a different color temperature
-- Everything slightly aged and tinted by the amber varnish
-- Blacks are warm umber. Whites are ivory. Golds are ochre. Never pure digital colors.
+COLOR PALETTE
+- Rich, saturated but realistic oil paint colors — not pastel, not digital flat
+- Warm amber varnish tones the entire image
+- Deep rich darks — warm umber, not flat black
+- Golds are warm ochre with specular highlights
+- Velvet shows real pile depth: dark in compressed areas, lighter on peaks
 
-COMPOSITION
-- The subject's face is large and fills the frame naturally
-- Background: pure atmospheric color — completely out of focus, no sharp details, no competing architecture
-- Warm halo of light behind the subject's head — separates subject from background
-- Sharpness hierarchy: eyes → face → body → background dissolves
-- Aspect ratio: 4:5 vertical
-
-PHYSICAL REALITY
-- Wardrobe falls with gravity — heavy fabric, natural drape
-- Chest open — the garment opens at the front showing the animal's natural fur
-- Garment closes with a simple clasp or cord — no excessive jewelry or medallions hanging
-- Everything has weight and casts shadows
+COMPOSITION — THE COMPETITOR FORMULA
+- The animal lies on a luxurious velvet cushion — this anchors the body
+- Sphinx pose: chest down on the cushion, front paws extended forward and flat, head raised
+- The head occupies the upper portion of the frame, body fills the rest
+- No empty space — the subject fills the frame
+- Background darkest at corners, warming behind the head — classic vignette
 
 ${styleDescription}
 
 ${framingInstruction}
 
 NEVER:
-- Change the subject's face, skull, eyes, coat or markings
-- Add subjects not in the source photo
-- Show sharp architectural details or competing background elements
-- Use pure saturated digital colors
-- Make objects float or appear weightless
-- Show the animal in a human upright pose
-- Add rings on paws, earrings, or absurd accessories
+- Change the face, skull, eyes, coat or markings
+- Show the animal in a human upright pose — always sphinx/resting on cushion
+- Make the robe hang from shoulders as if on a human — it drapes AROUND the resting body
+- Use flat digital colors
+- Add subjects not in the photo
+- Leave empty compositional space
 - Add text, watermarks, or UI elements
 `;
 };
