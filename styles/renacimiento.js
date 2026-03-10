@@ -34,7 +34,5 @@ module.exports = function renacimiento(gender) {
   return {
     name: "Jardín Dorado",
     role: `Style: Gainsborough warm aristocratic portrait — 18th century. The animal wears ${selectedCape}. It rests on ${pick(cushions)}. Background near-black at corners graduating to warm deep umber behind the head — no detail, pure atmospheric darkness. Soft warm light from upper left. No necklaces or hanging accessories.`,
-    poses_dog,
-    poses_cat
   };
 };
