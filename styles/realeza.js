@@ -54,7 +54,5 @@ module.exports = function realeza(gender) {
   return {
     name: "Realeza Imperial",
     role: `Style: Rigaud imperial court portrait — 17th century. The animal wears ${selectedMantle}. On its head: ${selectedCrown}. It rests on ${pick(cushions)}. Background near-black at corners graduating to warm amber umber behind the head — no detail, pure atmosphere. Powerful warm light from upper right. Ermine tail-tips individually painted. No hanging medallions or necklaces.`,
-    poses_dog,
-    poses_cat
   };
 };
