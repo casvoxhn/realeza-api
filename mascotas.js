@@ -90,16 +90,17 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
     .replace(/The animal wears[^.]+\./gi, '')
     .replace(/On its head[^.]+\./gi, '')
     .replace(/It rests on[^.]+\./gi, '')
+    .replace(/\s{2,}/g, ' ')
     .trim();
 
   const palette = pick(complementaryPalettes);
   const shuffledGems = [...gems].sort(() => Math.random() - 0.5);
 
-  // Composición según cantidad — sin "touching" que causa que se suban encima
+  // Composición narrativa — natural, orgánica, sin coordenadas rígidas
   const compositions = {
-    2: "side by side on the cushion — the larger animal on the left, the smaller on the right. They are close but each in their own space. Both faces fully visible.",
-    3: "arranged on the wide cushion — largest in the center-back, the other two in front on each side. All faces clearly visible.",
-    4: "arranged on the grand cushion — two slightly behind, two in front. Pyramid composition. All faces clearly visible.",
+    2: "Two noble animals rest together on the cushion — their bodies naturally angled and relaxed, the larger one slightly elevated and behind, the smaller one beside and slightly in front. The composition feels organic and alive, like a painted scene that always existed this way. Both faces clearly visible.",
+    3: "Three noble animals share the grand cushion — their bodies naturally arranged, the largest slightly behind and central, the other two in front on each side. Each at their own angle, relaxed and organic. All faces clearly visible.",
+    4: "Four noble animals rest on the grand cushion — naturally grouped, some slightly behind others, each at their own angle. Relaxed and organic, like a painted scene. All faces clearly visible.",
   };
 
   const compositionKey = Math.min(totalAnimals, 4).toString();
