@@ -26,12 +26,17 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
   const buildStyle = styleMap[styleKey] || renacimientoStyle;
   const S = buildStyle(gender);
 
-  // Actitudes — libertad total de pose, mínimas restricciones físicas
+  // Actitudes — el modelo elige la más natural según la foto
   const attitudes = [
-    "The animal rests on the cushion in whatever position feels most natural to its character — settled, at ease, unhurried. Paws visible or partially visible.",
-    "The animal is relaxed on the cushion, completely at home — it may have its paws tucked, extended, or curled as it naturally would. The face is readable.",
-    "The animal sits upright on the cushion with quiet self-possession — composed and still, in its own natural way of being present.",
-  ];
+    "A: Resting naturally — settled into the cushion, paws tucked under the body or hidden, completely at ease.",
+    "B: Resting relaxed — lying comfortably, paws extended or loosely forward, unhurried and soft.",
+    "C: Sitting upright — composed and present, paws together or neatly placed, tail curled to one side.",
+    "D: Sitting asymmetric — one paw tucked in, the other extended, naturally imperfect and alive.",
+    "E: Lounging — body low and sprawled with ease, head resting on a paw or slightly drooped, drowsy.",
+    "F: Alert and poised — slightly raised, attentive but calm, full of quiet energy.",
+  ].join(" | ");
+
+  const attitudeInstruction = `Choose the attitude from the following options that best matches the natural character and posture of the animal in the photo: ${attitudes}`;
 
   // Miradas — 1 directa, 2 libres
   const gazes = [
@@ -49,11 +54,10 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
 
   let framingInstruction;
   if (!isMulti) {
-    const attitude = pick(attitudes);
     const gaze = pick(gazes);
     const camera = pick(cameraAngles);
 
-    framingInstruction = `${attitude} ${gaze} Preserve the exact body proportions of the animal from the photo. Cushion visible at the bottom edge. ${camera} Aspect ratio 4:5 vertical.`.replace(/\s+/g, ' ').trim();
+    framingInstruction = `${attitudeInstruction} ${gaze} Preserve the exact body proportions of the animal from the photo. Cushion visible at the bottom edge. ${camera} Aspect ratio 4:5 vertical.`.replace(/\s+/g, ' ').trim();
   } else {
     framingInstruction = `Both animals rest together on the same cushion — settled and at ease in their own natural positions, bodies close. Both faces readable. Cushion visible at the bottom edge. Camera slightly elevated, centered. Aspect ratio 4:5 vertical.`;
   }
