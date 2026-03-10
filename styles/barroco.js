@@ -1,45 +1,45 @@
-// styles/barroco.js — V9.0
+// styles/barroco.js — V10.0
 
 const { pick } = require('../utils/pick');
 
 module.exports = function barroco(gender) {
 
+  const backdrops = [
+    "near-black atmospheric void with warm umber undertones — a soft warm golden halo loosely painted behind the subject's head. Rembrandt's studio darkness. Infinite and expensive.",
+    "deep warm brown background — aged oak and old varnish. No detail. Pure tonal depth. A barely visible warm light far behind.",
+    "absolute darkness with a single warm light zone on the subject — like Rembrandt's late self-portraits. The darkness breathes."
+  ];
+
   const wardrobes = [
-    "heavy dark velvet cloak — near-black with warm umber undertone, open at front revealing natural chest. A single heavy antique gold medallion on a thick chain.",
-    "dark baroque academic robe — near-black velvet with gold threading at collar, open. Heavy antique gold chain.",
-    "dramatic dark charcoal velvet cape — clasped at throat with single gold pin, falling open. Heavy gold medallion."
+    "a heavy dark velvet cloak — near-black with warm umber undertone, open at the chest revealing natural fur. Fastened at the throat with a single antique gold pin.",
+    "a dark baroque velvet robe — near-black, open at front. Simple gold cord fastening at the throat. Natural chest fur fully visible.",
+    "a dramatic charcoal velvet cape, open at the chest — tied with a single dark cord. The animal's fur is the light against the darkness."
   ];
 
   const wardrobes_masculine = [
-    "black velvet doublet open at the chest — Dutch Golden Age merchant-aristocrat. Heavy gold chain of state across the chest.",
-    "dark burgundy velvet coat, collar slightly up — open chest. A single massive gold medallion on a heavy chain."
+    "a black velvet doublet open at the chest — Dutch Golden Age. Simple gold clasp at throat. Natural fur visible. Dark, serious, expensive.",
+    "a dark burgundy velvet coat, open front — single cord fastening. Masculine and brooding."
   ];
 
   const wardrobes_feminine = [
-    "black satin baroque gown with pearl-white lace collar — the lace is the light of the composition. Classic Rembrandt female portrait.",
-    "deep charcoal velvet cape with a single strand of large pearls — each pearl luminous against the darkness."
+    "a black satin baroque gown with pearl-white lace collar — the lace is the light of the composition. Open at chest. Classic Rembrandt.",
+    "a deep charcoal velvet cape, chest open — fastened with a simple pearl brooch. One luminous point against the darkness."
   ];
 
   const accessories = [
-    "a single heavy antique gold medallion on a thick chain — oxidized edges, engraved face, visibly old and important. This is the hero detail.",
-    "a heavy antique gold chain — each link catching the candlelight. It has real weight.",
-    "a simple antique gold chain with a deep amber gemstone — one object, maximum presence."
+    "a single heavy antique gold chain as the only accessory — each link catching the candlelight. Visibly old and important.",
+    "a simple antique gold chain with a dark amber stone — one object, maximum presence.",
+    "a single thick antique gold chain — the hero detail of the composition."
   ];
 
   const accessories_masculine = [
-    "a heavy gold chain of state — thick links catching the candle light individually. The chain of a man of power.",
-    "a single massive engraved gold medallion — the center of gravity in the entire composition."
+    "a heavy gold chain of state — thick links, each catching candlelight individually. The chain of a man of power.",
+    "a single massive antique gold chain — center of gravity in the composition."
   ];
 
   const accessories_feminine = [
-    "a single strand of large pearls — each pearl luminous against the dark wardrobe. Rembrandt female portraiture.",
-    "a pearl brooch at the collar — one luminous point of ivory light against the darkness."
-  ];
-
-  const backdrops = [
-    "near-black atmospheric void with warm umber undertones — a soft warm golden halo painted loosely behind the subject's head. Rembrandt's studio darkness. Infinite. Expensive.",
-    "deep warm brown background — the color of aged oak and old varnish. No detail. Pure tonal depth.",
-    "absolute darkness with warm light zone on the subject only — like Rembrandt's late self-portraits. The background breathes."
+    "a single strand of large pearls — each luminous against the dark wardrobe. Classic Rembrandt.",
+    "a simple pearl brooch at the collar — one point of ivory light against the darkness."
   ];
 
   const selectedWardrobe = gender === 'masculine' ? pick(wardrobes_masculine)
@@ -50,29 +50,33 @@ module.exports = function barroco(gender) {
     : gender === 'feminine' ? pick(accessories_feminine)
     : pick(accessories);
 
+  const poses_dog = [
+    "the dog is lying down, front paws stretched forward, head up looking at the viewer — emerging from darkness, natural and dignified",
+    "the dog is sitting in a natural low position, front paws down, body compact — direct gaze, maximum psychological presence"
+  ];
+
+  const poses_cat = [
+    "the cat is in a natural loaf position — body compact, front paws resting forward, head up with characteristic feline stillness",
+    "the cat is sitting naturally, front paws down, body low — looking at the viewer with quiet intensity"
+  ];
+
   return {
     name: "Gran Maestro Oscuro",
-    role: `**STYLE: Dutch Golden Age Portrait — Rembrandt, circa 1660**
-Mood: Museum-grade. The most artistically serious style. Technically magnificent.
+    role: `STYLE: Dutch Golden Age Portrait — Rembrandt, circa 1660
+Mood: Museum-grade. The most artistically serious style.
 
 BACKDROP: ${pick(backdrops)}
 
 WARDROBE: ${selectedWardrobe}
-The velvet is near-black — warm, not flat. Real weight. Fold shadows deep. Light-struck peaks warm.
+Near-black velvet with real weight. Chest open — natural fur visible. Simple fastening only.
 
 ACCESSORY: ${selectedAccessory}
-The gold medallion or chain is the hero detail — painted with warm light on the raised surfaces, dark in the recesses. Visibly old. Visibly important.
+The hero detail — painted with warm light on raised surfaces, dark in recesses. Visibly old. Visibly important.
 
-LIGHTING: Single directional light source from the upper-left. Classic Rembrandt — one side of the face fully lit, the other in warm rich shadow. A single small catchlight in the eye.
+LIGHTING: Single directional light from the upper-left. Classic Rembrandt — one side fully lit, the other in warm rich shadow. One small catchlight in the eye.
 
-MOOD: The owner thinks "this belongs in the Rijksmuseum." Give them Rembrandt.`,
-    poses_dog: [
-      "seated 3/4 position emerging from darkness — face and chest illuminated, body in warm shadow. Mouth closed. The pose of a dog painted by a master.",
-      "seated full-face forward — direct gaze into the light. Mouth closed. Maximum psychological presence."
-    ],
-    poses_cat: [
-      "seated with feline stillness, half-turned toward the light — one eye in full light, one in shadow. Mouth closed. Deeply psychological.",
-      "direct frontal seated — face fully to viewer, eyes carrying maximum intensity. Mouth closed. The gaze of a creature that understands everything."
-    ]
+MOOD: The owner thinks "this belongs in the Rijksmuseum."`,
+    poses_dog,
+    poses_cat
   };
 };
