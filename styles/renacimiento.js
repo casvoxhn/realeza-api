@@ -1,34 +1,51 @@
-// styles/renacimiento.js — V14.0
+// styles/renacimiento.js — V15.0
 
 const { pick } = require('../utils/pick');
 
 module.exports = function renacimiento(gender) {
 
-  const cushions = [
-    "large forest-green velvet cushion with gold embroidered trim and corner tassels on a stone ledge",
-    "large deep emerald velvet cushion with gold cord border on a warm stone ledge",
-    "wide dark olive velvet cushion with antique gold trim and tassels on a stone surface"
+  const capes = [
+    "a forest-green velvet cape with gold embroidered border — draped around the body, chest visible, fastened with a braided gold cord bow",
+    "a deep emerald velvet mantle with antique gold trim — draped around the body, simple gold cord at throat",
+    "a dark olive-green velvet cape with gold leaf embroidery — draped around the body, fine gold cord fastening"
   ];
 
-  const capes = [
-    "a forest-green velvet cape with gold embroidered border draped around the resting body, falling to both sides of the cushion, chest fur exposed, fastened with a braided gold cord",
-    "a deep emerald velvet mantle draped around the resting body with visible pile and gold cord at throat",
-    "a dark olive-green velvet cape draped around the body pooling on the cushion, tied with fine gold cord"
+  const capes_m = [
+    "a forest-green velvet cape with gold embroidered border — draped around the body, gold cord, chest exposed",
+    "a hunter-green velvet mantle with antique gold trim — draped around the body, simple clasp"
+  ];
+
+  const capes_f = [
+    "a sage-green silk cape with delicate gold embroidery — draped around the body, gold cord bow",
+    "an emerald velvet mantle with champagne gold trim — draped around the body, fine ribbon"
+  ];
+
+  // Cojín de color distinto a la capa — combinaciones elegantes
+  const cushions = [
+    "a large opulent burgundy velvet cushion — full and generously inflated — gold embroidered trim and corner tassels, on a warm stone ledge",
+    "a large rich gold velvet cushion — inflated and luxurious — with gold cord border and tassels, on a stone ledge",
+    "a large deep crimson velvet cushion — full and generous — antique gold trim and tassels, on a stone ledge"
   ];
 
   const poses_dog = [
-    "The dog lies in sphinx pose — chest resting on the cushion, both front paws extended flat forward on the cushion surface, head raised looking at the viewer.",
-    "The dog rests on the cushion chest-down, front paws stretched forward and flat, head up."
+    "The dog lies in sphinx pose — chest down on the cushion, both front paws extended flat forward, head raised looking at the viewer.",
+    "The dog sits naturally on the cushion — upright, front paws down, body relaxed, looking at the viewer.",
+    "The dog rests chest-down on the cushion, front paws forward, head raised with warm dignity."
   ];
 
   const poses_cat = [
-    "The cat lies in sphinx pose — chest resting on the cushion, front paws extended flat forward, head raised looking at the viewer.",
-    "The cat rests chest-down on the cushion, front paws stretched forward and flat, head up."
+    "The cat lies in sphinx pose — chest down on the cushion, front paws extended flat forward, head raised looking at the viewer.",
+    "The cat sits naturally on the cushion — upright and compact, paws together, looking at the viewer.",
+    "The cat rests chest-down, front paws forward, head raised with serene confidence."
   ];
+
+  const selectedCape = gender === 'masculine' ? pick(capes_m)
+    : gender === 'feminine' ? pick(capes_f)
+    : pick(capes);
 
   return {
     name: "Jardín Dorado",
-    role: `Style: Gainsborough warm aristocratic portrait. The animal wears ${pick(capes)}. It rests on a ${pick(cushions)}. Background is warm golden blur — soft amber and ochre out of focus, no sharp details anywhere. Warm golden light from upper left. The fur glows warmly at the tips.`,
+    role: `Style: Gainsborough warm aristocratic portrait — 18th century. The animal wears ${selectedCape}. It rests on ${pick(cushions)}. Background is warm golden blur — soft amber and ochre completely out of focus, no architecture, no trees, no objects — pure warm atmospheric color. Soft warm golden light from upper left. The fur glows at the tips. No necklaces or hanging accessories.`,
     poses_dog,
     poses_cat
   };
