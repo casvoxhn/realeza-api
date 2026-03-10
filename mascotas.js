@@ -1,4 +1,4 @@
-// mascotas.js — V10.0
+// mascotas.js — V11.0
 
 const masterPrompt = require('./masterPrompt');
 const humanGuard = require('./utils/humanGuard');
@@ -38,23 +38,26 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
 
   let genderBlock = '';
   if (gender === 'masculine') {
-    genderBlock = `GENDER: King's crown and wardrobe variants. Commanding presence.`;
+    genderBlock = `GENDER VARIANT: Use king's crown and masculine wardrobe options.`;
   } else if (gender === 'feminine') {
-    genderBlock = `GENDER: Queen's crown and wardrobe variants. Graceful and composed.`;
+    genderBlock = `GENDER VARIANT: Use queen's crown and feminine wardrobe options.`;
   }
 
   let framingInstruction;
   if (!isMulti) {
-    framingInstruction = `FRAMING & POSE:
-- The subject's face fills the frame naturally and prominently
-- Show head, chest, and front paws — cut just below the front paws
+    framingInstruction = `POSE & FRAMING:
 - If dog: ${dogPose}
 - If cat: ${catPose}
-- Camera at eye-level with the animal`;
+- The head is in the upper portion of the frame. The body and cushion fill the lower portion.
+- Front paws are always visible, extended forward on the cushion.
+- Camera at the animal's eye level.
+- The frame is full — no empty compositional space.`;
   } else {
-    framingInstruction = `GROUP PORTRAIT (${numSubjects} subjects):
-- All subjects in natural animal poses, front paws visible
-- All faces readable. Physical connection between subjects.`;
+    framingInstruction = `GROUP PORTRAIT — ${numSubjects} subjects:
+- All animals in sphinx pose on the same cushion, touching or very close.
+- Both sets of front paws visible and forward.
+- All faces readable. The animals look at the viewer.
+- The frame is completely filled — head to cushion edge.`;
   }
 
   const styleDescription = `
