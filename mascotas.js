@@ -109,11 +109,11 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
   // Prompt narrativo directo — sin if/dog/cat, el modelo ya ve las fotos
   const framingInstruction = [
     `This portrait contains ${totalAnimals} animals from the photos provided. Paint every single one of them — no animal may be omitted.`,
-    `IMPORTANT: Each animal wears its own completely independent royal garment. They do NOT share a cape, robe or any clothing.`,
-    `Animal 1 wears: a ${palette[0]} velvet royal robe with white ermine trim — draped behind its shoulders and to the sides, chest fully visible. A single thin gold chain with a ${shuffledGems[0]} pendant.`,
-    `Animal 2 wears: a ${palette[1]} velvet royal robe with white ermine trim — draped behind its shoulders and to the sides, chest fully visible. A single thin gold chain with a ${shuffledGems[1]} pendant.`,
-    totalAnimals >= 3 ? `Animal 3 wears: a deep gold velvet royal robe with ermine trim — draped behind its shoulders, chest visible. A single thin gold chain with a ${shuffledGems[2]} pendant.` : '',
-    totalAnimals >= 4 ? `Animal 4 wears: a midnight blue velvet royal robe with ermine trim — draped behind its shoulders, chest visible. A single thin gold chain with a ${shuffledGems[3]} pendant.` : '',
+    `IMPORTANT: Each animal wears its own completely independent royal mantle. They do NOT share any garment. The mantle falls behind the shoulders and drapes to each side — the animal's chest and belly are completely bare and uncovered. It is NOT a robe, NOT a coat, NOT a wrap. Think of it as a cape placed on top of the back, falling to the sides like wings, with the ermine border framing the open front.`,
+    `Animal 1 wears: a ${palette[0]} velvet royal mantle — falling behind its shoulders, draping to each side, chest and front completely bare. White ermine border visible at the opening. A delicate antique gold chain with fine links and a small ${shuffledGems[0]} pendant.`,
+    `Animal 2 wears: a ${palette[1]} velvet royal mantle — falling behind its shoulders, draping to each side, chest and front completely bare. White ermine border visible at the opening. A delicate antique gold chain with fine links and a small ${shuffledGems[1]} pendant.`,
+    totalAnimals >= 3 ? `Animal 3 wears: a deep gold velvet royal mantle — falling behind its shoulders, draping to each side, chest completely bare. Ermine border at the opening. A delicate antique gold chain with a small ${shuffledGems[2]} pendant.` : '',
+    totalAnimals >= 4 ? `Animal 4 wears: a midnight blue velvet royal mantle — falling behind its shoulders, draping to each side, chest completely bare. Ermine border at the opening. A delicate antique gold chain with a small ${shuffledGems[3]} pendant.` : '',
     `The animals are ${composition}`,
     `Each animal's pose is natural and independent. Preserve the exact face, markings, fur color and expression of each animal from the photos.`,
     `A single very large, plump, luxurious velvet cushion with gold tassels fills the lower portion of the frame — all animals rest on it comfortably with space for each.`,
