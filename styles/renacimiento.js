@@ -1,48 +1,34 @@
-// styles/renacimiento.js — V13.0
+// styles/renacimiento.js — V14.0
 
 const { pick } = require('../utils/pick');
 
 module.exports = function renacimiento(gender) {
 
-  const capes = [
-    "a forest-green velvet cape draped around the resting body, chest fur visible, fastened with a braided gold cord",
-    "a deep emerald velvet mantle wrapped around the resting body, simple gold cord at the throat",
-    "a dark olive-green velvet cape falling around the resting body, tied with a fine gold cord"
-  ];
-
-  const capes_masculine = [
-    "a forest-green velvet cape around the resting body, gold cord fastening, chest exposed",
-    "a hunter-green velvet mantle around the body, simple gold clasp"
-  ];
-
-  const capes_feminine = [
-    "a sage-green silk cape around the resting body, delicate gold cord bow at throat",
-    "an emerald velvet mantle around the body, fine gold ribbon"
-  ];
-
   const cushions = [
-    "a large, generous forest-green velvet cushion with gold embroidered trim and corner tassels — wide and full, the animal rests comfortably on top with space around it — placed on a warm stone ledge",
-    "a large deep emerald velvet cushion with gold cord border — spacious and lush, the animal sits within it — stone ledge beneath",
-    "a wide dark olive velvet cushion with antique gold trim and tassels — the animal rests on top with the cushion extending visibly on all sides"
+    "large forest-green velvet cushion with gold embroidered trim and corner tassels on a stone ledge",
+    "large deep emerald velvet cushion with gold cord border on a warm stone ledge",
+    "wide dark olive velvet cushion with antique gold trim and tassels on a stone surface"
   ];
 
-  const selectedCape = gender === 'masculine' ? pick(capes_masculine)
-    : gender === 'feminine' ? pick(capes_feminine)
-    : pick(capes);
+  const capes = [
+    "a forest-green velvet cape with gold embroidered border draped around the resting body, falling to both sides of the cushion, chest fur exposed, fastened with a braided gold cord",
+    "a deep emerald velvet mantle draped around the resting body with visible pile and gold cord at throat",
+    "a dark olive-green velvet cape draped around the body pooling on the cushion, tied with fine gold cord"
+  ];
 
   const poses_dog = [
-    "The dog lies sphinx pose — chest down, front paws flat and extended forward on the cushion, head raised looking at viewer.",
-    "The dog rests with front paws forward on the cushion, body low, head raised."
+    "The dog lies in sphinx pose — chest resting on the cushion, both front paws extended flat forward on the cushion surface, head raised looking at the viewer.",
+    "The dog rests on the cushion chest-down, front paws stretched forward and flat, head up."
   ];
 
   const poses_cat = [
-    "The cat lies sphinx pose — chest down, front paws flat and extended forward on the cushion, head raised looking at viewer.",
-    "The cat rests with front paws forward on the cushion, body low and compact, head raised."
+    "The cat lies in sphinx pose — chest resting on the cushion, front paws extended flat forward, head raised looking at the viewer.",
+    "The cat rests chest-down on the cushion, front paws stretched forward and flat, head up."
   ];
 
   return {
     name: "Jardín Dorado",
-    role: `Gainsborough aristocratic style. Warm golden light from upper left. The animal wears ${selectedCape}. It rests on ${pick(cushions)}. Background is warm golden blur — soft amber and ochre tones completely out of focus, no details. Fur glows warmly at the tips. Soft morning light throughout.`,
+    role: `Style: Gainsborough warm aristocratic portrait. The animal wears ${pick(capes)}. It rests on a ${pick(cushions)}. Background is warm golden blur — soft amber and ochre out of focus, no sharp details anywhere. Warm golden light from upper left. The fur glows warmly at the tips.`,
     poses_dog,
     poses_cat
   };
