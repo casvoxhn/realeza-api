@@ -1,45 +1,45 @@
-// styles/realeza.js — V12.0 — Narrativo puro
+// styles/realeza.js — V13.0
 
 const { pick } = require('../utils/pick');
 
 module.exports = function realeza(gender) {
 
   const mantles = [
-    "a crimson velvet coronation mantle with white ermine border — individual black tail-tips painted precisely — draped around the animal's resting body and pooling on the cushion to both sides, chest fur fully visible, fastened at the throat with a single gold clasp",
-    "a deep burgundy velvet royal mantle with thick ermine trim — gold embroidery along the border edge — wrapped naturally around the resting body, falling to the sides of the cushion, a simple gold pin at the throat",
-    "a royal blue velvet coronation robe with ermine collar — the ermine tail-tips individually rendered — draped over and around the resting body, tied with a single gold cord"
+    "crimson velvet coronation mantle with white ermine border — individual black tail-tips — draped around resting body, chest fur visible, single gold clasp",
+    "deep burgundy velvet royal mantle with ermine trim — wrapped around resting body, gold pin at throat",
+    "royal blue velvet robe with ermine collar — draped around resting body, gold cord fastening"
   ];
 
   const mantles_masculine = [
-    "a king's crimson velvet coronation mantle with wide ermine border — each black tail-tip painted individually — draped around the resting body and pooling on the cushion, chest fur exposed, a heavy gold clasp at the throat",
-    "a deep burgundy royal mantle with ermine trim and gold embroidery — wrapped naturally around the resting body, simple gold fastening at the throat"
+    "king's crimson velvet mantle with wide ermine border — draped around resting body, heavy gold clasp",
+    "deep burgundy royal mantle with ermine — around resting body, single gold fastening"
   ];
 
   const mantles_feminine = [
-    "a queen's crimson velvet mantle with delicate ermine trim — draped elegantly around the resting body, chest fur visible, a fine gold clasp at the throat",
-    "a royal blue velvet court mantle with ermine collar — wrapped softly around the resting body, single gold cord fastening"
+    "queen's crimson velvet mantle with ermine — around resting body, delicate gold clasp",
+    "royal blue velvet court mantle with ermine — around resting body, gold cord"
   ];
 
   const crowns = [
-    "a heavy imperial crown resting on the animal's head with real weight, pressing into the fur — a large central ruby glowing with deep internal light, brightening to a single brilliant surface highlight — ermine base band, the crown casting a shadow on the fur beneath",
-    "a substantial royal crown with a large central emerald — deep green layers with one precise specular highlight — sitting with genuine mass on the head, pressing the fur down",
-    "a golden state crown with a large central sapphire — deep blue with a single point of pure light at the surface — heavy, resting with gravity on the head"
+    "a heavy imperial crown pressing into the fur with real weight — large central ruby glowing deep red with a single bright highlight — gold with ermine base band",
+    "a royal crown with large central emerald — deep green, one specular highlight — heavy, pressing into the fur",
+    "a golden crown with large central sapphire — deep blue with one point of light — sitting with gravity on the head"
   ];
 
   const crowns_masculine = [
-    "a king's imperial crown — tall, gold, with a large central ruby glowing from deep within — ermine base band pressing into the fur with undeniable weight",
-    "a warrior-king's crown — gold with a central sapphire, deep blue brightening to a single specular highlight — sitting heavily on the head"
+    "a king's imperial crown — heavy gold, large central ruby glowing from within — pressing into the fur",
+    "a warrior-king crown — gold with central sapphire, deep blue with bright highlight"
   ];
 
   const crowns_feminine = [
-    "an elegant queen's crown — lower profile gold filigree with a central diamond as a point of pure cold light — graceful authority pressing gently into the fur",
-    "a queen's tiara-crown — gold with graduated pearls and diamonds, each pearl luminous — resting delicately on the head"
+    "an elegant queen's crown — gold filigree, central diamond as pure light — pressing gently into fur",
+    "a queen's tiara-crown — gold with luminous pearls and diamonds"
   ];
 
   const cushions = [
-    "a large gold velvet cushion with visible pile compression under the animal's weight, gold tassel at the front corner, resting on a stone ledge",
-    "a deep crimson velvet cushion — lush and heavy, the animal's weight compresses it — gold cord trim, stone ledge beneath",
-    "a royal burgundy velvet cushion with gold embroidered trim and corner tassels — full and soft under the animal's body"
+    "a large gold velvet cushion with corner tassels — wide and opulent, the animal fits comfortably with space on all sides — on a stone ledge",
+    "a large crimson velvet cushion with gold cord trim — spacious and lush, the animal rests within it — stone ledge",
+    "a wide burgundy velvet cushion with gold embroidery and tassels — generous size, animal rests on top"
   ];
 
   const selectedMantle = gender === 'masculine' ? pick(mantles_masculine)
@@ -51,18 +51,18 @@ module.exports = function realeza(gender) {
     : pick(crowns);
 
   const poses_dog = [
-    "The dog lies in a sphinx pose on the cushion — chest down, both front paws extended forward and flat on the cushion surface, head raised and looking at the viewer with regal authority. The mantle drapes naturally around this resting body.",
-    "The dog rests on the cushion with front paws forward, body settled low and natural, head raised. The royal mantle wraps around the body as it lies there."
+    "The dog lies sphinx pose — chest down, front paws flat and extended forward on the cushion, head raised with regal authority.",
+    "The dog rests with front paws forward on the cushion, body low, head raised."
   ];
 
   const poses_cat = [
-    "The cat lies in a sphinx pose on the cushion — chest down, front paws extended forward and flat, head raised with absolute feline stillness. The mantle drapes around this resting body.",
-    "The cat rests naturally on the cushion with front paws forward, body low and compact, head up looking at the viewer. The royal mantle falls around the resting body."
+    "The cat lies sphinx pose — chest down, front paws flat and extended forward on the cushion, head raised with absolute stillness.",
+    "The cat rests with front paws forward on the cushion, body low, head raised."
   ];
 
   return {
     name: "Realeza Imperial",
-    role: `The portrait depicts the animal as imperial royalty — absolute power, intimidating opulence, in the manner of Rigaud's portrait of Louis XIV. The animal wears ${selectedMantle}. On its head sits ${selectedCrown}. The animal rests upon ${pick(cushions)}. The velvet pile direction is visible throughout — lighter at the peaks, deeper in compressed valleys. The ermine tail-tips are painted individually with precision. The lighting is a powerful single source from the upper right at warm 3200K — the crown catches the light first, the eyes catch it second, and deep warm shadows fall away from the light source. The owner must look at this and think: my pet, the king.`,
+    role: `Rigaud court portrait style. Powerful light from upper right. The animal wears ${selectedMantle}. On its head: ${selectedCrown}. It rests on ${pick(cushions)}. Dark near-black background with warm amber halo behind head. Ermine tail-tips painted individually. Deep warm shadows.`,
     poses_dog,
     poses_cat
   };
