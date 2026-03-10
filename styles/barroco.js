@@ -1,4 +1,4 @@
-// styles/barroco.js — V15.0
+// styles/barroco.js — V17.1
 
 const { pick } = require('../utils/pick');
 
@@ -25,18 +25,6 @@ module.exports = function barroco(gender) {
     "a large opulent deep burgundy velvet cushion — full and generously inflated — gold cord trim and corner tassels, on a stone ledge",
     "a large rich crimson velvet cushion — inflated and luxurious — antique gold embroidery and tassels, on a stone ledge",
     "a large deep teal velvet cushion — full and generous — gold trim and tassels, on a marble ledge"
-  ];
-
-  const poses_dog = [
-    "The dog lies in sphinx pose — chest down on the cushion, both front paws extended flat forward, head raised looking at the viewer with intensity.",
-    "The dog sits upright on the cushion — front paws down, body composed, gaze turned slightly to one side with psychological weight.",
-    "The dog rests chest-down on the cushion, front paws forward, head in three-quarter profile — looking away into shadow with quiet gravitas."
-  ];
-
-  const poses_cat = [
-    "The cat lies in sphinx pose — chest down on the cushion, front paws extended flat forward, head raised with quiet intensity looking at the viewer.",
-    "The cat sits upright on the cushion — compact, paws together, gaze directed to one side with piercing inner stillness.",
-    "The cat rests chest-down, front paws forward, head turned in three-quarter profile — emerging from shadow, gaze directed away with brooding presence."
   ];
 
   const selectedRobe = gender === 'masculine' ? pick(robes_m)
