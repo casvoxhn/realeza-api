@@ -1,78 +1,59 @@
-// styles/renacimiento.js — V9.0
+// styles/renacimiento.js — V10.0
 
 const { pick } = require('../utils/pick');
 
 module.exports = function renacimiento(gender) {
 
+  const backdrops = [
+    "warm golden garden atmosphere — trees and foliage as pure soft color masses, completely out of focus. A warm amber-gold glow emanates from behind the subject. No sharp details. Pure painterly warmth.",
+    "luminous golden haze — soft warm light from behind, garden suggested as blurred color. The background is atmosphere, not a scene.",
+    "autumnal garden light — warm ochre and gold tones, trees as soft suggestion. A glowing warm corona behind the subject's head."
+  ];
+
   const wardrobes = [
-    "rich forest-green velvet cape draped open across the shoulders — fully revealing the natural chest and fur. A single antique gold medallion.",
-    "deep emerald velvet mantle open at front — natural chest visible. Antique gold chain border at the edge.",
-    "dark olive-green brocade cape worn open — chest fully visible. Subtle gold embroidery at collar. The animal's fur is the centerpiece."
+    "a forest-green velvet cape draped over the shoulders, open at the chest — the animal's natural fur fully visible at the front. Fastened with a simple gold cord tied in a bow.",
+    "a deep emerald velvet mantle, chest open — fastened at the throat with a single simple gold clasp. The fabric falls naturally with visible weight.",
+    "a dark olive-green velvet cape, open at the front — tied loosely with a braided gold cord. The animal's chest fur is the centerpiece."
   ];
 
   const wardrobes_masculine = [
-    "deep forest-green velvet doublet open at the chest — natural fur visible underneath. Heavy gold medallion.",
-    "hunter-green brocade coat, open front — gold details. Masculine, commanding."
+    "a deep forest-green velvet cape, chest open — fastened with a simple gold cord. Masculine and commanding.",
+    "a hunter-green velvet mantle, open front — single simple clasp at the throat. Natural fur fully visible."
   ];
 
   const wardrobes_feminine = [
-    "soft sage-green silk cape trimmed with delicate gold embroidery — open at front. Single pearl-and-gold brooch. Elegant.",
-    "emerald velvet mantle with champagne gold trim — feminine and noble, open front."
-  ];
-
-  const accessories = [
-    "a delicate antique gold chain with a single medallion — warm, slightly oxidized. Light and elegant.",
-    "a small gold leaf brooch as the single accent — catching morning light",
-    "a thin gold cord collar — minimal, refined"
-  ];
-
-  const accessories_masculine = [
-    "a heavy antique gold medallion — center of visual gravity. Old. Important.",
-    "a gold pendant on leather cord — masculine and grounded"
-  ];
-
-  const accessories_feminine = [
-    "a delicate pearl-and-gold collar piece — light, elegant, feminine",
-    "a small floral gold coronet if anatomy allows — refined, not costume"
-  ];
-
-  const backdrops = [
-    "warm atmospheric garden — entirely soft focus golden-green haze. Ancient oaks as pure color mass. Morning light. No sharp detail. Pure Gainsborough atmosphere.",
-    "luminous garden terrace — warm ivory stone columns as atmospheric suggestion in deep bokeh. Dappled golden light. Zero sharp background detail.",
-    "romantic manor garden — soft golden backlight creating a glowing corona behind the subject. Background is light and air, not trees and architecture."
+    "a soft sage-green silk cape, chest open — fastened with a delicate gold cord bow. Graceful and elegant.",
+    "an emerald velvet mantle, open front — tied with a fine gold ribbon. Feminine and noble."
   ];
 
   const selectedWardrobe = gender === 'masculine' ? pick(wardrobes_masculine)
     : gender === 'feminine' ? pick(wardrobes_feminine)
     : pick(wardrobes);
 
-  const selectedAccessory = gender === 'masculine' ? pick(accessories_masculine)
-    : gender === 'feminine' ? pick(accessories_feminine)
-    : pick(accessories);
+  const poses_dog = [
+    "the dog is lying down, front paws stretched forward and flat, head up looking at the viewer — relaxed and natural, the way a dog rests on a soft surface",
+    "the dog is sitting in a natural low position, front paws down, body compact — calm and dignified"
+  ];
+
+  const poses_cat = [
+    "the cat is in a natural loaf position — body compact, front paws tucked or resting forward, head up looking at the viewer",
+    "the cat is sitting naturally, front paws down, body low and relaxed — the way a cat rests on a cushion"
+  ];
 
   return {
     name: "Jardín Dorado",
-    role: `**STYLE: Aristocratic Garden Portrait — Gainsborough, 18th century**
+    role: `STYLE: Aristocratic Garden Portrait — Gainsborough, 18th century
 Mood: Noble, warm, emotionally accessible. The most giftable style.
 
 BACKDROP: ${pick(backdrops)}
-The background is pure warm atmosphere — soft, golden, out of focus. It exists only to make the subject glow.
 
 WARDROBE: ${selectedWardrobe}
-The velvet has real weight. Pile direction visible. The animal's natural fur is the centerpiece — the cape frames it, not covers it.
+The velvet has real weight and visible pile direction. Chest open — the animal's natural fur is the centerpiece. The garment frames, it does not cover.
 
-ACCESSORY: ${selectedAccessory}
+LIGHTING: Soft warm morning light from the upper-left. Golden temperature throughout the entire painting. The fur glows. The background receives less light than the subject — the subject radiates warmth.
 
-LIGHTING: Soft directional morning light from the upper-left. Warm golden temperature throughout. The fur glows. The eyes sparkle with a single small warm catchlight. The shadow side of the face is warm and luminous, never dead.
-
-MOOD: The owner feels their pet belongs in Versailles. This style converts on pure emotion — it feels like the most beautiful gift imaginable.`,
-    poses_dog: [
-      "seated with noble posture — head high, chest open and forward. Mouth closed. Alert and dignified.",
-      "3/4 seated — body angled, face toward viewer. Mouth closed. The classic aristocratic portrait pose."
-    ],
-    poses_cat: [
-      "seated upright with perfect natural posture — tail wrapped around front paws, gaze direct. Mouth closed. Naturally regal.",
-      "3/4 seated, body turned slightly, head toward viewer. Mouth closed. Quietly commanding."
-    ]
+MOOD: The owner feels their pet belongs in Versailles. Pure emotion.`,
+    poses_dog,
+    poses_cat
   };
 };
