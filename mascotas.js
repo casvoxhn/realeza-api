@@ -1,17 +1,13 @@
-// mascotas.js — V17.0
-// Poses predefinidas por especie — variedad + expresión natural
-
+// mascotas.js — V17.1
+// Fix: isMulti ahora dice explícitamente "paint ALL of them"
 const masterPrompt = require('./masterPrompt');
 const { pick } = require('./utils/pick');
-
 const renacimientoStyle = require('./styles/renacimiento');
 const realezaStyle = require('./styles/realeza');
 const barrocoStyle = require('./styles/barroco');
 
 module.exports = function mascotas(style, numSubjects, isGroup, gender) {
-
   const isMulti = numSubjects > 1 || !!isGroup;
-
   const styleMap = {
     renacimiento: renacimientoStyle,
     realeza: realezaStyle,
@@ -21,7 +17,6 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
     imperial_coronation: realezaStyle,
     baroque_drama: barrocoStyle,
   };
-
   const styleKey = style?.toLowerCase().replace(/\s+/g, '_') || 'renacimiento';
   const buildStyle = styleMap[styleKey] || renacimientoStyle;
   const S = buildStyle(gender);
@@ -46,7 +41,7 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
     "The cat sits asymmetrically — one paw forward, one tucked, body slightly turned, naturally imperfect.",
   ];
 
-  // Miradas — 1 directa, 1 libre, 1 desviada
+  // Miradas
   const gazes = [
     "The animal looks directly and calmly into the viewer's eyes.",
     "",
@@ -61,16 +56,16 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
   ];
 
   let framingInstruction;
+
   if (!isMulti) {
     const gaze = pick(gazes);
     const camera = pick(cameraAngles);
-
-    framingInstruction = `If the subject is a dog: ${pick(poses_dog)} If the subject is a cat: ${pick(poses_cat)} The pose should feel different from the original photo — give the animal a new position that feels natural but fresh. ${gaze} Preserve the exact body proportions and facial expression of the animal from the photo. Cushion visible only at the bottom third of the frame. ${camera} Aspect ratio 4:5 vertical.`.replace(/\s+/g, ' ').trim();
+    framingInstruction = `If the subject is a dog: ${pick(poses_dog)} If the subject is a cat: ${pick(poses_cat)} ${gaze} Preserve the exact body proportions and facial expression of the animal from the photo. Cushion visible only at the bottom third of the frame. ${camera} Aspect ratio 4:5 vertical.`.replace(/\s+/g, ' ').trim();
   } else {
-    framingInstruction = `Both animals rest together on the same cushion, each in its own natural position. If there is a dog: ${pick(poses_dog)} If there is a cat: ${pick(poses_cat)} Both faces readable. Cushion visible at the bottom edge. Camera slightly elevated, centered. Aspect ratio 4:5 vertical.`;
+    // FIX: instrucción explícita de pintar TODOS los animales
+    framingInstruction = `There are ${numSubjects} animals in the client photos — paint ALL of them together on the same cushion. Each animal keeps its exact appearance from its photo. For the dog: ${pick(poses_dog)} For the cat: ${pick(poses_cat)} Both animals are clearly visible, both faces readable. Cushion visible at the bottom edge. Camera slightly elevated, centered. Aspect ratio 4:5 vertical.`;
   }
 
   const styleDescription = S.role;
-
   return masterPrompt(numSubjects, styleDescription, framingInstruction);
 };
