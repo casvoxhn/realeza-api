@@ -1,21 +1,21 @@
-// masterPrompt.js — V18.0
-// Animal protagonista absoluto — calidad competidor
+// masterPrompt.js — V18.1
+// Narrativa Nano Banana 2 — describe resultado, no instrucciones
 
 module.exports = function masterPrompt(numSubjects, styleDescription, framingInstruction) {
   return [
-    "A hyperrealistic oil painting portrait in the tradition of 17th–18th century European court painters. Fine craquelure across the entire painted surface — age cracks consistent with old oil on canvas. Visible brushwork throughout.",
+    "A hyperrealistic oil painting portrait in the tradition of 17th century European court painters. The canvas surface shows fine craquelure — age cracks across the paint layer, warm amber varnish patina, visible brushwork in the fur and fabric.",
     "",
-    "The subject is the animal from the client photo. Preserve its exact facial expression — tongue out, drowsy, alert, whatever its natural character is. The animal fills the frame — close, commanding, the absolute protagonist.",
+    "The background is near-black in the upper corners with a diagonal warmth — deep umber gathers behind the subject's head, like candlelight in a 17th century studio. Pure atmospheric darkness, no objects, no architecture.",
     "",
-    "The fur is painted in three distinct layers: bright direct light on the outermost hairs, warm reflected light in the mid-tones, and deep rich shadow in the recesses. Muted oil pigments — burnt sienna, raw umber, warm ivory. No saturated digital colors. Unified by a warm amber varnish glaze.",
+    "The animal from the photo dominates the composition — large, close, commanding. Its face wears the same expression as in the photo: if the tongue is out, it is out; if the eyes are soft and drowsy, they are soft and drowsy. The animal's proportions are faithful to the photo.",
     "",
-    "The royal robe falls around the body with real physical weight — heavy velvet with deep natural folds and gravity, not draped flat. The ermine collar sits with volume and texture.",
+    "The fur has three visible layers of light — bright highlights on the outermost hairs, warm reflected light in the mid-tones, deep rich shadow pooling in the recesses. The palette is muted oil pigment: burnt sienna, raw umber, warm ivory, unified by an amber glaze.",
     "",
-    "The cushion occupies only the lower third of the composition — a plump, heavily stuffed velvet base beneath the animal. It supports without competing.",
+    "The royal robe hangs with the weight of heavy velvet — deep natural folds pulled down by gravity, rich shadows in the creases. The ermine collar is thick and voluminous.",
     "",
-    "The background has diagonal atmospheric depth — near-black in the upper corners, warming to deep umber behind the head. Not a flat gradient — layered atmospheric darkness with warm undertones, like a 17th century studio interior.",
+    "In the lower third of the painting, a plump velvet cushion rests on a stone ledge — heavily stuffed, full and round, partially visible beneath the animal.",
     "",
-    "The eyes have a wet cornea, one small warm catchlight, visible iris depth.",
+    "The eyes show a wet cornea with one small warm catchlight and visible iris depth.",
     "",
     styleDescription,
     "",
