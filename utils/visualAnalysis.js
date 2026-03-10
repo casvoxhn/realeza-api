@@ -1,15 +1,13 @@
 module.exports = function visualAnalysis() {
   return `
-STEP 0 — VISUAL ANALYSIS (DO THIS BEFORE ANYTHING ELSE)
-Examine the input image and determine:
+VISUAL ANALYSIS — DO THIS FIRST:
 1. SPECIES: dog, cat, or other
-2. COAT: color and dominant tone (light/dark/golden)
-3. HUMAN PRESENT: is any human visible? Yes / No
-4. SUBJECT COUNT: how many subjects
+2. COAT: dominant color — light / dark / golden / mixed
+3. HUMAN PRESENT: yes or no
+4. SUBJECT COUNT
 
-USE THESE TO DECIDE:
-- BACKDROP: maximum contrast against the coat. Light coat → dark backdrop. Dark coat → warm amber backdrop. Golden coat → deep burgundy or forest green.
-- POSE: natural to the animal's anatomy — dogs and cats rest horizontally, front paws forward.
-- If HUMAN PRESENT → apply Human Guard rules.
+DECISIONS:
+- BACKDROP contrast: light coat → darker backdrop. Dark coat → warm amber backdrop. Golden coat → deep burgundy or forest green backdrop.
+- If human present → apply Human Guard rules.
 `;
 };
