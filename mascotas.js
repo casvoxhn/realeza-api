@@ -1,4 +1,4 @@
-// mascotas.js — V9.2
+// mascotas.js — V10.0
 
 const masterPrompt = require('./masterPrompt');
 const humanGuard = require('./utils/humanGuard');
@@ -14,7 +14,6 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
 
   const isMulti = numSubjects > 1 || !!isGroup;
 
-  // ─── ESTILO ──────────────────────────────────────────────────────────────
   const styleMap = {
     renacimiento: renacimientoStyle,
     realeza: realezaStyle,
@@ -29,40 +28,35 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
   const buildStyle = styleMap[styleKey] || renacimientoStyle;
   const S = buildStyle(gender);
 
-  // ─── WOW KEY ─────────────────────────────────────────────────────────────
   const wowKey = ['rey', 'realeza', 'imperial_coronation'].includes(styleKey) ? 'realeza'
     : styleKey === 'museum_elegance' ? 'renacimiento'
     : styleKey === 'baroque_drama' ? 'barroco'
     : styleKey;
 
-  // ─── POSE ────────────────────────────────────────────────────────────────
   const dogPose = pick(S.poses_dog);
   const catPose = pick(S.poses_cat);
 
-  // ─── GENDER ──────────────────────────────────────────────────────────────
   let genderBlock = '';
   if (gender === 'masculine') {
-    genderBlock = `GENDER: King's crown and wardrobe variants. Commanding, direct gaze.`;
+    genderBlock = `GENDER: King's crown and wardrobe variants. Commanding presence.`;
   } else if (gender === 'feminine') {
-    genderBlock = `GENDER: Queen's crown and wardrobe variants. Composed, graceful.`;
+    genderBlock = `GENDER: Queen's crown and wardrobe variants. Graceful and composed.`;
   }
 
-  // ─── FRAMING ─────────────────────────────────────────────────────────────
   let framingInstruction;
   if (!isMulti) {
-    framingInstruction = `FRAMING:
-- Close portrait. Head occupies 40–50% of image height.
-- Show: head + chest + front paws. Cut just below the front paws.
+    framingInstruction = `FRAMING & POSE:
+- The subject's face fills the frame naturally and prominently
+- Show head, chest, and front paws — cut just below the front paws
 - If dog: ${dogPose}
 - If cat: ${catPose}
-- Camera at eye-level. Subject looks directly at the viewer.`;
+- Camera at eye-level with the animal`;
   } else {
     framingInstruction = `GROUP PORTRAIT (${numSubjects} subjects):
-- All subjects in natural resting poses, front paws visible.
-- All faces readable. Physical connection between subjects — touching or very close.`;
+- All subjects in natural animal poses, front paws visible
+- All faces readable. Physical connection between subjects.`;
   }
 
-  // ─── ENSAMBLAJE ──────────────────────────────────────────────────────────
   const styleDescription = `
 ${S.role}
 ${genderBlock}
