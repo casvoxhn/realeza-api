@@ -1,20 +1,24 @@
-// masterPrompt.js — V17.1
-// V14 base + expresión preservada + craquelado quirúrgico
+// masterPrompt.js — V18.0
+// Animal protagonista absoluto — calidad competidor
 
 module.exports = function masterPrompt(numSubjects, styleDescription, framingInstruction) {
-  return `A hyperrealistic oil painting portrait. Fine craquelure visible across the painted surface — age cracks consistent with old oil on canvas. Visible brushwork in fur and fabric.
-
-The subject is the animal in the client photo. Preserve its exact facial expression from the photo — if it has its tongue out, paint it with its tongue out; if it looks drowsy, paint it drowsy; if it looks alert, paint it alert.
-
-The background is near-black at the corners and edges, warming gradually to deep umber directly behind the subject. There is a soft warm amber glow behind the head. The background has zero detail — no architecture, no trees, no objects. Pure atmospheric darkness.
-
-The animal's fur is painted with hyperrealistic individual hair detail. The colors are muted oil pigments — burnt sienna and ochre for orange fur, warm ivory for white areas, deep warm umber for shadows. Never saturated digital colors. Everything is unified by a warm amber varnish.
-
-The animal rests on a large opulent velvet cushion on a stone ledge — thick and heavily stuffed, visibly plump, cushion visible on all sides. A royal robe draped around the body, falling naturally to the sides.
-
-The eyes are painted with a wet cornea, one small catchlight, visible depth.
-
-${styleDescription}
-
-${framingInstruction}`;
+  return [
+    "A hyperrealistic oil painting portrait in the tradition of 17th–18th century European court painters. Fine craquelure across the entire painted surface — age cracks consistent with old oil on canvas. Visible brushwork throughout.",
+    "",
+    "The subject is the animal from the client photo. Preserve its exact facial expression — tongue out, drowsy, alert, whatever its natural character is. The animal fills the frame — close, commanding, the absolute protagonist.",
+    "",
+    "The fur is painted in three distinct layers: bright direct light on the outermost hairs, warm reflected light in the mid-tones, and deep rich shadow in the recesses. Muted oil pigments — burnt sienna, raw umber, warm ivory. No saturated digital colors. Unified by a warm amber varnish glaze.",
+    "",
+    "The royal robe falls around the body with real physical weight — heavy velvet with deep natural folds and gravity, not draped flat. The ermine collar sits with volume and texture.",
+    "",
+    "The cushion occupies only the lower third of the composition — a plump, heavily stuffed velvet base beneath the animal. It supports without competing.",
+    "",
+    "The background has diagonal atmospheric depth — near-black in the upper corners, warming to deep umber behind the head. Not a flat gradient — layered atmospheric darkness with warm undertones, like a 17th century studio interior.",
+    "",
+    "The eyes have a wet cornea, one small warm catchlight, visible iris depth.",
+    "",
+    styleDescription,
+    "",
+    framingInstruction
+  ].join("\n");
 };
