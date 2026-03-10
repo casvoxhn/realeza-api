@@ -34,7 +34,5 @@ module.exports = function barroco(gender) {
   return {
     name: "Gran Maestro Oscuro",
     role: `Style: Rembrandt Dutch Golden Age — circa 1660. The animal wears ${selectedRobe}. It rests on ${pick(cushions)}. Background near-black with warm umber undertones — not flat, subtle warm brushwork — soft amber halo behind the head. Single candle from upper left — one side fully lit, the other in warm rich shadow. The gold chain is thin, elegant, antique — warm light on raised links, dark in recesses. Eyes: one small warm catchlight, deep iris, visible wet lower line.`,
-    poses_dog,
-    poses_cat
   };
 };
