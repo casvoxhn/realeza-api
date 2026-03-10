@@ -1,63 +1,49 @@
-// styles/barroco.js — V10.0
+// styles/barroco.js — V11.0
 
 const { pick } = require('../utils/pick');
 
 module.exports = function barroco(gender) {
 
   const backdrops = [
-    "near-black atmospheric void with warm umber undertones — a soft warm golden halo loosely painted behind the subject's head. Rembrandt's studio darkness. Infinite and expensive.",
-    "deep warm brown background — aged oak and old varnish. No detail. Pure tonal depth. A barely visible warm light far behind.",
-    "absolute darkness with a single warm light zone on the subject — like Rembrandt's late self-portraits. The darkness breathes."
+    "near-black atmospheric void — darkest at the corners, a soft warm umber halo loosely painted behind the subject's head. Rembrandt's studio darkness. The background breathes.",
+    "deep warm brown background graduating to near-black at the edges — old varnish and aged oak tones. Pure tonal depth, no detail.",
+    "absolute darkness with a warm amber light zone centered on the subject — like Rembrandt's late self-portraits. One source of light, everything else falls away."
   ];
 
-  const wardrobes = [
-    "a heavy dark velvet cloak — near-black with warm umber undertone, open at the chest revealing natural fur. Fastened at the throat with a single antique gold pin.",
-    "a dark baroque velvet robe — near-black, open at front. Simple gold cord fastening at the throat. Natural chest fur fully visible.",
-    "a dramatic charcoal velvet cape, open at the chest — tied with a single dark cord. The animal's fur is the light against the darkness."
+  const cushions = [
+    "a dark charcoal velvet cushion with antique gold cord trim — heavy, compressed under the animal's weight. On a stone ledge.",
+    "a near-black velvet cushion with warm gold tassel — lush, the animal settles INTO it. Warm stone surface beneath.",
+    "a deep umber velvet cushion with dark gold trim — the animal's weight visible in the compression of the pile"
   ];
 
-  const wardrobes_masculine = [
-    "a black velvet doublet open at the chest — Dutch Golden Age. Simple gold clasp at throat. Natural fur visible. Dark, serious, expensive.",
-    "a dark burgundy velvet coat, open front — single cord fastening. Masculine and brooding."
+  const robes = [
+    "a near-black velvet cloak with gold embroidered border — draped AROUND the resting body, pooling on the cushion to the sides. White ermine collar with individual black tail-tips framing the chest. A single heavy antique gold chain at the throat.",
+    "a dark baroque velvet robe — deep charcoal, draped around the body as it rests. NOT hanging from upright shoulders. Ermine trim at the collar. Heavy antique gold chain.",
+    "a dramatic near-black velvet mantle with gold brocade detail — wrapped around the resting body. Ermine collar. One thick gold chain as the single accessory."
   ];
 
-  const wardrobes_feminine = [
-    "a black satin baroque gown with pearl-white lace collar — the lace is the light of the composition. Open at chest. Classic Rembrandt.",
-    "a deep charcoal velvet cape, chest open — fastened with a simple pearl brooch. One luminous point against the darkness."
+  const robes_masculine = [
+    "a black velvet doublet with ermine collar — draped around the resting body. Heavy gold chain of state across the chest. Dutch Golden Age authority.",
+    "a dark burgundy velvet robe with ermine trim — wrapped around the body. Single massive gold chain. The garment of a man of power."
   ];
 
-  const accessories = [
-    "a single heavy antique gold chain as the only accessory — each link catching the candlelight. Visibly old and important.",
-    "a simple antique gold chain with a dark amber stone — one object, maximum presence.",
-    "a single thick antique gold chain — the hero detail of the composition."
+  const robes_feminine = [
+    "a black satin baroque gown with pearl-white lace collar — the lace catches the single candle source. Draped around the resting body. A single strand of large pearls.",
+    "a deep charcoal velvet robe with ermine collar — draped naturally around the body. Single pearl brooch as the only accessory."
   ];
 
-  const accessories_masculine = [
-    "a heavy gold chain of state — thick links, each catching candlelight individually. The chain of a man of power.",
-    "a single massive antique gold chain — center of gravity in the composition."
-  ];
-
-  const accessories_feminine = [
-    "a single strand of large pearls — each luminous against the dark wardrobe. Classic Rembrandt.",
-    "a simple pearl brooch at the collar — one point of ivory light against the darkness."
-  ];
-
-  const selectedWardrobe = gender === 'masculine' ? pick(wardrobes_masculine)
-    : gender === 'feminine' ? pick(wardrobes_feminine)
-    : pick(wardrobes);
-
-  const selectedAccessory = gender === 'masculine' ? pick(accessories_masculine)
-    : gender === 'feminine' ? pick(accessories_feminine)
-    : pick(accessories);
+  const selectedRobe = gender === 'masculine' ? pick(robes_masculine)
+    : gender === 'feminine' ? pick(robes_feminine)
+    : pick(robes);
 
   const poses_dog = [
-    "the dog is lying down, front paws stretched forward, head up looking at the viewer — emerging from darkness, natural and dignified",
-    "the dog is sitting in a natural low position, front paws down, body compact — direct gaze, maximum psychological presence"
+    "the dog lies in a sphinx pose on the cushion — chest down, both front paws extended forward and flat, head raised with psychological intensity. The dark robe drapes around this resting body.",
+    "the dog rests on the dark cushion with front paws forward — body settled and low, head up. The robe wraps around the resting body naturally."
   ];
 
   const poses_cat = [
-    "the cat is in a natural loaf position — body compact, front paws resting forward, head up with characteristic feline stillness",
-    "the cat is sitting naturally, front paws down, body low — looking at the viewer with quiet intensity"
+    "the cat lies in a sphinx pose on the cushion — chest down, front paws extended forward and flat, head raised. Emerging from darkness with quiet intensity. The robe drapes around the resting body.",
+    "the cat rests on the cushion with front paws forward — body low and settled, head up. The dark velvet robe falls around the resting body."
   ];
 
   return {
@@ -67,15 +53,15 @@ Mood: Museum-grade. The most artistically serious style.
 
 BACKDROP: ${pick(backdrops)}
 
-WARDROBE: ${selectedWardrobe}
-Near-black velvet with real weight. Chest open — natural fur visible. Simple fastening only.
+CUSHION: ${pick(cushions)}
+The animal rests ON this cushion. Its weight compresses the velvet.
 
-ACCESSORY: ${selectedAccessory}
-The hero detail — painted with warm light on raised surfaces, dark in recesses. Visibly old. Visibly important.
+ROBE: ${selectedRobe}
+CRITICAL: The robe drapes AROUND the resting body — it does not hang from upright shoulders. The velvet falls to the sides of the cushion. The ermine collar frames the chest. The gold chain rests against the chest fur.
 
-LIGHTING: Single directional light from the upper-left. Classic Rembrandt — one side fully lit, the other in warm rich shadow. One small catchlight in the eye.
+LIGHTING: Single directional candle source from upper-left. Classic Rembrandt — one side fully lit, the other in warm rich shadow. One small catchlight in each eye. The gold chain catches the candle first.
 
-MOOD: The owner thinks "this belongs in the Rijksmuseum."`,
+MOOD: The owner thinks "this belongs in the Rijksmuseum." Give them Rembrandt.`,
     poses_dog,
     poses_cat
   };
