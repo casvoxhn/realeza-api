@@ -1,5 +1,5 @@
-// mascotas.js — V18.0
-// Vestuario independiente por animal, composición adaptada a cantidad
+// mascotas.js — V18.1
+// Prompt multi simplificado y narrativo — sin condicionales if/dog/cat
 const masterPrompt = require('./masterPrompt');
 const { pick } = require('./utils/pick');
 const renacimientoStyle = require('./styles/renacimiento');
@@ -43,8 +43,8 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
   // Miradas
   const gazes = [
     "looks directly and calmly into the viewer's eyes",
-    "gazes with quiet self-possession, naturally",
-    "looks slightly away — into the middle distance, thoughtful",
+    "gazes with quiet self-possession",
+    "looks slightly away — thoughtful and self-contained",
   ];
 
   // Ángulos de cámara
@@ -54,17 +54,16 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
     "Camera slightly elevated, angled 30 degrees — adds depth and dimension.",
   ];
 
-  // Paletas complementarias para multi — garantizan que los colores no choquen
+  // Paletas complementarias garantizadas — colores distintos y elegantes
   const complementaryPalettes = [
-    ["crimson", "deep teal"],
-    ["forest green", "burgundy"],
-    ["royal blue", "warm gold"],
-    ["deep purple", "burnt orange"],
-    ["charcoal", "rose"],
+    ["deep crimson", "dark teal"],
+    ["forest green", "deep burgundy"],
+    ["royal blue", "warm crimson"],
+    ["deep purple", "forest green"],
+    ["dark burgundy", "midnight blue"],
   ];
 
-  // Gemas complementarias por animal
-  const gems = ["ruby", "emerald", "sapphire", "topaz", "amethyst", "pearl"];
+  const gems = ["ruby", "emerald", "sapphire", "topaz", "amethyst"];
 
   const totalAnimals = Math.max(numSubjects || 1, isGroup ? 2 : 1);
   const camera = pick(cameraAngles);
@@ -74,71 +73,51 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
     const S = buildStyle(gender);
     const gaze = pick(gazes);
     const framingInstruction = [
-      `Look at the photo and identify the animal.`,
-      `If it is a dog: it ${pick(poses_dog)}`,
-      `If it is a cat: it ${pick(poses_cat)}`,
+      `If the subject is a dog: it ${pick(poses_dog)}`,
+      `If the subject is a cat: it ${pick(poses_cat)}`,
       `The animal ${gaze}. Preserve exact appearance, proportions and expression from the photo.`,
-      `Cushion visible and prominent at the bottom of the frame — large, plump, luxurious.`,
+      `Cushion visible and prominent at the bottom of the frame — large, plump, luxurious, with tassels.`,
       `${camera} Aspect ratio 4:5 vertical.`
     ].join(' ');
     return masterPrompt(1, S.role, framingInstruction);
   }
 
   // ── CASO 2+: MÚLTIPLES ANIMALES ─────────────────────────────────────────
-  // Generar vestuario independiente para cada animal
+  const S = buildStyle(gender);
+  
+  // Extraer solo fondo/luz del estilo — sin descripción de ropa
+  const bgOnly = S.role
+    .replace(/The animal wears[^.]+\./gi, '')
+    .replace(/On its head[^.]+\./gi, '')
+    .replace(/It rests on[^.]+\./gi, '')
+    .trim();
+
   const palette = pick(complementaryPalettes);
-  const usedGems = [...gems].sort(() => Math.random() - 0.5);
+  const shuffledGems = [...gems].sort(() => Math.random() - 0.5);
 
-  // Construir descripción de cada animal con su propia ropa
-  const animalDescriptions = [];
-  for (let i = 0; i < Math.min(totalAnimals, 4); i++) {
-    const S = buildStyle(null); // gender null para máxima variedad
-    // Reemplazar color dominante con el de la paleta complementaria
-    const colorizedRole = S.role.replace(
-      /(crimson|burgundy|forest-green|emerald|blue|charcoal|black|dark)/i,
-      palette[i % palette.length]
-    );
-    const gem = usedGems[i % usedGems.length];
-    const label = i === 0 ? "The largest or first animal" : i === 1 ? "The second animal" : `Animal ${i + 1}`;
-    const dogPose = pick(poses_dog);
-    const catPose = pick(poses_cat);
-    const gaze = pick(gazes);
-
-    animalDescriptions.push(
-      `${label}: if dog it ${dogPose} if cat it ${pick(poses_cat)} It ${gaze}. ` +
-      `It wears its own independent royal garment in ${palette[i % palette.length]} velvet with ermine trim — ` +
-      `draped around its body, chest visible. A single elegant ${gem} pendant on a thin gold chain.`
-    );
-  }
-
-  // Composición según cantidad
+  // Composición según cantidad — sin "touching" que causa que se suban encima
   const compositions = {
-    2: "The two animals rest together on the same large cushion — bodies close, naturally touching or leaning slightly toward each other. The larger animal slightly behind or beside the smaller one.",
-    3: "The three animals share a wide royal cushion — arranged in a natural triangle. The largest in the center-back, the other two flanking in front. All faces visible.",
-    4: "The four animals share a grand wide cushion — two slightly behind, two in front. Pyramid composition. All faces clearly visible.",
+    2: "side by side on the cushion — the larger animal on the left, the smaller on the right. They are close but each in their own space. Both faces fully visible.",
+    3: "arranged on the wide cushion — largest in the center-back, the other two in front on each side. All faces clearly visible.",
+    4: "arranged on the grand cushion — two slightly behind, two in front. Pyramid composition. All faces clearly visible.",
   };
 
   const compositionKey = Math.min(totalAnimals, 4).toString();
   const composition = compositions[compositionKey] || compositions["2"];
 
+  // Prompt narrativo directo — sin if/dog/cat, el modelo ya ve las fotos
   const framingInstruction = [
-    `Look at ALL photos provided. Identify and count EVERY animal visible across all images — paint ALL of them. No animal left out.`,
-    `Each animal has its own independent royal garment — they do NOT share a cape or robe.`,
-    animalDescriptions.join(' '),
-    composition,
-    `Preserve the exact appearance and proportions of each animal from the photos.`,
-    `The cushion is very large, plump and luxurious — prominently visible, all animals rest on it comfortably.`,
+    `This portrait contains ${totalAnimals} animals from the photos provided. Paint every single one of them — no animal may be omitted.`,
+    `IMPORTANT: Each animal wears its own completely independent royal garment. They do NOT share a cape, robe or any clothing.`,
+    `Animal 1 wears: a ${palette[0]} velvet royal robe with white ermine trim — draped behind its shoulders and to the sides, chest fully visible. A single thin gold chain with a ${shuffledGems[0]} pendant.`,
+    `Animal 2 wears: a ${palette[1]} velvet royal robe with white ermine trim — draped behind its shoulders and to the sides, chest fully visible. A single thin gold chain with a ${shuffledGems[1]} pendant.`,
+    totalAnimals >= 3 ? `Animal 3 wears: a deep gold velvet royal robe with ermine trim — draped behind its shoulders, chest visible. A single thin gold chain with a ${shuffledGems[2]} pendant.` : '',
+    totalAnimals >= 4 ? `Animal 4 wears: a midnight blue velvet royal robe with ermine trim — draped behind its shoulders, chest visible. A single thin gold chain with a ${shuffledGems[3]} pendant.` : '',
+    `The animals are ${composition}`,
+    `Each animal's pose is natural and independent. Preserve the exact face, markings, fur color and expression of each animal from the photos.`,
+    `A single very large, plump, luxurious velvet cushion with gold tassels fills the lower portion of the frame — all animals rest on it comfortably with space for each.`,
     `${camera} Aspect ratio 4:5 vertical.`
-  ].join(' ');
-
-  // Para el styleDescription en multi usamos el rol base del estilo (fondo, luz, atmósfera)
-  const baseStyle = buildStyle(gender);
-  // Solo tomamos la parte de fondo/luz/atmósfera — no la ropa (esa la definimos arriba por animal)
-  const bgOnly = baseStyle.role
-    .replace(/The animal wears[^.]+\./gi, '')
-    .replace(/On its head[^.]+\./gi, '')
-    .replace(/It rests on[^.]+\./gi, '')
-    .trim();
+  ].filter(Boolean).join(' ');
 
   return masterPrompt(totalAnimals, bgOnly, framingInstruction);
 };
