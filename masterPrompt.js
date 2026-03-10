@@ -1,61 +1,15 @@
-// masterPrompt.js — V11.0
-// Basado en análisis del competidor + checklist aprobada
+// masterPrompt.js — V12.0
+// Prompt narrativo puro — fórmula Google: [Sujeto] + [Acción] + [Contexto] + [Composición] + [Estilo]
+// Sin listas, sin bullets, sin negaciones. Solo descripción fluida.
 
 module.exports = function masterPrompt(numSubjects, styleDescription, framingInstruction) {
-  return `
-A 17th-century oil portrait painting — the quality of the Dutch and Flemish masters. Museum-grade. A physical painting with age and history, not digital art.
+  return `Transform the uploaded photo into a museum-quality 17th-century oil portrait painting, rendered in the hyperrealistic style of the great Flemish and Dutch masters — Rembrandt, Rigaud, and Largillière. The animal in the photo is the subject of this portrait. Preserve its exact face, skull shape, eye color, coat color, and every marking with complete fidelity — the identity of this specific animal is sacred and must be recognizable to its owner.
 
-SUBJECT IDENTITY — NEVER CHANGES
-The animal in the photo is the subject. Preserve exactly:
-- Skull shape, muzzle length, eye color and shape
-- Coat color, pattern, and every marking
-- Ear shape and size
-The style dresses the subject. The subject never changes for the style.
+The painting surface is aged linen canvas with visible craquelure in areas of thick paint, a warm amber varnish coating the entire surface, and subtle canvas weave texture visible in the background. The animal's fur is rendered with hyperrealistic precision — individual hairs visible throughout, warm light catching the fur tips to create luminous edges, and coat colors preserved exactly from the source photo. The eyes are the most important element: a wet cornea with one small off-center catchlight, a visible tear line along the lower lid, and genuine depth that draws the viewer in.
 
-PAINTING QUALITY — HYPERREALISTIC OIL
-- The animal is painted with hyperrealistic precision — almost photographic in sharpness on the face and fur
-- Individual hairs visible throughout, with warm light catching the tips
-- The background has painterly texture and brushwork — but the subject is razor sharp
-- Oil on aged linen canvas. Craquelure visible in background and thick paint areas.
-- Warm amber varnish unifies the entire surface
-
-EYES — THE MOST IMPORTANT ELEMENT
-- Wet cornea. One small catchlight slightly off-center.
-- Tear line visible along the lower lid.
-- Depth you look INTO — complex iris with multiple tones.
-- The eyes must look alive. The owner must feel their pet looking back at them.
-
-FUR & COAT
-- Hyperrealistic individual strands — each hair rendered
-- Warm light catches the tips of the fur, creating luminous edges
-- Color preserved exactly from the source — no generalization
-- The coat is the tactile centerpiece of the painting
-
-COLOR PALETTE
-- Rich, saturated but realistic oil paint colors — not pastel, not digital flat
-- Warm amber varnish tones the entire image
-- Deep rich darks — warm umber, not flat black
-- Golds are warm ochre with specular highlights
-- Velvet shows real pile depth: dark in compressed areas, lighter on peaks
-
-COMPOSITION — THE COMPETITOR FORMULA
-- The animal lies on a luxurious velvet cushion — this anchors the body
-- Sphinx pose: chest down on the cushion, front paws extended forward and flat, head raised
-- The head occupies the upper portion of the frame, body fills the rest
-- No empty space — the subject fills the frame
-- Background darkest at corners, warming behind the head — classic vignette
+The color palette across the entire painting is rich and warm — deep umbers, warm ochres, and earthy tones unified by the amber varnish. Blacks are rendered as deep warm umber, whites as luminous ivory, and all shadows carry warm undertones rather than cool grey. The background graduates from near-black at the corners to a soft warm halo of amber light directly behind the subject's head, creating depth and separating the subject from the darkness.
 
 ${styleDescription}
 
-${framingInstruction}
-
-NEVER:
-- Change the face, skull, eyes, coat or markings
-- Show the animal in a human upright pose — always sphinx/resting on cushion
-- Make the robe hang from shoulders as if on a human — it drapes AROUND the resting body
-- Use flat digital colors
-- Add subjects not in the photo
-- Leave empty compositional space
-- Add text, watermarks, or UI elements
-`;
+${framingInstruction}`;
 };
