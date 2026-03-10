@@ -1,18 +1,18 @@
-// masterPrompt.js — V17.0
-// Expresión preservada + craquelado + colores desaturados
+// masterPrompt.js — V17.1
+// V14 base + expresión preservada + craquelado quirúrgico
 
 module.exports = function masterPrompt(numSubjects, styleDescription, framingInstruction) {
-  return `A hyperrealistic oil painting portrait in the style of a 17th–18th century European master. The canvas shows fine craquelure — a network of fine age cracks across the entire painted surface, consistent with an old oil painting on canvas. The paint has the warm amber patina of aged varnish. Visible brushwork in the fur and fabric — this is a painting, not a photograph.
+  return `A hyperrealistic oil painting portrait. Fine craquelure visible across the painted surface — age cracks consistent with old oil on canvas. Visible brushwork in fur and fabric.
 
-The subject is the animal from the client photo. Preserve its exact facial expression, personality and proportions from the photo — if it has its tongue out, paint it with its tongue out; if it looks drowsy, paint it drowsy; if it looks alert, paint it alert. The character of the animal must be recognizable.
+The subject is the animal in the client photo. Preserve its exact facial expression from the photo — if it has its tongue out, paint it with its tongue out; if it looks drowsy, paint it drowsy; if it looks alert, paint it alert.
 
-The fur is painted with muted, deeply desaturated oil pigments — burnt sienna and raw umber for warm tones, cool grey-ivory for white areas, deep warm shadow. No saturated digital colors. The palette is earthy, aged, unified by a warm amber-brown varnish glaze.
+The background is near-black at the corners and edges, warming gradually to deep umber directly behind the subject. There is a soft warm amber glow behind the head. The background has zero detail — no architecture, no trees, no objects. Pure atmospheric darkness.
 
-The background is near-black at the corners, warming gradually to deep umber behind the subject. A soft amber halo glows behind the head. Zero background detail — pure atmospheric darkness with subtle warm brushwork.
+The animal's fur is painted with hyperrealistic individual hair detail. The colors are muted oil pigments — burnt sienna and ochre for orange fur, warm ivory for white areas, deep warm umber for shadows. Never saturated digital colors. Everything is unified by a warm amber varnish.
 
-The animal rests on a large opulent velvet cushion on a stone ledge. The cushion is thick and heavily stuffed — visibly plump, with its full volume visible on all sides of the animal. A royal robe is draped around the body, falling naturally to the sides.
+The animal rests on a large opulent velvet cushion on a stone ledge — thick and heavily stuffed, visibly plump, cushion visible on all sides. A royal robe draped around the body, falling naturally to the sides.
 
-The eyes have a wet cornea, one small warm catchlight, visible iris depth.
+The eyes are painted with a wet cornea, one small catchlight, visible depth.
 
 ${styleDescription}
 
