@@ -1,5 +1,5 @@
-// mascotas.js — V16.0
-// Poses por actitud, no por coordenadas — cámara variada
+// mascotas.js — V17.0
+// Poses predefinidas por especie — variedad + expresión natural
 
 const masterPrompt = require('./masterPrompt');
 const { pick } = require('./utils/pick');
@@ -26,30 +26,34 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
   const buildStyle = styleMap[styleKey] || renacimientoStyle;
   const S = buildStyle(gender);
 
-  // Actitudes — el modelo elige la más natural según la foto
-  const attitudes = [
-    "A: Resting naturally — settled into the cushion, paws tucked under the body or hidden, completely at ease.",
-    "B: Resting relaxed — lying comfortably, paws extended or loosely forward, unhurried and soft.",
-    "C: Sitting upright — composed and present, paws together or neatly placed, tail curled to one side.",
-    "D: Sitting asymmetric — one paw tucked in, the other extended, naturally imperfect and alive.",
-    "E: Lounging — body low and sprawled with ease, head resting on a paw or slightly drooped, drowsy.",
-    "F: Alert and poised — slightly raised, attentive but calm, full of quiet energy.",
-  ].join(" | ");
+  // Poses predefinidas — perros
+  const poses_dog = [
+    "The dog lies relaxed on the cushion, chest down, front paws extended loosely forward — completely at ease, its natural resting character preserved.",
+    "The dog sits naturally on the cushion — upright but relaxed, front paws down, body at ease, tail visible to one side.",
+    "The dog reclines on the cushion with quiet confidence — one paw tucked, one extended, head slightly turned, naturally asymmetric.",
+    "The dog lies on the cushion with its body low and comfortable, head raised, paws loosely forward — unhurried and warm.",
+  ];
 
-  const attitudeInstruction = `Choose the attitude from the following options that best matches the natural character and posture of the animal in the photo: ${attitudes}`;
+  // Poses predefinidas — gatos
+  const poses_cat = [
+    "The cat lies on the cushion with its paws tucked neatly under its body — the classic loaf position, perfectly self-contained.",
+    "The cat sits upright on the cushion — compact, composed, front paws together, tail curled to one side.",
+    "The cat reclines on the cushion, chest down, one paw tucked in and one extended — naturally asymmetric and alive.",
+    "The cat lounges on the cushion, body low and relaxed, head resting gently on its front paws — drowsy and soft.",
+  ];
 
-  // Miradas — 1 directa, 2 libres
+  // Miradas — 1 directa, 1 libre, 1 desviada
   const gazes = [
     "The animal looks directly and calmly into the viewer's eyes.",
-    "", // modelo decide completamente
+    "",
     "The gaze is directed slightly away — into the middle distance, thoughtful and self-contained.",
   ];
 
   // Ángulos de cámara
   const cameraAngles = [
     "Camera slightly elevated, centered — classic formal portrait angle.",
-    "Camera at eye level, positioned at a gentle 30-degree angle to one side — three-quarter view.",
-    "Camera slightly elevated, angled 30 degrees — adds depth and dimension to the composition.",
+    "Camera at eye level, gentle 30-degree angle to one side — three-quarter view.",
+    "Camera slightly elevated, angled 30 degrees — adds depth and dimension.",
   ];
 
   let framingInstruction;
@@ -57,9 +61,9 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
     const gaze = pick(gazes);
     const camera = pick(cameraAngles);
 
-    framingInstruction = `${attitudeInstruction} ${gaze} Preserve the exact body proportions of the animal from the photo. Cushion visible at the bottom edge. ${camera} Aspect ratio 4:5 vertical.`.replace(/\s+/g, ' ').trim();
+    framingInstruction = `If the subject is a dog: ${pick(poses_dog)} If the subject is a cat: ${pick(poses_cat)} ${gaze} Preserve the exact body proportions and facial expression of the animal from the photo. Cushion visible at the bottom edge. ${camera} Aspect ratio 4:5 vertical.`.replace(/\s+/g, ' ').trim();
   } else {
-    framingInstruction = `Look at each animal in the photo individually. Choose the attitude from the following options that best matches the natural character and posture of each one: ${attitudes}. Each animal may have a different attitude. Both animals on the same cushion, bodies close together. Both faces readable. Cushion visible at the bottom edge. Camera slightly elevated, centered. Aspect ratio 4:5 vertical.`;
+    framingInstruction = `Both animals rest together on the same cushion, each in its own natural position. If there is a dog: ${pick(poses_dog)} If there is a cat: ${pick(poses_cat)} Both faces readable. Cushion visible at the bottom edge. Camera slightly elevated, centered. Aspect ratio 4:5 vertical.`;
   }
 
   const styleDescription = S.role;
