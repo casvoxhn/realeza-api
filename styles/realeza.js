@@ -1,68 +1,48 @@
-// styles/realeza.js — V13.0
+// styles/barroco.js — V13.0
 
 const { pick } = require('../utils/pick');
 
-module.exports = function realeza(gender) {
+module.exports = function barroco(gender) {
 
-  const mantles = [
-    "crimson velvet coronation mantle with white ermine border — individual black tail-tips — draped around resting body, chest fur visible, single gold clasp",
-    "deep burgundy velvet royal mantle with ermine trim — wrapped around resting body, gold pin at throat",
-    "royal blue velvet robe with ermine collar — draped around resting body, gold cord fastening"
+  const robes = [
+    "near-black velvet cloak with white ermine collar — individual black tail-tips — draped around resting body, chest visible, single heavy antique gold chain",
+    "dark charcoal velvet robe with ermine trim — around resting body, thick antique gold chain",
+    "near-black velvet mantle with gold brocade and ermine collar — around resting body, one heavy gold chain"
   ];
 
-  const mantles_masculine = [
-    "king's crimson velvet mantle with wide ermine border — draped around resting body, heavy gold clasp",
-    "deep burgundy royal mantle with ermine — around resting body, single gold fastening"
+  const robes_masculine = [
+    "black velvet doublet with ermine collar — around resting body — heavy gold chain of state, each link catching candlelight",
+    "dark burgundy velvet robe with ermine — around resting body — single massive antique gold chain"
   ];
 
-  const mantles_feminine = [
-    "queen's crimson velvet mantle with ermine — around resting body, delicate gold clasp",
-    "royal blue velvet court mantle with ermine — around resting body, gold cord"
-  ];
-
-  const crowns = [
-    "a heavy imperial crown pressing into the fur with real weight — large central ruby glowing deep red with a single bright highlight — gold with ermine base band",
-    "a royal crown with large central emerald — deep green, one specular highlight — heavy, pressing into the fur",
-    "a golden crown with large central sapphire — deep blue with one point of light — sitting with gravity on the head"
-  ];
-
-  const crowns_masculine = [
-    "a king's imperial crown — heavy gold, large central ruby glowing from within — pressing into the fur",
-    "a warrior-king crown — gold with central sapphire, deep blue with bright highlight"
-  ];
-
-  const crowns_feminine = [
-    "an elegant queen's crown — gold filigree, central diamond as pure light — pressing gently into fur",
-    "a queen's tiara-crown — gold with luminous pearls and diamonds"
+  const robes_feminine = [
+    "black satin baroque gown with pearl-white lace collar — around resting body — single strand of large luminous pearls",
+    "deep charcoal velvet robe with ermine — around resting body — single pearl brooch"
   ];
 
   const cushions = [
-    "a large gold velvet cushion with corner tassels — wide and opulent, the animal fits comfortably with space on all sides — on a stone ledge",
-    "a large crimson velvet cushion with gold cord trim — spacious and lush, the animal rests within it — stone ledge",
-    "a wide burgundy velvet cushion with gold embroidery and tassels — generous size, animal rests on top"
+    "a large dark charcoal velvet cushion with antique gold trim and tassels — wide and opulent, animal rests comfortably with space around it — on a stone ledge",
+    "a large near-black velvet cushion with warm gold tassel — spacious, animal rests within it — stone ledge",
+    "a wide deep umber velvet cushion with dark gold trim — generous size, animal rests on top"
   ];
 
-  const selectedMantle = gender === 'masculine' ? pick(mantles_masculine)
-    : gender === 'feminine' ? pick(mantles_feminine)
-    : pick(mantles);
-
-  const selectedCrown = gender === 'masculine' ? pick(crowns_masculine)
-    : gender === 'feminine' ? pick(crowns_feminine)
-    : pick(crowns);
+  const selectedRobe = gender === 'masculine' ? pick(robes_masculine)
+    : gender === 'feminine' ? pick(robes_feminine)
+    : pick(robes);
 
   const poses_dog = [
-    "The dog lies sphinx pose — chest down, front paws flat and extended forward on the cushion, head raised with regal authority.",
-    "The dog rests with front paws forward on the cushion, body low, head raised."
+    "The dog lies sphinx pose — chest down, front paws flat and extended forward on the cushion, head raised with intensity.",
+    "The dog rests with front paws forward on the cushion, body low, head raised looking at viewer."
   ];
 
   const poses_cat = [
-    "The cat lies sphinx pose — chest down, front paws flat and extended forward on the cushion, head raised with absolute stillness.",
+    "The cat lies sphinx pose — chest down, front paws flat and extended forward on the cushion, head raised with quiet intensity.",
     "The cat rests with front paws forward on the cushion, body low, head raised."
   ];
 
   return {
-    name: "Realeza Imperial",
-    role: `Rigaud court portrait style. Powerful light from upper right. The animal wears ${selectedMantle}. On its head: ${selectedCrown}. It rests on ${pick(cushions)}. Dark near-black background with warm amber halo behind head. Ermine tail-tips painted individually. Deep warm shadows.`,
+    name: "Gran Maestro Oscuro",
+    role: `Rembrandt Dutch Golden Age style circa 1660. Single candle light from upper left — one side lit, one side in warm shadow. The animal wears ${selectedRobe}. It rests on ${pick(cushions)}. Background is near-black atmospheric darkness — not flat, warm umber undertones, soft amber halo behind head. Gold chain catches the candle: warm light on raised surfaces, dark in recesses. Eyes have one small warm catchlight, deep iris, visible wet lower line.`,
     poses_dog,
     poses_cat
   };
