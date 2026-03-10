@@ -29,14 +29,14 @@ module.exports = function barroco(gender) {
 
   const poses_dog = [
     "The dog lies in sphinx pose — chest down on the cushion, both front paws extended flat forward, head raised looking at the viewer with intensity.",
-    "The dog sits upright on the cushion — front paws down, body composed, looking directly at the viewer with psychological depth.",
-    "The dog rests chest-down on the cushion, front paws forward, head raised with quiet gravitas."
+    "The dog sits upright on the cushion — front paws down, body composed, gaze turned slightly to one side with psychological weight.",
+    "The dog rests chest-down on the cushion, front paws forward, head in three-quarter profile — looking away into shadow with quiet gravitas."
   ];
 
   const poses_cat = [
-    "The cat lies in sphinx pose — chest down on the cushion, front paws extended flat forward, head raised with quiet intensity.",
-    "The cat sits upright on the cushion — compact, paws together, looking at the viewer with piercing stillness.",
-    "The cat rests chest-down, front paws forward, head raised — emerging from shadow with presence."
+    "The cat lies in sphinx pose — chest down on the cushion, front paws extended flat forward, head raised with quiet intensity looking at the viewer.",
+    "The cat sits upright on the cushion — compact, paws together, gaze directed to one side with piercing inner stillness.",
+    "The cat rests chest-down, front paws forward, head turned in three-quarter profile — emerging from shadow, gaze directed away with brooding presence."
   ];
 
   const selectedRobe = gender === 'masculine' ? pick(robes_m)
