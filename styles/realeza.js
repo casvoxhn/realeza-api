@@ -1,45 +1,58 @@
-// styles/realeza.js — V14.0
+// styles/realeza.js — V15.0
 
 const { pick } = require('../utils/pick');
 
 module.exports = function realeza(gender) {
 
-  const cushions = [
-    "large gold velvet cushion with corner tassels on a stone ledge",
-    "large crimson velvet cushion with gold cord trim on a stone ledge",
-    "wide burgundy velvet cushion with gold embroidery and tassels on stone"
-  ];
-
   const mantles = [
-    "a crimson velvet coronation mantle with white ermine border — black tail-tips individually painted — draped around the resting body falling to both sides, chest visible, single gold clasp at throat",
-    "a deep burgundy velvet royal mantle with thick ermine trim draped around resting body, gold pin at throat",
-    "a royal blue velvet robe with ermine collar draped around resting body, gold cord"
+    "a crimson velvet coronation mantle with white ermine border — black tail-tips individually painted — draped around the body, chest visible, single gold clasp at throat",
+    "a deep burgundy velvet royal mantle with white ermine trim — gold embroidery on the border — draped around the body, single gold pin",
+    "a royal blue velvet robe with white ermine collar — black tail-tips — draped around the body, gold cord fastening"
   ];
 
   const mantles_m = [
-    "a king's crimson velvet mantle with wide ermine border — black tail-tips individually painted — draped around resting body, heavy gold clasp",
-    "a deep burgundy royal mantle with ermine draped around resting body, single gold clasp"
+    "a king's crimson velvet mantle with wide ermine border — black tail-tips individually painted — draped around the body, single heavy gold clasp",
+    "a deep burgundy royal mantle with ermine — draped around the body, single gold clasp"
   ];
 
   const mantles_f = [
-    "a queen's crimson velvet mantle with fine ermine trim draped around resting body, delicate gold clasp",
-    "a royal blue velvet court mantle with ermine draped around resting body, gold cord"
+    "a queen's rose-pink velvet mantle with fine ermine trim — draped around the body, delicate gold clasp",
+    "a royal blue velvet court mantle with ermine — draped around the body, gold cord"
   ];
 
   const crowns = [
-    "a heavy imperial crown pressing into the fur — large central ruby with deep red internal glow brightening to a single surface highlight",
-    "a royal crown with large central emerald — deep green, one specular highlight — pressing into the fur with weight",
-    "a golden crown with large central sapphire — deep blue with one point of light — heavy on the head"
+    "a heavy imperial crown pressing into the fur with real weight — large central ruby with deep red internal glow and a single bright surface highlight — gold with ermine base band",
+    "a royal crown with large central emerald — deep green, one specular highlight — heavy on the head",
+    "a golden crown with large central sapphire — deep blue with one point of pure light — sitting with gravity"
   ];
 
   const crowns_m = [
-    "a king's imperial crown — heavy gold, large central ruby glowing deep red — ermine base band pressing into the fur",
-    "a warrior-king crown — gold with central sapphire, deep blue with bright highlight"
+    "a king's imperial crown — heavy gold, large central ruby glowing deep red — ermine base pressing into the fur",
+    "a warrior-king crown — gold with central sapphire, deep blue brightening to a highlight"
   ];
 
   const crowns_f = [
-    "an elegant queen's crown — gold filigree with central diamond as pure cold light",
-    "a queen's tiara-crown with luminous pearls and diamonds"
+    "an elegant queen's crown — gold filigree with central diamond as a point of cold light",
+    "a queen's tiara-crown with graduated luminous pearls and diamonds"
+  ];
+
+  // Combinaciones elegantes cojín + capa — colores complementarios, no iguales
+  const cushions = [
+    "a large opulent gold velvet cushion — full and generously inflated — with gold cord trim and corner tassels, on a marble stone ledge",
+    "a large ivory silk damask cushion — full and luxurious — with gold tassel, on a stone ledge",
+    "a large deep teal velvet cushion — inflated and generous — gold embroidered border and tassels, on a marble ledge"
+  ];
+
+  const poses_dog = [
+    "The dog lies in sphinx pose — chest down on the cushion, both front paws extended flat forward, head raised looking at the viewer.",
+    "The dog sits naturally on the cushion — upright, both front paws down, body straight, looking directly at the viewer.",
+    "The dog rests on the cushion chest-down, front paws forward, head turned slightly with dignity."
+  ];
+
+  const poses_cat = [
+    "The cat lies in sphinx pose — chest down on the cushion, front paws extended flat forward, head raised looking at the viewer.",
+    "The cat sits naturally on the cushion — upright and compact, front paws together, looking directly at the viewer.",
+    "The cat rests chest-down, front paws forward, head raised with absolute regal stillness."
   ];
 
   const selectedMantle = gender === 'masculine' ? pick(mantles_m)
@@ -50,19 +63,9 @@ module.exports = function realeza(gender) {
     : gender === 'feminine' ? pick(crowns_f)
     : pick(crowns);
 
-  const poses_dog = [
-    "The dog lies in sphinx pose — chest resting on the cushion, both front paws extended flat forward, head raised with regal authority looking at viewer.",
-    "The dog rests chest-down on the cushion, front paws stretched forward and flat, head up."
-  ];
-
-  const poses_cat = [
-    "The cat lies in sphinx pose — chest on cushion, front paws extended flat forward, head raised with absolute stillness looking at viewer.",
-    "The cat rests chest-down on cushion, front paws forward and flat, head raised."
-  ];
-
   return {
     name: "Realeza Imperial",
-    role: `Style: Rigaud imperial court portrait. The animal wears ${selectedMantle}. On its head: ${selectedCrown}. It rests on a ${pick(cushions)}. Background near-black with warm amber halo behind head. Powerful light from upper right. Ermine tail-tips individually painted.`,
+    role: `Style: Rigaud imperial court portrait — 17th century. The animal wears ${selectedMantle}. On its head: ${selectedCrown}. It rests on ${pick(cushions)}. Background near-black at corners graduating to warm amber umber behind the head — no detail, pure atmosphere. Powerful warm light from upper right. Ermine tail-tips individually painted. No hanging medallions or necklaces.`,
     poses_dog,
     poses_cat
   };
