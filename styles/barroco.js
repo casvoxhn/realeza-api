@@ -14,16 +14,11 @@ module.exports = function barroco(gender) {
     "a deep charcoal velvet mantle with ermine collar. Draped behind and to one side — studio arranged, falling with natural weight away from the animal. A single luminous pearl brooch fastens the ermine at the center of the chest",
     "a near-black velvet mantle with ermine trim. Arranged dramatically behind and to one side. A delicate pearl-and-gold brooch anchors the mantle at the chest"
   ];
-  const cushions = [
-    "a large opulent deep burgundy velvet cushion — full and generously inflated — gold cord trim, corner tassels, and gold embroidered border with floral arabesque pattern, on a stone ledge",
-    "a large rich crimson velvet cushion — inflated and luxurious — gold embroidery with arabesque pattern and tassels, on a stone ledge",
-    "a large deep teal velvet cushion — full and generous — gold embroidered floral border and tassels, on a marble ledge"
-  ];
   const selectedRobe = gender === 'masculine' ? pick(robes_m)
     : gender === 'feminine' ? pick(robes_f)
     : pick(robes);
   return {
     name: "Gran Maestro Oscuro",
-    role: `Style: Rembrandt Dutch Golden Age — circa 1660. The animal wears ${selectedRobe}. It rests on ${pick(cushions)}. Background near-black with warm umber undertones — subtle warm brushwork — soft amber halo behind the head. Single candle from upper left — one side fully lit, the other in warm rich shadow. Eyes: one small warm catchlight, deep iris, visible wet lower line.`,
+    role: `Style: Rembrandt Dutch Golden Age — circa 1660. The animal wears ${selectedRobe}. Background near-black with warm umber undertones — subtle warm brushwork — soft amber halo behind the head. Single candle from upper left — one side fully lit, the other in warm rich shadow. Eyes: one small warm catchlight, deep iris, visible wet lower line.`,
   };
 };
