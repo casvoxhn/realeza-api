@@ -14,16 +14,11 @@ module.exports = function realeza(gender) {
     "a queen's rose-pink velvet mantle with fine ermine trim. Draped behind and to one side — studio arranged, falling with natural weight. A delicate gold brooch with a small gemstone fastens the ermine at the chest",
     "a royal blue velvet court mantle with ermine. Arranged dramatically behind and to one side. A gold and pearl brooch anchors the mantle at the chest"
   ];
-  const cushions = [
-    "a large opulent gold velvet cushion — thick and heavily stuffed, visibly plump — gold cord trim, corner tassels, and gold embroidered border with floral arabesque pattern, on a marble stone ledge",
-    "a large ivory silk damask cushion — thick and deeply cushioned — gold tassel, gold embroidered floral border, on a stone ledge",
-    "a large deep teal velvet cushion — thick and heavily stuffed — gold embroidered arabesque border and corner tassels, on a marble ledge"
-  ];
   const selectedMantle = gender === 'masculine' ? pick(mantles_m)
     : gender === 'feminine' ? pick(mantles_f)
     : pick(mantles);
   return {
     name: "Realeza Imperial",
-    role: `Style: Rigaud imperial court portrait — 17th century. The animal wears ${selectedMantle}. It rests on ${pick(cushions)}. Background near-black at corners graduating to warm amber umber behind the head — no detail, pure atmosphere. Powerful warm light from upper right. Ermine tail-tips individually painted.`,
+    role: `Style: Rigaud imperial court portrait — 17th century. The animal wears ${selectedMantle}. Background near-black at corners graduating to warm amber umber behind the head — no detail, pure atmosphere. Powerful warm light from upper right. Ermine tail-tips individually painted.`,
   };
 };
