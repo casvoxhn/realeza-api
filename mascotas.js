@@ -96,11 +96,11 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
 
   const framingInstruction = [
     `This portrait contains ${totalAnimals} animals from the photos provided. Paint every single one of them — no animal may be omitted.`,
-    `IMPORTANT: Each animal wears its own completely independent royal mantle. They do NOT share any garment. The mantle falls behind the shoulders and drapes to each side like wings — chest and belly completely bare and uncovered.`,
-    `Animal 1 wears: a ${palette[0]} velvet royal mantle — falling behind its shoulders, draping to each side, chest bare. White ermine border at the opening. A visible gold chain with a ${shuffledGems[0]} pendant.`,
-    `Animal 2 wears: a ${palette[1]} velvet royal mantle — falling behind its shoulders, draping to each side, chest bare. White ermine border at the opening. A visible gold chain with a ${shuffledGems[1]} pendant.`,
-    totalAnimals >= 3 ? `Animal 3 wears: a deep gold velvet royal mantle — falling behind its shoulders, chest bare. Ermine border. A visible gold chain with a ${shuffledGems[2]} pendant.` : '',
-    totalAnimals >= 4 ? `Animal 4 wears: a midnight blue velvet royal mantle — falling behind its shoulders, chest bare. Ermine border. A visible gold chain with a ${shuffledGems[3]} pendant.` : '',
+    `IMPORTANT: Each animal wears its own completely independent royal mantle. They do NOT share any garment. Each mantle is draped dramatically behind and to one side — studio arranged, falling away from the animal with natural weight.`,
+    `Animal 1 wears: a ${palette[0]} velvet royal mantle with white ermine border — draped dramatically behind and to one side, as if arranged by a studio painter. The fabric falls away from the animal with natural weight, not around it. A gold brooch with a ${shuffledGems[0]} gemstone fastens the two ermine lapels together at the center of the chest.`,
+    `Animal 2 wears: a ${palette[1]} velvet royal mantle with white ermine border — draped dramatically behind and to one side, studio arranged. The velvet falls away naturally. A gold brooch with a ${shuffledGems[1]} gemstone fastens the ermine at the chest.`,
+    totalAnimals >= 3 ? `Animal 3 wears: a deep gold velvet royal mantle with ermine — draped behind and to one side, studio arranged. A gold brooch with a ${shuffledGems[2]} gemstone fastens the ermine at the chest.` : '',
+    totalAnimals >= 4 ? `Animal 4 wears: a midnight blue velvet royal mantle with ermine — draped behind and to one side, studio arranged. A gold brooch with a ${shuffledGems[3]} gemstone fastens the ermine at the chest.` : '',
     scene,
     `Preserve the exact face, markings, fur color and expression of each animal from the photos.`,
     `${camera} Aspect ratio 4:5 vertical.`
