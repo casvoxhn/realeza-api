@@ -28,15 +28,25 @@ const poses = {
     `POSE: The dog sits — body in 3/4 profile, head turned completely to face the viewer. Direct, confident gaze.`
   ],
 
-  // ─── GATO ────────────────────────────────────────────────────────────────
+  // ─── GATO — 6 POSES ANATÓMICAMENTE ESPECÍFICAS ──────────────────────────
   gato: [
-    `POSE: The cat sits with natural weight settled into the cushion — body slightly relaxed, not rigid. One front paw very slightly ahead of the other, creating subtle asymmetry. Tail curled loosely to one side. Head turned 15 degrees off-center, chin slightly elevated. Gaze directed just past the viewer — 10 degrees to the side — the indifferent confidence of a cat that knows it is being painted but has better things to think about.`,
-    `POSE: The cat lies in sphinx position — chest slightly raised, both front legs extended forward, parallel. Head fully erect, gaze directed straight at the viewer. One front paw very slightly ahead of the other.`,
-    `POSE: The cat sits upright — both front paws placed perfectly together, tail wrapped neatly around the front feet. Head turned very slightly — 10 degrees — giving a composed, evaluating gaze.`,
-    `POSE: The cat sits — body turned 3/4, head turned back to face the viewer directly. One front paw slightly forward. The posture of a cat that has just decided you are worth its attention.`,
-    `POSE: The cat sits perfectly upright — front paws together, back straight. Head tilted very slightly — 8 degrees. Gaze direct and penetrating.`,
-    `POSE: The cat lies in loaf position — front paws tucked completely under the chest, body compact and round. Head erect, gaze directed straight at the viewer. Maximum authority with minimum effort.`,
-    `POSE: The cat lies with its chest resting directly on the cushion — front paws folded completely underneath the body, hidden from view. Body low, wide and settled deeply into the cushion. Head fully erect and elevated, gaze direct and commanding. The royal mantle drapes over the back and falls down both sides of the cushion, pooling dramatically on the stone ledge below. The cat owns every inch of the frame.`
+    // POSE 0 — Sentado asimétrico, mirada lateral
+    `POSE 0 — SEATED ASYMMETRIC: The cat's HINDQUARTERS are fully seated and resting on the cushion. The cat's FRONT PAWS are both flat on the cushion surface below the chest — one paw very slightly ahead of the other, creating subtle asymmetry. The cat's BACK is upright and straight. The cat's TAIL is curled loosely to one side of the body. The cat's HEAD is turned 15 degrees to one side — completely level, not tilted up or down. The cat's EYES are directed to a point 15 degrees beside the viewer — not at the viewer directly, not downward. The indifferent gaze of a cat that knows it is being painted.`,
+
+    // POSE 1 — Sphinx, patas extendidas
+    `POSE 1 — SPHINX RECLINE: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion surface — stretched out in front of the body. The cat's CHEST is lowered and resting on the cushion — not raised, touching the velvet. The cat's HINDQUARTERS are on the cushion behind the body, low. The cat's HEAD is fully erect and elevated above the body — chin up. The cat's EYES look directly at the viewer — straight ahead, not downward, not to the side. This is a sphinx recline: front legs stretched forward, chest on cushion, head up and alert.`,
+
+    // POSE 2 — Sentado upright, patas juntas, cola enroscada
+    `POSE 2 — UPRIGHT FORMAL: The cat's HINDQUARTERS are fully seated on the cushion. The cat's FRONT PAWS are placed together, side by side, perfectly symmetrical, flat on the cushion. The cat's TAIL is wrapped neatly around the front feet, tip just visible. The cat's BACK is perfectly straight and upright. The cat's HEAD faces directly forward — not tilted, not turned. The cat's EYES look straight at the viewer. Maximum feline composure — a cat sitting like a statue.`,
+
+    // POSE 3 — Sentado 3/4, cabeza vuelta
+    `POSE 3 — THREE-QUARTER TURN: The cat's HINDQUARTERS are seated on the cushion. The cat's BODY is turned 3/4 away from the viewer — the flank and side of the body are visible. The cat's FRONT PAWS are flat on the cushion, one slightly forward. The cat's HEAD is turned completely back toward the viewer — a sharp, confident rotation of the neck. The cat's EYES look directly at the viewer. The body faces away, the head faces forward — a dynamic, aristocratic pose.`,
+
+    // POSE 5 — Loaf, patas escondidas
+    `POSE 5 — LOAF: The cat's FRONT PAWS are completely tucked and hidden underneath the chest — not visible at all, fully concealed under the body. The cat's BODY is compact, rounded, and resting directly on the cushion — no legs visible at the front whatsoever. The cat's TAIL is wrapped around one side of the rounded body. The cat's HEAD is fully erect on top of the round body. The cat's EYES look directly at the viewer — straight ahead, level, not downward. A perfectly round compact body with zero visible legs, head erect like a sovereign.`,
+
+    // POSE 6 — Recostado pecho al cojín, patas escondidas, manto dramático
+    `POSE 6 — CHEST DOWN REGAL: The cat's FRONT PAWS are folded completely underneath the chest — hidden from view, not visible. The cat's CHEST is resting directly and fully on the cushion surface — body low and wide, settled deeply into the velvet. The cat's HINDQUARTERS are also low on the cushion behind the body. The cat's HEAD is fully erect and elevated above the low body — chin up, commanding. The cat's EYES look directly at the viewer. The royal mantle drapes over the back and falls down both sides of the cushion. A low, wide, powerful presence.`
   ],
 
   // ─── CONEJO ──────────────────────────────────────────────────────────────
