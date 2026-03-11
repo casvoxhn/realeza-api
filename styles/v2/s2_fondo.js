@@ -3,9 +3,9 @@
 const fondos = {
   realeza: `Background: near-black in the upper left corner, graduating diagonally to deep warm amber-gold behind the subject's head and upper right. Pure atmospheric warmth — no objects, no furniture, no architecture, no props of any kind. Only darkness and candlelight atmosphere.`,
 
-  barroco: `Background: near-black on all sides, deepest in the upper corners. A single concentrated pool of warm amber light gathers directly behind the subject's head — like a single candle in a dark room. Pure Rembrandt darkness — no objects, no furniture, no architecture, no props of any kind.`,
+  barroco: `Background: near-black on ALL sides and corners — 80% of the canvas is pure deep black. A single tight shaft of warm amber-gold light strikes directly behind the subject's head only — creating a small luminous halo against total darkness. Extreme Rembrandt chiaroscuro. The darkness is absolute and dominant. No objects, no furniture, no architecture, no props of any kind.`,
 
-  renacimiento: `Background: deep warm umber graduating from near-black at the left edge to soft amber-brown behind the subject's head. A subtle warm haze, like afternoon light through old glass. No objects, no furniture, no architecture, no props of any kind.`
+  renacimiento: `Background: rich warm Venetian atmosphere in the style of Titian — deep golden ochre and burnt sienna tones that glow from within, as if sunlight is trapped in the paint itself. The upper corners dissolve into warm amber-brown darkness while the area behind the subject's head radiates with a luminous golden warmth. Tonal painting — colors blend continuously into one unified glowing atmosphere. No objects, no furniture, no architecture, no props of any kind.`
 };
 
 module.exports = function s2_fondo(estilo) {
