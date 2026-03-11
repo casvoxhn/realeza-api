@@ -6,18 +6,18 @@ const poses = {
 
   // ─── PERRO RAZA GRANDE ───────────────────────────────────────────────────
   perro_grande: [
-    `POSE: The dog lies reclined — chest down, both front legs extended forward on the cushion, parallel. Head fully erect, chin slightly raised, gaze directed straight at the viewer.`,
-    `POSE: The dog lies reclined — chest down, left front leg extended forward, right slightly retracted. Head turned 3/4 toward the viewer. Slight natural asymmetry.`,
-    `POSE: The dog lies in sphinx position — chest slightly elevated, front legs extended forward, one paw lightly crossed over the other. Head erect, gaze forward.`,
-    `POSE: The dog lies fully reclined — body long and horizontal, both front paws extended forward. Head raised and turned slightly — 20 degrees off center — gaze returning to meet the viewer.`
+    `POSE: The dog lies fully on top of the cushion — entire body resting ON the cushion surface, chest pressed down into the velvet, belly supported by the cushion. Both front legs extended forward, paws hanging relaxed over the front edge of the cushion. The dog's full body weight is on the cushion — not perched on the edge, not floating. Head fully erect, chin slightly raised, gaze directed straight at the viewer.`,
+    `POSE: The dog lies on top of the cushion — chest and body fully supported by the cushion surface. Left front leg extended forward, right slightly retracted. The cushion visibly compresses under the dog's weight. Head turned 3/4 toward the viewer with natural confidence.`,
+    `POSE: The dog lies on top of the cushion in sphinx position — full chest pressed into the velvet surface, both front legs extended forward on the cushion, one paw slightly over the other. The entire underside of the dog rests on the cushion. Head erect, gaze forward.`,
+    `POSE: The dog lies fully on top of the cushion — body long and horizontal, completely supported by the cushion from chest to hindquarters. Both front paws extended forward over the cushion edge. Head raised and turned 20 degrees off center to meet the viewer's gaze.`
   ],
 
   // ─── PERRO RAZA MEDIANA ──────────────────────────────────────────────────
   perro_mediano: [
-    `POSE: The dog lies reclined — chest down, both front legs extended forward. Head fully erect, gaze straight at the viewer.`,
-    `POSE: The dog sits upright — back straight, both front paws placed neatly together. Head elevated. Gaze straight at the viewer.`,
-    `POSE: The dog sits upright — body turned 3/4, head turned back to face the viewer directly. One front paw slightly forward.`,
-    `POSE: The dog sits — body in 3/4 profile, head turned completely to face the viewer. Front paws neatly placed.`
+    `POSE: The dog lies fully on top of the cushion — entire chest and body resting ON the cushion surface, not perched on the edge. Both front legs extended forward, paws at the cushion's front edge. The dog's full weight presses into the velvet. Head fully erect, gaze straight at the viewer.`,
+    `POSE: The dog sits upright ON TOP of the cushion — hindquarters fully seated on the cushion surface, back straight, both front paws placed neatly on the cushion in front. Head elevated. Gaze straight at the viewer.`,
+    `POSE: The dog sits ON the cushion — body turned 3/4, fully seated with weight on the cushion, head turned back to face the viewer directly. One front paw slightly forward on the cushion surface.`,
+    `POSE: The dog sits ON TOP of the cushion — body in 3/4 profile, fully supported by the cushion, head turned completely to face the viewer. Front paws rest naturally on the cushion surface.`
   ],
 
   // ─── PERRO RAZA PEQUEÑA ──────────────────────────────────────────────────
