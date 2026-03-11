@@ -8,8 +8,8 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 
-const buildPrompt      = require('./v2/buildPrompt');
-const detectarAnimales = require('./v2/detectAnimales');
+const buildPrompt      = require('./styles/v2/buildPrompt');
+const detectarAnimales = require('./styles/v2/detectAnimales');
 const getFamiliaPrompt = require('./familia');
 const getNinosPrompt   = require('./ninos');
 const getParejasPrompt = require('./parejas');
