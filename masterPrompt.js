@@ -25,7 +25,7 @@ module.exports = function masterPrompt(numSubjects, styleDescription, framingIns
     "",
     "The fur has three visible layers of light — bright highlights on the outermost hairs, warm reflected light in the mid-tones, deep rich shadow pooling in the recesses. The palette is muted oil pigment: burnt sienna, raw umber, warm ivory, unified by an amber glaze.",
     "",
-    "The royal mantle falls behind the shoulders and drapes to each side — the animal's chest is bare and uncovered. Heavy velvet with deep natural folds pulled down by gravity. The ermine border frames the open front with thick voluminous fur.",
+    "The royal mantle is draped dramatically behind and to one side — as if arranged by a studio painter before the sitting. The heavy velvet falls away from the animal with natural weight, not around it. The ermine border frames the chest opening. A brooch or clasp fastens the mantle at the center of the chest.",
     "",
     cushionLine,
     "",
