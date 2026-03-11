@@ -14,16 +14,11 @@ module.exports = function renacimiento(gender) {
     "a sage-green silk cape with delicate gold embroidery. Draped behind and to one side — arranged by a studio hand, falling with natural weight. A delicate gold cord bow fastens the cape at the chest",
     "an emerald velvet mantle with champagne gold trim. Arranged dramatically behind and to one side. A fine gold ribbon bow anchors the mantle at the chest"
   ];
-  const cushions = [
-    "a large opulent burgundy velvet cushion — full and generously inflated — gold embroidered border with floral arabesque pattern and corner tassels, on a warm stone ledge",
-    "a large rich gold velvet cushion — inflated and luxurious — gold embroidered arabesque border and tassels, on a stone ledge",
-    "a large deep crimson velvet cushion — full and generous — gold embroidered floral border and tassels, on a stone ledge"
-  ];
   const selectedCape = gender === 'masculine' ? pick(capes_m)
     : gender === 'feminine' ? pick(capes_f)
     : pick(capes);
   return {
     name: "Jardín Dorado",
-    role: `Style: Gainsborough warm aristocratic portrait — 18th century. The animal wears ${selectedCape}. It rests on ${pick(cushions)}. Background near-black at corners graduating to warm deep umber behind the head — no detail, pure atmospheric darkness. Soft warm light from upper left.`,
+    role: `Style: Gainsborough warm aristocratic portrait — 18th century. The animal wears ${selectedCape}. Background near-black at corners graduating to warm deep umber behind the head — no detail, pure atmospheric darkness. Soft warm light from upper left.`,
   };
 };
