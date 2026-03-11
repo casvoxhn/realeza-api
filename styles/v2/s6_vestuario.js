@@ -1,12 +1,7 @@
 // SECCIÓN 6 — VESTUARIO
-// Manto + armiño + cadena cruzada.
-// Variables controladas: color del manto (3 por estilo), género.
-// El modelo NO decide cómo cae el manto ni el tipo de cierre.
-
 const { pick } = require('./utils');
 
 const mantos = {
-
   realeza: {
     masculine: [
       { color: 'deep crimson', descripcion: 'a king\'s deep crimson velvet coronation mantle' },
@@ -24,7 +19,6 @@ const mantos = {
       { color: 'deep blue', descripcion: 'a royal blue velvet mantle' }
     ]
   },
-
   barroco: {
     masculine: [
       { color: 'near-black', descripcion: 'a near-black velvet mantle' },
@@ -42,7 +36,6 @@ const mantos = {
       { color: 'deep umber', descripcion: 'a deep umber-brown velvet mantle' }
     ]
   },
-
   renacimiento: {
     masculine: [
       { color: 'forest green', descripcion: 'a forest-green velvet cape' },
@@ -62,13 +55,11 @@ const mantos = {
   }
 };
 
-// Gemas pre-definidas para la cadena
 const gemas = ['deep emerald', 'rich sapphire', 'blood ruby', 'golden topaz', 'dark amethyst', 'white pearl'];
 
-// Cierre del manto por estilo — fijo, no variable
 const cierres = {
-  realeza: 'A large gold medallion brooch with a deep gemstone fastens the ermine at the center of the chest — drawing both lapels together into a single noble clasp.',
-  barroco: 'A fine gold chain crosses from one ermine lapel to the other — bridging the chest with a single luminous pearl at the center.',
+  realeza: 'A large gold medallion brooch with a deep gemstone fastens the ermine at the center of the chest.',
+  barroco: 'A fine gold chain crosses from one ermine lapel to the other with a single luminous pearl at the center.',
   renacimiento: 'A heavy braided gold cord with a decorative knot fastens both sides of the cape at the center of the chest.'
 };
 
@@ -82,9 +73,9 @@ module.exports = function s6_vestuario(estilo, genero, indexHero = null) {
   const gema = pick(gemas);
   const cierre = cierres[estilo] || cierres.realeza;
 
-  return `MANTLE: ${manto.descripcion} with wide white ermine border — black tail-tips individually painted. Draped dramatically behind and to one side — as if arranged by a studio painter before the sitting. The heavy velvet falls away from the animal with natural weight, not around it. The ermine border frames the chest opening, leaving the chest bare.
+  return `MANTLE: ${manto.descripcion} with wide white ermine border — black tail-tips individually painted. CRITICAL DRAPE: The mantle sits only on the animal's shoulders and falls BACKWARD and to one side only — like a cape tossed back by a king. The bulk of the velvet pools behind and beside the animal on the cushion. The mantle does NOT wrap around the front, does NOT cover the chest, does NOT fall forward. The animal's full chest and front are visible and unobstructed. Only the ermine collar is visible at the front — the rest goes behind.
 
-CHAIN: A visible gold chain crosses from one side of the ermine collar to the other — hanging at the center of the chest with a ${gema} pendant. The chain has weight and presence.
+CHAIN: A gold chain crosses the ermine collar from shoulder to shoulder — hanging at the center of the chest with a ${gema} pendant.
 
 BROOCH: ${cierre}`;
 };
