@@ -8,37 +8,33 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 
-const buildPrompt    = require('./v2/buildPrompt');  // ← NUEVA ARQUITECTURA
+const buildPrompt      = require('./v2/buildPrompt');
+const detectarAnimales = require('./v2/detectAnimales');
 const getFamiliaPrompt = require('./familia');
-const getNinosPrompt = require('./ninos');
+const getNinosPrompt   = require('./ninos');
 const getParejasPrompt = require('./parejas');
 const getRetratosPrompt = require('./retratos');
-const getMujerPrompt = require('./mujer');
+const getMujerPrompt   = require('./mujer');
 
-const app = express();
+const app  = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({ origin: '*' }));
 app.use(express.json({ limit: '100mb' }));
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+const genAI    = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const MODEL_ID = "gemini-3.1-flash-image-preview";
 
-// ─── CARGAR REFERENCIAS DE ESTILO ────────────────────────────────────────────
+// ─── REFERENCIAS DE ESTILO ────────────────────────────────────────────────────
 function loadReferenceImages() {
-  const refs = [];
+  const refs   = [];
   const refDir = path.join(__dirname, 'references');
   if (!fs.existsSync(refDir)) return refs;
   for (const file of ['ref_golden.jpg', 'ref_doberman.jpg', 'ref_poodle.jpg', 'ref_dachshunds.jpg']) {
     const fp = path.join(refDir, file);
     if (fs.existsSync(fp)) {
-      refs.push({
-        inlineData: {
-          data: fs.readFileSync(fp).toString('base64'),
-          mimeType: 'image/jpeg'
-        }
-      });
+      refs.push({ inlineData: { data: fs.readFileSync(fp).toString('base64'), mimeType: 'image/jpeg' } });
     }
   }
   console.log(`📸 Referencias cargadas: ${refs.length}`);
@@ -48,24 +44,24 @@ const STYLE_REFS = loadReferenceImages();
 
 async function uploadBufferToSupabase(buffer, prefix) {
   const fileName = `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.jpg`;
-  const { error } = await supabase.storage
-    .from('generated-art')
-    .upload(fileName, buffer, { contentType: 'image/jpeg' });
+  const { error } = await supabase.storage.from('generated-art').upload(fileName, buffer, { contentType: 'image/jpeg' });
   if (error) throw error;
   const { data } = supabase.storage.from('generated-art').getPublicUrl(fileName);
   return data.publicUrl;
 }
 
+// ─── GENERATE ────────────────────────────────────────────────────────────────
 app.post('/generate', async (req, res) => {
   try {
-    const { images, style, category, gender, especie, raza } = req.body;
-    const numSubjects = images.length;
-    const isGroup = numSubjects > 1;
+    const { images, style, category, gender } = req.body;
+    const numSubjects     = images.length;
+    const isGroup         = numSubjects > 1;
     const currentCategory = category || 'mascota';
-    const hasGender = gender && (gender === 'masculine' || gender === 'feminine');
+    const hasGender       = gender && (gender === 'masculine' || gender === 'feminine');
 
     console.log(`🎨 V15.0 | ${currentCategory} | ${style} | ${hasGender ? gender : 'neutral'} | ${numSubjects} sujetos`);
 
+    // Subir originales
     const originalUrls = await Promise.all(
       images.map(async (img, i) => {
         const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -73,28 +69,35 @@ app.post('/generate', async (req, res) => {
       })
     );
 
-    // ─── CONSTRUIR PROMPT ────────────────────────────────────────────────────
-    let promptText = "";
-
     const isMascotas = !currentCategory || currentCategory === 'mascota' || currentCategory === 'mascotas';
 
+    let promptText = "";
+
     if (isMascotas) {
-      // NUEVA ARQUITECTURA V2
+      // ── DETECTAR ANIMALES AUTOMÁTICAMENTE ──────────────────────────────
+      const animalesDetectados = await detectarAnimales(genAI, MODEL_ID, images);
+
+      // Para single usamos el primer animal detectado
+      // Para multi cada animal tiene su propia detección
+      const primerAnimal = animalesDetectados[0] || { especie: 'dog', raza: '' };
+
       promptText = buildPrompt({
         estilo:      style || 'realeza',
         numAnimales: numSubjects,
-        especie:     especie || 'perro',   // 'gato' | 'perro'
-        raza:        raza || '',            // nombre de la raza para detectar tamaño
+        especie:     primerAnimal.especie,
+        raza:        primerAnimal.raza,
         genero:      hasGender ? gender : null,
-        hero:        null                   // null = producción normal
+        animales:    animalesDetectados,  // array completo para multi
+        hero:        null
       });
+
     } else if (currentCategory === 'mujer')    promptText = getMujerPrompt(style, numSubjects, isGroup);
     else if (currentCategory === 'retratos')   promptText = getRetratosPrompt(style, numSubjects, isGroup);
     else if (currentCategory === 'parejas')    promptText = getParejasPrompt(style, numSubjects, isGroup);
     else if (currentCategory === 'ninos')      promptText = getNinosPrompt(style, numSubjects, isGroup);
     else if (currentCategory === 'familia')    promptText = getFamiliaPrompt(style, numSubjects, isGroup);
 
-    // ─── CONSTRUIR PARTS ─────────────────────────────────────────────────────
+    // ── CONSTRUIR PARTS ────────────────────────────────────────────────────
     const parts = [];
 
     if (isMascotas && STYLE_REFS.length > 0) {
@@ -103,43 +106,31 @@ app.post('/generate', async (req, res) => {
       parts.push({ text: "CLIENT PET PHOTO — paint this specific animal in the style shown above:" });
     }
 
-    // Imágenes del cliente
     parts.push(...images.map(img => ({
-      inlineData: {
-        data: img.replace(/^data:image\/\w+;base64,/, ""),
-        mimeType: "image/jpeg"
-      }
+      inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }
     })));
 
-    // Prompt
     parts.push({ text: promptText });
 
-    // ─── LLAMAR AL MODELO ────────────────────────────────────────────────────
-    const model = genAI.getGenerativeModel({ model: MODEL_ID });
-
+    // ── LLAMAR AL MODELO ───────────────────────────────────────────────────
+    const model  = genAI.getGenerativeModel({ model: MODEL_ID });
     const result = await model.generateContent({
       contents: [{ role: "user", parts }],
       generationConfig: {
         responseModalities: ["IMAGE", "TEXT"],
-        imageConfig: {
-          aspectRatio: "4:5",
-          imageSize: "1K"
-        }
+        imageConfig: { aspectRatio: "4:5", imageSize: "1K" }
       }
     });
 
     const response = await result.response;
-
-    if (!response.candidates?.[0]?.content) {
-      throw new Error("Gemini devolvió respuesta vacía.");
-    }
+    if (!response.candidates?.[0]?.content) throw new Error("Gemini devolvió respuesta vacía.");
 
     const imagePart = response.candidates[0].content.parts.find(p => p.inlineData?.data);
     if (!imagePart) throw new Error("Gemini no devolvió imagen.");
 
     const imageBuffer = Buffer.from(imagePart.inlineData.data, 'base64');
-    const prefix = `V15_${currentCategory.toUpperCase()}_${style?.toUpperCase().replace(/\s+/g, '_') || 'UNKNOWN'}${hasGender ? `_${gender.toUpperCase()}` : ''}`;
-    const finalUrl = await uploadBufferToSupabase(imageBuffer, prefix);
+    const prefix      = `V15_${currentCategory.toUpperCase()}_${style?.toUpperCase().replace(/\s+/g, '_') || 'UNKNOWN'}${hasGender ? `_${gender.toUpperCase()}` : ''}`;
+    const finalUrl    = await uploadBufferToSupabase(imageBuffer, prefix);
 
     console.log(`✅ V15.0 OK | ${prefix} | ${finalUrl}`);
     res.json({ success: true, imageUrl: finalUrl, originalUrls });
