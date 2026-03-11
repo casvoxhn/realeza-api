@@ -1,4 +1,3 @@
-// SECCIÓN 6 — VESTUARIO
 const { pick } = require('./utils');
 
 const mantos = {
@@ -73,9 +72,15 @@ module.exports = function s6_vestuario(estilo, genero, indexHero = null) {
   const gema = pick(gemas);
   const cierre = cierres[estilo] || cierres.realeza;
 
-  return `MANTLE: ${manto.descripcion} with wide white ermine border — black tail-tips individually painted. CRITICAL DRAPE: The mantle sits only on the animal's shoulders and falls BACKWARD and to one side only — like a cape tossed back by a king. The bulk of the velvet pools behind and beside the animal on the cushion. The mantle does NOT wrap around the front, does NOT cover the chest, does NOT fall forward. The animal's full chest and front are visible and unobstructed. Only the ermine collar is visible at the front — the rest goes behind.
+  return `MANTLE: ${manto.descripcion}.
 
-CHAIN: A gold chain crosses the ermine collar from shoulder to shoulder — hanging at the center of the chest with a ${gema} pendant.
+TWO SEPARATE PARTS — treat these independently:
+
+PART 1 — ERMINE COLLAR (always visible at front): A wide white ermine border with black tail-tips frames the animal's chest like an open lapel. This ermine collar is ALWAYS visible at the front of the animal — it never disappears behind the body. It sits like a coat's lapels — one on each side of the chest, open at the center.
+
+PART 2 — VELVET BODY (goes behind): The velvet body of the mantle drapes over the animal's back and falls to ONE side only — pooling on the cushion to the right. It does NOT come to the front. It does NOT cover the chest. Only its shoulder edge is visible where it meets the ermine collar.
+
+CHAIN: A gold chain hangs visibly across the open chest between the two ermine lapels — clearly visible, with a ${gema} pendant at the center. This chain is ALWAYS present and visible.
 
 BROOCH: ${cierre}`;
 };
