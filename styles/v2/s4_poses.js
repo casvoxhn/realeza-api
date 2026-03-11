@@ -35,7 +35,8 @@ const poses = {
     `POSE: The cat sits upright — both front paws placed perfectly together, tail wrapped neatly around the front feet. Head turned very slightly — 10 degrees — giving a composed, evaluating gaze.`,
     `POSE: The cat sits — body turned 3/4, head turned back to face the viewer directly. One front paw slightly forward. The posture of a cat that has just decided you are worth its attention.`,
     `POSE: The cat sits perfectly upright — front paws together, back straight. Head tilted very slightly — 8 degrees. Gaze direct and penetrating.`,
-    `POSE: The cat lies in loaf position — front paws tucked completely under the chest, body compact and round. Head erect, gaze directed straight at the viewer. Maximum authority with minimum effort.`
+    `POSE: The cat lies in loaf position — front paws tucked completely under the chest, body compact and round. Head erect, gaze directed straight at the viewer. Maximum authority with minimum effort.`,
+    `POSE: The cat lies with its chest resting directly on the cushion — front paws folded completely underneath the body, hidden from view. Body low, wide and settled deeply into the cushion. Head fully erect and elevated, gaze direct and commanding. The royal mantle drapes over the back and falls down both sides of the cushion, pooling dramatically on the stone ledge below. The cat owns every inch of the frame.`
   ],
 
   // ─── CONEJO ──────────────────────────────────────────────────────────────
