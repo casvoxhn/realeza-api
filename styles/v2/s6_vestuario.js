@@ -54,7 +54,11 @@ const mantos = {
   }
 };
 
-const gemas = ['deep emerald', 'rich sapphire', 'blood ruby', 'golden topaz', 'dark amethyst', 'white pearl'];
+const gemas = {
+  masculine: ['dark sapphire', 'golden topaz', 'deep emerald'],
+  feminine:  ['white pearl', 'rose ruby', 'deep amethyst'],
+  neutral:   ['rich sapphire', 'blood ruby', 'golden topaz', 'dark amethyst', 'deep emerald', 'white pearl']
+};
 
 module.exports = function s6_vestuario(estilo, genero, indexHero = null) {
   const generoKey = genero === 'masculine' ? 'masculine'
@@ -63,7 +67,7 @@ module.exports = function s6_vestuario(estilo, genero, indexHero = null) {
 
   const pool = mantos[estilo]?.[generoKey] || mantos.realeza.neutral;
   const manto = indexHero !== null ? pool[indexHero % pool.length] : pick(pool);
-  const gema = pick(gemas);
+  const gema = pick(gemas[generoKey]);
 
   return `MANTLE: ${manto.descripcion}.
 
