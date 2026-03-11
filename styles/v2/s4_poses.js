@@ -6,18 +6,18 @@ const poses = {
 
   // ─── PERRO RAZA GRANDE ───────────────────────────────────────────────────
   perro_grande: [
-    `POSE: The dog lies fully on top of the cushion — entire body resting ON the cushion surface, chest pressed down into the velvet, belly supported by the cushion. Both front legs extended forward, paws hanging relaxed over the front edge of the cushion. The dog's full body weight is on the cushion — not perched on the edge, not floating. Head fully erect, chin slightly raised, gaze directed straight at the viewer.`,
-    `POSE: The dog lies on top of the cushion — chest and body fully supported by the cushion surface. Left front leg extended forward, right slightly retracted. The cushion visibly compresses under the dog's weight. Head turned 3/4 toward the viewer with natural confidence.`,
-    `POSE: The dog lies on top of the cushion in sphinx position — full chest pressed into the velvet surface, both front legs extended forward on the cushion, one paw slightly over the other. The entire underside of the dog rests on the cushion. Head erect, gaze forward.`,
-    `POSE: The dog lies fully on top of the cushion — body long and horizontal, completely supported by the cushion from chest to hindquarters. Both front paws extended forward over the cushion edge. Head raised and turned 20 degrees off center to meet the viewer's gaze.`
+    `POSE: The dog lies fully reclined on the cushion like the classic Landseer royal portrait — complete body visible from nose to tail. Chest and belly pressed into the velvet, both front legs extended forward with paws at the cushion edge. The hindquarters and haunches are clearly visible behind the front legs — the dog has full body depth and volume. The cushion supports the entire length of the dog. Head erect, chin slightly raised, gaze straight at viewer.`,
+    `POSE: The dog reclines on the cushion showing its complete body — from the extended front paws all the way back to the visible haunches and hindquarters. Left front leg forward, right slightly back. The full silhouette of the dog is visible: broad chest, torso, and rear end all supported on the cushion. Head turned 3/4 toward the viewer.`,
+    `POSE: The dog lies in a full sphinx recline across the entire cushion — front legs extended forward, full torso resting on the velvet, haunches and rear legs visible behind. The complete body of the dog occupies the cushion from front to back. Head erect, one paw slightly over the other, gaze forward.`,
+    `POSE: The dog is fully reclined showing complete body volume — broad chest at the front, full torso in the middle, haunches clearly visible at the back. Both front paws extended forward. The dog fills the cushion entirely from nose to tail. Head raised 20 degrees off center to meet the viewer.`
   ],
 
   // ─── PERRO RAZA MEDIANA ──────────────────────────────────────────────────
   perro_mediano: [
-    `POSE: The dog lies fully on top of the cushion — entire chest and body resting ON the cushion surface, not perched on the edge. Both front legs extended forward, paws at the cushion's front edge. The dog's full weight presses into the velvet. Head fully erect, gaze straight at the viewer.`,
-    `POSE: The dog sits upright ON TOP of the cushion — hindquarters fully seated on the cushion surface, back straight, both front paws placed neatly on the cushion in front. Head elevated. Gaze straight at the viewer.`,
-    `POSE: The dog sits ON the cushion — body turned 3/4, fully seated with weight on the cushion, head turned back to face the viewer directly. One front paw slightly forward on the cushion surface.`,
-    `POSE: The dog sits ON TOP of the cushion — body in 3/4 profile, fully supported by the cushion, head turned completely to face the viewer. Front paws rest naturally on the cushion surface.`
+    `POSE: The dog lies fully reclined on the cushion showing its complete body — chest and belly on the velvet, front paws extended forward, full torso visible, haunches and rear clearly visible behind. The entire dog from nose to tail is painted. Head erect, gaze straight at viewer.`,
+    `POSE: The dog sits upright on the cushion showing full body — hindquarters seated on the cushion, torso upright, full body volume visible. Head elevated, gaze straight at viewer.`,
+    `POSE: The dog sits on the cushion showing complete body in 3/4 view — full silhouette visible including haunches, torso and chest. Head turned to face viewer directly. One front paw slightly forward.`,
+    `POSE: The dog sits on the cushion in 3/4 profile — complete body visible from nose to tail, full volume and depth. Head turned completely to face the viewer.`
   ],
 
   // ─── PERRO RAZA PEQUEÑA ──────────────────────────────────────────────────
