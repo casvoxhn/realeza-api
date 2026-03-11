@@ -1,16 +1,16 @@
-// SECCIÓN 5 — SUJETO
-// Carácter de especie, pelo, ojos, asimetría.
-// encuadre cambia dinámicamente según si la pose muestra cuerpo completo o no.
+// SECCIÓN 5 — SUJETO v4
+// Carácter, pelo, ojos, asimetría ÚNICAMENTE.
+// El encuadre fue removido de aquí — vive en s4_poses embebido en cada pose.
+// Así nunca hay contradicción entre encuadre y pose.
 
-module.exports = function s5_sujeto(especie, numAnimales, cuerpoCompleto = false) {
+module.exports = function s5_sujeto(especie, numAnimales) {
   const isMulti = numAnimales > 1;
 
-  // ─── ENCUADRE ────────────────────────────────────────────────────────────
-  const encuadre = isMulti
+  // ─── ENCUADRE MULTI ───────────────────────────────────────────────────────
+  // Solo aplica para multi — single ya tiene framing en su pose
+  const encuadreMulti = isMulti
     ? `FRAMING: All animals fill the frame together — large, close, commanding. Every animal has equal visual weight. No animal is cropped, minimized, or pushed to the edge. All faces clearly visible.`
-    : cuerpoCompleto
-      ? `FRAMING: The COMPLETE body of the animal is fully visible from head to tail — full figure including haunches, rear legs, and tail clearly shown on the cushion. The face is prominent and expressive, but the entire body occupies the canvas with monumental presence. Do NOT crop the body. Do NOT zoom into the face only.`
-      : `FRAMING: The animal's face fills at least 60% of the frame — extremely close crop, monumental presence. The face IS the painting. The body and cushion are visible in the lower third only.`;
+    : null;
 
   // ─── CARÁCTER DE ESPECIE ─────────────────────────────────────────────────
   const caracter = especie === 'gato'
@@ -26,5 +26,7 @@ module.exports = function s5_sujeto(especie, numAnimales, cuerpoCompleto = false
   // ─── ASIMETRÍA NATURAL ───────────────────────────────────────────────────
   const asimetria = `NATURALNESS: The pose has a slight natural asymmetry — nothing is perfectly centered or perfectly symmetrical. Real animals are never perfectly still. There is a lived-in quality: one ear slightly more forward, the weight distributed naturally, the expression caught in a genuine moment.`;
 
-  return [encuadre, caracter, pelo, ojos, asimetria].join('\n\n');
+  return [encuadreMulti, caracter, pelo, ojos, asimetria]
+    .filter(s => s !== null)
+    .join('\n\n');
 };
