@@ -6,19 +6,19 @@ const { pick } = require('./utils');
 
 const cojines = {
   realeza: [
-    { color: 'deep burgundy', tela: 'deep burgundy velvet' },
-    { color: 'rich gold', tela: 'rich gold velvet' },
-    { color: 'imperial crimson', tela: 'imperial crimson velvet' }
+    { tela: 'deep burgundy velvet' },
+    { tela: 'rich gold velvet' },
+    { tela: 'imperial crimson velvet' }
   ],
   barroco: [
-    { color: 'near-black', tela: 'near-black velvet' },
-    { color: 'deep crimson', tela: 'deep crimson velvet' },
-    { color: 'dark burgundy', tela: 'dark burgundy velvet' }
+    { tela: 'near-black velvet' },
+    { tela: 'deep crimson velvet' },
+    { tela: 'dark burgundy velvet' }
   ],
   renacimiento: [
-    { color: 'deep gold', tela: 'deep gold velvet' },
-    { color: 'warm burgundy', tela: 'warm burgundy velvet' },
-    { color: 'forest green', tela: 'forest-green velvet' }
+    { tela: 'deep gold velvet' },
+    { tela: 'warm burgundy velvet' },
+    { tela: 'forest-green velvet' }
   ]
 };
 
@@ -27,8 +27,8 @@ module.exports = function s7_props(estilo, numAnimales, indexHero = null) {
   const cojin = indexHero !== null ? pool[indexHero % pool.length] : pick(pool);
 
   const ancho = numAnimales > 1
-    ? `wide enough to seat all animals side by side with room to spare — it spans nearly the full width of the composition`
-    : `wider than the animal sitting on it — it extends beyond the animal on both sides`;
+    ? `wide enough to seat all animals side by side with room to spare — spans nearly the full width of the composition`
+    : `wider than the animal on it — extends visibly beyond the animal on both left and right sides`;
 
-  return `CUSHION: A ${cojin.tela} ceremonial cushion resting on a stone ledge. CRITICAL SIZE — this cushion is enormous and heavily overstuffed: it bulges upward under the animal's weight, its sides billow outward, ${ancho}. The cushion is nearly as tall as it is wide — almost a cube of velvet. It deforms slightly under the animal, creating natural fabric folds and tension wrinkles across the top surface. TRIM: A dense wall of gold bullion fringe runs along the ENTIRE bottom edge — thick, heavy, tightly packed tassels hanging straight down like a royal ceremonial altar cloth. One oversized gold tassel hangs prominently at the front corner. A gold embroidered arabesque border frames the top edge of the fringe. The velvet surface has subtle light sheen from the overhead light source.`;
+  return `CUSHION: A ${cojin.tela} ceremonial cushion, ${ancho}. SHAPE AND STRUCTURE: Enormously overstuffed — sides billow outward, top surface bulges upward under the animal's weight. A single central seam runs horizontally across the middle of the cushion from left edge to right edge, dividing it into two symmetrical halves like a classic tufted throne cushion — this seam is clearly visible and slightly indented into the velvet. The fabric gathers naturally around this seam creating a subtle quilted appearance. CRITICAL FRAMING: The ENTIRE cushion must be visible — top, sides, AND full bottom edge with fringe — the cushion is never cropped at the bottom. The bottom fringe and tassel are fully visible inside the frame. TRIM: A dense wall of gold bullion fringe runs along the entire bottom edge — thick, tightly packed tassels hanging straight down. One large gold tassel hangs at the front center-bottom corner. A gold embroidered floral border runs along the top edge of the fringe. LEDGE: Below the cushion is a flat matte stone surface — cool grey, completely non-reflective, zero shine. Only a thin sliver visible. The composition shows the full cushion from top to bottom.`;
 };
