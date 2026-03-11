@@ -1,18 +1,18 @@
-// styles/realeza.js — V17.2 (sin corona)
+// styles/realeza.js — V17.3 (mantle fix)
 const { pick } = require('../utils/pick');
 module.exports = function realeza(gender) {
   const mantles = [
-    "a crimson velvet coronation mantle with white ermine border — black tail-tips individually painted — draped around the body, chest visible, single gold clasp at throat",
-    "a deep burgundy velvet royal mantle with white ermine trim — gold embroidery on the border — draped around the body, single gold pin",
-    "a royal blue velvet robe with white ermine collar — black tail-tips — draped around the body, gold cord fastening"
+    "a crimson velvet coronation mantle with white ermine border — black tail-tips individually painted — falling behind the shoulders and draping to each side, chest and belly completely bare. Single gold clasp at the shoulder",
+    "a deep burgundy velvet royal mantle with white ermine trim — gold embroidery on the border — falling behind the shoulders to each side, chest uncovered. Single gold pin at the shoulder",
+    "a royal blue velvet mantle with white ermine collar — black tail-tips — falling behind the shoulders, draping to the sides, chest bare. Gold cord fastening at the shoulder"
   ];
   const mantles_m = [
-    "a king's crimson velvet mantle with wide ermine border — black tail-tips individually painted — draped around the body, single heavy gold clasp",
-    "a deep burgundy royal mantle with ermine — draped around the body, single gold clasp"
+    "a king's crimson velvet mantle with wide ermine border — black tail-tips individually painted — falling behind the shoulders and draping to each side, chest completely bare. Heavy gold clasp at the shoulder",
+    "a deep burgundy royal mantle with ermine — falling behind the shoulders to the sides, chest bare. Single gold clasp at the shoulder"
   ];
   const mantles_f = [
-    "a queen's rose-pink velvet mantle with fine ermine trim — draped around the body, delicate gold clasp",
-    "a royal blue velvet court mantle with ermine — draped around the body, gold cord"
+    "a queen's rose-pink velvet mantle with fine ermine trim — falling behind the shoulders, draping to each side, chest uncovered. Delicate gold clasp at the shoulder",
+    "a royal blue velvet court mantle with ermine — falling behind the shoulders to the sides, chest bare. Gold cord at the shoulder"
   ];
   const cushions = [
     "a large opulent gold velvet cushion — thick and heavily stuffed, visibly plump — gold cord trim and corner tassels, on a marble stone ledge",
