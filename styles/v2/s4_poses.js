@@ -1,105 +1,127 @@
 // SECCIÓN 4 — POSES
-// 29 poses pre-definidas. El modelo NO decide la pose.
-// Asignadas automáticamente por especie y raza.
+// Poses pre-definidas para TODOS los animales.
+// El modelo NO decide la pose — asignada automáticamente por especie/raza.
 
 const poses = {
 
   // ─── PERRO RAZA GRANDE ───────────────────────────────────────────────────
   perro_grande: [
-    // P1 — El Monarca Reclinado
-    `POSE: The dog lies reclined — chest down, weight resting on the sternum, both front legs extended forward on the cushion, parallel and symmetrical. Head fully erect, chin slightly raised, gaze directed straight at the viewer. Ears in natural position. Tail not visible. Body is horizontal and low.`,
-
-    // P2 — El General
-    `POSE: The dog lies reclined — chest down, left front leg extended forward, right front leg slightly retracted. Head turned 3/4 toward the viewer — not fully frontal. A slight natural asymmetry in the body. Eyes meeting the viewer with calm authority.`,
-
-    // P5 — La Esfinge Noble
-    `POSE: The dog lies in sphinx position — chest slightly elevated off the cushion, front legs extended forward with one paw crossed lightly over the other. Head erect, gaze forward. The posture radiates relaxed authority.`,
-
-    // P7 — El Reposo Real
-    `POSE: The dog lies fully reclined — chest down, body long and horizontal, both front paws extended forward. Head raised and turned slightly to one side — 20 degrees off center — gaze returning to meet the viewer. A pose of complete ease and dominance.`
+    `POSE: The dog lies reclined — chest down, both front legs extended forward on the cushion, parallel. Head fully erect, chin slightly raised, gaze directed straight at the viewer.`,
+    `POSE: The dog lies reclined — chest down, left front leg extended forward, right slightly retracted. Head turned 3/4 toward the viewer. Slight natural asymmetry.`,
+    `POSE: The dog lies in sphinx position — chest slightly elevated, front legs extended forward, one paw lightly crossed over the other. Head erect, gaze forward.`,
+    `POSE: The dog lies fully reclined — body long and horizontal, both front paws extended forward. Head raised and turned slightly — 20 degrees off center — gaze returning to meet the viewer.`
   ],
 
   // ─── PERRO RAZA MEDIANA ──────────────────────────────────────────────────
   perro_mediano: [
-    // P1
-    `POSE: The dog lies reclined — chest down, both front legs extended forward on the cushion. Head fully erect, gaze directed straight at the viewer. Body low and horizontal.`,
-
-    // P3 — El Duque Sentado
-    `POSE: The dog sits upright — back straight, both front paws perpendicular to the cushion, placed neatly together. Head elevated slightly. Gaze directed straight at the viewer. A dignified, composed sitting posture.`,
-
-    // P4 — El Almirante
-    `POSE: The dog sits upright — body turned 3/4 to the left, head turned back to face the viewer directly. Left front paw slightly more forward than the right. Classic aristocratic portrait tension between body direction and gaze.`,
-
-    // P6 — El Canciller
-    `POSE: The dog sits — body in 3/4 profile facing right, head turned completely to face the viewer. The tension between the body's direction and the direct gaze creates drama. Front paws neatly placed.`
+    `POSE: The dog lies reclined — chest down, both front legs extended forward. Head fully erect, gaze straight at the viewer.`,
+    `POSE: The dog sits upright — back straight, both front paws placed neatly together. Head elevated. Gaze straight at the viewer.`,
+    `POSE: The dog sits upright — body turned 3/4, head turned back to face the viewer directly. One front paw slightly forward.`,
+    `POSE: The dog sits — body in 3/4 profile, head turned completely to face the viewer. Front paws neatly placed.`
   ],
 
   // ─── PERRO RAZA PEQUEÑA ──────────────────────────────────────────────────
   perro_pequeno: [
-    // P3
-    `POSE: The dog sits upright — back perfectly straight, both front paws placed neatly together on the cushion. Head slightly elevated. Gaze directed straight at the viewer with calm confidence.`,
-
-    // P4
-    `POSE: The dog sits upright — body turned 3/4, head turned to face the viewer directly. One front paw slightly forward. Aristocratic and composed.`,
-
-    // P5 — Esfinge pequeña
-    `POSE: The dog lies in sphinx position — chest slightly elevated, front legs extended forward, one paw lightly over the other. Head erect, gaze forward. Compact and regal.`,
-
-    // P6
-    `POSE: The dog sits — body in 3/4 profile, head turned completely to face the viewer. Direct, confident gaze. Front paws neatly placed on the cushion.`
+    `POSE: The dog sits upright — back perfectly straight, both front paws placed neatly together. Head slightly elevated, gaze straight at the viewer.`,
+    `POSE: The dog sits upright — body turned 3/4, head turned to face the viewer. One front paw slightly forward.`,
+    `POSE: The dog lies in sphinx position — chest slightly elevated, front legs extended forward, one paw lightly over the other. Head erect.`,
+    `POSE: The dog sits — body in 3/4 profile, head turned completely to face the viewer. Direct, confident gaze.`
   ],
 
   // ─── GATO ────────────────────────────────────────────────────────────────
   gato: [
-    // G1 — La Reina Sentada
-    `POSE: The cat sits perfectly upright — back straight, both front paws placed neatly together and perpendicular to the cushion. Tail curled around the front paws or tucked to one side. Head level, gaze directed straight at the viewer with calm feline superiority. The posture is immaculate — the cat is fully aware of being observed and has decided to allow it.`,
+    `POSE: The cat sits perfectly upright — back straight, both front paws placed neatly together and perpendicular to the cushion. Tail curled around the front paws. Head level, gaze directed straight at the viewer with calm feline superiority.`,
+    `POSE: The cat lies in sphinx position — chest slightly raised, both front legs extended forward, parallel. Head fully erect, gaze directed straight at the viewer. One front paw very slightly ahead of the other.`,
+    `POSE: The cat sits upright — both front paws placed perfectly together, tail wrapped neatly around the front feet. Head turned very slightly — 10 degrees — giving a composed, evaluating gaze.`,
+    `POSE: The cat sits — body turned 3/4, head turned back to face the viewer directly. One front paw slightly forward. The posture of a cat that has just decided you are worth its attention.`,
+    `POSE: The cat sits perfectly upright — front paws together, back straight. Head tilted very slightly — 8 degrees. Gaze direct and penetrating.`,
+    `POSE: The cat lies in loaf position — front paws tucked completely under the chest, body compact and round. Head erect, gaze directed straight at the viewer. Maximum authority with minimum effort.`
+  ],
 
-    // G2 — El Faraón
-    `POSE: The cat lies in sphinx position — chest slightly raised, both front legs extended forward on the cushion, parallel. Head fully erect, chin level, gaze directed straight at the viewer. One front paw placed very slightly ahead of the other. The posture is ancient and authoritative.`,
+  // ─── CONEJO ──────────────────────────────────────────────────────────────
+  conejo: [
+    `POSE: The rabbit sits upright in a natural alert pose — front paws resting neatly on the cushion, ears tall and erect. Head level, gaze directed toward the viewer with calm dignity.`,
+    `POSE: The rabbit sits in a relaxed loaf position — front paws tucked slightly under the chest, ears upright. Head elevated, gaze forward. Compact and regal.`,
+    `POSE: The rabbit sits upright — body slightly turned 3/4, head facing the viewer directly. Front paws placed neatly. A noble, composed posture.`
+  ],
 
-    // G3 — La China
-    `POSE: The cat sits upright — both front paws placed perfectly together and aligned, tail wrapped neatly around the front feet. Body facing forward. Head turned very slightly — 10 degrees — giving a composed, evaluating gaze. Maximum feline elegance.`,
+  // ─── AVE ─────────────────────────────────────────────────────────────────
+  ave: [
+    `POSE: The bird perches upright on the cushion — body erect, wings folded naturally at its sides. Head turned slightly toward the viewer, one eye visible and alert. Feet gripping the cushion surface naturally.`,
+    `POSE: The bird stands on the cushion — full upright posture, wings folded, tail feathers visible behind. Head facing forward directly toward the viewer. Dignified and still.`,
+    `POSE: The bird perches — body in 3/4 profile, head turned fully to face the viewer. Wings folded tight. A composed, regal stance.`
+  ],
 
-    // G4 — El Observador
-    `POSE: The cat sits — body turned 3/4 to the right, head turned back to face the viewer directly. One front paw slightly forward. The posture of a cat that has just decided you are worth its attention.`,
+  // ─── CABALLO ─────────────────────────────────────────────────────────────
+  caballo: [
+    `POSE: The horse stands in a proud square stance — all four hooves planted firmly, body facing 3/4 toward the viewer. Head held high and slightly turned to face the viewer directly. Mane falling naturally. Tail visible behind. The cushion and ledge are large and monumental to accommodate the horse's stature.`,
+    `POSE: The horse stands — body in profile, head turned fully toward the viewer. Noble posture, ears forward, eyes alert. The royal mantle drapes across the back and falls to one side. The composition is monumental.`,
+    `POSE: The horse stands at 3/4 angle — front legs slightly staggered, one forward. Head elevated and turned toward the viewer. Mane and tail caught in a slight movement. Powerful and regal.`
+  ],
 
-    // G6 — La Emperatriz
-    `POSE: The cat sits perfectly upright — front paws together, back straight. Head tilted very slightly to one side — no more than 8 degrees. Gaze direct and penetrating. The slight tilt gives a sense of quiet judgment.`,
+  // ─── REPTIL ──────────────────────────────────────────────────────────────
+  reptil: [
+    `POSE: The reptile rests in a composed sphinx-like position — body low and horizontal on the cushion, legs relaxed at its sides, tail extending behind. Head fully erect and elevated, gaze directed straight at the viewer with ancient authority.`,
+    `POSE: The reptile sits upright — body elevated on its front legs, head raised high. Gaze directed toward the viewer. The posture is alert and commanding.`,
+    `POSE: The reptile rests on the cushion — body in natural resting position, head turned directly toward the viewer. Still, dignified, and utterly regal.`
+  ],
 
-    // G7 — El Reposo del Sabio
-    `POSE: The cat lies in loaf position — front paws tucked completely under the chest, body compact and round. Head erect, chin level, gaze directed straight at the viewer. Maximum authority with minimum effort. The cat does not need to extend its paws to dominate the frame.`
+  // ─── ANIMAL PEQUEÑO (hamster, cobaya, etc) ───────────────────────────────
+  pequeno: [
+    `POSE: The small animal sits upright on the cushion — body compact, front paws resting neatly together. Head elevated, gaze toward the viewer. Surprisingly dignified.`,
+    `POSE: The small animal sits in a natural alert pose — front paws on the cushion, head erect and facing the viewer directly. Small but commanding.`
+  ],
+
+  // ─── DEFAULT (animal desconocido) ────────────────────────────────────────
+  default: [
+    `POSE: The animal rests naturally on the cushion in the most dignified position its anatomy allows — body composed, head erect and elevated, gaze directed straight at the viewer with calm authority.`,
+    `POSE: The animal sits or reclines on the cushion in its most natural resting pose — head raised, eyes meeting the viewer. The posture is noble and composed.`
   ]
 };
 
-// Asignación automática por especie y raza
-function asignarPose(especie, raza, indexHero = null) {
-  let pool;
+// ─── DETECCIÓN DE CATEGORÍA ──────────────────────────────────────────────────
+function detectarCategoria(especie, raza) {
+  const e = (especie || '').toLowerCase();
+  const r = (raza || '').toLowerCase();
 
-  if (especie === 'gato') {
-    pool = poses.gato;
-  } else {
-    // Detectar tamaño por nombre de raza
+  if (e.includes('cat') || e.includes('gato') || e.includes('feline')) return 'gato';
+  if (e.includes('rabbit') || e.includes('conejo') || e.includes('bunny')) return 'conejo';
+  if (e.includes('bird') || e.includes('ave') || e.includes('parrot') ||
+      e.includes('loro') || e.includes('canary') || e.includes('cockatiel') ||
+      e.includes('parakeet')) return 'ave';
+  if (e.includes('horse') || e.includes('caballo') || e.includes('pony') ||
+      e.includes('mare') || e.includes('stallion')) return 'caballo';
+  if (e.includes('reptile') || e.includes('reptil') || e.includes('lizard') ||
+      e.includes('iguana') || e.includes('snake') || e.includes('serpiente') ||
+      e.includes('gecko') || e.includes('tortoise') || e.includes('turtle') ||
+      e.includes('chameleon')) return 'reptil';
+  if (e.includes('hamster') || e.includes('guinea') || e.includes('cobaya') ||
+      e.includes('gerbil') || e.includes('ferret') || e.includes('chinchilla') ||
+      e.includes('rat') || e.includes('mouse') || e.includes('hedgehog')) return 'pequeno';
+
+  if (e.includes('dog') || e.includes('perro') || e.includes('canine')) {
     const razasGrandes = ['doberman', 'dalmatian', 'golden', 'labrador', 'german shepherd',
       'husky', 'rottweiler', 'great dane', 'saint bernard', 'mastiff',
-      'bernese', 'boxer', 'weimaraner', 'vizsla', 'pointer', 'setter'];
+      'bernese', 'boxer', 'weimaraner', 'vizsla', 'pointer', 'setter',
+      'greyhound', 'akita', 'malamute', 'newfoundland', 'leonberger'];
     const razasPequenas = ['chihuahua', 'yorkshire', 'yorkie', 'maltese', 'pomeranian',
       'shih tzu', 'dachshund', 'miniature', 'toy', 'papillon',
-      'pug', 'french bulldog', 'boston terrier', 'cavalier'];
+      'pug', 'french bulldog', 'boston terrier', 'cavalier', 'bichon',
+      'schnauzer mini', 'jack russell', 'corgi', 'beagle'];
 
-    const razaLower = (raza || '').toLowerCase();
-    const esGrande = razasGrandes.some(r => razaLower.includes(r));
-    const esPequeno = razasPequenas.some(r => razaLower.includes(r));
-
-    if (esGrande) pool = poses.perro_grande;
-    else if (esPequeno) pool = poses.perro_pequeno;
-    else pool = poses.perro_mediano;
+    if (razasGrandes.some(x => r.includes(x))) return 'perro_grande';
+    if (razasPequenas.some(x => r.includes(x))) return 'perro_pequeno';
+    return 'perro_mediano';
   }
 
-  // Si se especifica un índice hero, usarlo. Si no, pick aleatorio.
-  if (indexHero !== null && indexHero < pool.length) {
-    return pool[indexHero];
-  }
+  return 'default';
+}
+
+function asignarPose(especie, raza, indexHero = null) {
+  const categoria = detectarCategoria(especie, raza);
+  const pool = poses[categoria] || poses.default;
+  if (indexHero !== null && indexHero < pool.length) return pool[indexHero];
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-module.exports = { asignarPose, poses };
+module.exports = { asignarPose, poses, detectarCategoria };
