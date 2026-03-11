@@ -30,7 +30,7 @@ const poses = {
 
   // ─── GATO ────────────────────────────────────────────────────────────────
   gato: [
-    `POSE: The cat sits perfectly upright — back straight, both front paws placed neatly together and perpendicular to the cushion. Tail curled around the front paws. Head level, gaze directed straight at the viewer with calm feline superiority.`,
+    `POSE: The cat sits with natural weight settled into the cushion — body slightly relaxed, not rigid. One front paw very slightly ahead of the other, creating subtle asymmetry. Tail curled loosely to one side. Head turned 15 degrees off-center, chin slightly elevated. Gaze directed just past the viewer — 10 degrees to the side — the indifferent confidence of a cat that knows it is being painted but has better things to think about.`,
     `POSE: The cat lies in sphinx position — chest slightly raised, both front legs extended forward, parallel. Head fully erect, gaze directed straight at the viewer. One front paw very slightly ahead of the other.`,
     `POSE: The cat sits upright — both front paws placed perfectly together, tail wrapped neatly around the front feet. Head turned very slightly — 10 degrees — giving a composed, evaluating gaze.`,
     `POSE: The cat sits — body turned 3/4, head turned back to face the viewer directly. One front paw slightly forward. The posture of a cat that has just decided you are worth its attention.`,
