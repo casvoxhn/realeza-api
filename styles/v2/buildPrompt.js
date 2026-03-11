@@ -53,7 +53,7 @@ module.exports = function buildPrompt(params) {
 
     // 4. Pose (single only — multi usa escenas)
     !isMulti
-      ? asignarPose(especie, raza, heroPose)
+      ? asignarPose(especie, raza, false, heroPose, null)
       : null,
 
     // 6. Vestuario (single) o composición multi
