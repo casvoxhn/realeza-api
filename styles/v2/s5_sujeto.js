@@ -1,13 +1,16 @@
 // SECCIÓN 5 — SUJETO
-// Carácter de especie, pelo, ojos, asimetría. Fijo por especie.
+// Carácter de especie, pelo, ojos, asimetría.
+// encuadre cambia dinámicamente según si la pose muestra cuerpo completo o no.
 
-module.exports = function s5_sujeto(especie, numAnimales) {
+module.exports = function s5_sujeto(especie, numAnimales, cuerpoCompleto = false) {
   const isMulti = numAnimales > 1;
 
   // ─── ENCUADRE ────────────────────────────────────────────────────────────
   const encuadre = isMulti
     ? `FRAMING: All animals fill the frame together — large, close, commanding. Every animal has equal visual weight. No animal is cropped, minimized, or pushed to the edge. All faces clearly visible.`
-    : `FRAMING: The animal's face fills at least 60% of the frame — extremely close crop, monumental presence. The face IS the painting. The body and cushion are visible in the lower third only.`;
+    : cuerpoCompleto
+      ? `FRAMING: The COMPLETE body of the animal is fully visible from head to tail — full figure including haunches, rear legs, and tail clearly shown on the cushion. The face is prominent and expressive, but the entire body occupies the canvas with monumental presence. Do NOT crop the body. Do NOT zoom into the face only.`
+      : `FRAMING: The animal's face fills at least 60% of the frame — extremely close crop, monumental presence. The face IS the painting. The body and cushion are visible in the lower third only.`;
 
   // ─── CARÁCTER DE ESPECIE ─────────────────────────────────────────────────
   const caracter = especie === 'gato'
