@@ -67,11 +67,11 @@ module.exports = function s6_vestuario(estilo, genero, indexHero = null) {
 
   return `MANTLE: ${manto.descripcion}.
 
-TWO SEPARATE PARTS:
+TWO SEPARATE PARTS — paint these independently:
 
-PART 1 — ERMINE COLLAR (always at front): Wide white ermine with black tail-tips, worn like open coat lapels framing the chest. Always visible at the front. Never disappears.
+PART 1 — ERMINE COLLAR (ALWAYS visible at front, even in dark paintings): Bright white ermine fur with distinct black tail-tips forms wide open lapels framing the animal's chest — like a judge's robes or a king's collar. This ermine is LUMINOUS WHITE — it catches the light source and glows against the dark background. It is the brightest element in the painting. Never hidden, never darkened, always clearly visible at the front of the animal.
 
-PART 2 — VELVET BODY (goes behind): The velvet drapes over the shoulders and falls backward and to one side only — pooling on the cushion. Does NOT come to the front. Does NOT cover the chest.
+PART 2 — VELVET BODY (goes behind only): The velvet drapes over the shoulders and falls backward and to ONE side — it does NOT come to the front, does NOT cover the chest.
 
-CHEST ORNAMENT — ONE ITEM ONLY: A single gold chain crosses from one ermine lapel to the other — one clean arc of gold links with a ${gema} pendant at the center. This is the ONLY ornament on the chest. No brooch, no cord, no extra chains.`;
+CHEST ORNAMENT — ONE ITEM ONLY: A single delicate gold chain — thin, refined links — crosses from one ermine lapel to the other with a ${gema} pendant at the center. Thin and elegant, not thick or heavy.`;
 };
