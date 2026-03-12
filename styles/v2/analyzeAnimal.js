@@ -1,14 +1,9 @@
 // analyzeAnimal.js
-// Paso 1 de 2: Gemini analiza la foto y describe la cara con precisión quirúrgica.
-// El resultado se inyecta en el prompt de generación como instrucción específica.
+// Análisis forense de cada animal por separado.
+// Single: analiza la única foto y devuelve string.
+// Multi: analiza cada foto individualmente en paralelo y devuelve texto etiquetado.
 
-async function analyzeAnimal(genAI, modelId, imagesBase64) {
-  try {
-    const model = genAI.getGenerativeModel({ model: modelId });
-
-    const parts = [
-      {
-        text: `You are a forensic portraitist preparing to paint this specific animal.
+const PROMPT_ANALISIS = `You are a forensic portraitist preparing to paint this specific animal.
 Your job is to write a precise, clinical description of this individual's face and body
 so that another painter can replicate it exactly — with all its imperfections.
 
@@ -26,12 +21,12 @@ MUZZLE & NOSE:
 - Shape of the nostrils
 - Wrinkle pattern around the muzzle — describe each major fold and its position
 - Lip shape and any asymmetry
-- Any discoloration or pigmentation around the mouth
+- Any discoloration, staining, or unique pigmentation around the mouth
 
 SKULL & FACE:
 - Width-to-height ratio of the skull (wide/narrow/square)
 - Depth of the stop (forehead-to-muzzle indent)
-- Prominence of cheekbones
+- Prominence of the cheekbones
 - Any tilt or asymmetry of the face
 - Ear position and shape
 
@@ -42,32 +37,70 @@ BODY:
 - Any distinctive physical features
 
 Respond ONLY with the clinical description. No preamble, no "I see a dog", no explanation.
-Write as if you are leaving notes for a painter who cannot see the photo.`
-      },
-      ...imagesBase64.map(img => ({
-        inlineData: {
-          data: img.replace(/^data:image\/\w+;base64,/, ""),
-          mimeType: "image/jpeg"
-        }
-      }))
-    ];
+Write as if you are leaving notes for a painter who cannot see the photo.`;
 
-    const result = await model.generateContent({
-      contents: [{ role: "user", parts }],
-      generationConfig: { maxOutputTokens: 1000 }
-    });
+// Analiza UNA sola imagen
+async function analizarUna(model, imageBase64) {
+  const parts = [
+    { text: PROMPT_ANALISIS },
+    {
+      inlineData: {
+        data: imageBase64.replace(/^data:image\/\w+;base64,/, ""),
+        mimeType: "image/jpeg"
+      }
+    }
+  ];
 
-    const text = result.response.candidates[0].content.parts
-      .filter(p => p.text)
-      .map(p => p.text)
-      .join('');
+  const result = await model.generateContent({
+    contents: [{ role: "user", parts }],
+    generationConfig: { maxOutputTokens: 1000 }
+  });
 
-    console.log(`🔬 ANÁLISIS FACIAL:\n${text}`);
-    return text.trim();
+  return result.response.candidates[0].content.parts
+    .filter(p => p.text)
+    .map(p => p.text)
+    .join('')
+    .trim();
+}
+
+// Exportado — maneja single y multi automáticamente
+async function analyzeAnimal(genAI, modelId, imagesBase64) {
+  try {
+    const model = genAI.getGenerativeModel({ model: modelId });
+
+    if (imagesBase64.length === 1) {
+      // ── SINGLE ─────────────────────────────────────────────────────────
+      const texto = await analizarUna(model, imagesBase64[0]);
+      console.log(`🔬 ANÁLISIS FACIAL (1 animal):\n${texto}`);
+      return texto;
+
+    } else {
+      // ── MULTI — cada foto analizada por separado en paralelo ────────────
+      const resultados = await Promise.all(
+        imagesBase64.map((img, i) =>
+          analizarUna(model, img).catch(err => {
+            console.error(`⚠️ Error analizando animal ${i + 1}:`, err.message);
+            return null;
+          })
+        )
+      );
+
+      // Texto etiquetado: ANIMAL 1, ANIMAL 2, etc.
+      const textoMulti = resultados
+        .map((desc, i) =>
+          desc
+            ? `ANIMAL ${i + 1}:\n${desc}`
+            : `ANIMAL ${i + 1}: description unavailable`
+        )
+        .join('\n\n---\n\n');
+
+      console.log(`🔬 ANÁLISIS FACIAL (${imagesBase64.length} animales):\n${textoMulti}`);
+      return textoMulti;
+    }
 
   } catch (err) {
     console.error('⚠️ Error en análisis facial:', err.message);
-    return null; // Si falla, el sistema sigue sin el análisis
+    return null; // No es fatal — el sistema sigue sin el análisis
   }
 }
 
