@@ -1,5 +1,5 @@
-// server.js — V15.1
-// v15.1 — logging completo: tiempo de respuesta Gemini, refs cargadas, hash imagen, errores detallados.
+// server.js — V15.2
+// v15.2 — referencias de estilo por especie: gatos → references/gatos/, perros → references/perros/
 
 const express = require('express');
 const cors = require('cors');
@@ -28,27 +28,61 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANO
 const genAI    = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const MODEL_ID = "gemini-3.1-flash-image-preview";
 
-// ─── REFERENCIAS DE ESTILO ────────────────────────────────────────────────────
-function loadReferenceImages() {
-  const refs   = [];
-  const refDir = path.join(__dirname, 'references');
+// ─── REFERENCIAS POR ESPECIE ─────────────────────────────────────────────────
+
+const REF_FILES = {
+  gato: [
+    'ref_cat_1.jpg',
+    'ref_cat_2.jpg',
+    'ref_cat_3.jpg',
+    'ref_cat_4.jpg',
+  ],
+  perro: [
+    'ref_golden.jpg',
+    'ref_doberman.jpg',
+    'ref_poodle.jpg',
+    'ref_dachshunds.jpg',
+  ],
+};
+
+// Subcarpeta dentro de /references según especie
+function getRefSubdir(especie) {
+  const e = (especie || '').toLowerCase();
+  if (e.includes('cat') || e.includes('gato') || e.includes('feline')) return 'gatos';
+  if (e.includes('dog') || e.includes('perro') || e.includes('canine')) return 'perros';
+  return 'perros'; // fallback
+}
+
+function getRefKey(especie) {
+  const e = (especie || '').toLowerCase();
+  if (e.includes('cat') || e.includes('gato') || e.includes('feline')) return 'gato';
+  return 'perro'; // fallback
+}
+
+function loadReferenceImages(especie) {
+  const refs    = [];
+  const subdir  = getRefSubdir(especie);
+  const key     = getRefKey(especie);
+  const files   = REF_FILES[key] || REF_FILES.perro;
+  const refDir  = path.join(__dirname, 'references', subdir);
+
   if (!fs.existsSync(refDir)) {
-    console.warn(`⚠️ REFS | Directorio /references no encontrado`);
+    console.warn(`⚠️ REFS | Directorio no encontrado: references/${subdir}`);
     return refs;
   }
-  for (const file of ['ref_golden.jpg', 'ref_doberman.jpg', 'ref_poodle.jpg', 'ref_dachshunds.jpg']) {
+
+  for (const file of files) {
     const fp = path.join(refDir, file);
     if (fs.existsSync(fp)) {
       refs.push({ inlineData: { data: fs.readFileSync(fp).toString('base64'), mimeType: 'image/jpeg' } });
-      console.log(`📸 REF cargada: ${file}`);
     } else {
-      console.warn(`⚠️ REF no encontrada: ${file}`);
+      console.warn(`⚠️ REF no encontrada: references/${subdir}/${file}`);
     }
   }
-  console.log(`📸 REFS TOTAL: ${refs.length}/4`);
+
+  console.log(`📸 REFS | especie:${especie} | carpeta:references/${subdir} | cargadas:${refs.length}/${files.length}`);
   return refs;
 }
-const STYLE_REFS = loadReferenceImages();
 
 // ─── HASH DE IMAGEN ───────────────────────────────────────────────────────────
 function hashImagen(base64) {
@@ -74,10 +108,9 @@ app.post('/generate', async (req, res) => {
     const currentCategory = category || 'mascota';
     const hasGender       = gender && (gender === 'masculine' || gender === 'feminine');
 
-    // Hash de la primera imagen para rastreo
     const imgHash = hashImagen(images[0]);
 
-    console.log(`🚀 V15.1 START | hash:${imgHash} | cat:${currentCategory} | style:${style} | gender:${hasGender ? gender : 'neutral'} | sujetos:${numSubjects} | refs:${STYLE_REFS.length}`);
+    console.log(`🚀 V15.2 START | hash:${imgHash} | cat:${currentCategory} | style:${style} | gender:${hasGender ? gender : 'neutral'} | sujetos:${numSubjects}`);
 
     // Subir originales
     const originalUrls = await Promise.all(
@@ -89,7 +122,9 @@ app.post('/generate', async (req, res) => {
 
     const isMascotas = !currentCategory || currentCategory === 'mascota' || currentCategory === 'mascotas';
 
-    let promptText = "";
+    let promptText  = "";
+    let styleRefs   = [];
+    let especie     = 'dog';
 
     if (isMascotas) {
       // ── DETECTAR ANIMALES ──────────────────────────────────────────────
@@ -98,6 +133,10 @@ app.post('/generate', async (req, res) => {
       console.log(`🔍 DETECCIÓN | hash:${imgHash} | ${JSON.stringify(animalesDetectados)} | ${Date.now() - t0}ms`);
 
       const primerAnimal = animalesDetectados[0] || { especie: 'dog', raza: '' };
+      especie = primerAnimal.especie;
+
+      // ── CARGAR REFS SEGÚN ESPECIE ──────────────────────────────────────
+      styleRefs = loadReferenceImages(especie);
 
       promptText = buildPrompt({
         estilo:      style || 'realeza',
@@ -110,18 +149,20 @@ app.post('/generate', async (req, res) => {
         imgHash,
       });
 
-    } else if (currentCategory === 'mujer')    promptText = getMujerPrompt(style, numSubjects, isGroup);
-    else if (currentCategory === 'retratos')   promptText = getRetratosPrompt(style, numSubjects, isGroup);
-    else if (currentCategory === 'parejas')    promptText = getParejasPrompt(style, numSubjects, isGroup);
-    else if (currentCategory === 'ninos')      promptText = getNinosPrompt(style, numSubjects, isGroup);
-    else if (currentCategory === 'familia')    promptText = getFamiliaPrompt(style, numSubjects, isGroup);
+    } else {
+      if (currentCategory === 'mujer')    promptText = getMujerPrompt(style, numSubjects, isGroup);
+      else if (currentCategory === 'retratos')   promptText = getRetratosPrompt(style, numSubjects, isGroup);
+      else if (currentCategory === 'parejas')    promptText = getParejasPrompt(style, numSubjects, isGroup);
+      else if (currentCategory === 'ninos')      promptText = getNinosPrompt(style, numSubjects, isGroup);
+      else if (currentCategory === 'familia')    promptText = getFamiliaPrompt(style, numSubjects, isGroup);
+    }
 
     // ── CONSTRUIR PARTS ────────────────────────────────────────────────────
     const parts = [];
 
-    if (isMascotas && STYLE_REFS.length > 0) {
+    if (isMascotas && styleRefs.length > 0) {
       parts.push({ text: "STYLE REFERENCE IMAGES — study these for: how the royal mantle falls behind and to one side (never wrapping the body), the cushion volume and fringe, the dark atmospheric background, the craquelure on the canvas, and the overall oil painting quality. Do not copy the specific animals, colors, or accessories shown:" });
-      parts.push(...STYLE_REFS);
+      parts.push(...styleRefs);
       parts.push({ text: "CLIENT PET PHOTO — paint this specific animal in the style shown above:" });
     }
 
@@ -132,10 +173,10 @@ app.post('/generate', async (req, res) => {
     parts.push({ text: promptText });
 
     // ── LLAMAR AL MODELO ───────────────────────────────────────────────────
-    const model    = genAI.getGenerativeModel({ model: MODEL_ID });
-    const tGemini  = Date.now();
+    const model   = genAI.getGenerativeModel({ model: MODEL_ID });
+    const tGemini = Date.now();
 
-    const result   = await model.generateContent({
+    const result  = await model.generateContent({
       contents: [{ role: "user", parts }],
       generationConfig: {
         responseModalities: ["IMAGE", "TEXT"],
@@ -157,13 +198,13 @@ app.post('/generate', async (req, res) => {
     const finalUrl    = await uploadBufferToSupabase(imageBuffer, prefix);
 
     const totalMs = Date.now() - startTotal;
-    console.log(`✅ V15.1 OK | hash:${imgHash} | ${prefix} | gemini:${geminiMs}ms | total:${totalMs}ms | ${finalUrl}`);
+    console.log(`✅ V15.2 OK | hash:${imgHash} | ${prefix} | gemini:${geminiMs}ms | total:${totalMs}ms | ${finalUrl}`);
 
     res.json({ success: true, imageUrl: finalUrl, originalUrls });
 
   } catch (error) {
     const totalMs = Date.now() - startTotal;
-    console.error(`❌ V15.1 ERROR | ${totalMs}ms | ${error.message}`);
+    console.error(`❌ V15.2 ERROR | ${totalMs}ms | ${error.message}`);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -171,13 +212,12 @@ app.post('/generate', async (req, res) => {
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
-    version: 'V15.1',
+    version: 'V15.2',
     model: MODEL_ID,
-    styleRefs: STYLE_REFS.length,
     uptime: process.uptime()
   });
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 V15.1 | Puerto:${PORT} | Modelo:${MODEL_ID} | Refs:${STYLE_REFS.length}`);
+  console.log(`🚀 V15.2 | Puerto:${PORT} | Modelo:${MODEL_ID}`);
 });
