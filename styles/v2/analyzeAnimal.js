@@ -54,7 +54,7 @@ Write as if you are leaving notes for a painter who cannot see the photo.`
 
     const result = await model.generateContent({
       contents: [{ role: "user", parts }],
-      generationConfig: { maxOutputTokens: 600 }
+      generationConfig: { maxOutputTokens: 1000 }
     });
 
     const text = result.response.candidates[0].content.parts
