@@ -32,6 +32,7 @@ module.exports = function buildPrompt(params) {
     animales       = [],
     hero           = null,
     esNaturalistic = false,
+    imgHash        = 'nohash',
   } = params;
 
   const isMulti = numAnimales > 1;
@@ -104,7 +105,11 @@ module.exports = function buildPrompt(params) {
     s7_props(estilo, numAnimales, heroCojin),
   ];
 
-  return secciones
+  const promptFinal = secciones
     .filter(s => s !== null && s !== undefined && s !== '')
     .join('\n\n');
+
+  console.log(`📝 PROMPT | hash:${imgHash}\n${'─'.repeat(60)}\n${promptFinal}\n${'─'.repeat(60)}`);
+
+  return promptFinal;
 };
