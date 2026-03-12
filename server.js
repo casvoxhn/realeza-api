@@ -125,13 +125,10 @@ app.post('/generate', async (req, res) => {
       const primerAnimal = animalesDetectados[0] || { especie: 'dog', raza: '' };
       especie = primerAnimal.especie;
 
-      // ── PASO 2: ANÁLISIS FACIAL (solo para single) ────────────────────
-      // Para multi-animal el análisis facial no aplica de la misma forma
-      if (!isGroup) {
-        const tAnalisis = Date.now();
-        analisisFacial = await analyzeAnimal(genAI, MODEL_ID, images);
-        console.log(`🔬 ANÁLISIS | hash:${imgHash} | ${Date.now() - tAnalisis}ms`);
-      }
+      // ── PASO 2: ANÁLISIS FACIAL (single y multi) ─────────────────────
+      const tAnalisis = Date.now();
+      analisisFacial = await analyzeAnimal(genAI, MODEL_ID, images);
+      console.log(`🔬 ANÁLISIS | hash:${imgHash} | ${Date.now() - tAnalisis}ms`);
 
       // ── PASO 3: CARGAR REFS ───────────────────────────────────────────
       styleRefs = loadReferenceImages(especie);
