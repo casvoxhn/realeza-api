@@ -1,9 +1,6 @@
-// SECCIÓN 1 — LIENZO v2
+// SECCIÓN 1 — LIENZO v3
 // Fijo. Nunca cambia. Base de toda imagen.
-// v2 — reescrito para apuntar a calidad de pintura de museo del siglo XVII.
-// Removido "Not a photograph / Not digital art" — ese lenguaje empujaba
-// al modelo hacia resultados limpios y artificiales.
-// Ahora se describe QUÉ es y cómo fue ejecutado, no qué no es.
+// v3 — limpiado: sin repeticiones, sin contradicciones, sin negaciones innecesarias.
 // La instrucción anti-marco vive al final del prompt en buildPrompt.js.
 
-module.exports = `An exquisite masterpiece oil painting in the tradition of Dutch Golden Age portraiture by Rembrandt van Rijn and Frans Hals, extremely heavy dramatic chiaroscuro with a single weak raking light source from upper left barely illuminating the subject, profound deep shadows engulfing most of the composition, massive volumetric depth through layered sfumato and lost edges, ultra-low overall brightness and muted subdued palette with strong amber-yellowed tonality from aged varnish, thick impasto brushwork with raised textured ridges in fur, velvet folds, lace and gold details, pronounced irregular organic craquelure varying deeply across the surface with crack patterns pooling darker varnish in crevices, warm heavy amber varnish patina dominating the color temperature, genuine 17th-century museum artifact appearance, hand-painted imperfections, subtle brush cadence and painterly restraint, heavily desaturated highlights with no specular shine, earthy muted tones throughout, tactile heavy oil materiality on canvas, not bright, not vibrant, not photographic, not digital, real darkened aged canvas painting, absolute masterpiece quality.`;
+module.exports = `An exquisite masterwork oil painting in the tradition of Dutch Golden Age portraiture — Rembrandt van Rijn and Frans Hals. Strong directional chiaroscuro from a single raking light source upper left, with deep shadows engulfing most of the composition. Layered sfumato and lost edges create volumetric depth. Thick impasto brushwork with raised textured ridges in fur, velvet folds, and gold details. Pronounced irregular craquelure across the entire surface with aged varnish pooling darker in the crevices. Warm amber varnish patina dominates the color temperature. Muted earthy palette — burnt sienna, raw umber, warm ivory, deep black-brown. Tactile oil materiality on canvas. Genuine 17th-century museum artifact quality.`;
