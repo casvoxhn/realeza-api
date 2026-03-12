@@ -1,7 +1,7 @@
-// ENSAMBLADOR PRINCIPAL v2.6
-// v2.6 — normalización de estilo al inicio del buildPrompt.
-// Cualquier alias del frontend (rey, baroque, etc.) se convierte
-// a la clave canónica antes de pasarse a cualquier módulo.
+// ENSAMBLADOR PRINCIPAL v2.7
+// v2.7 — analisisFacial inyectado como sección entre s5_sujeto y la pose.
+// El análisis describe quirúrgicamente la cara del animal específico
+// para que Gemini no use plantilla genérica de raza.
 
 const s1_lienzo    = require('./s1_lienzo');
 const s2_fondo     = require('./s2_fondo');
@@ -12,7 +12,6 @@ const s6_vestuario = require('./s6_vestuario');
 const s7_props     = require('./s7_props');
 const s8_multi     = require('./s8_multi');
 
-// Mapa de alias — frontend puede mandar cualquiera de estos
 const ESTILO_ALIAS = {
   rey:         'realeza',
   royal:       'realeza',
@@ -25,26 +24,25 @@ function normalizarEstilo(estilo) {
   return ESTILO_ALIAS[e] || e;
 }
 
-// Instrucción anti-marco — siempre al final del prompt
 const NO_FRAME = `FINAL INSTRUCTION — ABSOLUTE REQUIREMENT: NO frame. NO border. NO picture frame. NO ornate frame. NO wooden frame. NO gold frame. NO decorative border of ANY kind. The painting fills the entire image edge to edge with NO frame whatsoever. If you add a frame, the output is wrong.`;
 
 module.exports = function buildPrompt(params) {
   const {
-    estilo:        estiloRaw = 'realeza',
-    numAnimales    = 1,
-    especie        = 'perro',
-    raza           = '',
-    genero         = null,
-    animales       = [],
-    hero           = null,
-    esNaturalistic = false,
-    imgHash        = 'nohash',
+    estilo:        estiloRaw      = 'realeza',
+    numAnimales                   = 1,
+    especie                       = 'perro',
+    raza                          = '',
+    genero                        = null,
+    animales                      = [],
+    hero                          = null,
+    esNaturalistic                = false,
+    imgHash                       = 'nohash',
+    analisisFacial                = null,   // ← nuevo en v2.7
   } = params;
 
-  // Normalizar estilo UNA VEZ — todos los módulos reciben la clave canónica
-  const estilo = normalizarEstilo(estiloRaw);
+  const estilo  = normalizarEstilo(estiloRaw);
+  const isMulti = numAnimales > 1;
 
-  const isMulti   = numAnimales > 1;
   const heroPose  = hero?.pose  ?? null;
   const heroManto = hero?.manto ?? null;
   const heroCojin = hero?.cojin ?? null;
@@ -80,6 +78,7 @@ module.exports = function buildPrompt(params) {
       `genero: ${genero || 'neutral'}`,
       `naturalistic: ${esNaturalistic}`,
       `hero: ${heroPose !== null ? `pose:${heroPose}` : 'aleatorio'}`,
+      `analisis: ${analisisFacial ? 'sí' : 'no'}`,
     ].join(' | '));
 
     poseTexto = asignarPose(especie, raza, esNaturalistic, heroPose, varianteIdx);
@@ -87,14 +86,30 @@ module.exports = function buildPrompt(params) {
     console.log(`🎭 PROMPT MULTI | animales: ${numAnimales} | estilo: ${estilo} | estilo_raw: ${estiloRaw}`);
   }
 
+  // ─── SECCIÓN DE IDENTIDAD ESPECÍFICA (solo si hay análisis) ──────────────
+  // Se inyecta entre s5_sujeto y la pose para que Gemini tenga
+  // la descripción exacta del individuo antes de leer las instrucciones de pose.
+  const identidadEspecifica = analisisFacial
+    ? `THIS SPECIFIC INDIVIDUAL — FORENSIC DESCRIPTION (OVERRIDE ANY BREED TEMPLATE):
+The following is a clinical description of the exact animal in the photo.
+You MUST match every detail below. This overrides any generic breed expectations.
+
+${analisisFacial}
+
+Paint THIS animal. Not a generic ${especie}. THIS one.`
+    : null;
+
   // ─── ENSAMBLAR ───────────────────────────────────────────────────────────
   const secciones = [
     s1_lienzo,
     s2_fondo(estilo),
     s3_estilo(estilo).referencia,
     s5_sujeto(especie, numAnimales),
+    identidadEspecifica,                          // ← v2.7: análisis facial específico
     !isMulti ? poseTexto : null,
-    isMulti ? s8_multi(numAnimales, estilo) : s6_vestuario(estilo, genero, heroManto),
+    isMulti
+      ? s8_multi(numAnimales, estilo)
+      : s6_vestuario(estilo, genero, heroManto),
     s7_props(estilo, numAnimales, heroCojin),
     NO_FRAME,
   ];
