@@ -1,55 +1,59 @@
+// SECCIÓN 6 — VESTUARIO v4
+// v4 — Añadido cuello de encaje antiguo (lace ruff) para estatus histórico.
+// Instrucciones de gravedad en la caída del manto.
+
 const { pick } = require('./utils');
 
 const mantos = {
   realeza: {
     masculine: [
-      { descripcion: 'a king\'s deep crimson velvet coronation mantle' },
-      { descripcion: 'a rich royal burgundy velvet coronation mantle' },
-      { descripcion: 'a deep imperial navy velvet coronation mantle' }
+      { descripcion: 'a king\'s heavy, deep crimson velvet coronation mantle' },
+      { descripcion: 'a rich, weighty royal burgundy velvet coronation mantle' },
+      { descripcion: 'a deep imperial navy velvet coronation mantle with heavy drape' }
     ],
     feminine: [
-      { descripcion: 'a queen\'s rose-pink velvet royal mantle' },
-      { descripcion: 'a delicate ivory silk-velvet royal mantle' },
-      { descripcion: 'a regal deep violet velvet court mantle' }
+      { descripcion: 'a queen\'s heavy rose-pink velvet royal mantle' },
+      { descripcion: 'a delicate but weighty ivory silk-velvet royal mantle' },
+      { descripcion: 'a regal deep violet velvet court mantle pooling heavily' }
     ],
     neutral: [
-      { descripcion: 'a crimson velvet royal mantle' },
-      { descripcion: 'a rich burgundy velvet royal mantle' },
-      { descripcion: 'a royal blue velvet mantle' }
+      { descripcion: 'a heavy crimson velvet royal mantle' },
+      { descripcion: 'a rich burgundy velvet royal mantle draping with gravity' },
+      { descripcion: 'a weighty royal blue velvet mantle' }
     ]
   },
   barroco: {
     masculine: [
-      { descripcion: 'a near-black velvet mantle' },
-      { descripcion: 'a dark charcoal velvet mantle' },
-      { descripcion: 'a deep burgundy velvet mantle' }
+      { descripcion: 'a near-black heavy velvet mantle' },
+      { descripcion: 'a dark charcoal thick velvet mantle' },
+      { descripcion: 'a deep burgundy heavy velvet mantle' }
     ],
     feminine: [
-      { descripcion: 'a dark charcoal velvet mantle' },
-      { descripcion: 'a deep plum velvet mantle' },
-      { descripcion: 'a near-black velvet mantle' }
+      { descripcion: 'a dark charcoal heavy velvet mantle' },
+      { descripcion: 'a deep plum velvet mantle pooling naturally' },
+      { descripcion: 'a near-black weighty velvet mantle' }
     ],
     neutral: [
-      { descripcion: 'a near-black velvet mantle' },
-      { descripcion: 'a dark charcoal velvet mantle' },
-      { descripcion: 'a deep umber-brown velvet mantle' }
+      { descripcion: 'a near-black heavy velvet mantle' },
+      { descripcion: 'a dark charcoal thick velvet mantle' },
+      { descripcion: 'a deep umber-brown heavy velvet mantle' }
     ]
   },
   renacimiento: {
     masculine: [
-      { descripcion: 'a forest-green velvet cape' },
-      { descripcion: 'a deep emerald velvet mantle' },
-      { descripcion: 'a hunter-green velvet cape' }
+      { descripcion: 'a heavy forest-green velvet cape' },
+      { descripcion: 'a deep emerald velvet mantle draping heavily' },
+      { descripcion: 'a hunter-green thick velvet cape' }
     ],
     feminine: [
-      { descripcion: 'a sage-green silk-velvet cape' },
-      { descripcion: 'an emerald velvet mantle' },
-      { descripcion: 'an olive-gold velvet cape' }
+      { descripcion: 'a weighty sage-green silk-velvet cape' },
+      { descripcion: 'an emerald velvet mantle pooling with gravity' },
+      { descripcion: 'an heavy olive-gold velvet cape' }
     ],
     neutral: [
-      { descripcion: 'a forest-green velvet cape' },
-      { descripcion: 'a deep emerald velvet mantle' },
-      { descripcion: 'a dark olive velvet cape' }
+      { descripcion: 'a heavy forest-green velvet cape' },
+      { descripcion: 'a deep emerald thick velvet mantle' },
+      { descripcion: 'a dark olive weighty velvet cape' }
     ]
   }
 };
@@ -69,13 +73,15 @@ module.exports = function s6_vestuario(estilo, genero, indexHero = null) {
   const manto = indexHero !== null ? pool[indexHero % pool.length] : pick(pool);
   const gema = pick(gemas[generoKey]);
 
-  return `MANTLE: ${manto.descripcion}.
+  return `WARDROBE: ${manto.descripcion}.
 
-TWO SEPARATE PARTS — paint these independently:
+THREE SEPARATE PARTS — paint these independently with physical weight:
 
-PART 1 — ERMINE COLLAR (ALWAYS visible at front, even in dark paintings): Bright white ermine fur with distinct black tail-tips forms wide open lapels framing the animal's chest — like a judge's robes or a king's collar. This ermine is LUMINOUS WHITE — it catches the light source and glows against the dark background. It is the brightest element in the painting. Never hidden, never darkened, always clearly visible at the front of the animal.
+PART 1 — ANTIQUE LACE (Neck area): An intricate, delicate antique lace ruff peeks out directly around the animal's neck, anchoring the portrait in the 17th century.
 
-PART 2 — VELVET BODY (goes behind only): The velvet drapes over the shoulders and falls backward and to ONE side — it does NOT come to the front, does NOT cover the chest.
+PART 2 — ERMINE COLLAR (Over the lace, framing chest): Bright white ermine fur with distinct black tail-tips forms wide open lapels framing the animal's chest. This ermine catches the soft light beautifully. Never hidden, always clearly visible at the front.
 
-CHEST ORNAMENT — ONE ITEM ONLY: A single delicate gold chain — thin, refined links — crosses from one ermine lapel to the other with a ${gema} pendant at the center. Thin and elegant, not thick or heavy.`;
+PART 3 — VELVET BODY (Goes behind only): The velvet drapes heavily over the shoulders and falls backward. It visibly responds to gravity, pooling with deep, tangible folds. It does NOT come to the front, does NOT cover the chest.
+
+CHEST ORNAMENT: A single delicate gold chain crosses from one ermine lapel to the other with a ${gema} pendant at the center.`;
 };
