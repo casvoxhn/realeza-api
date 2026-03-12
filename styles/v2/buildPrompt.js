@@ -1,6 +1,6 @@
-// ENSAMBLADOR PRINCIPAL v2.4
-// Framing vive en s4_poses — buildPrompt ya no necesita detectar cuerpoCompleto.
-// v2.4 — logging completo: pose, variante, mirada, naturalistic, hero.
+// ENSAMBLADOR PRINCIPAL v2.5
+// v2.5 — instrucción anti-marco movida al FINAL del prompt para mayor peso.
+// Gemini procesa las instrucciones al final con mayor prioridad.
 
 const s1_lienzo       = require('./s1_lienzo');
 const s2_fondo        = require('./s2_fondo');
@@ -11,16 +11,20 @@ const s6_vestuario    = require('./s6_vestuario');
 const s7_props        = require('./s7_props');
 const s8_multi        = require('./s8_multi');
 
+// Instrucción anti-marco — al final del prompt para máximo peso
+const NO_FRAME = `FINAL INSTRUCTION — ABSOLUTE REQUIREMENT: NO frame. NO border. NO picture frame. NO ornate frame. NO wooden frame. NO gold frame. NO decorative border of ANY kind. The painting fills the entire image edge to edge with NO frame whatsoever. If you add a frame, the output is wrong.`;
+
 /**
  * @param {Object} params
- * @param {string} params.estilo          — 'realeza' | 'barroco' | 'renacimiento'
- * @param {number} params.numAnimales     — 1 | 2 | 3 | 4
- * @param {string} params.especie         — 'gato' | 'perro' | etc
- * @param {string} params.raza            — nombre de la raza
- * @param {string} params.genero          — 'masculine' | 'feminine' | null
- * @param {Array}  params.animales        — array completo para multi
- * @param {Object} params.hero            — { pose, manto, cojin } índices hero shoots
- * @param {boolean} params.esNaturalistic — forzar pose naturalistic (guardrail pendiente)
+ * @param {string} params.estilo
+ * @param {number} params.numAnimales
+ * @param {string} params.especie
+ * @param {string} params.raza
+ * @param {string} params.genero
+ * @param {Array}  params.animales
+ * @param {Object} params.hero
+ * @param {boolean} params.esNaturalistic
+ * @param {string} params.imgHash
  */
 module.exports = function buildPrompt(params) {
   const {
@@ -40,7 +44,7 @@ module.exports = function buildPrompt(params) {
   const heroManto = hero?.manto ?? null;
   const heroCojin = hero?.cojin ?? null;
 
-  // ─── POSE + LOG DETALLADO ─────────────────────────────────────────────────
+  // ─── POSE + LOG ──────────────────────────────────────────────────────────
   let poseTexto = null;
 
   if (!isMulti) {
@@ -56,7 +60,6 @@ module.exports = function buildPrompt(params) {
       poseObj = pool[Math.floor(Math.random() * pool.length)];
     }
 
-    // Determinar índice de variante que se usará
     const variantesDisponibles = poseObj?.variantes?.length || 0;
     const varianteIdx = Math.floor(Math.random() * variantesDisponibles);
 
@@ -73,7 +76,6 @@ module.exports = function buildPrompt(params) {
       `hero: ${heroPose !== null ? `pose:${heroPose}` : 'aleatorio'}`,
     ].join(' | '));
 
-    // Usar el mismo índice de variante que loggeamos
     poseTexto = asignarPose(especie, raza, esNaturalistic, heroPose, varianteIdx);
   } else {
     console.log(`🎭 PROMPT MULTI | animales: ${numAnimales} | estilo: ${estilo} | genero: ${genero || 'neutral'}`);
@@ -81,28 +83,15 @@ module.exports = function buildPrompt(params) {
 
   // ─── ENSAMBLAR ───────────────────────────────────────────────────────────
   const secciones = [
-    // 1. Lienzo base
     s1_lienzo,
-
-    // 2. Fondo por estilo
     s2_fondo(estilo),
-
-    // 3. Referencia pictórica
     s3_estilo(estilo).referencia,
-
-    // 4. Sujeto: carácter + pelo + ojos + asimetría (encuadre multi si aplica)
     s5_sujeto(especie, numAnimales),
-
-    // 5. Pose con framing embebido (single only — multi usa escenas)
     !isMulti ? poseTexto : null,
-
-    // 6. Vestuario (single) o composición multi
-    isMulti
-      ? s8_multi(numAnimales, estilo)
-      : s6_vestuario(estilo, genero, heroManto),
-
-    // 7. Cojín
+    isMulti ? s8_multi(numAnimales, estilo) : s6_vestuario(estilo, genero, heroManto),
     s7_props(estilo, numAnimales, heroCojin),
+    // Anti-marco SIEMPRE al final — máximo peso
+    NO_FRAME,
   ];
 
   const promptFinal = secciones
