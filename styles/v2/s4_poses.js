@@ -1,12 +1,11 @@
-// SECCIÓN 4 — POSES v5
+// SECCIÓN 4 — POSES v6
 // Framing embebido en cada pose — nunca hay contradicción con s5_sujeto.
 //
 // REGLAS DE ENCUADRE:
-//   Perros y gatos — encuadre cinematográfico cercano. No se fuerza cuerpo completo.
-//     Si la parte trasera se corta naturalmente, está bien — lo que se ve debe
-//     tener coherencia anatómica y presencia. El animal llena el frame con potencia.
-//   Aves, reptiles, conejos, animales pequeños, caballos — cuerpo completo,
-//     porque en estas especies el cuerpo entero aporta dignidad y contexto.
+//   Perros y gatos — portrait crop sin porcentajes forzados.
+//     Proporciones anatómicamente correctas siempre.
+//     Si la parte trasera se corta naturalmente, está bien.
+//   Aves, reptiles, conejos, animales pequeños, caballos — cuerpo completo.
 //
 // OTRAS REGLAS:
 //   Gatos: mirada off-lens en todas excepto G2 y G5 (frontal directa aprobada)
@@ -17,25 +16,23 @@
 
 const framings = {
 
-  // PERROS Y GATOS — cinematográfico cercano
-  // No fuerza cuerpo completo. Si la parte trasera se corta, está bien.
-  // Lo que se ve debe ser coherente y anatómicamente correcto.
-  cinematic: `FRAMING: Close cinematic crop — the animal fills the frame with commanding presence. Head and chest prominent in the upper half, front paws visible at the lower portion. If the rear body or haunches fall outside the frame naturally, that is acceptable — what IS visible must be anatomically correct and coherent. Do NOT artificially shrink the animal to fit the full body. Do NOT zoom out excessively. The animal should feel large, close, and monumental.`,
+  // PERROS Y GATOS — portrait crop sin porcentajes
+  portrait: `FRAMING: Portrait crop — the animal fills the frame with natural presence. Front paws and cushion visible at the bottom. Proportions anatomically correct throughout. Do NOT compress or shrink the body.`,
 
-  // CLOSE CROP — para loaf de gato y portrait de perro pequeño
-  close_crop: `FRAMING: Very close crop — the animal's face and chest fill the majority of the frame. The face is the hero. Front paws and cushion edge visible at the bottom. The animal feels monumental and intimate.`,
+  // CLOSE CROP — para loaf de gato y poses sentadas compactas
+  close_crop: `FRAMING: Portrait crop — front paws and cushion visible at the bottom. Proportions anatomically correct throughout. Do NOT compress or shrink the body.`,
 
-  // CLOSE CROP FUERTE — perro pequeño portrait
-  close_crop_strong: `FRAMING: Extremely close crop — the animal's face and chest fill at least 70% of the frame. The face IS the painting. Chest and front paws barely visible at the bottom edge. Monumental presence despite small size.`,
+  // CLOSE CROP FUERTE — perro pequeño portrait (PP3)
+  close_crop_strong: `FRAMING: Close portrait crop — chest and front paws barely visible at bottom edge. Proportions anatomically correct throughout. Do NOT compress or shrink the body.`,
 
   // CUERPO COMPLETO — aves, reptiles, conejos, animales pequeños
-  full_body: `FRAMING: The complete body of the animal is fully visible from head to tail — full figure on the cushion or surface. The animal fills the canvas with dignified presence. Proportions are anatomically correct throughout. Do NOT crop the body.`,
+  full_body: `FRAMING: The complete body of the animal is fully visible from head to tail — full figure on the cushion or surface. Proportions anatomically correct throughout. Do NOT crop the body.`,
 
   // CUERPO COMPLETO MONUMENTAL — caballos
-  full_body_monumental: `FRAMING: The complete body of the horse fills the canvas — monumental composition from head to tail. Anatomically correct and powerful throughout. The horse dominates the frame entirely.`,
+  full_body_monumental: `FRAMING: The complete body of the horse fills the canvas — monumental composition from head to tail. Anatomically correct and powerful throughout.`,
 
-  // MEDIO CUERPO — para poses sentadas de conejo/reptil donde el cuerpo trasero es menos relevante
-  half_body: `FRAMING: The animal shown from head to mid-body — face prominent, front paws and chest visible, body naturally cropped at the cushion. Natural portrait framing with close presence.`,
+  // MEDIO CUERPO — conejo loaf
+  half_body: `FRAMING: The animal shown from head to mid-body — front paws and chest visible, body naturally cropped at the cushion. Proportions anatomically correct throughout.`,
 };
 
 // ─── MIRADAS ─────────────────────────────────────────────────────────────────
@@ -65,33 +62,33 @@ const perro_global = `CRITICAL — PRESERVE THE DOG'S NATURAL EXPRESSION: Study 
 const poses = {
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // GATO — encuadre cinematográfico en todas las poses
+  // GATO
   // ═══════════════════════════════════════════════════════════════════════════
   gato: [
 
-    // G1a — Sphinx derecha — 4 miradas
+    // G1a — Sphinx derecha — portrait — 4 miradas
     {
       id: 'G1a',
       variantes: [
-        `${framings.cinematic} POSE — SPHINX RECLINE RIGHT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the right — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_offlens}`,
-        `${framings.cinematic} POSE — SPHINX RECLINE RIGHT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the right — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_lateral}`,
-        `${framings.cinematic} POSE — SPHINX RECLINE RIGHT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the right — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_elevada}`,
-        `${framings.cinematic} POSE — SPHINX RECLINE RIGHT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the right — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_indiferente}`,
+        `${framings.portrait} POSE — SPHINX RECLINE RIGHT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the right — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_offlens}`,
+        `${framings.portrait} POSE — SPHINX RECLINE RIGHT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the right — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_lateral}`,
+        `${framings.portrait} POSE — SPHINX RECLINE RIGHT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the right — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_elevada}`,
+        `${framings.portrait} POSE — SPHINX RECLINE RIGHT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the right — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_indiferente}`,
       ]
     },
 
-    // G1b — Sphinx izquierda — 4 miradas
+    // G1b — Sphinx izquierda — portrait — 4 miradas
     {
       id: 'G1b',
       variantes: [
-        `${framings.cinematic} POSE — SPHINX RECLINE LEFT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the left — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_offlens}`,
-        `${framings.cinematic} POSE — SPHINX RECLINE LEFT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the left — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_lateral}`,
-        `${framings.cinematic} POSE — SPHINX RECLINE LEFT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the left — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_elevada}`,
-        `${framings.cinematic} POSE — SPHINX RECLINE LEFT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the left — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_indiferente}`,
+        `${framings.portrait} POSE — SPHINX RECLINE LEFT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the left — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_offlens}`,
+        `${framings.portrait} POSE — SPHINX RECLINE LEFT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the left — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_lateral}`,
+        `${framings.portrait} POSE — SPHINX RECLINE LEFT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the left — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_elevada}`,
+        `${framings.portrait} POSE — SPHINX RECLINE LEFT: The cat's FRONT LEGS are both fully extended forward and lying flat on the cushion. The cat's CHEST is lowered and resting on the cushion. The cat's BODY is oriented slightly to the left — 15 degrees off center. The cat's HEAD is fully erect and elevated — chin up. NO tail visible. ${miradas.gato_indiferente}`,
       ]
     },
 
-    // G2 — Upright asimétrico — close crop — 3 miradas — mirada frontal directa aprobada
+    // G2 — Upright asimétrico — close_crop — 3 miradas — frontal directa aprobada
     {
       id: 'G2',
       variantes: [
@@ -101,17 +98,17 @@ const poses = {
       ]
     },
 
-    // G3 — Three quarter — cinematic — 2 miradas — NO junto a G2
+    // G3 — Three quarter — portrait — 2 miradas — NO junto a G2
     {
       id: 'G3',
       noJuntoA: ['G2'],
       variantes: [
-        `${framings.cinematic} POSE — THREE QUARTER TURN: The cat's HINDQUARTERS are seated on the cushion. The cat's BODY is turned 3/4 away from the viewer — the flank and side are clearly visible. The cat's FRONT PAWS are flat on the cushion, one slightly forward. The cat's HEAD is turned completely back toward the viewer — sharp confident neck rotation. Body faces away, head faces forward. ${miradas.gato_offlens}`,
-        `${framings.cinematic} POSE — THREE QUARTER TURN: The cat's HINDQUARTERS are seated on the cushion. The cat's BODY is turned 3/4 away from the viewer — the flank and side are clearly visible. The cat's FRONT PAWS are flat on the cushion, one slightly forward. The cat's HEAD is turned completely back toward the viewer — sharp confident neck rotation. Body faces away, head faces forward. ${miradas.gato_lateral}`,
+        `${framings.portrait} POSE — THREE QUARTER TURN: The cat's HINDQUARTERS are seated on the cushion. The cat's BODY is turned 3/4 away from the viewer — the flank and side are clearly visible. The cat's FRONT PAWS are flat on the cushion, one slightly forward. The cat's HEAD is turned completely back toward the viewer — sharp confident neck rotation. Body faces away, head faces forward. ${miradas.gato_offlens}`,
+        `${framings.portrait} POSE — THREE QUARTER TURN: The cat's HINDQUARTERS are seated on the cushion. The cat's BODY is turned 3/4 away from the viewer — the flank and side are clearly visible. The cat's FRONT PAWS are flat on the cushion, one slightly forward. The cat's HEAD is turned completely back toward the viewer — sharp confident neck rotation. Body faces away, head faces forward. ${miradas.gato_lateral}`,
       ]
     },
 
-    // G4 — Loaf — close crop — 4 miradas
+    // G4 — Loaf — close_crop — 4 miradas
     {
       id: 'G4',
       variantes: [
@@ -122,7 +119,7 @@ const poses = {
       ]
     },
 
-    // G5a — Alineado izquierda — close crop — 1 mirada frontal aprobada
+    // G5a — Alineado izquierda — close_crop — frontal aprobada
     {
       id: 'G5a',
       variantes: [
@@ -130,7 +127,7 @@ const poses = {
       ]
     },
 
-    // G5b — Alineado derecha — close crop — 1 mirada frontal aprobada
+    // G5b — Alineado derecha — close_crop — frontal aprobada
     {
       id: 'G5b',
       variantes: [
@@ -138,158 +135,157 @@ const poses = {
       ]
     },
 
-    // G6 — Naturalistic — cinematic
+    // G6 — Naturalistic — portrait
     {
       id: 'G6',
       naturalistic: true,
       variantes: [
-        `${framings.cinematic} POSE — NATURALISTIC: Faithfully recreate the cat's natural pose from the reference photo. Preserve the exact body position, limb placement, and tail position as shown. Transform it into a royal oil painting while keeping the pose 100% faithful to the reference.`,
+        `${framings.portrait} POSE — NATURALISTIC: Faithfully recreate the cat's natural pose from the reference photo. Preserve the exact body position, limb placement, and tail position as shown. Transform into a royal oil painting while keeping the pose 100% faithful to the reference.`,
       ]
     },
   ],
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // PERRO GRANDE — encuadre cinematográfico en todas las poses
+  // PERRO GRANDE
   // ═══════════════════════════════════════════════════════════════════════════
   perro_grande: [
 
-    // PG1 — Landseer Recline — cinematic — 4 miradas
+    // PG1 — Landseer Recline — portrait — 4 miradas
     {
       id: 'PG1',
       variantes: [
-        `${framings.cinematic} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion. Both front legs extended forward, one paw slightly over the other — natural asymmetry. Head fully erect and elevated — chin up, noble. The rear haunches may fall outside the frame naturally — what IS visible must be coherent and powerful. ${miradas.perro_offlens}`,
-        `${framings.cinematic} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion. Both front legs extended forward, one paw slightly over the other — natural asymmetry. Head fully erect and elevated — chin up, noble. The rear haunches may fall outside the frame naturally — what IS visible must be coherent and powerful. ${miradas.perro_girada}`,
-        `${framings.cinematic} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion. Both front legs extended forward, one paw slightly over the other — natural asymmetry. Head fully erect and elevated — chin up, noble. The rear haunches may fall outside the frame naturally — what IS visible must be coherent and powerful. ${miradas.perro_headtilt}`,
-        `${framings.cinematic} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion. Both front legs extended forward, one paw slightly over the other — natural asymmetry. Head fully erect and elevated — chin up, noble. The rear haunches may fall outside the frame naturally — what IS visible must be coherent and powerful. ${miradas.perro_directo}`,
+        `${framings.portrait} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion. Both front legs extended forward, one paw slightly over the other — natural asymmetry. Head fully erect and elevated — chin up, noble. Rear haunches may fall outside the frame naturally. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion. Both front legs extended forward, one paw slightly over the other — natural asymmetry. Head fully erect and elevated — chin up, noble. Rear haunches may fall outside the frame naturally. ${miradas.perro_girada}`,
+        `${framings.portrait} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion. Both front legs extended forward, one paw slightly over the other — natural asymmetry. Head fully erect and elevated — chin up, noble. Rear haunches may fall outside the frame naturally. ${miradas.perro_headtilt}`,
+        `${framings.portrait} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion. Both front legs extended forward, one paw slightly over the other — natural asymmetry. Head fully erect and elevated — chin up, noble. Rear haunches may fall outside the frame naturally. ${miradas.perro_directo}`,
       ]
     },
 
-    // PG2 — Sphinx Noble — cinematic — 4 miradas
+    // PG2 — Sphinx Noble — portrait — 4 miradas
     {
       id: 'PG2',
       variantes: [
-        `${framings.cinematic} ${perro_global} POSE — SPHINX NOBLE: The dog's chest is lowered and resting on the cushion. Both front legs fully extended forward, one paw slightly ahead of the other. Head fully erect and elevated — chin up, commanding. The rear haunches may fall outside the frame naturally — what IS visible must be coherent and powerful. ${miradas.perro_offlens}`,
-        `${framings.cinematic} ${perro_global} POSE — SPHINX NOBLE: The dog's chest is lowered and resting on the cushion. Both front legs fully extended forward, one paw slightly ahead of the other. Head fully erect and elevated — chin up, commanding. The rear haunches may fall outside the frame naturally — what IS visible must be coherent and powerful. ${miradas.perro_girada}`,
-        `${framings.cinematic} ${perro_global} POSE — SPHINX NOBLE: The dog's chest is lowered and resting on the cushion. Both front legs fully extended forward, one paw slightly ahead of the other. Head fully erect and elevated — chin up, commanding. The rear haunches may fall outside the frame naturally — what IS visible must be coherent and powerful. ${miradas.perro_headtilt}`,
-        `${framings.cinematic} ${perro_global} POSE — SPHINX NOBLE: The dog's chest is lowered and resting on the cushion. Both front legs fully extended forward, one paw slightly ahead of the other. Head fully erect and elevated — chin up, commanding. The rear haunches may fall outside the frame naturally — what IS visible must be coherent and powerful. ${miradas.perro_directo}`,
+        `${framings.portrait} ${perro_global} POSE — SPHINX NOBLE: The dog's chest is lowered and resting on the cushion. Both front legs fully extended forward, one paw slightly ahead of the other. Head fully erect and elevated — chin up, commanding. Rear haunches may fall outside the frame naturally. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — SPHINX NOBLE: The dog's chest is lowered and resting on the cushion. Both front legs fully extended forward, one paw slightly ahead of the other. Head fully erect and elevated — chin up, commanding. Rear haunches may fall outside the frame naturally. ${miradas.perro_girada}`,
+        `${framings.portrait} ${perro_global} POSE — SPHINX NOBLE: The dog's chest is lowered and resting on the cushion. Both front legs fully extended forward, one paw slightly ahead of the other. Head fully erect and elevated — chin up, commanding. Rear haunches may fall outside the frame naturally. ${miradas.perro_headtilt}`,
+        `${framings.portrait} ${perro_global} POSE — SPHINX NOBLE: The dog's chest is lowered and resting on the cushion. Both front legs fully extended forward, one paw slightly ahead of the other. Head fully erect and elevated — chin up, commanding. Rear haunches may fall outside the frame naturally. ${miradas.perro_directo}`,
       ]
     },
 
-    // PG3 — Seated Proud — cinematic — 4 miradas
+    // PG3 — Seated Proud — portrait — 4 miradas
     {
       id: 'PG3',
       variantes: [
-        `${framings.cinematic} ${perro_global} POSE — SEATED PROUD: The dog sits upright on the cushion — hindquarters firmly seated, chest broad and forward. One front paw very slightly ahead of the other — natural asymmetry. Back straight but not rigid. Head elevated naturally. ${miradas.perro_offlens}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED PROUD: The dog sits upright on the cushion — hindquarters firmly seated, chest broad and forward. One front paw very slightly ahead of the other — natural asymmetry. Back straight but not rigid. Head elevated naturally. ${miradas.perro_girada}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED PROUD: The dog sits upright on the cushion — hindquarters firmly seated, chest broad and forward. One front paw very slightly ahead of the other — natural asymmetry. Back straight but not rigid. Head elevated naturally. ${miradas.perro_headtilt}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED PROUD: The dog sits upright on the cushion — hindquarters firmly seated, chest broad and forward. One front paw very slightly ahead of the other — natural asymmetry. Back straight but not rigid. Head elevated naturally. ${miradas.perro_directo}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED PROUD: The dog sits upright on the cushion — hindquarters firmly seated, chest broad and forward. One front paw very slightly ahead of the other — natural asymmetry. Back straight but not rigid. Head elevated naturally. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED PROUD: The dog sits upright on the cushion — hindquarters firmly seated, chest broad and forward. One front paw very slightly ahead of the other — natural asymmetry. Back straight but not rigid. Head elevated naturally. ${miradas.perro_girada}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED PROUD: The dog sits upright on the cushion — hindquarters firmly seated, chest broad and forward. One front paw very slightly ahead of the other — natural asymmetry. Back straight but not rigid. Head elevated naturally. ${miradas.perro_headtilt}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED PROUD: The dog sits upright on the cushion — hindquarters firmly seated, chest broad and forward. One front paw very slightly ahead of the other — natural asymmetry. Back straight but not rigid. Head elevated naturally. ${miradas.perro_directo}`,
       ]
     },
 
-    // PG4 — Three Quarter — cinematic — 3 miradas
+    // PG4 — Three Quarter — portrait — 3 miradas
     {
       id: 'PG4',
       variantes: [
-        `${framings.cinematic} ${perro_global} POSE — THREE QUARTER: The dog's body is turned 3/4 toward one side — flank and side clearly visible. Head turned back toward the viewer — confident, dynamic. One front paw slightly forward — natural asymmetry. ${miradas.perro_offlens}`,
-        `${framings.cinematic} ${perro_global} POSE — THREE QUARTER: The dog's body is turned 3/4 toward one side — flank and side clearly visible. Head turned back toward the viewer — confident, dynamic. One front paw slightly forward — natural asymmetry. ${miradas.perro_headtilt}`,
-        `${framings.cinematic} ${perro_global} POSE — THREE QUARTER: The dog's body is turned 3/4 toward one side — flank and side clearly visible. Head turned back toward the viewer — confident, dynamic. One front paw slightly forward — natural asymmetry. ${miradas.perro_directo}`,
+        `${framings.portrait} ${perro_global} POSE — THREE QUARTER: The dog's body is turned 3/4 toward one side — flank and side clearly visible. Head turned back toward the viewer — confident, dynamic. One front paw slightly forward — natural asymmetry. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — THREE QUARTER: The dog's body is turned 3/4 toward one side — flank and side clearly visible. Head turned back toward the viewer — confident, dynamic. One front paw slightly forward — natural asymmetry. ${miradas.perro_headtilt}`,
+        `${framings.portrait} ${perro_global} POSE — THREE QUARTER: The dog's body is turned 3/4 toward one side — flank and side clearly visible. Head turned back toward the viewer — confident, dynamic. One front paw slightly forward — natural asymmetry. ${miradas.perro_directo}`,
       ]
     },
 
-    // PG5 — Naturalistic — cinematic
+    // PG5 — Naturalistic — portrait
     {
       id: 'PG5',
       naturalistic: true,
       variantes: [
-        `${framings.cinematic} ${perro_global} POSE — NATURALISTIC: Faithfully recreate the dog's natural pose from the reference photo. Preserve the exact body position, limb placement, and expression. Transform it into a royal oil painting while keeping the pose 100% faithful.`,
+        `${framings.portrait} ${perro_global} POSE — NATURALISTIC: Faithfully recreate the dog's natural pose from the reference photo. Preserve exact body position, limb placement, and expression. Transform into a royal oil painting while keeping the pose 100% faithful.`,
       ]
     },
   ],
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // PERRO MEDIANO — encuadre cinematográfico
+  // PERRO MEDIANO
   // ═══════════════════════════════════════════════════════════════════════════
   perro_mediano: [
 
-    // PM1 — Landseer Recline — cinematic — 4 miradas
+    // PM1 — Landseer Recline — portrait — 4 miradas
     {
       id: 'PM1',
       variantes: [
-        `${framings.cinematic} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion — cushion proportional to the dog's size. Both front legs extended forward, one paw slightly over the other. Head fully erect — chin up. Rear may fall outside frame naturally. ${miradas.perro_offlens}`,
-        `${framings.cinematic} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion — cushion proportional to the dog's size. Both front legs extended forward, one paw slightly over the other. Head fully erect — chin up. Rear may fall outside frame naturally. ${miradas.perro_girada}`,
-        `${framings.cinematic} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion — cushion proportional to the dog's size. Both front legs extended forward, one paw slightly over the other. Head fully erect — chin up. Rear may fall outside frame naturally. ${miradas.perro_headtilt}`,
-        `${framings.cinematic} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion — cushion proportional to the dog's size. Both front legs extended forward, one paw slightly over the other. Head fully erect — chin up. Rear may fall outside frame naturally. ${miradas.perro_directo}`,
+        `${framings.portrait} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion — cushion proportional to dog's size. Both front legs extended forward, one paw slightly over the other. Head fully erect — chin up. Rear may fall outside frame naturally. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion — cushion proportional to dog's size. Both front legs extended forward, one paw slightly over the other. Head fully erect — chin up. Rear may fall outside frame naturally. ${miradas.perro_girada}`,
+        `${framings.portrait} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion — cushion proportional to dog's size. Both front legs extended forward, one paw slightly over the other. Head fully erect — chin up. Rear may fall outside frame naturally. ${miradas.perro_headtilt}`,
+        `${framings.portrait} ${perro_global} POSE — LANDSEER RECLINE: The dog lies with chest slightly elevated on the cushion — cushion proportional to dog's size. Both front legs extended forward, one paw slightly over the other. Head fully erect — chin up. Rear may fall outside frame naturally. ${miradas.perro_directo}`,
       ]
     },
 
-    // PM2 — Seated Proud — cinematic — 4 miradas
+    // PM2 — Seated Proud — portrait — 4 miradas
     {
       id: 'PM2',
       variantes: [
-        `${framings.cinematic} ${perro_global} POSE — SEATED PROUD: The dog sits upright — chest forward, one front paw slightly ahead of the other. Head elevated naturally. Cushion proportional to dog's size. ${miradas.perro_offlens}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED PROUD: The dog sits upright — chest forward, one front paw slightly ahead of the other. Head elevated naturally. Cushion proportional to dog's size. ${miradas.perro_girada}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED PROUD: The dog sits upright — chest forward, one front paw slightly ahead of the other. Head elevated naturally. Cushion proportional to dog's size. ${miradas.perro_headtilt}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED PROUD: The dog sits upright — chest forward, one front paw slightly ahead of the other. Head elevated naturally. Cushion proportional to dog's size. ${miradas.perro_directo}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED PROUD: The dog sits upright — chest forward, one front paw slightly ahead of the other. Head elevated naturally. Cushion proportional to dog's size. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED PROUD: The dog sits upright — chest forward, one front paw slightly ahead of the other. Head elevated naturally. Cushion proportional to dog's size. ${miradas.perro_girada}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED PROUD: The dog sits upright — chest forward, one front paw slightly ahead of the other. Head elevated naturally. Cushion proportional to dog's size. ${miradas.perro_headtilt}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED PROUD: The dog sits upright — chest forward, one front paw slightly ahead of the other. Head elevated naturally. Cushion proportional to dog's size. ${miradas.perro_directo}`,
       ]
     },
 
-    // PM3 — Three Quarter — cinematic — 3 miradas
+    // PM3 — Three Quarter — portrait — 3 miradas
     {
       id: 'PM3',
       variantes: [
-        `${framings.cinematic} ${perro_global} POSE — THREE QUARTER: The dog's body is turned 3/4 to one side — flank visible. Head turned back toward viewer. Natural asymmetry. Cushion proportional to dog's size. ${miradas.perro_offlens}`,
-        `${framings.cinematic} ${perro_global} POSE — THREE QUARTER: The dog's body is turned 3/4 to one side — flank visible. Head turned back toward viewer. Natural asymmetry. Cushion proportional to dog's size. ${miradas.perro_headtilt}`,
-        `${framings.cinematic} ${perro_global} POSE — THREE QUARTER: The dog's body is turned 3/4 to one side — flank visible. Head turned back toward viewer. Natural asymmetry. Cushion proportional to dog's size. ${miradas.perro_directo}`,
+        `${framings.portrait} ${perro_global} POSE — THREE QUARTER: The dog's body is turned 3/4 to one side — flank visible. Head turned back toward viewer. Natural asymmetry. Cushion proportional. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — THREE QUARTER: The dog's body is turned 3/4 to one side — flank visible. Head turned back toward viewer. Natural asymmetry. Cushion proportional. ${miradas.perro_headtilt}`,
+        `${framings.portrait} ${perro_global} POSE — THREE QUARTER: The dog's body is turned 3/4 to one side — flank visible. Head turned back toward viewer. Natural asymmetry. Cushion proportional. ${miradas.perro_directo}`,
       ]
     },
 
-    // PM4 — Seated Angled — cinematic — 4 miradas
+    // PM4 — Seated Angled — portrait — 4 miradas
     {
       id: 'PM4',
       variantes: [
-        `${framings.cinematic} ${perro_global} POSE — SEATED ANGLED: The dog sits with body angled 20 degrees to one side — not fully frontal, natural depth. Chest forward and slightly turned. One front paw noticeably ahead of the other. Cushion proportional. ${miradas.perro_offlens}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED ANGLED: The dog sits with body angled 20 degrees to one side — not fully frontal, natural depth. Chest forward and slightly turned. One front paw noticeably ahead of the other. Cushion proportional. ${miradas.perro_girada}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED ANGLED: The dog sits with body angled 20 degrees to one side — not fully frontal, natural depth. Chest forward and slightly turned. One front paw noticeably ahead of the other. Cushion proportional. ${miradas.perro_headtilt}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED ANGLED: The dog sits with body angled 20 degrees to one side — not fully frontal, natural depth. Chest forward and slightly turned. One front paw noticeably ahead of the other. Cushion proportional. ${miradas.perro_directo}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: The dog sits with body angled 20 degrees to one side — not fully frontal, natural depth. Chest forward and slightly turned. One front paw noticeably ahead of the other. Cushion proportional. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: The dog sits with body angled 20 degrees to one side — not fully frontal, natural depth. Chest forward and slightly turned. One front paw noticeably ahead of the other. Cushion proportional. ${miradas.perro_girada}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: The dog sits with body angled 20 degrees to one side — not fully frontal, natural depth. Chest forward and slightly turned. One front paw noticeably ahead of the other. Cushion proportional. ${miradas.perro_headtilt}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: The dog sits with body angled 20 degrees to one side — not fully frontal, natural depth. Chest forward and slightly turned. One front paw noticeably ahead of the other. Cushion proportional. ${miradas.perro_directo}`,
       ]
     },
 
-    // PM5 — Naturalistic — cinematic
+    // PM5 — Naturalistic — portrait
     {
       id: 'PM5',
       naturalistic: true,
       variantes: [
-        `${framings.cinematic} ${perro_global} POSE — NATURALISTIC: Faithfully recreate the dog's natural pose from the reference photo. Preserve exact body position, limb placement, and expression. Transform into a royal oil painting while keeping the pose 100% faithful.`,
+        `${framings.portrait} ${perro_global} POSE — NATURALISTIC: Faithfully recreate the dog's natural pose from the reference photo. Preserve exact body position, limb placement, and expression. Transform into a royal oil painting while keeping the pose 100% faithful.`,
       ]
     },
   ],
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PERRO PEQUEÑO
-  // PP3 es la única con close_crop_strong — las demás cinematic
-  // Sin poses reclinadas — pierden dignidad en razas pequeñas
+  // PP3 única excepción con close_crop_strong
   // ═══════════════════════════════════════════════════════════════════════════
   perro_pequeno: [
 
-    // PP1 — Seated Upright Formal — cinematic — 4 miradas
+    // PP1 — Seated Upright Formal — portrait — 4 miradas
     {
       id: 'PP1',
       variantes: [
-        `${framings.cinematic} ${perro_global} POSE — SEATED UPRIGHT FORMAL: The small dog sits perfectly upright — back straight, chest forward. Cushion sized to make the dog look dignified, not swallowed. One front paw slightly ahead of the other. Head elevated. ${miradas.perro_offlens}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED UPRIGHT FORMAL: The small dog sits perfectly upright — back straight, chest forward. Cushion sized to make the dog look dignified, not swallowed. One front paw slightly ahead of the other. Head elevated. ${miradas.perro_girada}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED UPRIGHT FORMAL: The small dog sits perfectly upright — back straight, chest forward. Cushion sized to make the dog look dignified, not swallowed. One front paw slightly ahead of the other. Head elevated. ${miradas.perro_headtilt}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED UPRIGHT FORMAL: The small dog sits perfectly upright — back straight, chest forward. Cushion sized to make the dog look dignified, not swallowed. One front paw slightly ahead of the other. Head elevated. ${miradas.perro_directo}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED UPRIGHT FORMAL: The small dog sits perfectly upright — back straight, chest forward. Cushion sized to make the dog look dignified. One front paw slightly ahead of the other. Head elevated. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED UPRIGHT FORMAL: The small dog sits perfectly upright — back straight, chest forward. Cushion sized to make the dog look dignified. One front paw slightly ahead of the other. Head elevated. ${miradas.perro_girada}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED UPRIGHT FORMAL: The small dog sits perfectly upright — back straight, chest forward. Cushion sized to make the dog look dignified. One front paw slightly ahead of the other. Head elevated. ${miradas.perro_headtilt}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED UPRIGHT FORMAL: The small dog sits perfectly upright — back straight, chest forward. Cushion sized to make the dog look dignified. One front paw slightly ahead of the other. Head elevated. ${miradas.perro_directo}`,
       ]
     },
 
-    // PP2 — Seated Angled — cinematic — 4 miradas
+    // PP2 — Seated Angled — portrait — 4 miradas
     {
       id: 'PP2',
       variantes: [
-        `${framings.cinematic} ${perro_global} POSE — SEATED ANGLED: The small dog sits with body angled 20 degrees — not fully frontal. One front paw clearly ahead of the other. Cushion appropriately sized. ${miradas.perro_offlens}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED ANGLED: The small dog sits with body angled 20 degrees — not fully frontal. One front paw clearly ahead of the other. Cushion appropriately sized. ${miradas.perro_girada}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED ANGLED: The small dog sits with body angled 20 degrees — not fully frontal. One front paw clearly ahead of the other. Cushion appropriately sized. ${miradas.perro_headtilt}`,
-        `${framings.cinematic} ${perro_global} POSE — SEATED ANGLED: The small dog sits with body angled 20 degrees — not fully frontal. One front paw clearly ahead of the other. Cushion appropriately sized. ${miradas.perro_directo}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: The small dog sits with body angled 20 degrees — not fully frontal. One front paw clearly ahead of the other. Cushion appropriately sized. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: The small dog sits with body angled 20 degrees — not fully frontal. One front paw clearly ahead of the other. Cushion appropriately sized. ${miradas.perro_girada}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: The small dog sits with body angled 20 degrees — not fully frontal. One front paw clearly ahead of the other. Cushion appropriately sized. ${miradas.perro_headtilt}`,
+        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: The small dog sits with body angled 20 degrees — not fully frontal. One front paw clearly ahead of the other. Cushion appropriately sized. ${miradas.perro_directo}`,
       ]
     },
 
@@ -297,35 +293,35 @@ const poses = {
     {
       id: 'PP3',
       variantes: [
-        `${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: The dog's face and chest fill at least 70% of the frame. The face is the hero. Chest and front paws visible at the bottom. The royal mantle frames the face dramatically. ${miradas.perro_offlens}`,
-        `${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: The dog's face and chest fill at least 70% of the frame. The face is the hero. Chest and front paws visible at the bottom. The royal mantle frames the face dramatically. ${miradas.perro_girada}`,
-        `${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: The dog's face and chest fill at least 70% of the frame. The face is the hero. Chest and front paws visible at the bottom. The royal mantle frames the face dramatically. ${miradas.perro_headtilt}`,
-        `${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: The dog's face and chest fill at least 70% of the frame. The face is the hero. Chest and front paws visible at the bottom. The royal mantle frames the face dramatically. ${miradas.perro_directo}`,
+        `${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: The dog's face and chest are the focus. The royal mantle frames dramatically. Chest and front paws at the bottom edge. ${miradas.perro_offlens}`,
+        `${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: The dog's face and chest are the focus. The royal mantle frames dramatically. Chest and front paws at the bottom edge. ${miradas.perro_girada}`,
+        `${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: The dog's face and chest are the focus. The royal mantle frames dramatically. Chest and front paws at the bottom edge. ${miradas.perro_headtilt}`,
+        `${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: The dog's face and chest are the focus. The royal mantle frames dramatically. Chest and front paws at the bottom edge. ${miradas.perro_directo}`,
       ]
     },
 
-    // PP4 — Three Quarter — cinematic — 3 miradas
+    // PP4 — Three Quarter — portrait — 3 miradas
     {
       id: 'PP4',
       variantes: [
-        `${framings.cinematic} ${perro_global} POSE — THREE QUARTER DYNAMIC: The small dog's body is turned 3/4 to one side. Head turned back toward viewer with personality. Natural asymmetry. Cushion appropriately sized. ${miradas.perro_offlens}`,
-        `${framings.cinematic} ${perro_global} POSE — THREE QUARTER DYNAMIC: The small dog's body is turned 3/4 to one side. Head turned back toward viewer with personality. Natural asymmetry. Cushion appropriately sized. ${miradas.perro_headtilt}`,
-        `${framings.cinematic} ${perro_global} POSE — THREE QUARTER DYNAMIC: The small dog's body is turned 3/4 to one side. Head turned back toward viewer with personality. Natural asymmetry. Cushion appropriately sized. ${miradas.perro_directo}`,
+        `${framings.portrait} ${perro_global} POSE — THREE QUARTER DYNAMIC: The small dog's body is turned 3/4 to one side. Head turned back toward viewer with personality. Natural asymmetry. Cushion appropriately sized. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — THREE QUARTER DYNAMIC: The small dog's body is turned 3/4 to one side. Head turned back toward viewer with personality. Natural asymmetry. Cushion appropriately sized. ${miradas.perro_headtilt}`,
+        `${framings.portrait} ${perro_global} POSE — THREE QUARTER DYNAMIC: The small dog's body is turned 3/4 to one side. Head turned back toward viewer with personality. Natural asymmetry. Cushion appropriately sized. ${miradas.perro_directo}`,
       ]
     },
 
-    // PP5 — Naturalistic — cinematic
+    // PP5 — Naturalistic — portrait
     {
       id: 'PP5',
       naturalistic: true,
       variantes: [
-        `${framings.cinematic} ${perro_global} POSE — NATURALISTIC: Faithfully recreate the dog's natural pose from the reference photo. Preserve exact body position and expression. Transform into a royal oil painting while keeping the pose 100% faithful.`,
+        `${framings.portrait} ${perro_global} POSE — NATURALISTIC: Faithfully recreate the dog's natural pose from the reference photo. Preserve exact body position and expression. Transform into a royal oil painting while keeping the pose 100% faithful.`,
       ]
     },
   ],
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // CONEJO — full_body, loaf usa half_body
+  // CONEJO
   // ═══════════════════════════════════════════════════════════════════════════
   conejo: [
     {
@@ -359,7 +355,7 @@ const poses = {
   ],
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // AVE — full_body siempre
+  // AVE
   // ═══════════════════════════════════════════════════════════════════════════
   ave: [
     {
@@ -387,13 +383,13 @@ const poses = {
       id: 'AV4',
       naturalistic: true,
       variantes: [
-        `${framings.full_body} POSE — NATURALISTIC: Faithfully recreate the bird's natural pose from the reference photo. Preserve the exact body position, wing placement, and head angle. Transform into a royal oil painting while keeping the pose 100% faithful.`,
+        `${framings.full_body} POSE — NATURALISTIC: Faithfully recreate the bird's natural pose from the reference photo. Preserve exact body position, wing placement, and head angle. Transform into a royal oil painting while keeping the pose 100% faithful.`,
       ]
     },
   ],
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // CABALLO — full_body_monumental siempre
+  // CABALLO
   // ═══════════════════════════════════════════════════════════════════════════
   caballo: [
     {
@@ -427,7 +423,7 @@ const poses = {
   ],
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // REPTIL — full_body siempre
+  // REPTIL
   // ═══════════════════════════════════════════════════════════════════════════
   reptil: [
     {
@@ -461,7 +457,7 @@ const poses = {
   ],
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // ANIMAL PEQUEÑO — full_body, AN2 usa close_crop por su expresividad facial
+  // ANIMAL PEQUEÑO
   // ═══════════════════════════════════════════════════════════════════════════
   pequeno: [
     {
@@ -501,7 +497,7 @@ const poses = {
     {
       id: 'DF1',
       variantes: [
-        `${framings.cinematic} POSE: The animal rests naturally on the cushion in the most dignified position its anatomy allows — body composed, head erect and elevated, gaze directed just off-lens with calm authority. Natural asymmetry preserved.`,
+        `${framings.portrait} POSE: The animal rests naturally on the cushion in the most dignified position its anatomy allows — body composed, head erect and elevated, gaze directed just off-lens with calm authority. Natural asymmetry preserved.`,
         `${framings.half_body} POSE: The animal sits or reclines — head raised, eyes meeting the viewer with quiet confidence. Noble and composed.`,
       ]
     },
