@@ -1,6 +1,6 @@
-// SECCIÓN 5 — SUJETO v8
-// v8 — Candado estricto de ANATOMÍA UNIVERSAL. Obliga a la IA a copiar el 
-// grosor de huesos y proporciones exactas de CUALQUIER animal (perros, gatos, etc).
+// SECCIÓN 5 — SUJETO v9
+// v9 — Candado obsesivo de IDENTIDAD FACIAL y FISONOMÍA ÓSEA. 
+// Obliga a la IA a copiar cada arruga y mancha de pigmentación de la cara exacta de la referencia.
 
 module.exports = function s5_sujeto(especie, numAnimales) {
   const isMulti = numAnimales > 1;
@@ -20,7 +20,8 @@ module.exports = function s5_sujeto(especie, numAnimales) {
 
   const pelo = `FUR & FLESH: Painted with individual directional strokes. The flesh and facial features show tangible weight and gravity. Wrinkles, folds, and jowls (if present) are heavy, organic, and highly volumetric, not painted flat. The coat has depth: some hairs catch the soft light, others fall into deep warm shadow. The texture is intensely tactile.`;
 
-  const ojos = `EYES: Genuinely alive and deeply set into the skull, conveying a profound mind and soul. Deep iris with visible layers of color, wet cornea reflecting warm ambient light, the lower lid slightly moist. One small warm matte catchlight. These are not glass eyes — they are the eyes of a real, breathing animal that knows it is being watched.`;
+  // NUEVA SECCIÓN OBSESIVA DE IDENTIDAD FACIAL
+  const ojos = `FACIAL IDENTITY (CRITICAL OBSESSION): Study the face in the reference photo with forensic detail. The unique fisonomy, bone structure, and facial proportions of THIS specific individual MUST be identical in the painting. You must perfectly replicate the exact placement and density of every facial wrinkle, especially in the forehead and muzzle. The shape and heavy character of the eyes, the precise ear set, and any unique facial markings or skin pigmentation irregularities (like specific pink spots on the muzzle) must be 100% faithful to the reference. Do NOT clean, normalize, or use a generic breed face. Replicate this specific soul and face in a classical oil style.`;
 
   const asimetria = `NATURALNESS & GRAVITY: The pose has a slight natural asymmetry — nothing is perfectly centered. Real animals are never perfectly still. There is a lived-in quality and undeniable physical mass: the body yields to gravity, the heavy limbs are distributed naturally onto the surface, and the expression is caught in a genuine, unforced moment.`;
 
