@@ -1,24 +1,25 @@
-// SECCIÓN 3 — ESTILO PICTÓRICO v2
-// v2 — luz específica y detallada por estilo, sin contradicciones con s1_lienzo.
-// Alias agregados: 'rey' → 'realeza' para compatibilidad con frontend.
+// SECCIÓN 3 — ESTILO PICTÓRICO v3
+// v3 — luz suavizada en todos los estilos para eliminar el brillo plástico.
+// La luz es siempre difusa y envolvente — nunca dura ni especular.
+// Alias mantenidos para compatibilidad con frontend.
 
 const estilos = {
   realeza: {
     nombre: "Realeza Imperial",
     referencia: `Style reference: Hyacinthe Rigaud imperial court portrait, circa 1700.
-LIGHTING: Powerful warm light from upper right — strikes the face and chest directly, creating bright illuminated zones on the forehead, cheekbones, and ermine collar. The left side of the face falls into soft warm shadow. The light is confident and theatrical — befitting a royal court. Rich saturated colors throughout: deep crimsons, warm golds, luminous ivory whites. The ermine tail-tips are individually crisp and precise. Overall palette: warm, regal, luminous.`
+LIGHTING: Warm diffused light from upper right — soft and enveloping, striking the face and chest with gentle illumination. Bright zones on the forehead and cheekbones are smooth gradients, never harsh highlights. The left side of the face falls into soft warm shadow with natural lost edges. No specular shine, no plastic highlights — the light is warm, confident, and painterly. Rich but muted colors: deep crimsons, antique golds, warm ivory. Overall palette: warm, regal, unified by amber varnish.`
   },
 
   barroco: {
     nombre: "Gran Maestro Oscuro",
     referencia: `Style reference: Rembrandt van Rijn Dutch Golden Age portrait, circa 1660.
-LIGHTING: A single warm candle source from upper left — raking across the subject at a low angle. One side of the face is fully illuminated: the forehead glows, the cheekbone catches a warm highlight. The opposite side of the face dissolves into rich warm shadow. The ermine collar is the brightest element in the painting, glowing white against darkness. Chiaroscuro — the transition from light to shadow is dramatic but natural. Muted palette: burnt sienna, raw umber, warm ivory, deep black-brown. Everything emerges from darkness.`
+LIGHTING: A single warm candle source from upper left — soft and diffused, not harsh or raking. The light wraps around the subject's form: one side of the face is gently illuminated with smooth warm gradients, the opposite side dissolves naturally into rich warm shadow with lost edges. No hard light transitions, no specular highlights, no plastic sheen. The ermine collar catches the light softly — luminous but not glowing artificially. Deep chiaroscuro achieved through shadow depth, not highlight brightness. Muted palette: burnt sienna, raw umber, warm ivory, deep black-brown.`
   },
 
   renacimiento: {
     nombre: "Jardín Dorado",
     referencia: `Style reference: Thomas Gainsborough aristocratic portrait, circa 1770.
-LIGHTING: Soft diffused warm light from upper left — enveloping rather than harsh, wrapping around the subject's form naturally. The face is lit with gentle gradients: warm light on the forehead and top of the head, soft shadow under the chin and behind the ears. No harsh transitions — the light is aristocratic and gentle. Loose painterly brushwork in the background, precise and detailed in the face and fur. Warm amber-green palette. A sense of natural aristocratic ease.`
+LIGHTING: Soft diffused warm light from upper left — fully enveloping, wrapping around the subject with gentle gradients. Warm light on the forehead and top of the head, soft shadow under the chin and behind the ears. No harsh transitions, no specular highlights, no plastic sheen anywhere. The light is aristocratic and gentle — every surface absorbs light rather than reflecting it. Loose painterly brushwork in background, precise in face and fur. Warm amber-ochre palette. Natural aristocratic ease.`
   }
 };
 
