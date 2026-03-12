@@ -55,7 +55,7 @@ const miradas = {
 
 // ─── INSTRUCCIÓN GLOBAL PERROS ───────────────────────────────────────────────
 
-const perro_global = `CRITICAL — PRESERVE THE DOG'S NATURAL EXPRESSION: Study the dog's expression and energy in the reference photo carefully. If the mouth is open — preserve it open. If the ears are forward and alert — preserve that alertness. If the dog looks relaxed — preserve that calm. The portrait must feel like THIS specific dog, not a generic noble dog. Never create a perfectly symmetrical pose — always introduce natural asymmetry.`;
+const perro_global = `CRITICAL — PRESERVE NATURAL EXPRESSION & PHYSICAL MASS: Study the dog's expression in the reference. The portrait must feel like THIS specific dog, carrying real physical weight and volume. Flesh, jowls, and wrinkles must obey gravity, looking heavy and three-dimensional, never perfectly symmetrical. If the mouth is open, preserve it. Transform it into a heavy, breathing subject in a classical oil painting.`;
 
 // ─── POSES ───────────────────────────────────────────────────────────────────
 
