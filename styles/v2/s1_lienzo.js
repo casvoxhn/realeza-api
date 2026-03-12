@@ -1,6 +1,16 @@
-// SECCIÓN 1 — LIENZO v3
-// Fijo. Nunca cambia. Base de toda imagen.
-// v3 — limpiado: sin repeticiones, sin contradicciones, sin negaciones innecesarias.
-// La instrucción anti-marco vive al final del prompt en buildPrompt.js.
+// SECCIÓN 1 — LIENZO v4
+// v4 — craquelure limitado al fondo y zonas oscuras ÚNICAMENTE.
+// El pelo, el armiño y la piel del animal son suaves, tridimensionales y vivos.
+// Iluminación facial cálida que modela el volumen — no plana, no uniforme.
 
-module.exports = `An exquisite masterpiece oil painting in the tradition of Dutch Golden Age portraiture by Rembrandt van Rijn and Frans Hals, dramatic chiaroscuro with a single raking light source from upper left creating deep volumetric depth, profound sfumato blending in shadows and fur edges for soft lost boundaries, overall low-key composition enveloped in heavy warm amber-yellowed varnish patina that subtly veils and unifies all colors, thick varied impasto brushwork with directional raised ridges following fur strands and fabric folds, deep irregular organic craquelure with fine to wide cracks pooling darker varnish irregularly, genuine 17th-century museum artifact with authentic aged materiality, extremely subdued matte highlights without any specular shine or gloss, restrained painterly touch, rich earthy muted tones dominated by warm amber filter, tactile heavy oil on canvas texture, hand-painted organic imperfections, real darkened aged painting --no bright specular highlights, no vibrant saturation, no photographic clarity, no digital sheen, no modern gloss.`;
+module.exports = `An exquisite masterwork oil painting in the tradition of Dutch Golden Age portraiture — Rembrandt van Rijn and Frans Hals. 
+
+CANVAS SURFACE: Fine craquelure and aged amber varnish patina appear ONLY in the background and dark shadow areas — the age cracks are visible in the darkness behind the subject, not on the animal itself, not on the fur, not on the ermine. The animal's fur and skin are painted with fresh, smooth, luminous brushwork — no cracks, no texture overlay on the living subject.
+
+LIGHTING: Warm singular light source from upper left — soft and enveloping, not harsh. This light models the facial volume naturally: the forehead catches warm light, the cheeks have gentle shadow, the chin is slightly lit. The face has three-dimensional roundness and depth. No flat uniform illumination — the light wraps around the form.
+
+FUR QUALITY: Each individual hair strand is painted with directional brushwork following the natural growth pattern of the specific animal. The fur has depth and layering — warm light on the outer hairs, cooler tones underneath. Soft, tactile, alive. Never uniform, never flat, never digital-looking.
+
+ERMINE: The white ermine collar is painted as soft, three-dimensional, cloud-like fur — luminous white catching the light source directly. No craquelure on the ermine. No texture overlay. Pure, bright, fluffy, real.
+
+OVERALL: Warm amber palette — burnt sienna, raw umber, warm ivory. Thick impasto in fabric folds and gold details only. Genuine museum-quality oil painting materiality.`;
