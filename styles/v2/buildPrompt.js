@@ -1,11 +1,12 @@
-// ENSAMBLADOR PRINCIPAL v2.2
+// ENSAMBLADOR PRINCIPAL v2.3
 // Framing vive en s4_poses — buildPrompt ya no necesita detectar cuerpoCompleto.
 // Arquitectura limpia sin contradicciones entre secciones.
+// v2.3 — agrega log de pose seleccionada para debugging en Railway.
 
 const s1_lienzo       = require('./s1_lienzo');
 const s2_fondo        = require('./s2_fondo');
 const s3_estilo       = require('./s3_estilo');
-const { asignarPose } = require('./s4_poses');
+const { asignarPose, poses, detectarCategoria } = require('./s4_poses');
 const s5_sujeto       = require('./s5_sujeto');
 const s6_vestuario    = require('./s6_vestuario');
 const s7_props        = require('./s7_props');
@@ -35,10 +36,30 @@ module.exports = function buildPrompt(params) {
   } = params;
 
   const isMulti = numAnimales > 1;
-
   const heroPose  = hero?.pose  ?? null;
   const heroManto = hero?.manto ?? null;
   const heroCojin = hero?.cojin ?? null;
+
+  // ─── POSE + LOG ──────────────────────────────────────────────────────────
+  let poseTexto = null;
+
+  if (!isMulti) {
+    // Detectar qué pose se va a seleccionar para loggearla
+    const categoria = detectarCategoria(especie, raza);
+    const pool = (poses[categoria] || poses.default).filter(p => !p.naturalistic);
+    let poseObj;
+    if (esNaturalistic) {
+      poseObj = (poses[categoria] || poses.default).find(p => p.naturalistic);
+    } else if (heroPose !== null && heroPose < pool.length) {
+      poseObj = pool[heroPose];
+    } else {
+      poseObj = pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    console.log(`🎭 POSE | especie: ${especie} | raza: ${raza || 'sin raza'} | categoria: ${categoria} | pose: ${poseObj?.id || 'unknown'} | estilo: ${estilo}`);
+
+    poseTexto = asignarPose(especie, raza, esNaturalistic, heroPose, null);
+  }
 
   // ─── ENSAMBLAR ───────────────────────────────────────────────────────────
   const secciones = [
@@ -55,9 +76,7 @@ module.exports = function buildPrompt(params) {
     s5_sujeto(especie, numAnimales),
 
     // 5. Pose con framing embebido (single only — multi usa escenas)
-    !isMulti
-      ? asignarPose(especie, raza, esNaturalistic, heroPose, null)
-      : null,
+    !isMulti ? poseTexto : null,
 
     // 6. Vestuario (single) o composición multi
     isMulti
