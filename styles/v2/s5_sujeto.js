@@ -1,19 +1,24 @@
-// SECCIÓN 5 — SUJETO v4
+// SECCIÓN 5 — SUJETO v5
 // Carácter, pelo, ojos, asimetría ÚNICAMENTE.
 // El encuadre fue removido de aquí — vive en s4_poses embebido en cada pose.
-// Así nunca hay contradicción entre encuadre y pose.
+//
+// v5 — FIX: detección de especie ahora usa .includes() para manejar
+// tanto inglés ('cat', 'dog') como español ('gato', 'perro').
+// Bug anterior: especie === 'gato' fallaba cuando detectarAnimales
+// devolvía 'cat' en inglés — todos los gatos recibían CHARACTER de perro.
 
 module.exports = function s5_sujeto(especie, numAnimales) {
   const isMulti = numAnimales > 1;
+  const e = (especie || '').toLowerCase();
+  const esGato = e.includes('cat') || e.includes('gato') || e.includes('feline');
 
   // ─── ENCUADRE MULTI ───────────────────────────────────────────────────────
-  // Solo aplica para multi — single ya tiene framing en su pose
   const encuadreMulti = isMulti
     ? `FRAMING: All animals fill the frame together — large, close, commanding. Every animal has equal visual weight. No animal is cropped, minimized, or pushed to the edge. All faces clearly visible.`
     : null;
 
   // ─── CARÁCTER DE ESPECIE ─────────────────────────────────────────────────
-  const caracter = especie === 'gato'
+  const caracter = esGato
     ? `CHARACTER: This is a cat — self-possessed, slightly detached, regal entirely on its own terms. It does not perform for the viewer. It tolerates being observed. Its expression carries quiet superiority and ancient intelligence. The royal setting does not define the cat — the cat defines the setting.`
     : `CHARACTER: This is a dog — warm, present, genuine. Its personality fills the frame. The expression is faithful to the photo: if the tongue is out, it stays out; if the eyes are soft, they remain soft. The royal setting elevates the dog's natural dignity — it does not replace it.`;
 
