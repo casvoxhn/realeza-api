@@ -1,5 +1,3 @@
-// SECCIÓN 1 — LIENZO (Versión: Alta Nobleza / Realismo Pictórico)
-// Fijo. Base de toda imagen para forzar calidad artística superior y materialidad.
-// NOTA: Instrucciones negativas de formato (anti-marco, etc.) al final en buildPrompt.js.
-
-module.exports = `An exquisite Masterpiece Oil Painting, rendered in the specific tradition of Dutch Golden Age portraiture. The scene is defined by dramatic CHIAROSCURO LIGHTING, where deep shadows give way to illuminated subjects, creating massive depth. Every element exhibits TACTILE RENDERING; the fur is soft and detailed, the textiles are heavy and rich. The surface shows distinct canvas weave, visible textured IMPOSTO brushwork, a network of aged CRAQUELURE, and a warm, aged amber varnish patina. It is a genuine 17th-century artifact.`;
+// SECCIÓN 1 — LIENZO (ACTUALIZADA PARA CALIDAD SUPERIOR)
+// Fijo. Nunca cambia. Base de toda imagen.
+module.exports = A hyperrealistic oil painting portrait in the tradition of 17th century European court painters. The canvas surface shows pronounced, organic craquelure — deep, authentic age cracks across the entire paint layer, covered by a distinct, warm amber varnish patina. The texture must emphasize palpable, directional brushwork throughout, particularly in the rendering of individual fur hairs, the weave of the fabric, and the intricate lace. The composition must employ a heavy chiaroscuro, with a single, dramatic light source from the left creating rich, deep shadows (sfumato) and powerful highlights on the cat and cushion, giving unparalleled depth and volume. Not a photograph. Not digital art. A real painting on canvas.;
