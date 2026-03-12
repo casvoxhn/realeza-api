@@ -29,10 +29,8 @@ const miradas = {
 
 // ─── INSTRUCCIONES GLOBALES DE FÍSICA Y MASA ─────────────────────────────────
 
-const perro_global = `CRITICAL — PRESERVE NATURAL EXPRESSION & PHYSICAL MASS: Study the dog's expression in the reference. The portrait must feel like THIS specific dog, carrying real physical weight and volume. Flesh, jowls, and wrinkles must obey gravity, looking heavy and three-dimensional, never perfectly symmetrical. If the mouth is open, preserve it. Transform it into a heavy, breathing subject embedded in a classical oil painting.`;
-
-const gato_global = `CRITICAL — PRESERVE FELINE FLUIDITY & MASS: The portrait must feel like THIS specific cat. The feline body is liquid but carries undeniable physical weight, sinking luxuriously and organically into the cushion's tufts. The pose must feel relaxed, sovereign, and sculptural, with a natural curve to the spine. Never stiff, never perfectly symmetrical.`;
-
+const perro_global = `CRITICAL — PRESERVE EXACT ANATOMY, EXPRESSION & PHYSICAL MASS: Study the reference photo carefully. You MUST perfectly preserve the specific bone structure, leg thickness, leg length, and chest width of the reference animal. If the dog has short, extremely thick, muscular legs and a massive wide chest, the generated body and paws MUST match this exact heavy, thickset anatomy in the new pose. Do not substitute with generic dog proportions. Flesh, jowls, and thick muscular limbs must obey gravity, looking heavy and three-dimensional. Transform this specific anatomical reality into a classical oil painting.`;
+const gato_global = `CRITICAL — PRESERVE EXACT ANATOMY, FLUIDITY & MASS: Study the reference photo carefully. You MUST perfectly preserve the specific bone structure, limb thickness, and proportions of THIS specific cat. Do not substitute with a generic feline body. The feline body carries undeniable physical weight, sinking luxuriously and organically into the cushion. The pose must feel relaxed, sovereign, and sculptural. Never perfectly symmetrical.`;
 // ─── POSES ───────────────────────────────────────────────────────────────────
 
 const poses = {
