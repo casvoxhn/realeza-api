@@ -1,5 +1,6 @@
-// server.js — V15.2
-// v15.2 — referencias de estilo por especie: gatos → references/gatos/, perros → references/perros/
+// server.js — V15.3
+// v15.3 — análisis facial previo (analyzeAnimal) inyectado en el prompt de generación.
+// El análisis describe la cara del animal con precisión quirúrgica antes de pintar.
 
 const express = require('express');
 const cors = require('cors');
@@ -10,13 +11,14 @@ const path = require('path');
 const crypto = require('crypto');
 require('dotenv').config();
 
-const buildPrompt      = require('./styles/v2/buildPrompt');
-const detectarAnimales = require('./styles/v2/detectAnimales');
-const getFamiliaPrompt = require('./familia');
-const getNinosPrompt   = require('./ninos');
-const getParejasPrompt = require('./parejas');
+const buildPrompt       = require('./styles/v2/buildPrompt');
+const detectarAnimales  = require('./styles/v2/detectAnimales');
+const analyzeAnimal     = require('./styles/v2/analyzeAnimal');
+const getFamiliaPrompt  = require('./familia');
+const getNinosPrompt    = require('./ninos');
+const getParejasPrompt  = require('./parejas');
 const getRetratosPrompt = require('./retratos');
-const getMujerPrompt   = require('./mujer');
+const getMujerPrompt    = require('./mujer');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -28,43 +30,31 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANO
 const genAI    = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const MODEL_ID = "gemini-3.1-flash-image-preview";
 
-// ─── REFERENCIAS POR ESPECIE ─────────────────────────────────────────────────
-
+// ─── REFERENCIAS POR ESPECIE ──────────────────────────────────────────────────
 const REF_FILES = {
-  gato: [
-    'ref_cat_1.jpg',
-    'ref_cat_2.jpg',
-    'ref_cat_3.jpg',
-    'ref_cat_4.jpg',
-  ],
-  perro: [
-    'ref_golden.jpg',
-    'ref_doberman.jpg',
-    'ref_poodle.jpg',
-    'ref_dachshunds.jpg',
-  ],
+  gato: ['ref_cat_1.jpg', 'ref_cat_2.jpg', 'ref_cat_3.jpg', 'ref_cat_4.jpg'],
+  perro: ['ref_golden.jpg', 'ref_doberman.jpg', 'ref_poodle.jpg', 'ref_dachshunds.jpg'],
 };
 
-// Subcarpeta dentro de /references según especie
 function getRefSubdir(especie) {
   const e = (especie || '').toLowerCase();
   if (e.includes('cat') || e.includes('gato') || e.includes('feline')) return 'gatos';
   if (e.includes('dog') || e.includes('perro') || e.includes('canine')) return 'perros';
-  return 'perros'; // fallback
+  return 'perros';
 }
 
 function getRefKey(especie) {
   const e = (especie || '').toLowerCase();
   if (e.includes('cat') || e.includes('gato') || e.includes('feline')) return 'gato';
-  return 'perro'; // fallback
+  return 'perro';
 }
 
 function loadReferenceImages(especie) {
-  const refs    = [];
-  const subdir  = getRefSubdir(especie);
-  const key     = getRefKey(especie);
-  const files   = REF_FILES[key] || REF_FILES.perro;
-  const refDir  = path.join(__dirname, 'references', subdir);
+  const refs   = [];
+  const subdir = getRefSubdir(especie);
+  const key    = getRefKey(especie);
+  const files  = REF_FILES[key] || REF_FILES.perro;
+  const refDir = path.join(__dirname, 'references', subdir);
 
   if (!fs.existsSync(refDir)) {
     console.warn(`⚠️ REFS | Directorio no encontrado: references/${subdir}`);
@@ -84,7 +74,6 @@ function loadReferenceImages(especie) {
   return refs;
 }
 
-// ─── HASH DE IMAGEN ───────────────────────────────────────────────────────────
 function hashImagen(base64) {
   return crypto.createHash('md5').update(base64.slice(0, 500)).digest('hex').slice(0, 8);
 }
@@ -107,10 +96,9 @@ app.post('/generate', async (req, res) => {
     const isGroup         = numSubjects > 1;
     const currentCategory = category || 'mascota';
     const hasGender       = gender && (gender === 'masculine' || gender === 'feminine');
+    const imgHash         = hashImagen(images[0]);
 
-    const imgHash = hashImagen(images[0]);
-
-    console.log(`🚀 V15.2 START | hash:${imgHash} | cat:${currentCategory} | style:${style} | gender:${hasGender ? gender : 'neutral'} | sujetos:${numSubjects}`);
+    console.log(`🚀 V15.3 START | hash:${imgHash} | cat:${currentCategory} | style:${style} | gender:${hasGender ? gender : 'neutral'} | sujetos:${numSubjects}`);
 
     // Subir originales
     const originalUrls = await Promise.all(
@@ -122,12 +110,14 @@ app.post('/generate', async (req, res) => {
 
     const isMascotas = !currentCategory || currentCategory === 'mascota' || currentCategory === 'mascotas';
 
-    let promptText  = "";
-    let styleRefs   = [];
-    let especie     = 'dog';
+    let promptText = "";
+    let styleRefs  = [];
+    let especie    = 'dog';
+    let analisisFacial = null;
 
     if (isMascotas) {
-      // ── DETECTAR ANIMALES ──────────────────────────────────────────────
+
+      // ── PASO 1: DETECTAR ESPECIE ──────────────────────────────────────
       const t0 = Date.now();
       const animalesDetectados = await detectarAnimales(genAI, MODEL_ID, images);
       console.log(`🔍 DETECCIÓN | hash:${imgHash} | ${JSON.stringify(animalesDetectados)} | ${Date.now() - t0}ms`);
@@ -135,26 +125,36 @@ app.post('/generate', async (req, res) => {
       const primerAnimal = animalesDetectados[0] || { especie: 'dog', raza: '' };
       especie = primerAnimal.especie;
 
-      // ── CARGAR REFS SEGÚN ESPECIE ──────────────────────────────────────
+      // ── PASO 2: ANÁLISIS FACIAL (solo para single) ────────────────────
+      // Para multi-animal el análisis facial no aplica de la misma forma
+      if (!isGroup) {
+        const tAnalisis = Date.now();
+        analisisFacial = await analyzeAnimal(genAI, MODEL_ID, images);
+        console.log(`🔬 ANÁLISIS | hash:${imgHash} | ${Date.now() - tAnalisis}ms`);
+      }
+
+      // ── PASO 3: CARGAR REFS ───────────────────────────────────────────
       styleRefs = loadReferenceImages(especie);
 
+      // ── PASO 4: CONSTRUIR PROMPT ──────────────────────────────────────
       promptText = buildPrompt({
-        estilo:      style || 'realeza',
-        numAnimales: numSubjects,
-        especie:     primerAnimal.especie,
-        raza:        primerAnimal.raza,
-        genero:      hasGender ? gender : null,
-        animales:    animalesDetectados,
-        hero:        null,
+        estilo:        style || 'realeza',
+        numAnimales:   numSubjects,
+        especie:       primerAnimal.especie,
+        raza:          primerAnimal.raza,
+        genero:        hasGender ? gender : null,
+        animales:      animalesDetectados,
+        hero:          null,
         imgHash,
+        analisisFacial, // ← nuevo: se inyecta en el prompt
       });
 
     } else {
-      if (currentCategory === 'mujer')    promptText = getMujerPrompt(style, numSubjects, isGroup);
-      else if (currentCategory === 'retratos')   promptText = getRetratosPrompt(style, numSubjects, isGroup);
-      else if (currentCategory === 'parejas')    promptText = getParejasPrompt(style, numSubjects, isGroup);
-      else if (currentCategory === 'ninos')      promptText = getNinosPrompt(style, numSubjects, isGroup);
-      else if (currentCategory === 'familia')    promptText = getFamiliaPrompt(style, numSubjects, isGroup);
+      if (currentCategory === 'mujer')        promptText = getMujerPrompt(style, numSubjects, isGroup);
+      else if (currentCategory === 'retratos') promptText = getRetratosPrompt(style, numSubjects, isGroup);
+      else if (currentCategory === 'parejas')  promptText = getParejasPrompt(style, numSubjects, isGroup);
+      else if (currentCategory === 'ninos')    promptText = getNinosPrompt(style, numSubjects, isGroup);
+      else if (currentCategory === 'familia')  promptText = getFamiliaPrompt(style, numSubjects, isGroup);
     }
 
     // ── CONSTRUIR PARTS ────────────────────────────────────────────────────
@@ -176,7 +176,7 @@ app.post('/generate', async (req, res) => {
     const model   = genAI.getGenerativeModel({ model: MODEL_ID });
     const tGemini = Date.now();
 
-    const result  = await model.generateContent({
+    const result = await model.generateContent({
       contents: [{ role: "user", parts }],
       generationConfig: {
         responseModalities: ["IMAGE", "TEXT"],
@@ -198,26 +198,21 @@ app.post('/generate', async (req, res) => {
     const finalUrl    = await uploadBufferToSupabase(imageBuffer, prefix);
 
     const totalMs = Date.now() - startTotal;
-    console.log(`✅ V15.2 OK | hash:${imgHash} | ${prefix} | gemini:${geminiMs}ms | total:${totalMs}ms | ${finalUrl}`);
+    console.log(`✅ V15.3 OK | hash:${imgHash} | ${prefix} | gemini:${geminiMs}ms | total:${totalMs}ms | ${finalUrl}`);
 
     res.json({ success: true, imageUrl: finalUrl, originalUrls });
 
   } catch (error) {
     const totalMs = Date.now() - startTotal;
-    console.error(`❌ V15.2 ERROR | ${totalMs}ms | ${error.message}`);
+    console.error(`❌ V15.3 ERROR | ${totalMs}ms | ${error.message}`);
     res.status(500).json({ success: false, error: error.message });
   }
 });
 
 app.get('/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    version: 'V15.2',
-    model: MODEL_ID,
-    uptime: process.uptime()
-  });
+  res.json({ status: 'ok', version: 'V15.3', model: MODEL_ID, uptime: process.uptime() });
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 V15.2 | Puerto:${PORT} | Modelo:${MODEL_ID}`);
+  console.log(`🚀 V15.3 | Puerto:${PORT} | Modelo:${MODEL_ID}`);
 });
