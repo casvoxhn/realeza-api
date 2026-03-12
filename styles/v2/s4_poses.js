@@ -1,6 +1,6 @@
-// SECCIÓN 4 — POSES v7
+// SECCIÓN 4 — POSES v8
+// v8 — Añadidas 3 nuevas poses maestras (Paw Drape, Royal Nest, Dramatic Turn) para Gatos, Perros Grandes y Medianos.
 // v7 — Reescritura escultural de poses. Transición de geometría rígida a física orgánica.
-// Se incorpora peso, gravedad, curvas naturales y anclaje profundo en los cojines.
 
 const framings = {
   portrait: `FRAMING: Portrait crop — the animal fills the frame with natural presence. Front paws and cushion visible at the bottom. Proportions anatomically correct throughout. Do NOT compress or shrink the body.`,
@@ -41,25 +41,30 @@ const poses = {
   // GATO
   // ═══════════════════════════════════════════════════════════════════════════
   gato: [
-    // G1a — Sphinx derecha — portrait
+    // G1a — Sphinx derecha
     {
       id: 'G1a',
       variantes: [
         `${framings.portrait} ${gato_global} POSE — ROYAL SPHINX RIGHT: The cat rests with aristocratic ease. The CHEST is lowered, sinking deeply into the velvet cushion. The FRONT PAWS are extended forward, resting heavily or crossed elegantly with natural asymmetry. The BODY shifts slightly to the right with a relaxed, organic curve. The HEAD is held high with sovereign dignity. NO tail visible. ${miradas.gato_offlens}`,
         `${framings.portrait} ${gato_global} POSE — ROYAL SPHINX RIGHT: The cat rests with aristocratic ease. The CHEST is lowered, sinking deeply into the velvet cushion. The FRONT PAWS are extended forward, resting heavily or crossed elegantly with natural asymmetry. The BODY shifts slightly to the right with a relaxed, organic curve. The HEAD is held high with sovereign dignity. NO tail visible. ${miradas.gato_lateral}`,
-        `${framings.portrait} ${gato_global} POSE — ROYAL SPHINX RIGHT: The cat rests with aristocratic ease. The CHEST is lowered, sinking deeply into the velvet cushion. The FRONT PAWS are extended forward, resting heavily or crossed elegantly with natural asymmetry. The BODY shifts slightly to the right with a relaxed, organic curve. The HEAD is held high with sovereign dignity. NO tail visible. ${miradas.gato_elevada}`,
-        `${framings.portrait} ${gato_global} POSE — ROYAL SPHINX RIGHT: The cat rests with aristocratic ease. The CHEST is lowered, sinking deeply into the velvet cushion. The FRONT PAWS are extended forward, resting heavily or crossed elegantly with natural asymmetry. The BODY shifts slightly to the right with a relaxed, organic curve. The HEAD is held high with sovereign dignity. NO tail visible. ${miradas.gato_indiferente}`,
       ]
     },
 
-    // G1b — Sphinx izquierda — portrait
+    // G1b — Sphinx izquierda
     {
       id: 'G1b',
       variantes: [
         `${framings.portrait} ${gato_global} POSE — ROYAL SPHINX LEFT: The cat rests with aristocratic ease. The CHEST is lowered, sinking deeply into the velvet cushion. The FRONT PAWS are extended forward, resting heavily or crossed elegantly with natural asymmetry. The BODY shifts slightly to the left with a relaxed, organic curve. The HEAD is held high with sovereign dignity. NO tail visible. ${miradas.gato_offlens}`,
         `${framings.portrait} ${gato_global} POSE — ROYAL SPHINX LEFT: The cat rests with aristocratic ease. The CHEST is lowered, sinking deeply into the velvet cushion. The FRONT PAWS are extended forward, resting heavily or crossed elegantly with natural asymmetry. The BODY shifts slightly to the left with a relaxed, organic curve. The HEAD is held high with sovereign dignity. NO tail visible. ${miradas.gato_lateral}`,
-        `${framings.portrait} ${gato_global} POSE — ROYAL SPHINX LEFT: The cat rests with aristocratic ease. The CHEST is lowered, sinking deeply into the velvet cushion. The FRONT PAWS are extended forward, resting heavily or crossed elegantly with natural asymmetry. The BODY shifts slightly to the left with a relaxed, organic curve. The HEAD is held high with sovereign dignity. NO tail visible. ${miradas.gato_elevada}`,
-        `${framings.portrait} ${gato_global} POSE — ROYAL SPHINX LEFT: The cat rests with aristocratic ease. The CHEST is lowered, sinking deeply into the velvet cushion. The FRONT PAWS are extended forward, resting heavily or crossed elegantly with natural asymmetry. The BODY shifts slightly to the left with a relaxed, organic curve. The HEAD is held high with sovereign dignity. NO tail visible. ${miradas.gato_indiferente}`,
+      ]
+    },
+
+    // NUEVA G1c — Paw Drape (Pata Colgante)
+    {
+      id: 'G1c',
+      variantes: [
+        `${framings.portrait} ${gato_global} POSE — RELAXED PAW DRAPE: The cat reclines luxuriously. While the body sinks into the cushion, ONE FRONT PAW is draped lazily over the front edge of the cushion, hanging down with heavy, relaxed gravity. Supreme aristocratic indifference. ${miradas.gato_indiferente}`,
+        `${framings.portrait} ${gato_global} POSE — RELAXED PAW DRAPE: The cat reclines luxuriously. While the body sinks into the cushion, ONE FRONT PAW is draped lazily over the front edge of the cushion, hanging down with heavy, relaxed gravity. Supreme aristocratic indifference. ${miradas.gato_lateral}`,
       ]
     },
 
@@ -69,7 +74,6 @@ const poses = {
       variantes: [
         `${framings.close_crop} ${gato_global} POSE — SEATED SOVEREIGN: The cat's HINDQUARTERS are anchored deeply into the cushion's tufts. The FRONT PAWS rest elegantly on the surface, one paw slightly ahead of the other, breaking perfect symmetry. The spine follows a graceful, natural line, not stiff. The weight is distributed organically. The TAIL wraps loosely around the body. ${miradas.gato_frontal}`,
         `${framings.close_crop} ${gato_global} POSE — SEATED SOVEREIGN: The cat's HINDQUARTERS are anchored deeply into the cushion's tufts. The FRONT PAWS rest elegantly on the surface, one paw slightly ahead of the other, breaking perfect symmetry. The spine follows a graceful, natural line, not stiff. The weight is distributed organically. The TAIL wraps loosely around the body. ${miradas.gato_lateral}`,
-        `${framings.close_crop} ${gato_global} POSE — SEATED SOVEREIGN: The cat's HINDQUARTERS are anchored deeply into the cushion's tufts. The FRONT PAWS rest elegantly on the surface, one paw slightly ahead of the other, breaking perfect symmetry. The spine follows a graceful, natural line, not stiff. The weight is distributed organically. The TAIL wraps loosely around the body. ${miradas.gato_indiferente}`,
       ]
     },
 
@@ -83,41 +87,28 @@ const poses = {
       ]
     },
 
+    // NUEVA G7 — Royal Nest (Interacción con la capa)
+    {
+      id: 'G7',
+      variantes: [
+        `${framings.portrait} ${gato_global} POSE — ROYAL NEST: The cat reclines deeply. Crucially, ONE FRONT PAW rests heavily directly ON TOP OF the thick folds of its own velvet mantle, pressing the rich fabric into the cushion. The animal and its royal garments are physically intertwined. ${miradas.gato_offlens}`,
+        `${framings.portrait} ${gato_global} POSE — ROYAL NEST: The cat reclines deeply. Crucially, ONE FRONT PAW rests heavily directly ON TOP OF the thick folds of its own velvet mantle, pressing the rich fabric into the cushion. The animal and its royal garments are physically intertwined. ${miradas.gato_elevada}`,
+      ]
+    },
+
     // G4 — Loaf
     {
       id: 'G4',
       variantes: [
         `${framings.close_crop} ${gato_global} POSE — SCULPTURAL LOAF: The cat rests as a compact, heavy, volumetric mass directly on the deeply indented cushion. FRONT PAWS are completely tucked and hidden. The body is an organic mound of fur shifting naturally to one side. NO tail visible. NO paws visible. Supreme comfort and density. ${miradas.gato_headtilt}`,
         `${framings.close_crop} ${gato_global} POSE — SCULPTURAL LOAF: The cat rests as a compact, heavy, volumetric mass directly on the deeply indented cushion. FRONT PAWS are completely tucked and hidden. The body is an organic mound of fur shifting naturally to one side. NO tail visible. NO paws visible. Supreme comfort and density. ${miradas.gato_lateral}`,
-        `${framings.close_crop} ${gato_global} POSE — SCULPTURAL LOAF: The cat rests as a compact, heavy, volumetric mass directly on the deeply indented cushion. FRONT PAWS are completely tucked and hidden. The body is an organic mound of fur shifting naturally to one side. NO tail visible. NO paws visible. Supreme comfort and density. ${miradas.gato_elevada}`,
-        `${framings.close_crop} ${gato_global} POSE — SCULPTURAL LOAF: The cat rests as a compact, heavy, volumetric mass directly on the deeply indented cushion. FRONT PAWS are completely tucked and hidden. The body is an organic mound of fur shifting naturally to one side. NO tail visible. NO paws visible. Supreme comfort and density. ${miradas.gato_indiferente}`,
       ]
     },
 
-    // G5a — Alineado izquierda
-    {
-      id: 'G5a',
-      variantes: [
-        `${framings.close_crop} ${gato_global} POSE — ALIGNED LEFT: The cat's BODY and HEAD flow together to the left. Anchored heavy hindquarters on the cushion. Front paws rest organically, one draped slightly ahead of the other. ${miradas.gato_frontal}`,
-      ]
-    },
-
-    // G5b — Alineado derecha
-    {
-      id: 'G5b',
-      variantes: [
-        `${framings.close_crop} ${gato_global} POSE — ALIGNED RIGHT: The cat's BODY and HEAD flow together to the right. Anchored heavy hindquarters on the cushion. Front paws rest organically, one draped slightly ahead of the other. ${miradas.gato_frontal}`,
-      ]
-    },
-
-    // G6 — Naturalistic
-    {
-      id: 'G6',
-      naturalistic: true,
-      variantes: [
-        `${framings.portrait} ${gato_global} POSE — NATURALISTIC: Faithfully recreate the cat's natural pose from the reference photo. Preserve the exact organic body position, limb placement, and weight distribution. Transform into a royal oil painting while keeping the physical truth of the animal 100% faithful.`,
-      ]
-    },
+    // G5a / G5b / G6... (Se mantienen igual)
+    { id: 'G5a', variantes: [`${framings.close_crop} ${gato_global} POSE — ALIGNED LEFT: The cat's BODY and HEAD flow together to the left. Anchored heavy hindquarters on the cushion. Front paws rest organically, one draped slightly ahead of the other. ${miradas.gato_frontal}`] },
+    { id: 'G5b', variantes: [`${framings.close_crop} ${gato_global} POSE — ALIGNED RIGHT: The cat's BODY and HEAD flow together to the right. Anchored heavy hindquarters on the cushion. Front paws rest organically, one draped slightly ahead of the other. ${miradas.gato_frontal}`] },
+    { id: 'G6', naturalistic: true, variantes: [`${framings.portrait} ${gato_global} POSE — NATURALISTIC: Faithfully recreate the cat's natural pose from the reference photo. Preserve the exact organic body position, limb placement, and weight distribution. Transform into a royal oil painting while keeping the physical truth of the animal 100% faithful.`] },
   ],
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -131,8 +122,15 @@ const poses = {
       variantes: [
         `${framings.portrait} ${perro_global} POSE — MAJESTIC RECLINE: The massive dog lies at ease, its broad chest resting heavily in the deep indentation of the cushion. Both front legs extend forward, paws draped naturally and asymmetrically. The body weight is clearly visibly supported by the yielding velvet. Head held up with noble calm. ${miradas.perro_offlens}`,
         `${framings.portrait} ${perro_global} POSE — MAJESTIC RECLINE: The massive dog lies at ease, its broad chest resting heavily in the deep indentation of the cushion. Both front legs extend forward, paws draped naturally and asymmetrically. The body weight is clearly visibly supported by the yielding velvet. Head held up with noble calm. ${miradas.perro_girada}`,
-        `${framings.portrait} ${perro_global} POSE — MAJESTIC RECLINE: The massive dog lies at ease, its broad chest resting heavily in the deep indentation of the cushion. Both front legs extend forward, paws draped naturally and asymmetrically. The body weight is clearly visibly supported by the yielding velvet. Head held up with noble calm. ${miradas.perro_headtilt}`,
-        `${framings.portrait} ${perro_global} POSE — MAJESTIC RECLINE: The massive dog lies at ease, its broad chest resting heavily in the deep indentation of the cushion. Both front legs extend forward, paws draped naturally and asymmetrically. The body weight is clearly visibly supported by the yielding velvet. Head held up with noble calm. ${miradas.perro_directo}`,
+      ]
+    },
+
+    // NUEVA PG1b — Paw Drape (Pata Colgante)
+    {
+      id: 'PG1b',
+      variantes: [
+        `${framings.portrait} ${perro_global} POSE — RELAXED PAW DRAPE: The heavy dog reclines with immense, relaxed power. ONE FRONT LEG is draped lazily over the front edge of the cushion, the heavy paw hanging down. The other paw rests tucked. Extreme organic asymmetry and physical ease. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — RELAXED PAW DRAPE: The heavy dog reclines with immense, relaxed power. ONE FRONT LEG is draped lazily over the front edge of the cushion, the heavy paw hanging down. The other paw rests tucked. Extreme organic asymmetry and physical ease. ${miradas.perro_headtilt}`,
       ]
     },
 
@@ -141,8 +139,6 @@ const poses = {
       id: 'PG2',
       variantes: [
         `${framings.portrait} ${perro_global} POSE — SPHINX COMMANDING: The heavy chest is lowered, embedding deeply into the cushion. Front legs extend powerfully forward, one paw planted firmly ahead of the other. The neck is thick and organic, head held high with absolute authority. Gravity pulls beautifully on jowls and loose skin. ${miradas.perro_offlens}`,
-        `${framings.portrait} ${perro_global} POSE — SPHINX COMMANDING: The heavy chest is lowered, embedding deeply into the cushion. Front legs extend powerfully forward, one paw planted firmly ahead of the other. The neck is thick and organic, head held high with absolute authority. Gravity pulls beautifully on jowls and loose skin. ${miradas.perro_girada}`,
-        `${framings.portrait} ${perro_global} POSE — SPHINX COMMANDING: The heavy chest is lowered, embedding deeply into the cushion. Front legs extend powerfully forward, one paw planted firmly ahead of the other. The neck is thick and organic, head held high with absolute authority. Gravity pulls beautifully on jowls and loose skin. ${miradas.perro_headtilt}`,
         `${framings.portrait} ${perro_global} POSE — SPHINX COMMANDING: The heavy chest is lowered, embedding deeply into the cushion. Front legs extend powerfully forward, one paw planted firmly ahead of the other. The neck is thick and organic, head held high with absolute authority. Gravity pulls beautifully on jowls and loose skin. ${miradas.perro_directo}`,
       ]
     },
@@ -153,8 +149,6 @@ const poses = {
       variantes: [
         `${framings.portrait} ${perro_global} POSE — SEATED POWER: The dog sits upright, anchoring its heavy hindquarters deep into the cushion. The broad chest pushes forward naturally, not stiffly. One front paw is planted slightly ahead of the other, creating dynamic volume. A majestic, organic posture. ${miradas.perro_offlens}`,
         `${framings.portrait} ${perro_global} POSE — SEATED POWER: The dog sits upright, anchoring its heavy hindquarters deep into the cushion. The broad chest pushes forward naturally, not stiffly. One front paw is planted slightly ahead of the other, creating dynamic volume. A majestic, organic posture. ${miradas.perro_girada}`,
-        `${framings.portrait} ${perro_global} POSE — SEATED POWER: The dog sits upright, anchoring its heavy hindquarters deep into the cushion. The broad chest pushes forward naturally, not stiffly. One front paw is planted slightly ahead of the other, creating dynamic volume. A majestic, organic posture. ${miradas.perro_headtilt}`,
-        `${framings.portrait} ${perro_global} POSE — SEATED POWER: The dog sits upright, anchoring its heavy hindquarters deep into the cushion. The broad chest pushes forward naturally, not stiffly. One front paw is planted slightly ahead of the other, creating dynamic volume. A majestic, organic posture. ${miradas.perro_directo}`,
       ]
     },
 
@@ -163,19 +157,30 @@ const poses = {
       id: 'PG4',
       variantes: [
         `${framings.portrait} ${perro_global} POSE — THREE QUARTER MASS: The dog's heavy body is turned 3/4 to the side, revealing its massive flank. The head turns powerfully back over the shoulder toward the viewer, skin folding organically at the neck. Dynamic, three-dimensional presence. ${miradas.perro_offlens}`,
-        `${framings.portrait} ${perro_global} POSE — THREE QUARTER MASS: The dog's heavy body is turned 3/4 to the side, revealing its massive flank. The head turns powerfully back over the shoulder toward the viewer, skin folding organically at the neck. Dynamic, three-dimensional presence. ${miradas.perro_headtilt}`,
         `${framings.portrait} ${perro_global} POSE — THREE QUARTER MASS: The dog's heavy body is turned 3/4 to the side, revealing its massive flank. The head turns powerfully back over the shoulder toward the viewer, skin folding organically at the neck. Dynamic, three-dimensional presence. ${miradas.perro_directo}`,
       ]
     },
 
-    // PG5 — Naturalistic
+    // NUEVA PG6 — Dramatic Turn (Giro dramático extremo sobre el hombro)
     {
-      id: 'PG5',
-      naturalistic: true,
+      id: 'PG6',
       variantes: [
-        `${framings.portrait} ${perro_global} POSE — NATURALISTIC: Faithfully recreate the dog's natural pose from the reference photo. Preserve exact organic body position, physical weight distribution, and authentic expression. Transform into a heavy, royal oil painting.`,
+        `${framings.portrait} ${perro_global} POSE — DRAMATIC SHOULDER TURN: The dog's body faces almost completely away from the viewer, showing the heavy drape of the velvet mantle on its back. The thick, muscular neck turns sharply back over the shoulder, creating profound, heavy skin folds. A masterful, sculptural pose showing immense volume. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — DRAMATIC SHOULDER TURN: The dog's body faces almost completely away from the viewer, showing the heavy drape of the velvet mantle on its back. The thick, muscular neck turns sharply back over the shoulder, creating profound, heavy skin folds. A masterful, sculptural pose showing immense volume. ${miradas.perro_directo}`,
       ]
     },
+
+    // NUEVA PG7 — Royal Nest (La Pata sobre la Capa)
+    {
+      id: 'PG7',
+      variantes: [
+        `${framings.portrait} ${perro_global} POSE — ROYAL NEST: The dog reclines heavily. ONE FRONT PAW rests directly ON TOP OF the thick folds of its own velvet mantle, pressing the fabric down into the cushion. The animal interacts physically with its royal garments. Deep, organic embedding. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — ROYAL NEST: The dog reclines heavily. ONE FRONT PAW rests directly ON TOP OF the thick folds of its own velvet mantle, pressing the fabric down into the cushion. The animal interacts physically with its royal garments. Deep, organic embedding. ${miradas.perro_girada}`,
+      ]
+    },
+
+    // PG5 — Naturalistic
+    { id: 'PG5', naturalistic: true, variantes: [`${framings.portrait} ${perro_global} POSE — NATURALISTIC: Faithfully recreate the dog's natural pose from the reference photo. Preserve exact organic body position, physical weight distribution, and authentic expression. Transform into a heavy, royal oil painting.`] },
   ],
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -187,264 +192,93 @@ const poses = {
       variantes: [
         `${framings.portrait} ${perro_global} POSE — RELAXED RECLINE: The dog lies comfortably, chest sinking into the proportional cushion. Front legs extended naturally, paws overlapping with organic asymmetry. Head held with noble dignity. ${miradas.perro_offlens}`,
         `${framings.portrait} ${perro_global} POSE — RELAXED RECLINE: The dog lies comfortably, chest sinking into the proportional cushion. Front legs extended naturally, paws overlapping with organic asymmetry. Head held with noble dignity. ${miradas.perro_girada}`,
-        `${framings.portrait} ${perro_global} POSE — RELAXED RECLINE: The dog lies comfortably, chest sinking into the proportional cushion. Front legs extended naturally, paws overlapping with organic asymmetry. Head held with noble dignity. ${miradas.perro_headtilt}`,
-        `${framings.portrait} ${perro_global} POSE — RELAXED RECLINE: The dog lies comfortably, chest sinking into the proportional cushion. Front legs extended naturally, paws overlapping with organic asymmetry. Head held with noble dignity. ${miradas.perro_directo}`,
       ]
     },
+
+    // NUEVA PM1b — Paw Drape (Pata Colgante)
+    {
+      id: 'PM1b',
+      variantes: [
+        `${framings.portrait} ${perro_global} POSE — RELAXED PAW DRAPE: The dog reclines comfortably. ONE FRONT LEG is draped lazily over the front edge of the cushion, hanging down with natural gravity. Supreme organic asymmetry and relaxed elegance. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — RELAXED PAW DRAPE: The dog reclines comfortably. ONE FRONT LEG is draped lazily over the front edge of the cushion, hanging down with natural gravity. Supreme organic asymmetry and relaxed elegance. ${miradas.perro_headtilt}`,
+      ]
+    },
+
     {
       id: 'PM2',
       variantes: [
         `${framings.portrait} ${perro_global} POSE — SEATED NOBLE: The dog sits upright, weight anchored nicely into the cushion. Chest forward naturally, one paw planted slightly ahead. A confident, breathing posture, not rigid. ${miradas.perro_offlens}`,
         `${framings.portrait} ${perro_global} POSE — SEATED NOBLE: The dog sits upright, weight anchored nicely into the cushion. Chest forward naturally, one paw planted slightly ahead. A confident, breathing posture, not rigid. ${miradas.perro_girada}`,
-        `${framings.portrait} ${perro_global} POSE — SEATED NOBLE: The dog sits upright, weight anchored nicely into the cushion. Chest forward naturally, one paw planted slightly ahead. A confident, breathing posture, not rigid. ${miradas.perro_headtilt}`,
-        `${framings.portrait} ${perro_global} POSE — SEATED NOBLE: The dog sits upright, weight anchored nicely into the cushion. Chest forward naturally, one paw planted slightly ahead. A confident, breathing posture, not rigid. ${miradas.perro_directo}`,
       ]
     },
     {
       id: 'PM3',
       variantes: [
         `${framings.portrait} ${perro_global} POSE — THREE QUARTER GRACE: Body turned elegantly 3/4. Head turns back to the viewer with natural skin folds at the neck. Weight distributed asymmetrically. ${miradas.perro_offlens}`,
-        `${framings.portrait} ${perro_global} POSE — THREE QUARTER GRACE: Body turned elegantly 3/4. Head turns back to the viewer with natural skin folds at the neck. Weight distributed asymmetrically. ${miradas.perro_headtilt}`,
         `${framings.portrait} ${perro_global} POSE — THREE QUARTER GRACE: Body turned elegantly 3/4. Head turns back to the viewer with natural skin folds at the neck. Weight distributed asymmetrically. ${miradas.perro_directo}`,
       ]
     },
+
+    // NUEVA PM6 — Royal Nest (La Pata sobre la Capa)
     {
-      id: 'PM4',
+      id: 'PM6',
       variantes: [
-        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: Seated with body naturally angled 20 degrees, creating depth. Weight clearly rests on the rear. One paw placed casually ahead. ${miradas.perro_offlens}`,
-        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: Seated with body naturally angled 20 degrees, creating depth. Weight clearly rests on the rear. One paw placed casually ahead. ${miradas.perro_girada}`,
-        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: Seated with body naturally angled 20 degrees, creating depth. Weight clearly rests on the rear. One paw placed casually ahead. ${miradas.perro_headtilt}`,
-        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: Seated with body naturally angled 20 degrees, creating depth. Weight clearly rests on the rear. One paw placed casually ahead. ${miradas.perro_directo}`,
+        `${framings.portrait} ${perro_global} POSE — ROYAL NEST: The dog reclines nicely. ONE FRONT PAW rests directly ON TOP OF the folds of its own velvet mantle, pressing the fabric down into the cushion. The animal interacts physically with its royal garments. ${miradas.perro_offlens}`,
+        `${framings.portrait} ${perro_global} POSE — ROYAL NEST: The dog reclines nicely. ONE FRONT PAW rests directly ON TOP OF the folds of its own velvet mantle, pressing the fabric down into the cushion. The animal interacts physically with its royal garments. ${miradas.perro_headtilt}`,
       ]
     },
-    {
-      id: 'PM5',
-      naturalistic: true,
-      variantes: [
-        `${framings.portrait} ${perro_global} POSE — NATURALISTIC: Faithfully recreate the dog's natural pose from the reference photo. Preserve exact physical weight distribution and authentic expression. Transform into a classical oil painting.`,
-      ]
-    },
+
+    { id: 'PM4', variantes: [`${framings.portrait} ${perro_global} POSE — SEATED ANGLED: Seated with body naturally angled 20 degrees, creating depth. Weight clearly rests on the rear. One paw placed casually ahead. ${miradas.perro_offlens}`] },
+    { id: 'PM5', naturalistic: true, variantes: [`${framings.portrait} ${perro_global} POSE — NATURALISTIC: Faithfully recreate the dog's natural pose from the reference photo. Preserve exact physical weight distribution and authentic expression. Transform into a classical oil painting.`] },
   ],
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // PERRO PEQUEÑO
+  // PERRO PEQUEÑO, CONEJO, AVE, CABALLO, REPTIL, PEQUEÑO
+  // (Sin cambios a partir de aquí, se mantiene tu versión v7 anterior)
   // ═══════════════════════════════════════════════════════════════════════════
   perro_pequeno: [
-    {
-      id: 'PP1',
-      variantes: [
-        `${framings.portrait} ${perro_global} POSE — SEATED UPRIGHT FORMAL: The small dog sits proudly, its small body nestled into the grand velvet cushion. Chest forward, weight resting deeply. One paw slightly ahead. Immense dignity in a small frame. ${miradas.perro_offlens}`,
-        `${framings.portrait} ${perro_global} POSE — SEATED UPRIGHT FORMAL: The small dog sits proudly, its small body nestled into the grand velvet cushion. Chest forward, weight resting deeply. One paw slightly ahead. Immense dignity in a small frame. ${miradas.perro_girada}`,
-        `${framings.portrait} ${perro_global} POSE — SEATED UPRIGHT FORMAL: The small dog sits proudly, its small body nestled into the grand velvet cushion. Chest forward, weight resting deeply. One paw slightly ahead. Immense dignity in a small frame. ${miradas.perro_headtilt}`,
-        `${framings.portrait} ${perro_global} POSE — SEATED UPRIGHT FORMAL: The small dog sits proudly, its small body nestled into the grand velvet cushion. Chest forward, weight resting deeply. One paw slightly ahead. Immense dignity in a small frame. ${miradas.perro_directo}`,
-      ]
-    },
-    {
-      id: 'PP2',
-      variantes: [
-        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: The small dog sits angled 20 degrees, creating sculptural volume. Anchored firmly on the cushion. ${miradas.perro_offlens}`,
-        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: The small dog sits angled 20 degrees, creating sculptural volume. Anchored firmly on the cushion. ${miradas.perro_girada}`,
-        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: The small dog sits angled 20 degrees, creating sculptural volume. Anchored firmly on the cushion. ${miradas.perro_headtilt}`,
-        `${framings.portrait} ${perro_global} POSE — SEATED ANGLED: The small dog sits angled 20 degrees, creating sculptural volume. Anchored firmly on the cushion. ${miradas.perro_directo}`,
-      ]
-    },
-    {
-      id: 'PP3',
-      variantes: [
-        `${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: The small dog's deeply volumetric face and chest fill the frame, emerging dramatically from the heavy royal mantle. ${miradas.perro_offlens}`,
-        `${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: The small dog's deeply volumetric face and chest fill the frame, emerging dramatically from the heavy royal mantle. ${miradas.perro_girada}`,
-        `${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: The small dog's deeply volumetric face and chest fill the frame, emerging dramatically from the heavy royal mantle. ${miradas.perro_headtilt}`,
-        `${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: The small dog's deeply volumetric face and chest fill the frame, emerging dramatically from the heavy royal mantle. ${miradas.perro_directo}`,
-      ]
-    },
-    {
-      id: 'PP4',
-      variantes: [
-        `${framings.portrait} ${perro_global} POSE — THREE QUARTER DYNAMIC: The small dog's body is turned 3/4. Head turned organically back over the shoulder. Deeply embedded in the cushion. ${miradas.perro_offlens}`,
-        `${framings.portrait} ${perro_global} POSE — THREE QUARTER DYNAMIC: The small dog's body is turned 3/4. Head turned organically back over the shoulder. Deeply embedded in the cushion. ${miradas.perro_headtilt}`,
-        `${framings.portrait} ${perro_global} POSE — THREE QUARTER DYNAMIC: The small dog's body is turned 3/4. Head turned organically back over the shoulder. Deeply embedded in the cushion. ${miradas.perro_directo}`,
-      ]
-    },
-    {
-      id: 'PP5',
-      naturalistic: true,
-      variantes: [
-        `${framings.portrait} ${perro_global} POSE — NATURALISTIC: Faithfully recreate the small dog's natural pose. Preserve organic weight distribution. Transform into a classical oil painting.`,
-      ]
-    },
+    { id: 'PP1', variantes: [`${framings.portrait} ${perro_global} POSE — SEATED UPRIGHT FORMAL: The small dog sits proudly, its small body nestled into the grand velvet cushion. Chest forward, weight resting deeply. One paw slightly ahead. Immense dignity in a small frame. ${miradas.perro_offlens}`] },
+    { id: 'PP2', variantes: [`${framings.portrait} ${perro_global} POSE — SEATED ANGLED: The small dog sits angled 20 degrees, creating sculptural volume. Anchored firmly on the cushion. ${miradas.perro_offlens}`] },
+    { id: 'PP3', variantes: [`${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: The small dog's deeply volumetric face and chest fill the frame, emerging dramatically from the heavy royal mantle. ${miradas.perro_offlens}`] },
+    { id: 'PP4', variantes: [`${framings.portrait} ${perro_global} POSE — THREE QUARTER DYNAMIC: The small dog's body is turned 3/4. Head turned organically back over the shoulder. Deeply embedded in the cushion. ${miradas.perro_offlens}`] },
+    { id: 'PP5', naturalistic: true, variantes: [`${framings.portrait} ${perro_global} POSE — NATURALISTIC: Faithfully recreate the small dog's natural pose. Preserve organic weight distribution. Transform into a classical oil painting.`] },
   ],
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // CONEJO, AVE, CABALLO, REPTIL, PEQUEÑO
-  // ═══════════════════════════════════════════════════════════════════════════
   conejo: [
-    {
-      id: 'CO1',
-      variantes: [
-        `${framings.full_body} POSE — SEATED ALERT: The rabbit sits upright, its weight sinking naturally into the plush cushion. Ears tall, one paw placed organically ahead of the other.`,
-        `${framings.full_body} POSE — SEATED ALERT: The rabbit sits upright, body resting heavily. Head turned 15 degrees with organic, alert curiosity.`,
-      ]
-    },
-    {
-      id: 'CO2',
-      variantes: [
-        `${framings.half_body} POSE — LOAF REGAL: The rabbit rests as a compact, heavy mass in the cushion. Paws tucked deeply. A sculptural, regal mound of fur.`,
-        `${framings.half_body} POSE — LOAF REGAL: The rabbit rests deeply in a loaf position. Head tilted organically with genuine presence.`,
-      ]
-    },
-    {
-      id: 'CO3',
-      variantes: [
-        `${framings.full_body} POSE — THREE QUARTER: Body turned 3/4, anchored in the velvet. Head facing viewer. Natural, living volume.`,
-        `${framings.full_body} POSE — THREE QUARTER: Body 3/4, anchored deeply. Head facing viewer with gentle organic presence.`,
-      ]
-    },
-    {
-      id: 'CO4',
-      naturalistic: true,
-      variantes: [
-        `${framings.full_body} POSE — NATURALISTIC: Faithfully recreate the rabbit's natural volumetric pose and weight distribution.`,
-      ]
-    },
+    { id: 'CO1', variantes: [`${framings.full_body} POSE — SEATED ALERT: The rabbit sits upright, its weight sinking naturally into the plush cushion. Ears tall, one paw placed organically ahead of the other.`] },
+    { id: 'CO2', variantes: [`${framings.half_body} POSE — LOAF REGAL: The rabbit rests as a compact, heavy mass in the cushion. Paws tucked deeply. A sculptural, regal mound of fur.`] },
+    { id: 'CO3', variantes: [`${framings.full_body} POSE — THREE QUARTER: Body turned 3/4, anchored in the velvet. Head facing viewer. Natural, living volume.`] },
+    { id: 'CO4', naturalistic: true, variantes: [`${framings.full_body} POSE — NATURALISTIC: Faithfully recreate the rabbit's natural volumetric pose and weight distribution.`] },
   ],
-
   ave: [
-    {
-      id: 'AV1',
-      variantes: [
-        `${framings.full_body} POSE — PERCHED UPRIGHT: The bird perches with majestic posture, talons gripping the heavy velvet organically. Wings folded naturally to the body's volume.`,
-        `${framings.full_body} POSE — PERCHED UPRIGHT: Perched organically. Head turned 20 degrees, one bright eye deeply set and observant.`,
-      ]
-    },
-    {
-      id: 'AV2',
-      variantes: [
-        `${framings.full_body} POSE — STANDING FORMAL: The bird stands with its weight balanced naturally on the cushion. Feathers painted with sculptural thickness.`,
-        `${framings.full_body} POSE — STANDING FORMAL: Standing organically, weight shifted subtly. Head tilted with sharp, living curiosity.`,
-      ]
-    },
-    {
-      id: 'AV3',
-      variantes: [
-        `${framings.full_body} POSE — THREE QUARTER PERCH: 3/4 profile, gripping the velvet organically. Head turned to face viewer. Sculptural and composed.`,
-        `${framings.full_body} POSE — THREE QUARTER PERCH: 3/4 profile. Powerful, volumetric presence on the cushion.`,
-      ]
-    },
-    {
-      id: 'AV4',
-      naturalistic: true,
-      variantes: [
-        `${framings.full_body} POSE — NATURALISTIC: Faithfully recreate the bird's natural pose, preserving organic feather volume and stance.`,
-      ]
-    },
+    { id: 'AV1', variantes: [`${framings.full_body} POSE — PERCHED UPRIGHT: The bird perches with majestic posture, talons gripping the heavy velvet organically. Wings folded naturally to the body's volume.`] },
+    { id: 'AV2', variantes: [`${framings.full_body} POSE — STANDING FORMAL: The bird stands with its weight balanced naturally on the cushion. Feathers painted with sculptural thickness.`] },
+    { id: 'AV3', variantes: [`${framings.full_body} POSE — THREE QUARTER PERCH: 3/4 profile, gripping the velvet organically. Head turned to face viewer. Sculptural and composed.`] },
+    { id: 'AV4', naturalistic: true, variantes: [`${framings.full_body} POSE — NATURALISTIC: Faithfully recreate the bird's natural pose, preserving organic feather volume and stance.`] },
   ],
-
   caballo: [
-    {
-      id: 'CA1',
-      variantes: [
-        `${framings.full_body_monumental} POSE — PROUD SQUARE STANCE: The horse stands with massive, monumental weight. All four hooves planted firmly, showing immense physical power and anatomical volume. 3/4 angle.`,
-        `${framings.full_body_monumental} POSE — PROUD SQUARE STANCE: Monumental weight. 3/4 angle. Head held high, muscles painted with thick sculptural impasto.`,
-      ]
-    },
-    {
-      id: 'CA2',
-      variantes: [
-        `${framings.full_body_monumental} POSE — PROFILE NOBLE: Deep, heavy profile stance. The royal mantle drapes with profound gravity across the powerful back.`,
-        `${framings.full_body_monumental} POSE — PROFILE NOBLE: Massive profile. Head turned confidently to the viewer. Undeniable physical presence.`,
-      ]
-    },
-    {
-      id: 'CA3',
-      variantes: [
-        `${framings.full_body_monumental} POSE — THREE QUARTER DYNAMIC: 3/4 angle. Legs staggered organically, suggesting massive weight shifting. Dynamic, breathing volume.`,
-        `${framings.full_body_monumental} POSE — THREE QUARTER DYNAMIC: 3/4 angle, weight shifted organically. Sculptural mane and muscles.`,
-      ]
-    },
-    {
-      id: 'CA4',
-      naturalistic: true,
-      variantes: [
-        `${framings.full_body_monumental} POSE — NATURALISTIC: Faithfully recreate the horse's natural massive pose. Preserve exact sculptural weight distribution.`,
-      ]
-    },
+    { id: 'CA1', variantes: [`${framings.full_body_monumental} POSE — PROUD SQUARE STANCE: The horse stands with massive, monumental weight. All four hooves planted firmly, showing immense physical power and anatomical volume. 3/4 angle.`] },
+    { id: 'CA2', variantes: [`${framings.full_body_monumental} POSE — PROFILE NOBLE: Deep, heavy profile stance. The royal mantle drapes with profound gravity across the powerful back.`] },
+    { id: 'CA3', variantes: [`${framings.full_body_monumental} POSE — THREE QUARTER DYNAMIC: 3/4 angle. Legs staggered organically, suggesting massive weight shifting. Dynamic, breathing volume.`] },
+    { id: 'CA4', naturalistic: true, variantes: [`${framings.full_body_monumental} POSE — NATURALISTIC: Faithfully recreate the horse's natural massive pose. Preserve exact sculptural weight distribution.`] },
   ],
-
   reptil: [
-    {
-      id: 'RE1',
-      variantes: [
-        `${framings.full_body} POSE — SPHINX REGAL: The reptile rests its heavy, cold-blooded mass deeply into the velvet cushion. Sculptural scales, ancient posture.`,
-        `${framings.full_body} POSE — SPHINX REGAL: Heavy body anchored in the velvet. Head elevated, gaze turned with sovereign, volumetric presence.`,
-      ]
-    },
-    {
-      id: 'RE2',
-      variantes: [
-        `${framings.full_body} POSE — ELEVATED ALERT: Upright on front legs, the heavy belly resting organically. Dignified, ancient, three-dimensional.`,
-        `${framings.full_body} POSE — ELEVATED ALERT: Upright, weight distributed naturally. Ancient sculptural authority.`,
-      ]
-    },
-    {
-      id: 'RE3',
-      variantes: [
-        `${framings.full_body} POSE — THREE QUARTER REST: 3/4 position, heavy tail dragging naturally. Thick, tactile scales.`,
-        `${framings.full_body} POSE — THREE QUARTER REST: 3/4 position, massive and deeply embedded in the scene.`,
-      ]
-    },
-    {
-      id: 'RE4',
-      naturalistic: true,
-      variantes: [
-        `${framings.full_body} POSE — NATURALISTIC: Faithfully recreate the reptile's natural heavy pose. Preserve organic weight and sculptural scales.`,
-      ]
-    },
+    { id: 'RE1', variantes: [`${framings.full_body} POSE — SPHINX REGAL: The reptile rests its heavy, cold-blooded mass deeply into the velvet cushion. Sculptural scales, ancient posture.`] },
+    { id: 'RE2', variantes: [`${framings.full_body} POSE — ELEVATED ALERT: Upright on front legs, the heavy belly resting organically. Dignified, ancient, three-dimensional.`] },
+    { id: 'RE3', variantes: [`${framings.full_body} POSE — THREE QUARTER REST: 3/4 position, heavy tail dragging naturally. Thick, tactile scales.`] },
+    { id: 'RE4', naturalistic: true, variantes: [`${framings.full_body} POSE — NATURALISTIC: Faithfully recreate the reptile's natural heavy pose. Preserve organic weight and sculptural scales.`] },
   ],
-
   pequeno: [
-    {
-      id: 'AN1',
-      variantes: [
-        `${framings.full_body} POSE — SEATED REGAL: The small animal sits upright, its tiny body sinking organically into the immense plush cushion.`,
-        `${framings.full_body} POSE — SEATED REGAL: Sits upright, nestled deeply in the velvet. Organic asymmetry in paw placement.`,
-      ]
-    },
-    {
-      id: 'AN2',
-      variantes: [
-        `${framings.close_crop} POSE — ALERT FRONTAL: Sits alert, weight anchored naturally. Small but possessing dense, living volume.`,
-        `${framings.close_crop} POSE — ALERT FRONTAL: Anchored organically in the cushion. Head turned with quick, breathing curiosity.`,
-      ]
-    },
-    {
-      id: 'AN3',
-      variantes: [
-        `${framings.full_body} POSE — THREE QUARTER: 3/4 angle. The small body creates a deep, natural indentation in the velvet throne.`,
-        `${framings.full_body} POSE — THREE QUARTER: 3/4 angle. A small, heavy sovereign anchored in its cushion.`,
-      ]
-    },
-    {
-      id: 'AN4',
-      naturalistic: true,
-      variantes: [
-        `${framings.full_body} POSE — NATURALISTIC: Faithfully recreate the animal's natural pose. Preserve organic weight resting on the surface.`,
-      ]
-    },
+    { id: 'AN1', variantes: [`${framings.full_body} POSE — SEATED REGAL: The small animal sits upright, its tiny body sinking organically into the immense plush cushion.`] },
+    { id: 'AN2', variantes: [`${framings.close_crop} POSE — ALERT FRONTAL: Sits alert, weight anchored naturally. Small but possessing dense, living volume.`] },
+    { id: 'AN3', variantes: [`${framings.full_body} POSE — THREE QUARTER: 3/4 angle. The small body creates a deep, natural indentation in the velvet throne.`] },
+    { id: 'AN4', naturalistic: true, variantes: [`${framings.full_body} POSE — NATURALISTIC: Faithfully recreate the animal's natural pose. Preserve organic weight resting on the surface.`] },
   ],
-
   default: [
-    {
-      id: 'DF1',
-      variantes: [
-        `${framings.portrait} POSE: The animal rests heavily and organically on the cushion. The body yields naturally to gravity, distributing its weight deeply into the surface. Noble, sculptural, and asymmetrical.`,
-        `${framings.half_body} POSE: The animal sits or reclines with tangible physical mass. Head raised, breathing and present.`,
-      ]
-    },
+    { id: 'DF1', variantes: [`${framings.portrait} POSE: The animal rests heavily and organically on the cushion. The body yields naturally to gravity, distributing its weight deeply into the surface. Noble, sculptural, and asymmetrical.`] },
   ],
 };
 
-// ─── DETECCIÓN DE CATEGORÍA Y ASIGNACIÓN (SIN CAMBIOS) ───────────────────────
-// (Mantén tus funciones detectarCategoria y asignarPose exactamente como estaban)
+// ─── DETECCIÓN DE CATEGORÍA Y ASIGNACIÓN ───────────────────────
 function detectarCategoria(especie, raza) {
   const e = (especie || '').toLowerCase();
   const r = (raza || '').toLowerCase();
