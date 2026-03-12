@@ -1,34 +1,36 @@
-// ENSAMBLADOR PRINCIPAL v2.5
-// v2.5 — instrucción anti-marco movida al FINAL del prompt para mayor peso.
-// Gemini procesa las instrucciones al final con mayor prioridad.
+// ENSAMBLADOR PRINCIPAL v2.6
+// v2.6 — normalización de estilo al inicio del buildPrompt.
+// Cualquier alias del frontend (rey, baroque, etc.) se convierte
+// a la clave canónica antes de pasarse a cualquier módulo.
 
-const s1_lienzo       = require('./s1_lienzo');
-const s2_fondo        = require('./s2_fondo');
-const s3_estilo       = require('./s3_estilo');
+const s1_lienzo    = require('./s1_lienzo');
+const s2_fondo     = require('./s2_fondo');
+const s3_estilo    = require('./s3_estilo');
 const { asignarPose, poses, detectarCategoria } = require('./s4_poses');
-const s5_sujeto       = require('./s5_sujeto');
-const s6_vestuario    = require('./s6_vestuario');
-const s7_props        = require('./s7_props');
-const s8_multi        = require('./s8_multi');
+const s5_sujeto    = require('./s5_sujeto');
+const s6_vestuario = require('./s6_vestuario');
+const s7_props     = require('./s7_props');
+const s8_multi     = require('./s8_multi');
 
-// Instrucción anti-marco — al final del prompt para máximo peso
+// Mapa de alias — frontend puede mandar cualquiera de estos
+const ESTILO_ALIAS = {
+  rey:         'realeza',
+  royal:       'realeza',
+  baroque:     'barroco',
+  renaissance: 'renacimiento',
+};
+
+function normalizarEstilo(estilo) {
+  const e = (estilo || 'realeza').toLowerCase().trim();
+  return ESTILO_ALIAS[e] || e;
+}
+
+// Instrucción anti-marco — siempre al final del prompt
 const NO_FRAME = `FINAL INSTRUCTION — ABSOLUTE REQUIREMENT: NO frame. NO border. NO picture frame. NO ornate frame. NO wooden frame. NO gold frame. NO decorative border of ANY kind. The painting fills the entire image edge to edge with NO frame whatsoever. If you add a frame, the output is wrong.`;
 
-/**
- * @param {Object} params
- * @param {string} params.estilo
- * @param {number} params.numAnimales
- * @param {string} params.especie
- * @param {string} params.raza
- * @param {string} params.genero
- * @param {Array}  params.animales
- * @param {Object} params.hero
- * @param {boolean} params.esNaturalistic
- * @param {string} params.imgHash
- */
 module.exports = function buildPrompt(params) {
   const {
-    estilo         = 'realeza',
+    estilo:        estiloRaw = 'realeza',
     numAnimales    = 1,
     especie        = 'perro',
     raza           = '',
@@ -39,12 +41,15 @@ module.exports = function buildPrompt(params) {
     imgHash        = 'nohash',
   } = params;
 
-  const isMulti = numAnimales > 1;
+  // Normalizar estilo UNA VEZ — todos los módulos reciben la clave canónica
+  const estilo = normalizarEstilo(estiloRaw);
+
+  const isMulti   = numAnimales > 1;
   const heroPose  = hero?.pose  ?? null;
   const heroManto = hero?.manto ?? null;
   const heroCojin = hero?.cojin ?? null;
 
-  // ─── POSE + LOG ──────────────────────────────────────────────────────────
+  // ─── POSE ────────────────────────────────────────────────────────────────
   let poseTexto = null;
 
   if (!isMulti) {
@@ -71,6 +76,7 @@ module.exports = function buildPrompt(params) {
       `pose: ${poseObj?.id || 'unknown'}`,
       `variante: ${varianteIdx + 1}/${variantesDisponibles}`,
       `estilo: ${estilo}`,
+      `estilo_raw: ${estiloRaw}`,
       `genero: ${genero || 'neutral'}`,
       `naturalistic: ${esNaturalistic}`,
       `hero: ${heroPose !== null ? `pose:${heroPose}` : 'aleatorio'}`,
@@ -78,7 +84,7 @@ module.exports = function buildPrompt(params) {
 
     poseTexto = asignarPose(especie, raza, esNaturalistic, heroPose, varianteIdx);
   } else {
-    console.log(`🎭 PROMPT MULTI | animales: ${numAnimales} | estilo: ${estilo} | genero: ${genero || 'neutral'}`);
+    console.log(`🎭 PROMPT MULTI | animales: ${numAnimales} | estilo: ${estilo} | estilo_raw: ${estiloRaw}`);
   }
 
   // ─── ENSAMBLAR ───────────────────────────────────────────────────────────
@@ -90,7 +96,6 @@ module.exports = function buildPrompt(params) {
     !isMulti ? poseTexto : null,
     isMulti ? s8_multi(numAnimales, estilo) : s6_vestuario(estilo, genero, heroManto),
     s7_props(estilo, numAnimales, heroCojin),
-    // Anti-marco SIEMPRE al final — máximo peso
     NO_FRAME,
   ];
 
