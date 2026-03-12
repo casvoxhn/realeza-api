@@ -106,7 +106,8 @@ app.post('/generate', async (req, res) => {
         raza:        primerAnimal.raza,
         genero:      hasGender ? gender : null,
         animales:    animalesDetectados,
-        hero:        null
+        hero:        null,
+        imgHash,
       });
 
     } else if (currentCategory === 'mujer')    promptText = getMujerPrompt(style, numSubjects, isGroup);
