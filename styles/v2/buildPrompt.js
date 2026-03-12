@@ -1,7 +1,6 @@
-// ENSAMBLADOR PRINCIPAL v2.3
+// ENSAMBLADOR PRINCIPAL v2.4
 // Framing vive en s4_poses — buildPrompt ya no necesita detectar cuerpoCompleto.
-// Arquitectura limpia sin contradicciones entre secciones.
-// v2.3 — agrega log de pose seleccionada para debugging en Railway.
+// v2.4 — logging completo: pose, variante, mirada, naturalistic, hero.
 
 const s1_lienzo       = require('./s1_lienzo');
 const s2_fondo        = require('./s2_fondo');
@@ -40,13 +39,13 @@ module.exports = function buildPrompt(params) {
   const heroManto = hero?.manto ?? null;
   const heroCojin = hero?.cojin ?? null;
 
-  // ─── POSE + LOG ──────────────────────────────────────────────────────────
+  // ─── POSE + LOG DETALLADO ─────────────────────────────────────────────────
   let poseTexto = null;
 
   if (!isMulti) {
-    // Detectar qué pose se va a seleccionar para loggearla
     const categoria = detectarCategoria(especie, raza);
     const pool = (poses[categoria] || poses.default).filter(p => !p.naturalistic);
+
     let poseObj;
     if (esNaturalistic) {
       poseObj = (poses[categoria] || poses.default).find(p => p.naturalistic);
@@ -56,9 +55,27 @@ module.exports = function buildPrompt(params) {
       poseObj = pool[Math.floor(Math.random() * pool.length)];
     }
 
-    console.log(`🎭 POSE | especie: ${especie} | raza: ${raza || 'sin raza'} | categoria: ${categoria} | pose: ${poseObj?.id || 'unknown'} | estilo: ${estilo}`);
+    // Determinar índice de variante que se usará
+    const variantesDisponibles = poseObj?.variantes?.length || 0;
+    const varianteIdx = Math.floor(Math.random() * variantesDisponibles);
 
-    poseTexto = asignarPose(especie, raza, esNaturalistic, heroPose, null);
+    console.log([
+      `🎭 PROMPT`,
+      `especie: ${especie}`,
+      `raza: ${raza || 'sin raza'}`,
+      `categoria: ${categoria}`,
+      `pose: ${poseObj?.id || 'unknown'}`,
+      `variante: ${varianteIdx + 1}/${variantesDisponibles}`,
+      `estilo: ${estilo}`,
+      `genero: ${genero || 'neutral'}`,
+      `naturalistic: ${esNaturalistic}`,
+      `hero: ${heroPose !== null ? `pose:${heroPose}` : 'aleatorio'}`,
+    ].join(' | '));
+
+    // Usar el mismo índice de variante que loggeamos
+    poseTexto = asignarPose(especie, raza, esNaturalistic, heroPose, varianteIdx);
+  } else {
+    console.log(`🎭 PROMPT MULTI | animales: ${numAnimales} | estilo: ${estilo} | genero: ${genero || 'neutral'}`);
   }
 
   // ─── ENSAMBLAR ───────────────────────────────────────────────────────────
