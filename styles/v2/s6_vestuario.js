@@ -1,6 +1,6 @@
-// SECCIÓN 6 — VESTUARIO v4
-// v4 — Añadido cuello de encaje antiguo (lace ruff) para estatus histórico.
-// Instrucciones de gravedad en la caída del manto.
+// SECCIÓN 6 — VESTUARIO v5
+// v5 — Removido el cuello de encaje a petición tuya.
+// Se mantienen las instrucciones de gravedad y peso físico en la caída del manto.
 
 const { pick } = require('./utils');
 
@@ -75,13 +75,11 @@ module.exports = function s6_vestuario(estilo, genero, indexHero = null) {
 
   return `WARDROBE: ${manto.descripcion}.
 
-THREE SEPARATE PARTS — paint these independently with physical weight:
+TWO SEPARATE PARTS — paint these independently with physical weight:
 
-PART 1 — ANTIQUE LACE (Neck area): An intricate, delicate antique lace ruff peeks out directly around the animal's neck, anchoring the portrait in the 17th century.
+PART 1 — ERMINE COLLAR (Framing chest): Bright white ermine fur with distinct black tail-tips forms wide open lapels framing the animal's chest. This ermine catches the soft light beautifully. Never hidden, always clearly visible at the front.
 
-PART 2 — ERMINE COLLAR (Over the lace, framing chest): Bright white ermine fur with distinct black tail-tips forms wide open lapels framing the animal's chest. This ermine catches the soft light beautifully. Never hidden, always clearly visible at the front.
-
-PART 3 — VELVET BODY (Goes behind only): The velvet drapes heavily over the shoulders and falls backward. It visibly responds to gravity, pooling with deep, tangible folds. It does NOT come to the front, does NOT cover the chest.
+PART 2 — VELVET BODY (Goes behind only): The velvet drapes heavily over the shoulders and falls backward. It visibly responds to gravity, pooling with deep, tangible folds. It does NOT come to the front, does NOT cover the chest.
 
 CHEST ORNAMENT: A single delicate gold chain crosses from one ermine lapel to the other with a ${gema} pendant at the center.`;
 };
