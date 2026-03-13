@@ -177,7 +177,7 @@ app.post('/generate', async (req, res) => {
       contents: [{ role: "user", parts }],
       generationConfig: {
         responseModalities: ["IMAGE", "TEXT"],
-        imageConfig: { aspectRatio: "4:5", imageSize: "4K" }
+        imageConfig: { aspectRatio: "4:5", imageSize: "1K" }
       }
     });
 
