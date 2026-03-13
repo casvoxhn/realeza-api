@@ -1,6 +1,7 @@
-// SECCIÓN 7 — PROPS v6
-// v6 — REVISIÓN DE ESCALA IMPONENTE: Cojines masivos, tensión de tela visible, 
-// grosor vertical extremo y esquinas robustas (estilo trono pesado).
+// SECCIÓN 7 — PROPS v7
+// v7 — COJÍN ORGÁNICO: Se elimina el efecto "globo/cama inflable". 
+// Foco en plumas suaves, arrugas naturales (organic wrinkles) y hundimiento orgánico.
+// Sin button tufting ni tensión excesiva. Inspirado en estética de competencia.
 
 const { pick } = require('./utils');
 
@@ -53,22 +54,19 @@ module.exports = function s7_props(estilo, numAnimales, indexHero = null) {
   const pool = cojines[estilo] || cojines.realeza;
   const cojin = indexHero !== null ? pool[indexHero % pool.length] : pick(pool);
 
-  // Forzamos un ancho y profundidad inmensos
   const ancho = numAnimales > 1
-    ? `wide and deep, spanning the full width of the painting with a massive physical surface area`
-    : `significantly wider and deeper than the animal, with the left and right edges extending broadly and heavily beyond the animal on both sides`;
+    ? `wide and deep, comfortably supporting the animals across the full width of the painting`
+    : `significantly wider and deeper than the animal, extending elegantly on both sides`;
 
-  return `CUSHION CONSTRUCTION (CRITICAL): An immense and voluminous ceremonial throne cushion, ${ancho}. This is a powerful, structural seat, not a flat pillow.
+  return `CUSHION CONSTRUCTION (CRITICAL): A luxurious, soft, and plush oversized velvet throw pillow, ${ancho}. It is NOT a rigid, boxy, or tightly packed structure. It resembles a high-end, extremely comfortable royal cushion filled with soft down feathers.
 
-SHAPE & VERTICALITY: The cushion rises with substantial vertical thickness from base to top. It is so tightly and heavily stuffed that the fabric tension is visible. The corners are tightly filled and boxy, defining its imposing, monolithic nature. The sides billow outward heavily with the massive weight of the interior filling.
+SHAPE & GRAVITY: The cushion has a relaxed, organic shape. The animal rests comfortably, creating a soft, natural, and deep indentation in the center. The fabric yields gracefully to the animal's weight, sinking down rather than pushing up.
 
-STRUCTURE & GRAVITY INDENTATION: The cushion has complex, deep button tufting (tufted padding) that creates deep wells. The animal is nestled deeply within these wells, demonstrating substantial mass. The velvet surface visibly sinks and compresses drastically beneath the weight of the animal, creating a pronounced physical indentation.
+SURFACE & TEXTURE: Made of ${cojin.tela} featuring ${cojin.bordado}. CRITICAL: The surface MUST display natural, organic fabric wrinkles, soft draping, and relaxed folds where the heavy velvet is compressed by the animal. 
 
-SURFACE & TENSION: Made of ${cojin.tela} featuring ${cojin.bordado}. The velvet has a rich, plush nap with natural light-catching sheen — highlights on the raised areas, deep shadow in the folds. The fabric is tightly packed, with tension visible in the weave.
+FABRIC PHYSICS: Strictly eliminate any inflated, balloon-like, or overly tight surface tension. NO deep button tufting. The velvet has a rich nap with natural light-catching sheen — highlights on the raised folds, deep shadow in the creases. 
 
-CONSTRUCTION DETAIL: The cushion exhibits visible fabric tension — deep, organic fold lines where the heavy stuffing pushes outward against the seams, especially at the corners and along the billowing sides. These are natural stress wrinkles in heavy velvet, adding to the realism.
+TRIM & BASE: A single, elegant thick antique gold cord runs along the seam. One beautiful, heavy gold tassel hangs naturally from a visible corner. The cushion rests on a simple, flat, matte, cool grey stone surface. Only a thin sliver of stone is visible below the cushion. NO decorative ledge, NO pedestal — just flat stone.
 
-TRIM & BASE: A substantial, tightly twisted, thick antique gold cord runs along the bottom edge — providing a clean, tight, monolithic robustness without loose fringe. One massive, heavy gold tassel hangs solidly from the front bottom corner. The cushion rests on a flat, matte, cool grey stone surface. Only a thin sliver of stone is visible below the cushion. NO decorative ledge, NO pedestal — just flat stone.
-
-COMPOSITIONAL RULE: Paint the cushion with as much textural complexity, immense scale, and physical presence as the animal itself. The animal MUST look deeply embedded inside a heavily stuffed velvet throne.`;
+COMPOSITIONAL RULE: Paint the cushion with immense scale but ultimate softness. The animal MUST look deeply and comfortably settled into a yielding, plush velvet pillow.`;
 };
