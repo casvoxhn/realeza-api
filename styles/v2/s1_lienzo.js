@@ -1,4 +1,2 @@
-// SECCIÓN 1 — LIENZO (V_CLEAN_MASTER)
-// Enfoque minimalista para maximizar la textura de óleo y eliminar el plástico.
-
-module.exports = `A classical, museum-quality oil painting. An absolute masterpiece of traditional fine art, purely painted with masterful thick impasto brushstrokes, giving highly tactile texture to both the fur and the fabric. Purely painted medium with zero photographic elements, zero CGI sheen, and zero sharp digital focus.`;
+// SECCIÓN 1 — LIENZO (CALIDAD CONTROLADA V_SIMPLE)
+module.exports = `A high-end, elegant classical oil painting. Masterful, smooth, and refined brushwork. Clean, professional, and regal aesthetic with a cohesive traditional art style. Absolute zero photographic gloss, CGI sheen, or digital plastic look.`;
