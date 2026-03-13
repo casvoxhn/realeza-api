@@ -1,6 +1,4 @@
-// SECCIÓN 2 — FONDO Y LUZ (V_CLEAN_MASTER)
-// Chiaroscuro y Sfumato para derretir los bordes del animal y unificar el lienzo.
-
+// SECCIÓN 2 — FONDO (CALIDAD CONTROLADA V_SIMPLE)
 module.exports = function s2_fondo(estilo) {
-  return `The composition features dramatic Rembrandt-style chiaroscuro lighting, with a warm, soft directional glow illuminating the subject's dignified face. Crucially, the outer edges of the animal's body and garments melt seamlessly into a deep, moody, antique umber background via heavy sfumato blending, eliminating any digital cut-out effect. Highly cohesive and deeply atmospheric.`;
+  return `BACKGROUND: A classic, moody portrait background. Deep, warm umber and rich dark tones. Soft, elegant studio lighting that illuminates the subject's face beautifully while the edges of the body blend naturally and smoothly into the background. No distracting elements.`;
 };
