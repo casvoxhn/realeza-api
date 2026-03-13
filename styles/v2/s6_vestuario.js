@@ -1,7 +1,4 @@
-// SECCIÓN 6 — VESTUARIO v7
-// v7 — Corregido el "efecto pingüino/masa amorfa": 
-//      1. Se eliminó la separación estricta de "PART 1 y PART 2" para permitir un drapeado orgánico adaptado a la pose.
-//      2. Se agregó lógica de "Contraste Crítico" para evitar cuellos de armiño blanco en mascotas blancas.
+// SECCIÓN 6 — VESTUARIO v6
 // v6 — Reintroducción selectiva del encaje antiguo (hasLace), pero como ribete suave (trim) bajo el armiño.
 // v5 — Removido el cuello de encaje rígido (ruff) por completo.
 
@@ -79,15 +76,20 @@ module.exports = function s6_vestuario(estilo, genero, indexHero = null, hasLace
   // Generamos la descripción del "encaje bueno" si hasLace es true
   let laceDesc = '';
   if (hasLace) {
-    laceDesc = `\nANTIQUE LACE ACCENT: A delicate, aged antique lace trim peeks out very subtly from beneath the inner edge of the collar. It rests flat upon the heavy velvet and drapes naturally with gravity, following the contours of the animal's chest.`;
+    laceDesc = `
+
+PART 2a — ANTIQUE LACE TRIM (Integrated edge): A delicate, aged antique lace trim peeks out very subtly from beneath the inner edge of the ermine collar and rests flat upon the heavy velvet cape body. It is soft and drapes naturally with the weight of the cape, following the gravity and contours of the animal's chest. Crucially, this is a soft, integrated trim lying flat, NOT a stiff, upright, medical-style neck ruff.`;
   }
 
-  // Ensamblamos el string dinámicamente con las nuevas reglas orgánicas y de contraste
+  // Ensamblamos el string dinámicamente
   return `WARDROBE: ${manto.descripcion}.
 
-ORGANIC DRAPING (CRITICAL): The mantle is a single, integrated garment. It drapes naturally and organically over the animal's true anatomy, responding to gravity and flowing seamlessly with the specific pose. Do NOT force unnatural separation between the chest and the back. The clothing must obey the animal's physical posture.
+${hasLace ? 'THREE' : 'TWO'} SEPARATE PARTS — paint these independently with physical weight:
 
-COLLAR & TRIM: The mantle features a thick, luxurious fur collar and trim. CRITICAL CONTRAST RULE: Use bright white ermine with distinct black tail-tips, BUT if the animal's natural fur is white, light-colored, or very fluffy (like a white Persian cat), you MUST replace the ermine with a contrasting dark sable fur OR a thick, heavy gold embroidered border. There MUST be a clear visual separation between the animal's body and the clothing.
+PART 1 — ERMINE COLLAR (Framing chest): Bright white ermine fur with distinct black tail-tips forms wide open lapels framing the animal's chest. This ermine catches the soft light beautifully. Never hidden, always clearly visible at the front.
 
-CHEST ORNAMENT: A delicate gold chain rests naturally across the upper chest with a ${gema} pendant at the center, integrating flawlessly with the fur and fabric.${laceDesc}`;
+PART 2 — VELVET BODY (Goes behind only): The velvet drapes heavily over the shoulders and falls backward. It visibly responds to gravity, pooling with deep, tangible folds. It does NOT come to the front, does NOT cover the chest.
+${laceDesc}
+
+CHEST ORNAMENT: A single delicate gold chain crosses from one ermine lapel to the other with a ${gema} pendant at the center.`;
 };
