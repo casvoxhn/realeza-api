@@ -1,7 +1,7 @@
-// SECCIÓN 7 — PROPS v7
-// v7 — COJÍN ORGÁNICO: Se elimina el efecto "globo/cama inflable". 
-// Foco en plumas suaves, arrugas naturales (organic wrinkles) y hundimiento orgánico.
-// Sin button tufting ni tensión excesiva. Inspirado en estética de competencia.
+// SECCIÓN 7 — PROPS v7.1
+// v7.1 — COJÍN ORGÁNICO & ENCUADRE LIMPIO: Se elimina la base de piedra gris para permitir el anclaje al borde.
+// Foco en plumas suaves, arrugas naturales (organic wrinkles) y hundimiento por gravedad.
+// Sin efecto "globo", sin button tufting. Estructura de almohadón de lujo.
 
 const { pick } = require('./utils');
 
@@ -66,7 +66,7 @@ SURFACE & TEXTURE: Made of ${cojin.tela} featuring ${cojin.bordado}. CRITICAL: T
 
 FABRIC PHYSICS: Strictly eliminate any inflated, balloon-like, or overly tight surface tension. NO deep button tufting. The velvet has a rich nap with natural light-catching sheen — highlights on the raised folds, deep shadow in the creases. 
 
-TRIM & BASE: A single, elegant thick antique gold cord runs along the seam. One beautiful, heavy gold tassel hangs naturally from a visible corner. The cushion rests on a simple, flat, matte, cool grey stone surface. Only a thin sliver of stone is visible below the cushion. NO decorative ledge, NO pedestal — just flat stone.
+TRIM & BASE: A single, elegant thick antique gold cord runs along the seam. One beautiful, heavy gold tassel hangs naturally from a visible corner. THE CUSHION ANCHORS THE COMPOSITION: The bottom of the cushion sits directly on the bottom edge of the canvas, bleeding off the frame. ZERO floor visible, ZERO stone visible, ZERO pedestal. 
 
-COMPOSITIONAL RULE: Paint the cushion with immense scale but ultimate softness. The animal MUST look deeply and comfortably settled into a yielding, plush velvet pillow.`;
+COMPOSITIONAL RULE: Paint the cushion with immense scale but ultimate softness. The animal MUST look deeply and comfortably settled into a yielding, plush velvet pillow that fills the lower base of the portrait entirely.`;
 };
