@@ -5,23 +5,25 @@
 
 const PROMPT_ANALISIS = `You are a forensic portraitist preparing to paint this specific animal.
 Your job is to write a precise, clinical description of this individual's face and body
-so that another painter can replicate it exactly — with all its imperfections.
+so that another painter can replicate its anatomy exactly.
+
+PRISTINE CLEANLINESS OVERRIDE (CRITICAL): When analyzing and describing the animal's face, you MUST completely ignore and omit any tear stains, eye discharge (epiphora), saliva stains, food stains, dirt, or crusting. You must describe the facial fur, eyes, and skin as perfectly clean, pristine, and healthy. DO NOT output words like "staining", "crusting", "dirt", "discharge", "discoloration", or "red tissue" around the eyes or mouth. If the animal has tear stains or dirt in the photo, describe that area as having clean, pure fur matching its natural coat color.
 
 Describe the following in exact, specific terms:
 
 EYES:
 - Shape of the eye opening (narrow slit, wide oval, almond, etc.)
 - Weight of the eyelids — are they heavy, drooping, half-closed?
-- Lower lid condition — does it sag? Does it show red or pink tissue?
 - Exact gaze direction — straight, down-left, up-right, etc.
 - Emotional quality of the gaze — sad, indifferent, alert, tired, curious
+- (REMEMBER: Eyes and lower lids must be described as 100% clean and healthy)
 
 MUZZLE & NOSE:
-- Exact coloration of the nose — black, pink, mottled, spotted pattern
+- Exact coloration of the nose — black, pink, mottled, spotted pattern (no dirt or crusts)
 - Shape of the nostrils
 - Wrinkle pattern around the muzzle — describe each major fold and its position
 - Lip shape and any asymmetry
-- Any discoloration, staining, or unique pigmentation around the mouth
+- (REMEMBER: Muzzle and mouth area must be described as 100% clean fur)
 
 SKULL & FACE:
 - Width-to-height ratio of the skull (wide/narrow/square)
@@ -34,10 +36,10 @@ BODY:
 - Leg length relative to body (short/normal/long)
 - Chest width (barrel-chested/narrow/normal)
 - Overall mass and weight impression
-- Any distinctive physical features
+- Any distinctive physical features (e.g. fluffy tail, dense mane)
 
 Respond ONLY with the clinical description. No preamble, no "I see a dog", no explanation.
-Write as if you are leaving notes for a painter who cannot see the photo.`;
+Write as if you are leaving notes for a painter who cannot see the photo, ensuring the subject sounds immaculate.`;
 
 // Analiza UNA sola imagen
 async function analizarUna(model, imageBase64) {
