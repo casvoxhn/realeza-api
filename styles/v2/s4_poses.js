@@ -3,12 +3,12 @@
 // v7 — Reescritura escultural de poses. Transición de geometría rígida a física orgánica.
 
 const framings = {
-  portrait: `FRAMING: Portrait crop — the animal fills the frame with natural presence. Front paws and cushion visible at the bottom. Proportions anatomically correct throughout. Do NOT compress or shrink the body.`,
-  close_crop: `FRAMING: Portrait crop — front paws and cushion visible at the bottom. Proportions anatomically correct throughout. Do NOT compress or shrink the body.`,
-  close_crop_strong: `FRAMING: Close portrait crop — chest and front paws barely visible at bottom edge. Proportions anatomically correct throughout. Do NOT compress or shrink the body.`,
-  full_body: `FRAMING: The complete body of the animal is fully visible from head to tail — full figure on the cushion or surface. Proportions anatomically correct throughout. Do NOT crop the body.`,
-  full_body_monumental: `FRAMING: The complete body of the horse fills the canvas — monumental composition from head to tail. Anatomically correct and powerful throughout.`,
-  half_body: `FRAMING: The animal shown from head to mid-body — front paws and chest visible, body naturally cropped at the cushion. Proportions anatomically correct throughout.`,
+  portrait: `FRAMING: Medium-close portrait crop — the animal fills the frame beautifully. The bottom of the cushion is positioned very close to the bottom edge of the image, with only a tiny sliver of base visible. Allow the body to stretch naturally upwards. Proportions anatomically correct throughout. Do NOT compress or shrink the body.`,
+  close_crop: `FRAMING: Close portrait crop. Anchor the cushion near the absolute bottom edge of the canvas. Allow the animal's chest and body to fill the vertical space proudly. Proportions anatomically correct throughout. Do NOT compress or shrink the body.`,
+  close_crop_strong: `FRAMING: Extreme close portrait crop — chest and front paws barely visible at bottom edge. Zero floor visible. Body is massive and uncompressed, filling the frame.`,
+  full_body: `FRAMING: Full figure on the cushion. The cushion rests very low in the frame to give maximum vertical room for the animal's natural height. Do NOT compress the torso. Proportions anatomically correct throughout.`,
+  full_body_monumental: `FRAMING: Monumental composition from head to tail. The base anchors firmly at the bottom border. Anatomically correct, uncompressed, and powerful throughout.`,
+  half_body: `FRAMING: The animal shown from head to mid-body. The cushion forms the bottom edge of the frame. The spine and chest expand naturally upwards without vertical compression.`,
 };
 
 const miradas = {
@@ -31,6 +31,7 @@ const miradas = {
 
 const perro_global = `CRITICAL — PRESERVE EXACT ANATOMY, EXPRESSION & PHYSICAL MASS: Study the reference photo carefully. You MUST perfectly preserve the specific bone structure, leg thickness, leg length, and chest width of the reference animal. If the dog has short, extremely thick, muscular legs and a massive wide chest, the generated body and paws MUST match this exact heavy, thickset anatomy in the new pose. Do not substitute with generic dog proportions. Flesh, jowls, and thick muscular limbs must obey gravity, looking heavy and three-dimensional. Transform this specific anatomical reality into a classical oil painting.`;
 const gato_global = `CRITICAL — PRESERVE EXACT ANATOMY, FLUIDITY & MASS: Study the reference photo carefully. You MUST perfectly preserve the specific bone structure, limb thickness, and proportions of THIS specific cat. Do not substitute with a generic feline body. The feline body carries undeniable physical weight, sinking luxuriously and organically into the cushion. The pose must feel relaxed, sovereign, and sculptural. Never perfectly symmetrical.`;
+
 // ─── POSES ───────────────────────────────────────────────────────────────────
 
 const poses = {
@@ -232,7 +233,6 @@ const poses = {
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PERRO PEQUEÑO, CONEJO, AVE, CABALLO, REPTIL, PEQUEÑO
-  // (Sin cambios a partir de aquí, se mantiene tu versión v7 anterior)
   // ═══════════════════════════════════════════════════════════════════════════
   perro_pequeno: [
     { id: 'PP1', variantes: [`${framings.portrait} ${perro_global} POSE — SEATED UPRIGHT FORMAL: The small dog sits proudly, its small body nestled into the grand velvet cushion. Chest forward, weight resting deeply. One paw slightly ahead. Immense dignity in a small frame. ${miradas.perro_offlens}`] },
