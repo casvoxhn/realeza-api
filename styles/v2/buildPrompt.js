@@ -1,7 +1,6 @@
-// ENSAMBLADOR PRINCIPAL v2.7
-// v2.7 — analisisFacial inyectado como sección entre s5_sujeto y la pose.
-// El análisis describe quirúrgicamente la cara del animal específico
-// para que Gemini no use plantilla genérica de raza.
+// ENSAMBLADOR PRINCIPAL v3 (CON CANDADO ESTÉTICO GLOBAL)
+// v3 — Protección contra vocabulario fotográfico en el analisisFacial
+// y agregado de GLOBAL_AESTHETIC_LOCK al final del prompt.
 
 const s1_lienzo    = require('./s1_lienzo');
 const s2_fondo     = require('./s2_fondo');
@@ -26,6 +25,9 @@ function normalizarEstilo(estilo) {
 
 const NO_FRAME = `FINAL INSTRUCTION — ABSOLUTE REQUIREMENT: NO frame. NO border. NO picture frame. NO ornate frame. NO wooden frame. NO gold frame. NO decorative border of ANY kind. The painting fills the entire image edge to edge with NO frame whatsoever. If you add a frame, the output is wrong.`;
 
+// NUEVO: El sello final que garantiza que no haya "look IA"
+const GLOBAL_AESTHETIC_LOCK = `GLOBAL AESTHETIC LOCK: The entire image MUST strictly adhere to a classical, aged oil painting aesthetic. Absolute zero CGI sheen, zero plastic skin, zero photographic sharp focus, and zero individual digital hairs. Thick grouped brushstrokes, matte surfaces, and a muted earthy color palette are mandatory across all elements.`;
+
 module.exports = function buildPrompt(params) {
   const {
     estilo:        estiloRaw      = 'realeza',
@@ -37,7 +39,7 @@ module.exports = function buildPrompt(params) {
     hero                          = null,
     esNaturalistic                = false,
     imgHash                       = 'nohash',
-    analisisFacial                = null,   // ← nuevo en v2.7
+    analisisFacial                = null,   
   } = params;
 
   const estilo  = normalizarEstilo(estiloRaw);
@@ -86,17 +88,16 @@ module.exports = function buildPrompt(params) {
     console.log(`🎭 PROMPT MULTI | animales: ${numAnimales} | estilo: ${estilo} | estilo_raw: ${estiloRaw}`);
   }
 
-  // ─── SECCIÓN DE IDENTIDAD ESPECÍFICA (solo si hay análisis) ──────────────
-  // Se inyecta entre s5_sujeto y la pose para que Gemini tenga
-  // la descripción exacta del individuo antes de leer las instrucciones de pose.
+  // ─── SECCIÓN DE IDENTIDAD ESPECÍFICA ─────────────────────────────────────
+  // MODIFICADO: Agregado el "Filtro de Traducción Estética" al final.
   const identidadEspecifica = analisisFacial
     ? `THIS SPECIFIC INDIVIDUAL — FORENSIC DESCRIPTION (OVERRIDE ANY BREED TEMPLATE):
 The following is a clinical description of the exact animal in the photo.
-You MUST match every detail below. This overrides any generic breed expectations.
+You MUST match every physical proportion, asymmetry, and marking below.
 
 ${analisisFacial}
 
-Paint THIS animal. Not a generic ${especie}. THIS one.`
+AESTHETIC TRANSLATION FILTER: While matching the anatomy above perfectly, you MUST render these features using the thick, matte oil painting techniques described earlier. Do NOT render the eyes, nose, or fur with any photographic gloss, bright reflections, or CGI hyper-detail that might be implied in the clinical description above. Paint THIS specific animal, but paint it entirely as a matte Old Master oil painting.`
     : null;
 
   // ─── ENSAMBLAR ───────────────────────────────────────────────────────────
@@ -105,13 +106,14 @@ Paint THIS animal. Not a generic ${especie}. THIS one.`
     s2_fondo(estilo),
     s3_estilo(estilo).referencia,
     s5_sujeto(especie, numAnimales),
-    identidadEspecifica,                          // ← v2.7: análisis facial específico
+    identidadEspecifica,                          
     !isMulti ? poseTexto : null,
     isMulti
       ? s8_multi(numAnimales, estilo)
       : s6_vestuario(estilo, genero, heroManto),
     s7_props(estilo, numAnimales, heroCojin),
     NO_FRAME,
+    GLOBAL_AESTHETIC_LOCK // ← El candado final inyectado aquí
   ];
 
   const promptFinal = secciones
