@@ -1,51 +1,51 @@
-// SECCIÓN 7 — PROPS v7.1
-// v7.1 — COJÍN ORGÁNICO & ENCUADRE LIMPIO: Se elimina la base de piedra gris para permitir el anclaje al borde.
-// Foco en plumas suaves, arrugas naturales (organic wrinkles) y hundimiento por gravedad.
-// Sin efecto "globo", sin button tufting. Estructura de almohadón de lujo.
+// SECCIÓN 7 — PROPS v8 (ESTÉTICA MATE ANTI-CGI)
+// v8 — COJÍN ORGÁNICO & ENCUADRE LIMPIO.
+// Eliminación de brillos especulares (sheen/highlights).
+// Acabado 100% mate con pinceladas visibles en tela y oro. Paleta terrosa.
 
 const { pick } = require('./utils');
 
 const cojines = {
   realeza: [
     { 
-      tela: 'rich deep crimson velvet damask', 
-      bordado: 'intricate arabesque gold thread embroidery with raised texture, stitched deeply into the velvet' 
+      tela: 'muted antique burgundy velvet damask', 
+      bordado: 'intricate arabesque aged gold thread embroidery, painted with thick impasto' 
     },
     { 
-      tela: 'heavy gold silk-velvet damask', 
+      tela: 'desaturated heavy ochre silk-velvet damask', 
       bordado: 'complex floral damask patterns woven across the entire surface' 
     },
     { 
-      tela: 'imperial aged burgundy velvet', 
-      bordado: 'darkened gold laurel and acanthus embroidery along the cushion face' 
+      tela: 'imperial aged dark-burgundy velvet', 
+      bordado: 'darkened oxidized gold laurel and acanthus embroidery' 
     }
   ],
   barroco: [
     { 
-      tela: 'near-black aged velvet', 
-      bordado: 'restrained and muted fine gold thread embroidery on a dark ground' 
+      tela: 'near-black aged matte velvet', 
+      bordado: 'restrained and muted fine bronze thread embroidery on a dark ground' 
     },
     { 
-      tela: 'deep crimson antique velvet', 
+      tela: 'deep rusted crimson antique velvet', 
       bordado: 'faded gold thread arabesque embroidery' 
     },
     { 
       tela: 'dark charcoal velvet damask', 
-      bordado: 'subtle, darkened gold scroll embroidery' 
+      bordado: 'subtle, darkened oxidized gold scroll embroidery' 
     }
   ],
   renacimiento: [
     { 
-      tela: 'deep antique gold velvet damask', 
+      tela: 'deep antique bronze velvet damask', 
       bordado: 'rich, faded botanical damask patterns with deep tone-on-tone complexity' 
     },
     { 
-      tela: 'warm burgundy velvet damask', 
-      bordado: 'dense botanical embroidery with gold and copper thread' 
+      tela: 'warm faded burgundy velvet damask', 
+      bordado: 'dense botanical embroidery with tarnished gold and copper thread' 
     },
     { 
-      tela: 'forest-green aged velvet', 
-      bordado: 'intricate gold and copper thread arabesque embroidery with leaf and vine motifs' 
+      tela: 'muted forest-green aged velvet', 
+      bordado: 'intricate oxidized copper thread arabesque embroidery with leaf motifs' 
     }
   ]
 };
@@ -64,9 +64,9 @@ SHAPE & GRAVITY: The cushion has a relaxed, organic shape. The animal rests comf
 
 SURFACE & TEXTURE: Made of ${cojin.tela} featuring ${cojin.bordado}. CRITICAL: The surface MUST display natural, organic fabric wrinkles, soft draping, and relaxed folds where the heavy velvet is compressed by the animal. 
 
-FABRIC PHYSICS: Strictly eliminate any inflated, balloon-like, or overly tight surface tension. NO deep button tufting. The velvet has a rich nap with natural light-catching sheen — highlights on the raised folds, deep shadow in the creases. 
+FABRIC PHYSICS (AESTHETIC LOCK): The velvet is rendered with thick, matte oil brushstrokes. ZERO light-catching sheen, ZERO specular CGI highlights on the raised folds. It absorbs light completely, with deep warm painted shadows in the creases. Strictly eliminate any inflated, balloon-like, or overly tight surface tension. NO deep button tufting. 
 
-TRIM & BASE: A single, elegant thick antique gold cord runs along the seam. One beautiful, heavy gold tassel hangs naturally from a visible corner. THE CUSHION ANCHORS THE COMPOSITION: The bottom of the cushion sits directly on the bottom edge of the canvas, bleeding off the frame. ZERO floor visible, ZERO stone visible, ZERO pedestal. 
+TRIM & BASE: A single thick antique oxidized gold cord runs along the seam. One heavy, matte gold tassel hangs naturally from a visible corner. The cord and tassel must look like thick oil paint, absolutely NO metallic CGI reflections. THE CUSHION ANCHORS THE COMPOSITION: The bottom of the cushion sits directly on the bottom edge of the canvas, bleeding off the frame. ZERO floor visible, ZERO stone visible, ZERO pedestal. 
 
-COMPOSITIONAL RULE: Paint the cushion with immense scale but ultimate softness. The animal MUST look deeply and comfortably settled into a yielding, plush velvet pillow that fills the lower base of the portrait entirely.`;
+COMPOSITIONAL RULE: Paint the cushion with immense scale but ultimate softness. The animal MUST look deeply and comfortably settled into a yielding, plush matte velvet pillow that fills the lower base of the portrait entirely.`;
 };
