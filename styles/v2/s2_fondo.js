@@ -1,20 +1,18 @@
-// SECCIÓN 2 — FONDO v4 (ESTÉTICA MATE ANTI-CGI)
-// Fijo por estilo. El modelo no decide nada aquí.
-// v4 — Inyección de textura de lienzo y pinceladas. Se elimina el negro digital plano
-// y los halos de luz tipo LED, forzando un acabado de óleo envejecido y barnizado.
+// SECCIÓN 2 — FONDO v5 (ESTÉTICA MUSEO ENVEJECIDA)
+// v5 — Upgrade Museo: Refuerzo de bases pictóricas envejecidas (umber/bitumen) en lugar de negro plano digital. Textura de lienzo y barniz viejo visible. Sfumato extremo reforzado.
 
 const fondos = {
-  realeza: `Background: heavily textured dark umber-black underpainting in the upper left corner, graduating diagonally to thick, matte amber-gold brushstrokes behind the subject's head and upper right. Pure atmospheric painted warmth — no objects, no furniture, no architecture, no props of any kind. Only thick painted darkness and matte candlelight atmosphere.`,
+  realeza: `Background: heavily textured aged umber-black underpainting in the upper left, graduating diagonally to thick, matte, aged amber-gold brushstrokes behind the subject's head. Displaying distinct antique craquelure age cracks and a thick, uneven varnish patina. Pure atmospheric painted warmth with zero objects. Only textured, painted darkness.`,
 
-  barroco: `Background: rich, layered dark umber-black on ALL sides and corners — 80% of the canvas is pure deep painted shadow. A single tight shaft of warm amber-gold painted light strikes directly behind the subject's head only — creating a small sfumato halo against total darkness. Extreme Rembrandt chiaroscuro achieved with visible brushstrokes. The darkness is heavily varnished, absorbing light, never a flat digital black. No objects, no furniture, no architecture, no props of any kind. This is NOT a scene — there is no room, no candle. Only the animal, its mantle, the cushion, and pure textured darkness.`,
+  barroco: `Background: rich, layered bases of aged bitumen and bone-black on ALL sides and corners — 80% of the canvas is pure deep painted shadow with distinct craquelure texture. A single tight shaft of warm amber-gold painted light strikes behind the subject's head, creating a small, heavily diffused sfumato halo that dissolves instantly into the profound, textured darkness. The edges of the animal melt completely into the background shadows. Extreme Rembrandt chiaroscuro with thick impasto brushwork, absolutely zero flat digital black areas.`,
 
-  renacimiento: `Background: a grand interior barely suggested through thick, dark oil brushstrokes — on the left side, a single dark marble column or heavy draped curtain emerges from deep shadow, painted with almost no detail, dissolving immediately into warm varnished darkness. It is a presence, not an object — more felt than seen. The right side is pure deep warm brown-black painted atmosphere. Behind the subject's head, a very subtle matte luminous warmth — amber and sienna — as if distant candlelight touches only that zone via soft impasto strokes. The overall background is 85% dark underpainting, with only the faintest architectural suggestion. No bright digital elements. No landscape. No sky. The architecture is a painted shadow of itself.`,
+  renacimiento: `Background: a grand interior barely suggested through thick, dark oil brushstrokes and glazes — a dark marble column or heavy draped curtain emerges from deep shadow on the left, painted with almost no detail, dissolving immediately into textured, varnished darkness via extreme sfumato. The architecture is a painted shadow with distinct age cracks. Right side is pure deep warm brown-black painted atmosphere. Behind the subject's head, a very subtle matte luminous warmth, amber and sienna, touched by distant candlelight via soft, heavy impasto strokes. 85% dark, textured underpainting.`,
 };
 
 const ALIAS = {
   rey:          'realeza',
-  royal:        'realeza',
-  baroque:      'barroco',
+  royal:       'realeza',
+  baroque:     'barroco',
   renaissance:  'renacimiento',
   renacer:      'renacimiento',
 };
