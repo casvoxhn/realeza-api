@@ -1,7 +1,4 @@
-// ENSAMBLADOR PRINCIPAL v3 (CON CANDADO ESTÉTICO GLOBAL)
-// v3 — Protección contra vocabulario fotográfico en el analisisFacial
-// y agregado de GLOBAL_AESTHETIC_LOCK al final del prompt.
-
+// ENSAMBLADOR PRINCIPAL (CON OVERRIDE DE POSE Y CANDADO ESTÉTICO)
 const s1_lienzo    = require('./s1_lienzo');
 const s2_fondo     = require('./s2_fondo');
 const s3_estilo    = require('./s3_estilo');
@@ -25,7 +22,6 @@ function normalizarEstilo(estilo) {
 
 const NO_FRAME = `FINAL INSTRUCTION — ABSOLUTE REQUIREMENT: NO frame. NO border. NO picture frame. NO ornate frame. NO wooden frame. NO gold frame. NO decorative border of ANY kind. The painting fills the entire image edge to edge with NO frame whatsoever. If you add a frame, the output is wrong.`;
 
-// NUEVO: El sello final que garantiza que no haya "look IA"
 const GLOBAL_AESTHETIC_LOCK = `GLOBAL AESTHETIC LOCK: The entire image MUST strictly adhere to a classical, aged oil painting aesthetic. Absolute zero CGI sheen, zero plastic skin, zero photographic sharp focus, and zero individual digital hairs. Thick grouped brushstrokes, matte surfaces, and a muted earthy color palette are mandatory across all elements.`;
 
 module.exports = function buildPrompt(params) {
@@ -88,16 +84,15 @@ module.exports = function buildPrompt(params) {
     console.log(`🎭 PROMPT MULTI | animales: ${numAnimales} | estilo: ${estilo} | estilo_raw: ${estiloRaw}`);
   }
 
-  // ─── SECCIÓN DE IDENTIDAD ESPECÍFICA ─────────────────────────────────────
-  // MODIFICADO: Agregado el "Filtro de Traducción Estética" al final.
+  // ─── SECCIÓN DE IDENTIDAD ESPECÍFICA (CORREGIDA) ─────────────────────────
   const identidadEspecifica = analisisFacial
     ? `THIS SPECIFIC INDIVIDUAL — FORENSIC DESCRIPTION (OVERRIDE ANY BREED TEMPLATE):
 The following is a clinical description of the exact animal in the photo.
-You MUST match every physical proportion, asymmetry, and marking below.
+You MUST match every physical trait, asymmetry, and marking below.
 
 ${analisisFacial}
 
-AESTHETIC TRANSLATION FILTER: While matching the anatomy above perfectly, you MUST render these features using the thick, matte oil painting techniques described earlier. Do NOT render the eyes, nose, or fur with any photographic gloss, bright reflections, or CGI hyper-detail that might be implied in the clinical description above. Paint THIS specific animal, but paint it entirely as a matte Old Master oil painting.`
+AESTHETIC TRANSLATION & POSE OVERRIDE FILTER: While matching the physical identity traits described above perfectly, you MUST completely IGNORE the posture or pose of the animal in the reference photo. Force the animal into the new pose instructed below. Render the physical features using the thick, matte oil painting techniques described earlier. Do NOT render the eyes, nose, or fur with any photographic gloss or CGI hyper-detail.`
     : null;
 
   // ─── ENSAMBLAR ───────────────────────────────────────────────────────────
@@ -113,7 +108,7 @@ AESTHETIC TRANSLATION FILTER: While matching the anatomy above perfectly, you MU
       : s6_vestuario(estilo, genero, heroManto),
     s7_props(estilo, numAnimales, heroCojin),
     NO_FRAME,
-    GLOBAL_AESTHETIC_LOCK // ← El candado final inyectado aquí
+    GLOBAL_AESTHETIC_LOCK
   ];
 
   const promptFinal = secciones
