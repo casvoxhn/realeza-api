@@ -1,6 +1,4 @@
 // masterPrompt.js — V18.5
-// styles/v2/masterPrompt.js
-
 module.exports = function masterPrompt(numSubjects, styleDescription, framingInstruction) {
   const isMulti = numSubjects > 1;
 
