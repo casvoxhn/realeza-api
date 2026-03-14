@@ -41,4 +41,105 @@ const poses = {
     },
     {
       id: 'G2',
-      text: `${fram
+      text: `${framings.noble_half} ${eyeLocks.nearDirect} POSE: The cat sits elegantly with a subtle noble turn of the head, preserving facial symmetry, calm presence, and believable body proportion. ${poseRules}`
+    }
+  ],
+
+  perro_grande: [
+    {
+      id: 'PG1',
+      text: `${framings.noble_half} ${eyeLocks.direct} POSE: The dog sits powerfully upright with a broad chest and calm authority. The head is centered or nearly centered. The front paws rest naturally and clearly. ${poseRules}`
+    },
+    {
+      id: 'PG2',
+      text: `${framings.imperial_bust} ${eyeLocks.direct} POSE: Monumental royal portrait. The face is prominent, but the chest beneath it must feel broad, weighty, and proportionally correct. The expression is calm, noble, and deeply present. ${poseRules}`
+    },
+    {
+      id: 'PG3',
+      text: `${framings.noble_half} ${eyeLocks.nearDirect} POSE: The dog rests in a composed half-length pose with the head only slightly turned, preserving emotional connection, noble stillness, and believable body scale. ${poseRules}`
+    }
+  ],
+
+  perro_mediano: [
+    {
+      id: 'PM1',
+      text: `${framings.noble_half} ${eyeLocks.direct} POSE: The dog sits with a proud chest and centered head. The expression feels intimate, noble, and emotionally engaging. The front paws remain visible and naturally proportioned. ${poseRules}`
+    },
+    {
+      id: 'PM2',
+      text: `${framings.noble_half} ${eyeLocks.nearDirect} POSE: The dog sits elegantly with a balanced body axis, calm paws, and a strong portrait presence. Head, chest, and torso must remain naturally proportioned. ${poseRules}`
+    }
+  ],
+
+  perro_pequeno: [
+    {
+      id: 'PP1',
+      text: `${framings.noble_half} ${eyeLocks.direct} POSE: The small dog sits upright on the cushion with proud chest and balanced posture. Front paws rest naturally and clearly visible. The body must appear compact but substantial beneath the head. ${poseRules}`
+    },
+    {
+      id: 'PP2',
+      text: `${framings.noble_half} ${eyeLocks.nearDirect} POSE: The dog sits comfortably with a slight noble head turn. Chest, shoulders, and paws remain visible and proportional. The portrait must feel refined, not toy-like. ${poseRules}`
+    }
+  ],
+
+  default: [
+    {
+      id: 'DF1',
+      text: `${framings.noble_half} ${eyeLocks.direct} POSE: The animal is portrayed with centered nobility, clear facial emphasis, visible chest, and believable anatomical proportion. ${poseRules}`
+    }
+  ]
+};
+
+function detectarCategoria(especie, raza) {
+  const e = (especie || '').toLowerCase();
+  const r = (raza || '').toLowerCase();
+
+  if (e.includes('cat') || e.includes('gato')) return 'gato';
+
+  if (e.includes('dog') || e.includes('perro')) {
+    const razasPequenas = [
+      'chihuahua',
+      'yorkshire',
+      'pug',
+      'french bulldog',
+      'pomeranian',
+      'corgi',
+      'dachshund'
+    ];
+
+    const razasGrandes = [
+      'doberman',
+      'golden',
+      'labrador',
+      'german shepherd',
+      'husky',
+      'mastiff',
+      'rottweiler',
+      'great dane'
+    ];
+
+    if (razasGrandes.some(x => r.includes(x))) return 'perro_grande';
+    if (razasPequenas.some(x => r.includes(x))) return 'perro_pequeno';
+
+    return 'perro_mediano';
+  }
+
+  return 'default';
+}
+
+function elegirPoseControlada({ especie, raza, heroPose = null }) {
+  const categoria = detectarCategoria(especie, raza);
+  const pool = poses[categoria] || poses.default;
+
+  if (Number.isInteger(heroPose) && heroPose >= 0 && heroPose < pool.length) {
+    return pool[heroPose].text;
+  }
+
+  return pool[0].text;
+}
+
+module.exports = {
+  poses,
+  detectarCategoria,
+  elegirPoseControlada
+};
