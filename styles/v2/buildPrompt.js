@@ -1,11 +1,14 @@
 // buildPrompt.js
-// ENSAMBLADOR MAESTRO v10.0 — Calidad de Museo / Anti-IA / Fix Export
+// ENSAMBLADOR MAESTRO v11.0 — Calidad de Museo / Anti-IA / NO FRAMES LOCK
 
 module.exports = function buildPrompt(analisis, pose, fondo, vestuario, cojin) {
   return `An exquisite masterpiece oil painting in the tradition of Dutch Golden Age portraiture (Rembrandt van Rijn and Diego Velázquez). 
 
 MASTER MATERIALITY & BRUSHWORK (ANTI-AI OVERRIDE): 
-This must NOT look like digital art, 3D render, or modern photography. Render with extreme tactile heavy oil materiality on canvas. Show visible raw canvas weave beneath the paint. Use thick, directional impasto brushwork with sculpted relief ridges on the velvet folds, fur, and gold details. Apply a microscopic, sparse, organic craquelure network (fine age cracks) integrated naturally into the paint layer, concentrating in background shadow areas and away from the subject's face. 
+This must NOT look like digital art, 3D render, or modern photography. Render with extreme tactile heavy oil materiality on canvas. Show visible raw canvas weave beneath the paint. Use thick, directional impasto brushwork with sculpted relief ridges on the velvet folds, fur, and gold details. Apply a microscopic, sparse, organic craquelure network (fine age cracks) integrated naturally into the paint layer, concentrating in background shadow areas.
+
+NO FRAMES LOCK (CRITICAL): 
+STRICTLY PROHIBIT any frames, borders, or ornamental edges around the painting. The art MUST extend absolutely and cleanly from edge-to-edge of the canvas. CERO gold frames, ZERO carved borders. The canvas surface is the art.
 
 AGED PATINA: 
 The entire composition is veiled by a thick, ancient, warm amber-yellowed varnish patina that unifies and mutes all colors with authentic centuries-old tonality. Restrained painterly economy — no digital clarity, zero plastic sheen, zero gloss. Muted earthy palette: reds become deep burgundy-brown, golds become antique bronze-ochre, whites become warm ivory-cream. No pure saturated hues.
