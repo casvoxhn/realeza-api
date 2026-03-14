@@ -1,38 +1,85 @@
-// buildPrompt.js
-// ENSAMBLADOR MAESTRO v11.0 — Calidad de Museo / Anti-IA / NO FRAMES LOCK
+// buildPrompt.js — V1.0
+// Orquestador principal. Recibe parámetros del server.js
+// y construye el prompt final según categoría y estilo.
 
-module.exports = function buildPrompt(analisis, pose, fondo, vestuario, cojin) {
-  return `An exquisite masterpiece oil painting in the tradition of Dutch Golden Age portraiture (Rembrandt van Rijn and Diego Velázquez). 
+const mascotas = require('./mascotas');
 
-MASTER MATERIALITY & BRUSHWORK (ANTI-AI OVERRIDE): 
-This must NOT look like digital art, 3D render, or modern photography. Render with extreme tactile heavy oil materiality on canvas. Show visible raw canvas weave beneath the paint. Use thick, directional impasto brushwork with sculpted relief ridges on the velvet folds, fur, and gold details. Apply a microscopic, sparse, organic craquelure network (fine age cracks) integrated naturally into the paint layer, concentrating in background shadow areas.
+// ─── RESOLUCIÓN DE ESTILO INTELLIGENT ─────────────────────────────────────
+// Si el usuario no eligió estilo, el sistema elige con pesos por especie.
+// Combinado: criterio visual + variedad para que retry dé resultados distintos.
 
-NO FRAMES LOCK (CRITICAL): 
-STRICTLY PROHIBIT any frames, borders, or ornamental edges around the painting. The art MUST extend absolutely and cleanly from edge-to-edge of the canvas. CERO gold frames, ZERO carved borders. The canvas surface is the art.
+function weightedPick(options) {
+  const total  = options.reduce((sum, o) => sum + o.weight, 0);
+  let   random = Math.random() * total;
+  for (const o of options) {
+    random -= o.weight;
+    if (random <= 0) return o.style;
+  }
+  return options[0].style; // fallback
+}
 
-AGED PATINA: 
-The entire composition is veiled by a thick, ancient, warm amber-yellowed varnish patina that unifies and mutes all colors with authentic centuries-old tonality. Restrained painterly economy — no digital clarity, zero plastic sheen, zero gloss. Muted earthy palette: reds become deep burgundy-brown, golds become antique bronze-ochre, whites become warm ivory-cream. No pure saturated hues.
+function resolveStyle(estilo, especie) {
+  if (estilo && estilo !== 'intelligent') return estilo;
 
-LIGHTING HARMONY: 
-A single soft diffused light source from the upper left — enveloping and warm, never harsh or raking. It eliminates all specular plastic-like highlights on skin, eyes, and fur. Deep chiaroscuro achieved through profound shadow depth, not highlight brightness.
+  const e = (especie || '').toLowerCase();
 
----------------------------------------------------------
-SUBJECT FORENSIC ANALYSIS (1:1 ANATOMICAL MATCH):
-${analisis}
+  if (e.includes('cat') || e.includes('gato') || e.includes('feline')) {
+    return weightedPick([
+      { style: 'renacimiento', weight: 70 },
+      { style: 'realeza',      weight: 20 },
+      { style: 'barroco',      weight: 10 },
+    ]);
+  }
 
----------------------------------------------------------
-${pose}
+  if (e.includes('dog') || e.includes('perro') || e.includes('canine')) {
+    return weightedPick([
+      { style: 'barroco',      weight: 60 },
+      { style: 'renacimiento', weight: 30 },
+      { style: 'realeza',      weight: 10 },
+    ]);
+  }
 
----------------------------------------------------------
-${vestuario}
+  // otro animal (conejo, ave, reptil, caballo, etc.)
+  return weightedPick([
+    { style: 'renacimiento', weight: 50 },
+    { style: 'barroco',      weight: 30 },
+    { style: 'realeza',      weight: 20 },
+  ]);
+}
 
----------------------------------------------------------
-${cojin}
+// ─── BUILD PROMPT ─────────────────────────────────────────────────────────
+module.exports = function buildPrompt({
+  estilo,
+  numAnimales,
+  especie,
+  raza,
+  genero,
+  animales,
+  hero,
+  imgHash,
+  analisisFacial,
+}) {
 
----------------------------------------------------------
-${fondo}
+  const numSubjects = numAnimales || 1;
+  const isGroup     = numSubjects > 1;
 
----------------------------------------------------------
-FINAL DIRECTIVE: 
-Ensure all elements (fur, velvet, cushion) interact physically with real gravity. The outer edges of the mantle and the deepest shadows MUST dissolve into the background via masterful sfumato. The portrait must exude absolute dynastic majesty and supreme high-ticket artistic quality.`;
+  // Resolver estilo — incluyendo intelligent
+  const resolvedStyle = resolveStyle(estilo, especie);
+
+  console.log(`🎨 PROMPT | hash:${imgHash} | estilo_in:${estilo} | estilo_out:${resolvedStyle} | animales:${numSubjects} | especie:${especie}`);
+
+  // Construir prompt base con mascotas.js
+  let prompt = mascotas(resolvedStyle, numSubjects, isGroup, genero);
+
+  // Inyectar análisis facial si está disponible
+  if (analisisFacial) {
+    prompt = [
+      "FACIAL ANALYSIS FROM PHOTO — Use this to paint the exact face of the animal:",
+      analisisFacial,
+      "",
+      prompt
+    ].join("\n");
+  }
+
+  return prompt;
 };
