@@ -1,165 +1,105 @@
-// SECCIÓN 4 — POSES (V_LIFE_OVER_RIGIDITY)
-// Orientado a poses vivas, composición pictórica y variedad real.
+// SECCIÓN 4 — POSES v10.0 (MUSEUM GRADE & PYRAMID COMPOSITION)
+// Optimizadas para Nano Banana 2: Foco en asimetría orgánica, proporciones estrictas y cero "look IA".
 
-const FRAMINGS = {
-  relaxed_three_quarter: `FRAMING: Relaxed three-quarter portrait. The head, chest, torso, front paws, and rear body mass are all readable. The composition breathes naturally and avoids rigid centering.`,
-
-  supported_rest: `FRAMING: Supported resting portrait. The animal rests naturally on the cushion with visible body weight, readable torso, clear front paws, and anatomically present hindquarters. The portrait feels alive, not staged.`,
-
-  regal_recline: `FRAMING: Regal reclining portrait. The subject reclines with head elevated and body flowing naturally across the cushion. Head, chest, torso, front legs, hips, hindquarters, and tail connection remain readable.`,
-
-  noble_half_body: `FRAMING: Noble half-body portrait. The face remains emotionally important, but enough of the body is visible to preserve believable anatomy and natural posture.`,
-
-  seated_with_lean: `FRAMING: Seated portrait with natural lean. The animal sits upright but with a subtle organic lean or curve through the torso, avoiding statue-like symmetry. Full body mass remains readable.`
+const framings = {
+  portrait: `FRAMING: Medium-close portrait crop. PYRAMID COMPOSITION: The animal's head is the apex. The cushion MUST sit exactly at the absolute bottom edge of the canvas, bleeding off the bottom and sides. ZERO floor visible. ZERO stone ledge. This anchors the image heavily. The animal's chest and head stretch naturally upward filling the top 80% of the frame. Do NOT compress or shrink the body.`,
+  close_crop: `FRAMING: Close portrait crop. Anchor the cushion firmly off the absolute bottom edge of the canvas. ZERO floor visible. Allow the animal's chest and body to fill the vertical space proudly. Proportions anatomically correct throughout.`,
+  close_crop_strong: `FRAMING: Extreme close portrait crop. ZERO floor visible. The cushion bleeds off the bottom edge. Body is massive and uncompressed, chest filling the lower frame, face dominant and highly detailed.`,
+  full_body: `FRAMING: Full figure. The cushion bleeds entirely off the bottom edge of the frame. ZERO floor visible. Maximum vertical room for the animal's natural height. Anatomically correct 1:1 scale.`,
 };
 
-const GAZES = {
-  direct: `GAZE: The eyes look directly at the viewer with calm presence and emotional connection.`,
+const miradas = {
+  // GATOS
+  gato_offlens:     `EYES: Upper eyelid slightly overlaps the iris. Deep, crystal-clear liquid cornea. Soft, diffused ambient catchlight (NO sharp white dots). Gaze directed slightly off-camera, breathing, alive, and PRISTINELY CLEAN. Zero tear staining.`,
+  gato_lateral:     `EYES: Upper eyelid slightly overlaps the iris. Deep crystal-clear liquid volume. Eyes directed lazily to the side. Aristocratic indifference. Pristinely clean.`,
+  gato_elevada:     `EYES: Upper eyelid slightly overlaps the iris. Deep crystal-clear liquid volume. Eyes directed slightly upward — contemplative, carrying ancient intelligence. Pristinely clean.`,
+  gato_frontal:     `EYES: Upper eyelid slightly overlaps the iris. Deep crystal-clear liquid cornea. Pupils are sharp. Piercing, confident, direct soul-to-soul connection. Pristinely clean.`,
+  gato_headtilt:    `EYES: Upper eyelid slightly overlaps the iris. Deep crystal-clear liquid volume. Head faces viewer with a subtle, organic tilt. A rare moment of feline curiosity. Pristinely clean.`,
 
-  near_direct: `GAZE: The head is slightly turned or relaxed, while the eyes maintain a strong near-direct connection with the viewer.`,
-
-  slightly_off: `GAZE: The head and gaze turn modestly off-center, creating elegance and painterly variety while preserving emotional readability.`
+  // PERROS
+  perro_offlens:  `EYES: Warm, loyal, and liquid. Cornea is crystal-clear with zero discharge. Upper lid creates a soft shadow over the iris. Soft, diffused catchlight. Gaze directed just slightly off the camera lens. Pristinely clean.`,
+  perro_girada:   `EYES: Warm, loyal, liquid, and crystal-clear. Upper lid creates a soft shadow. Head turned naturally, eyes following. Natural, relaxed. Pristinely clean.`,
+  perro_headtilt: `EYES: Warm, loyal, liquid. Cornea is crystal-clear. Head tilted adorably, eyes directed at the viewer with genuine curiosity and deep soulfulness. Pristinely clean.`,
+  perro_directo:  `EYES: Powerful direct gaze. Wet, crystal-clear, and alive with a soft diffused catchlight. Upper lid shadows the iris. Confident, direct connection. Pristinely clean.`,
 };
 
-const GLOBAL_RULES = `GLOBAL POSE RULES:
-The pose must feel alive, natural, and intentional.
-Avoid statue-like stiffness, front-only mannequin posture, or perfectly symmetrical placement.
-Avoid awkward meme-like tilts or cartoon energy.
+const anti_ai_physics = `ANTI-AI PHYSICS (CRITICAL): Strictly avoid "glassy", "taxidermy", or "plastic" eyes. Treat the eye as a biological organ. NO perfect white dot reflections. NEVER perfectly symmetrical; capture the organic asymmetry of a real living creature. Faces must be PRISTINELY CLEAN, zero invented dirt or tear stains. Maintain strict 1:1 anatomical scale with the reference — DO NOT elongate necks, shrink heads, or distort proportions.`;
 
-BODY CONTINUITY LOCK:
-The entire body must remain believable from head through hindquarters.
-Do NOT let the rear body disappear into the cushion, cloak, or darkness.
-Do NOT create front-half-only anatomy.
+const perro_global = `CRITICAL — PRESERVE EXACT ANATOMY & MASS: Study the reference photo forensically. You MUST perfectly preserve the specific bone structure, leg thickness, snout length, and chest width of THIS exact dog. Transform this specific anatomical reality into a classical royal oil painting with visible, tactile brushwork. ${anti_ai_physics}`;
 
-WEIGHT & CONTACT LOCK:
-The body must visibly rest on the cushion with believable compression and body weight.
-The subject must feel physically present, not pasted on top.`;
+const gato_global = `CRITICAL — PRESERVE EXACT ANATOMY & FLUIDITY: Study the reference photo forensically. You MUST perfectly preserve the specific bone structure, snout shape, ear placement, and proportions of THIS exact cat. The body carries undeniable physical weight, resting organically. Never perfectly symmetrical. Let natural fur volume flow organically. ${anti_ai_physics}`;
 
-const POSES = {
-  relaxed_seated_turn: `POSE: The animal sits in a relaxed three-quarter seated posture, with a soft turn through the torso and naturally placed front paws. The body silhouette remains elegant and complete.`,
+const poses = {
+  gato: [
+    { id: 'G1a', variantes: [`${framings.portrait} ${gato_global} POSE — ROYAL SPHINX: Chest held proudly, resting naturally on the cushion. Front paws extended forward, crossed elegantly with natural asymmetry. Body shifts slightly to one side. ${miradas.gato_offlens}`] },
+    { id: 'G1c', variantes: [`${framings.portrait} ${gato_global} POSE — RELAXED PAW DRAPE: Reclines luxuriously with a proud spine. ONE FRONT PAW is draped lazily over the front edge of the cushion, hanging down. ${miradas.gato_lateral}`] },
+    { id: 'G2', variantes: [`${framings.close_crop} ${gato_global} POSE — SEATED SOVEREIGN: Sits upright. Front paws rest elegantly, one slightly ahead of the other breaking symmetry. Proud, upward spine. ${miradas.gato_frontal}`] },
+    { id: 'G3', variantes: [`${framings.portrait} ${gato_global} POSE — THREE QUARTER TURN: Body is turned 3/4 away, revealing the graceful curve of the flank. Head turns back toward the viewer over the shoulder with organic neck folds. ${miradas.gato_offlens}`] },
+    { id: 'G7', variantes: [`${framings.portrait} ${gato_global} POSE — ROYAL NEST: Reclines proudly. Crucially, ONE FRONT PAW rests elegantly directly ON TOP OF the thick folds of its own velvet mantle. ${miradas.gato_elevada}`] },
+    { id: 'G4', variantes: [`${framings.close_crop} ${gato_global} POSE — SCULPTURAL LOAF: Compact, volumetric mass. Front paws are tucked and hidden. The body is an organic mound of fur shifting naturally to one side. ${miradas.gato_headtilt}`] },
+    
+    // Poses Emocionales (Awww)
+    { id: 'G8', variantes: [`${framings.close_crop} ${gato_global} POSE — INNOCENT TILT: Head is tilted naturally and adorably to one side, projecting sweet vulnerability. Front paws tucked neatly. Pure, wide-eyed affection. ${miradas.gato_headtilt}`] },
+    { id: 'G9', variantes: [`${framings.portrait} ${gato_global} POSE — SWEET DEMURE: ONE FRONT PAW is delicately placed over the other in a sweet, demure gesture. Beloved, pampered companion offering gentle affection. ${miradas.gato_frontal}`] },
+  ],
 
-  noble_resting_pose: `POSE: The animal rests with calm dignity, body supported by the cushion, chest lifted gently, and posture feeling natural rather than posed for a passport photo.`,
+  perro_grande: [
+    { id: 'PG1', variantes: [`${framings.portrait} ${perro_global} POSE — MAJESTIC RECLINE: Broad chest resting proudly. Both front legs extend forward, paws draped asymmetrically. Noble calm. ${miradas.perro_offlens}`] },
+    { id: 'PG1b', variantes: [`${framings.portrait} ${perro_global} POSE — RELAXED PAW DRAPE: ONE FRONT LEG is draped lazily over the front edge of the cushion, paw hanging down. Extreme organic asymmetry. ${miradas.perro_offlens}`] },
+    { id: 'PG2', variantes: [`${framings.portrait} ${perro_global} POSE — SPHINX COMMANDING: Chest held proudly. Front legs extend powerfully, one planted firmly ahead of the other. Thick, organic neck. ${miradas.perro_directo}`] },
+    { id: 'PG4', variantes: [`${framings.portrait} ${perro_global} POSE — THREE QUARTER MASS: Heavy body turned 3/4 to the side. Head turns powerfully back over the shoulder. Dynamic, highly dignified. ${miradas.perro_offlens}`] },
+    { id: 'PG7', variantes: [`${framings.portrait} ${perro_global} POSE — ROYAL NEST: ONE FRONT PAW rests directly ON TOP OF the thick folds of its own velvet mantle. Regal ease. ${miradas.perro_girada}`] },
+    
+    // Poses Emocionales (Awww)
+    { id: 'PG8', variantes: [`${framings.close_crop} ${perro_global} POSE — THE LOYAL TILT: Adorable, pronounced head tilt to one side. Chest leans slightly forward seeking a caress. Pure, unconditional love. ${miradas.perro_headtilt}`] },
+    { id: 'PG9', variantes: [`${framings.close_crop} ${perro_global} POSE — SWEET CHIN REST: Ultimate devotion. Heavy head rests flat directly ON TOP OF its crossed front paws on the cushion. Immense soulfulness looking up. ${miradas.perro_offlens}`] },
+  ],
 
-  aristocratic_recline: `POSE: The animal reclines with aristocratic ease, head elevated, front paws resting naturally, and body length flowing across the cushion in a painterly diagonal.`,
+  perro_mediano: [
+    { id: 'PM1', variantes: [`${framings.portrait} ${perro_global} POSE — RELAXED RECLINE: Chest resting proudly. Paws overlapping with organic asymmetry. High noble dignity. ${miradas.perro_offlens}`] },
+    { id: 'PM1b', variantes: [`${framings.portrait} ${perro_global} POSE — RELAXED PAW DRAPE: ONE FRONT LEG is draped lazily over the front edge, hanging down with natural gravity. ${miradas.perro_headtilt}`] },
+    { id: 'PM2', variantes: [`${framings.portrait} ${perro_global} POSE — SEATED NOBLE: Sits upright with a proud, tall spine. One paw planted slightly ahead. Majestic, breathing posture. ${miradas.perro_directo}`] },
+    { id: 'PM6', variantes: [`${framings.portrait} ${perro_global} POSE — ROYAL NEST: ONE FRONT PAW rests directly ON TOP OF the folds of its own velvet mantle. ${miradas.perro_offlens}`] },
+    
+    // Poses Emocionales (Awww)
+    { id: 'PM8', variantes: [`${framings.close_crop} ${perro_global} POSE — THE LOYAL TILT: Adorable, pronounced head tilt. Posture drops its aggressive majesty to reveal pure innocence. ${miradas.perro_headtilt}`] },
+    { id: 'PM9', variantes: [`${framings.close_crop} ${perro_global} POSE — SWEET CHIN REST: Head rests flat directly ON TOP OF crossed front paws. Looking up from this low, vulnerable position. ${miradas.perro_offlens}`] },
+  ],
 
-  seated_with_soft_curve: `POSE: The animal sits upright but with a slight curve or lean through the body, creating life and rhythm. The chest, torso, and hindquarters remain clearly readable.`,
-
-  compact_supported_pose: `POSE: The animal sits compactly but naturally on the cushion, with the body fully present and weight visibly supported. Avoid toy-like distortion or rigid front-facing placement.`
-};
-
-const CATEGORY_CONFIG = {
-  gato: {
-    options: [
-      { framing: 'relaxed_three_quarter', pose: 'relaxed_seated_turn', gaze: 'near_direct', weight: 30 },
-      { framing: 'supported_rest', pose: 'noble_resting_pose', gaze: 'slightly_off', weight: 30 },
-      { framing: 'seated_with_lean', pose: 'seated_with_soft_curve', gaze: 'near_direct', weight: 25 },
-      { framing: 'noble_half_body', pose: 'compact_supported_pose', gaze: 'direct', weight: 15 }
-    ]
-  },
-
-  perro_grande: {
-    options: [
-      { framing: 'regal_recline', pose: 'aristocratic_recline', gaze: 'near_direct', weight: 35 },
-      { framing: 'supported_rest', pose: 'noble_resting_pose', gaze: 'direct', weight: 25 },
-      { framing: 'relaxed_three_quarter', pose: 'relaxed_seated_turn', gaze: 'near_direct', weight: 20 },
-      { framing: 'seated_with_lean', pose: 'seated_with_soft_curve', gaze: 'slightly_off', weight: 20 }
-    ]
-  },
-
-  perro_mediano: {
-    options: [
-      { framing: 'supported_rest', pose: 'noble_resting_pose', gaze: 'near_direct', weight: 30 },
-      { framing: 'relaxed_three_quarter', pose: 'relaxed_seated_turn', gaze: 'near_direct', weight: 30 },
-      { framing: 'seated_with_lean', pose: 'seated_with_soft_curve', gaze: 'direct', weight: 20 },
-      { framing: 'noble_half_body', pose: 'compact_supported_pose', gaze: 'direct', weight: 20 }
-    ]
-  },
-
-  perro_pequeno: {
-    options: [
-      { framing: 'supported_rest', pose: 'compact_supported_pose', gaze: 'near_direct', weight: 30 },
-      { framing: 'relaxed_three_quarter', pose: 'relaxed_seated_turn', gaze: 'near_direct', weight: 30 },
-      { framing: 'seated_with_lean', pose: 'seated_with_soft_curve', gaze: 'direct', weight: 20 },
-      { framing: 'noble_half_body', pose: 'compact_supported_pose', gaze: 'slightly_off', weight: 20 }
-    ]
-  },
-
-  default: {
-    options: [
-      { framing: 'supported_rest', pose: 'noble_resting_pose', gaze: 'near_direct', weight: 35 },
-      { framing: 'relaxed_three_quarter', pose: 'relaxed_seated_turn', gaze: 'near_direct', weight: 30 },
-      { framing: 'seated_with_lean', pose: 'seated_with_soft_curve', gaze: 'direct', weight: 20 },
-      { framing: 'noble_half_body', pose: 'compact_supported_pose', gaze: 'direct', weight: 15 }
-    ]
-  }
+  perro_pequeno: [
+    { id: 'PP1', variantes: [`${framings.portrait} ${perro_global} POSE — SEATED UPRIGHT FORMAL: Sits proudly, small body nestled into the grand cushion but keeping a very upright, confident spine. ${miradas.perro_offlens}`] },
+    { id: 'PP3', variantes: [`${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: Deeply volumetric face and chest fill the frame, emerging dramatically from the mantle. ${miradas.perro_offlens}`] },
+    
+    // Poses Emocionales (Awww)
+    { id: 'PP8', variantes: [`${framings.close_crop} ${perro_global} POSE — THE LOYAL TILT: Adorable head tilt. Tiny chest leans slightly forward. Immense soulfulness in a small frame. ${miradas.perro_headtilt}`] },
+    { id: 'PP9', variantes: [`${framings.close_crop_strong} ${perro_global} POSE — SWEET CHIN REST: Head rests flat directly ON TOP OF tiny crossed front paws. Sweet emotional dependency. ${miradas.perro_offlens}`] },
+  ],
+  default: [
+    { id: 'DF1', variantes: [`${framings.portrait} POSE: Rests organically on the cushion. Noble, sculptural, and organically asymmetrical.`] },
+  ],
 };
 
 function detectarCategoria(especie, raza) {
   const e = (especie || '').toLowerCase();
   const r = (raza || '').toLowerCase();
-
-  if (e.includes('cat') || e.includes('gato')) return 'gato';
-
-  if (e.includes('dog') || e.includes('perro')) {
-    const razasPequenas = [
-      'chihuahua', 'yorkshire', 'pug', 'french bulldog', 'pomeranian',
-      'corgi', 'dachshund', 'mini pinscher', 'miniature pinscher',
-      'shih tzu', 'maltese', 'papillon', 'toy poodle'
-    ];
-
-    const razasGrandes = [
-      'doberman', 'golden', 'labrador', 'german shepherd', 'husky',
-      'mastiff', 'rottweiler', 'great dane', 'bernese',
-      'saint bernard', 'malamute', 'akita'
-    ];
-
+  if (e.includes('cat') || e.includes('gato') || e.includes('feline')) return 'gato';
+  if (e.includes('dog') || e.includes('perro') || e.includes('canine')) {
+    const razasGrandes = ['doberman', 'dalmatian', 'golden', 'labrador', 'german shepherd', 'husky', 'rottweiler', 'great dane', 'saint bernard', 'mastiff', 'bernese', 'boxer', 'weimaraner', 'pointer', 'greyhound', 'akita', 'malamute'];
+    const razasPequenas = ['chihuahua', 'yorkshire', 'yorkie', 'maltese', 'pomeranian', 'shih tzu', 'dachshund', 'toy', 'pug', 'french bulldog', 'boston terrier', 'corgi', 'beagle'];
     if (razasGrandes.some(x => r.includes(x))) return 'perro_grande';
     if (razasPequenas.some(x => r.includes(x))) return 'perro_pequeno';
     return 'perro_mediano';
   }
-
   return 'default';
 }
 
-function weightedPick(items) {
-  const total = items.reduce((sum, item) => sum + (item.weight || 1), 0);
-  let roll = Math.random() * total;
-
-  for (const item of items) {
-    roll -= (item.weight || 1);
-    if (roll <= 0) return item;
-  }
-
-  return items[items.length - 1];
-}
-
-function buildText(option) {
-  const framingText = FRAMINGS[option.framing] || '';
-  const gazeText = GAZES[option.gaze] || '';
-  const poseText = POSES[option.pose] || '';
-
-  return [framingText, gazeText, poseText, GLOBAL_RULES]
-    .filter(Boolean)
-    .join(' ');
-}
-
-function elegirPoseControlada({ especie, raza, heroPose = null }) {
+function asignarPose(especie, raza, esNaturalistic = false, poseIndex = null, varianteIndex = null) {
   const categoria = detectarCategoria(especie, raza);
-  const config = CATEGORY_CONFIG[categoria] || CATEGORY_CONFIG.default;
-  const pool = config.options;
-
-  if (Number.isInteger(heroPose) && heroPose >= 0 && heroPose < pool.length) {
-    return buildText(pool[heroPose]);
-  }
-
-  const choice = weightedPick(pool);
-  return buildText(choice);
+  const pool = poses[categoria] || poses.default;
+  const heroPool = pool.filter(p => !p.naturalistic);
+  let poseSeleccionada = (poseIndex !== null && poseIndex < heroPool.length) ? heroPool[poseIndex] : heroPool[Math.floor(Math.random() * heroPool.length)];
+  const variantes = poseSeleccionada.variantes;
+  return (varianteIndex !== null && varianteIndex < variantes.length) ? variantes[varianteIndex] : variantes[Math.floor(Math.random() * variantes.length)];
 }
 
-module.exports = {
-  FRAMINGS,
-  GAZES,
-  POSES,
-  detectarCategoria,
-  elegirPoseControlada
-};
+module.exports = { asignarPose, poses, detectarCategoria };
