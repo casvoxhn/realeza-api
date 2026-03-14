@@ -39,4 +39,70 @@ module.exports = function buildPrompt(params) {
     raza = '',
     genero = null,
     hero = null,
-    imgHash = '
+    imgHash = 'nohash',
+    analisisFacial = null,
+  } = params;
+
+  const estilo = normalizarEstilo(estiloRaw);
+  const isMulti = numAnimales > 1;
+
+  const heroPose  = hero?.pose  ?? null;
+  const heroManto = hero?.manto ?? null;
+  const heroCojin = hero?.cojin ?? null;
+
+  let poseTexto = null;
+
+  if (!isMulti) {
+    poseTexto = elegirPoseControlada({
+      especie,
+      raza,
+      heroPose
+    });
+
+    console.log([
+      `🎭 PROMPT`,
+      `especie:${especie}`,
+      `raza:${raza || 'sin raza'}`,
+      `estilo:${estilo}`,
+      `pose_controlada:OK`
+    ].join(' | '));
+  }
+
+  const identidadEspecifica = analisisFacial
+    ? `SUBJECT IDENTITY DETAILS:
+Incorporate the following specific physical traits, markings, proportions, and facial identity into the painted portrait with discipline and subtlety:
+
+${analisisFacial}
+
+IDENTITY RULES:
+Preserve the recognizable facial identity of this exact animal.
+Keep the unique structure of the eyes, muzzle, brow, ears, markings, and expression.
+Translate these traits into oil paint language.
+Do NOT copy the original photo composition literally.
+Do NOT make it look photographic.
+Do NOT flatten or genericize the face.`
+    : null;
+
+  const secciones = [
+    GLOBAL_QUALITY_LOCK,
+    s1_lienzo,
+    s2_fondo(estilo),
+    s3_estilo(estilo).referencia,
+    s5_sujeto(especie, numAnimales),
+    identidadEspecifica,
+    !isMulti ? poseTexto : null,
+    isMulti
+      ? s8_multi(numAnimales, estilo)
+      : s6_vestuario(estilo, genero, heroManto),
+    s7_props(estilo, numAnimales, heroCojin),
+    NO_FRAME
+  ];
+
+  const promptFinal = secciones
+    .filter(Boolean)
+    .join('\n\n');
+
+  console.log(`📝 PROMPT COMPLETO | hash:${imgHash}\n${'─'.repeat(60)}\n${promptFinal}\n${'─'.repeat(60)}`);
+
+  return promptFinal;
+};
