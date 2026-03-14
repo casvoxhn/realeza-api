@@ -1,91 +1,95 @@
-// SECCIÓN 4 — POSES (V_ART_DIRECTION_MATRIX)
-// Arquitectura real de dirección de arte:
-// framing + pose + gaze + reglas anatómicas por categoría
+// SECCIÓN 4 — POSES (V_LIFE_OVER_RIGIDITY)
+// Orientado a poses vivas, composición pictórica y variedad real.
 
 const FRAMINGS = {
-  hero_bust: `FRAMING: Hero bust portrait. The head, neck, and upper chest are dominant, but anatomy must remain breed-accurate and believable. The head must never feel oversized or toy-like relative to the chest and shoulders. This is an intense premium portrait, not a caricature.`,
+  relaxed_three_quarter: `FRAMING: Relaxed three-quarter portrait. The head, chest, torso, front paws, and rear body mass are all readable. The composition breathes naturally and avoids rigid centering.`,
 
-  royal_half: `FRAMING: Royal half-length portrait. The head, chest, torso, and front paws are clearly visible. The portrait feels balanced, premium, and classically composed. The body must remain substantial and readable.`,
+  supported_rest: `FRAMING: Supported resting portrait. The animal rests naturally on the cushion with visible body weight, readable torso, clear front paws, and anatomically present hindquarters. The portrait feels alive, not staged.`,
 
-  noble_three_quarter: `FRAMING: Noble three-quarter portrait. The head, chest, torso, front paws, and part of the rear body mass are visible. The composition must feel elegant, varied, and historically painted, with enough breathing room to avoid repetition.`,
+  regal_recline: `FRAMING: Regal reclining portrait. The subject reclines with head elevated and body flowing naturally across the cushion. Head, chest, torso, front legs, hips, hindquarters, and tail connection remain readable.`,
 
-  full_seated_premium: `FRAMING: Full seated premium portrait. The complete seated body is visible and readable, including head, chest, torso, front paws, hindquarters, and tail base where appropriate. The portrait must still feel premium and intimate, not zoomed out or casual.`,
+  noble_half_body: `FRAMING: Noble half-body portrait. The face remains emotionally important, but enough of the body is visible to preserve believable anatomy and natural posture.`,
 
-  regal_recline: `FRAMING: Regal reclining portrait. The subject reclines with the full body clearly present and anatomically complete. Head, chest, torso, front legs, hindquarters, and tail connection must remain believable and visible.`
+  seated_with_lean: `FRAMING: Seated portrait with natural lean. The animal sits upright but with a subtle organic lean or curve through the torso, avoiding statue-like symmetry. Full body mass remains readable.`
 };
 
 const GAZES = {
-  direct: `GAZE: The eyes look directly at the viewer with calm presence, emotional connection, and noble stillness.`,
+  direct: `GAZE: The eyes look directly at the viewer with calm presence and emotional connection.`,
 
-  near_direct: `GAZE: The head is mostly frontal or slightly turned, while the eyes maintain strong near-direct engagement with the viewer. This creates elegance without losing connection.`,
+  near_direct: `GAZE: The head is slightly turned or relaxed, while the eyes maintain a strong near-direct connection with the viewer.`,
 
-  slight_turn: `GAZE: The head turns modestly to one side, creating artistic variety and aristocratic elegance, while the expression remains emotionally readable and composed.`
+  slightly_off: `GAZE: The head and gaze turn modestly off-center, creating elegance and painterly variety while preserving emotional readability.`
 };
 
 const GLOBAL_RULES = `GLOBAL POSE RULES:
-Avoid exaggerated comedy, awkward asymmetry, meme-like expressions, goofy head tilts, or casual modern pet-photo energy.
-The subject must feel noble, calm, premium, intentional, and painterly.
+The pose must feel alive, natural, and intentional.
+Avoid statue-like stiffness, front-only mannequin posture, or perfectly symmetrical placement.
+Avoid awkward meme-like tilts or cartoon energy.
 
-CRITICAL ANATOMY LOCK:
-Maintain natural breed-accurate anatomical proportion between head, neck, chest, torso, front legs, hindquarters, and tail base.
-Do NOT create oversized-head distortion.
-Do NOT miniaturize the torso.
-Do NOT flatten the body beneath the face.
-Do NOT let the rear body disappear into cushion folds, drapery, or shadow.
-The full animal must remain a believable living body, even in tighter portraits.`;
+BODY CONTINUITY LOCK:
+The entire body must remain believable from head through hindquarters.
+Do NOT let the rear body disappear into the cushion, cloak, or darkness.
+Do NOT create front-half-only anatomy.
+
+WEIGHT & CONTACT LOCK:
+The body must visibly rest on the cushion with believable compression and body weight.
+The subject must feel physically present, not pasted on top.`;
 
 const POSES = {
-  formal_seated_center: `POSE: Formal seated center pose. The subject sits upright with composed dignity, visible front paws, stable chest, and a premium symmetrical rhythm.`,
-  three_quarter_seated: `POSE: Three-quarter seated pose. The body turns slightly for variety, while the silhouette remains elegant, stable, and fully readable.`,
-  compact_throne_pose: `POSE: Compact throne pose. The subject sits proudly and neatly on the cushion, with clear body structure, visible paws, and contained regal energy.`,
-  regal_recline_pose: `POSE: Regal reclining pose. The subject reclines with aristocratic ease, head elevated, front legs arranged naturally, and body length clearly readable.`,
-  soft_intimate_seated: `POSE: Soft intimate seated pose. The subject sits naturally but nobly, with gentle emotional presence, refined posture, and no casual slouching.`
+  relaxed_seated_turn: `POSE: The animal sits in a relaxed three-quarter seated posture, with a soft turn through the torso and naturally placed front paws. The body silhouette remains elegant and complete.`,
+
+  noble_resting_pose: `POSE: The animal rests with calm dignity, body supported by the cushion, chest lifted gently, and posture feeling natural rather than posed for a passport photo.`,
+
+  aristocratic_recline: `POSE: The animal reclines with aristocratic ease, head elevated, front paws resting naturally, and body length flowing across the cushion in a painterly diagonal.`,
+
+  seated_with_soft_curve: `POSE: The animal sits upright but with a slight curve or lean through the body, creating life and rhythm. The chest, torso, and hindquarters remain clearly readable.`,
+
+  compact_supported_pose: `POSE: The animal sits compactly but naturally on the cushion, with the body fully present and weight visibly supported. Avoid toy-like distortion or rigid front-facing placement.`
 };
 
 const CATEGORY_CONFIG = {
   gato: {
     options: [
-      { framing: 'royal_half', pose: 'formal_seated_center', gaze: 'direct', weight: 30 },
-      { framing: 'noble_three_quarter', pose: 'three_quarter_seated', gaze: 'near_direct', weight: 30 },
-      { framing: 'full_seated_premium', pose: 'soft_intimate_seated', gaze: 'slight_turn', weight: 25 },
-      { framing: 'hero_bust', pose: 'formal_seated_center', gaze: 'near_direct', weight: 15 }
+      { framing: 'relaxed_three_quarter', pose: 'relaxed_seated_turn', gaze: 'near_direct', weight: 30 },
+      { framing: 'supported_rest', pose: 'noble_resting_pose', gaze: 'slightly_off', weight: 30 },
+      { framing: 'seated_with_lean', pose: 'seated_with_soft_curve', gaze: 'near_direct', weight: 25 },
+      { framing: 'noble_half_body', pose: 'compact_supported_pose', gaze: 'direct', weight: 15 }
     ]
   },
 
   perro_grande: {
     options: [
-      { framing: 'royal_half', pose: 'formal_seated_center', gaze: 'direct', weight: 30 },
-      { framing: 'noble_three_quarter', pose: 'three_quarter_seated', gaze: 'near_direct', weight: 25 },
-      { framing: 'hero_bust', pose: 'formal_seated_center', gaze: 'direct', weight: 20 },
-      { framing: 'regal_recline', pose: 'regal_recline_pose', gaze: 'slight_turn', weight: 15 },
-      { framing: 'full_seated_premium', pose: 'formal_seated_center', gaze: 'near_direct', weight: 10 }
+      { framing: 'regal_recline', pose: 'aristocratic_recline', gaze: 'near_direct', weight: 35 },
+      { framing: 'supported_rest', pose: 'noble_resting_pose', gaze: 'direct', weight: 25 },
+      { framing: 'relaxed_three_quarter', pose: 'relaxed_seated_turn', gaze: 'near_direct', weight: 20 },
+      { framing: 'seated_with_lean', pose: 'seated_with_soft_curve', gaze: 'slightly_off', weight: 20 }
     ]
   },
 
   perro_mediano: {
     options: [
-      { framing: 'royal_half', pose: 'formal_seated_center', gaze: 'near_direct', weight: 35 },
-      { framing: 'noble_three_quarter', pose: 'three_quarter_seated', gaze: 'near_direct', weight: 30 },
-      { framing: 'full_seated_premium', pose: 'soft_intimate_seated', gaze: 'direct', weight: 20 },
-      { framing: 'hero_bust', pose: 'formal_seated_center', gaze: 'direct', weight: 15 }
+      { framing: 'supported_rest', pose: 'noble_resting_pose', gaze: 'near_direct', weight: 30 },
+      { framing: 'relaxed_three_quarter', pose: 'relaxed_seated_turn', gaze: 'near_direct', weight: 30 },
+      { framing: 'seated_with_lean', pose: 'seated_with_soft_curve', gaze: 'direct', weight: 20 },
+      { framing: 'noble_half_body', pose: 'compact_supported_pose', gaze: 'direct', weight: 20 }
     ]
   },
 
   perro_pequeno: {
     options: [
-      { framing: 'full_seated_premium', pose: 'compact_throne_pose', gaze: 'near_direct', weight: 30 },
-      { framing: 'noble_three_quarter', pose: 'three_quarter_seated', gaze: 'near_direct', weight: 30 },
-      { framing: 'royal_half', pose: 'soft_intimate_seated', gaze: 'direct', weight: 25 },
-      { framing: 'full_seated_premium', pose: 'soft_intimate_seated', gaze: 'slight_turn', weight: 15 }
+      { framing: 'supported_rest', pose: 'compact_supported_pose', gaze: 'near_direct', weight: 30 },
+      { framing: 'relaxed_three_quarter', pose: 'relaxed_seated_turn', gaze: 'near_direct', weight: 30 },
+      { framing: 'seated_with_lean', pose: 'seated_with_soft_curve', gaze: 'direct', weight: 20 },
+      { framing: 'noble_half_body', pose: 'compact_supported_pose', gaze: 'slightly_off', weight: 20 }
     ]
   },
 
   default: {
     options: [
-      { framing: 'royal_half', pose: 'formal_seated_center', gaze: 'near_direct', weight: 40 },
-      { framing: 'noble_three_quarter', pose: 'three_quarter_seated', gaze: 'near_direct', weight: 30 },
-      { framing: 'full_seated_premium', pose: 'soft_intimate_seated', gaze: 'direct', weight: 20 },
-      { framing: 'hero_bust', pose: 'formal_seated_center', gaze: 'direct', weight: 10 }
+      { framing: 'supported_rest', pose: 'noble_resting_pose', gaze: 'near_direct', weight: 35 },
+      { framing: 'relaxed_three_quarter', pose: 'relaxed_seated_turn', gaze: 'near_direct', weight: 30 },
+      { framing: 'seated_with_lean', pose: 'seated_with_soft_curve', gaze: 'direct', weight: 20 },
+      { framing: 'noble_half_body', pose: 'compact_supported_pose', gaze: 'direct', weight: 15 }
     ]
   }
 };
@@ -98,34 +102,15 @@ function detectarCategoria(especie, raza) {
 
   if (e.includes('dog') || e.includes('perro')) {
     const razasPequenas = [
-      'chihuahua',
-      'yorkshire',
-      'pug',
-      'french bulldog',
-      'pomeranian',
-      'corgi',
-      'dachshund',
-      'mini pinscher',
-      'miniature pinscher',
-      'shih tzu',
-      'maltese',
-      'papillon',
-      'toy poodle'
+      'chihuahua', 'yorkshire', 'pug', 'french bulldog', 'pomeranian',
+      'corgi', 'dachshund', 'mini pinscher', 'miniature pinscher',
+      'shih tzu', 'maltese', 'papillon', 'toy poodle'
     ];
 
     const razasGrandes = [
-      'doberman',
-      'golden',
-      'labrador',
-      'german shepherd',
-      'husky',
-      'mastiff',
-      'rottweiler',
-      'great dane',
-      'bernese',
-      'saint bernard',
-      'malamute',
-      'akita'
+      'doberman', 'golden', 'labrador', 'german shepherd', 'husky',
+      'mastiff', 'rottweiler', 'great dane', 'bernese',
+      'saint bernard', 'malamute', 'akita'
     ];
 
     if (razasGrandes.some(x => r.includes(x))) return 'perro_grande';
