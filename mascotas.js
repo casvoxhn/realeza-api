@@ -1,24 +1,38 @@
-// mascotas.js — V18.3
-const masterPrompt = require('./masterPrompt');
-const { pick } = require('./utils/pick');
+// mascotas.js — V18.4
+// Actualizado: imports apuntan a nuevos archivos de estilos + intelligent en styleMap
+
+const masterPrompt      = require('./masterPrompt');
+const { pick }          = require('./utils/pick');
 const renacimientoStyle = require('./styles/renacimiento');
-const realezaStyle = require('./styles/realeza');
-const barrocoStyle = require('./styles/barroco');
+const realezaStyle      = require('./styles/realeza');
+const barrocoStyle      = require('./styles/barroco');
 
 module.exports = function mascotas(style, numSubjects, isGroup, gender) {
+
+  // ── MAPA DE ESTILOS ────────────────────────────────────────────────────
+  // intelligent se resuelve en buildPrompt.js antes de llegar aquí.
+  // Lo dejamos como fallback de seguridad apuntando a renacimiento.
   const styleMap = {
-    renacimiento: renacimientoStyle,
-    realeza: realezaStyle,
-    barroco: barrocoStyle,
-    rey: realezaStyle,
-    museum_elegance: renacimientoStyle,
-    imperial_coronation: realezaStyle,
-    baroque_drama: barrocoStyle,
+    renacimiento:        renacimientoStyle,
+    realeza:             realezaStyle,
+    barroco:             barrocoStyle,
+    rey:                 realezaStyle,
+    // Nombres nuevos del frontend
+    the_elegant_portrait: renacimientoStyle,
+    the_classic_portrait: barrocoStyle,
+    the_royal_portrait:   realezaStyle,
+    // Nombres legacy (compatibilidad)
+    museum_elegance:      renacimientoStyle,
+    imperial_coronation:  realezaStyle,
+    baroque_drama:        barrocoStyle,
+    // Fallback si llega intelligent sin resolver
+    intelligent:          renacimientoStyle,
   };
 
-  const styleKey = style?.toLowerCase().replace(/\s+/g, '_') || 'renacimiento';
+  const styleKey  = style?.toLowerCase().replace(/\s+/g, '_') || 'renacimiento';
   const buildStyle = styleMap[styleKey] || renacimientoStyle;
 
+  // ── VARIANTES DE COMPOSICIÓN ───────────────────────────────────────────
   const gazes = [
     "looks directly and calmly into the viewer's eyes",
     "gazes with quiet self-possession",
@@ -31,12 +45,10 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
     "Camera slightly elevated, angled 30 degrees — adds depth and dimension.",
   ];
 
-  // ── ESCENAS MULTI — solo las seguras (ambos sobre el cojín) ──────────────
+  // ── ESCENAS MULTI ──────────────────────────────────────────────────────
 
   const scenes_2 = [
-    // Ambos recostados — el más natural y clásico
     "Both animals lie resting on the cushion — bodies low and horizontal, weight on chest and elbows, front paws extended forward. The larger one lies slightly behind and to one side, the smaller one lies in front beside it. Both faces raised and clearly visible. Both animals rest directly on the cushion — no animal stands outside it.",
-    // Ambos sentados sobre el cojín
     "Both animals sit together on the cushion — upright but relaxed, bodies naturally angled slightly toward each other. The larger one sits slightly behind, the smaller one beside and in front. Front paws resting down on the cushion. Both faces clearly visible. Both animals rest directly on the cushion — no animal stands outside it.",
   ];
 
@@ -62,11 +74,11 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
   const gems = ["ruby", "emerald", "sapphire", "topaz", "amethyst"];
 
   const totalAnimals = Math.max(numSubjects || 1, isGroup ? 2 : 1);
-  const camera = pick(cameraAngles);
+  const camera       = pick(cameraAngles);
 
-  // ── CASO 1: UN SOLO ANIMAL ───────────────────────────────────────────────
+  // ── CASO 1: UN SOLO ANIMAL ─────────────────────────────────────────────
   if (totalAnimals === 1) {
-    const S = buildStyle(gender);
+    const S    = buildStyle(gender);
     const gaze = pick(gazes);
     const framingInstruction = [
       `The animal ${gaze}. Preserve exact appearance, proportions and expression from the photo.`,
@@ -76,7 +88,7 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
     return masterPrompt(1, S.role, framingInstruction);
   }
 
-  // ── CASO 2+: MÚLTIPLES ANIMALES ─────────────────────────────────────────
+  // ── CASO 2+: MÚLTIPLES ANIMALES ───────────────────────────────────────
   const S = buildStyle(gender);
 
   const bgOnly = S.role
@@ -86,7 +98,7 @@ module.exports = function mascotas(style, numSubjects, isGroup, gender) {
     .replace(/\s{2,}/g, ' ')
     .trim();
 
-  const palette = pick(complementaryPalettes);
+  const palette      = pick(complementaryPalettes);
   const shuffledGems = [...gems].sort(() => Math.random() - 0.5);
 
   const scenePool = totalAnimals === 2 ? scenes_2
