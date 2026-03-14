@@ -1,16 +1,12 @@
-// SECCIÓN 4 — POSES (V_RESET_DIVERSITY)
-// Recupera variedad real sin perder calidad comercial.
+// SECCIÓN 4 — POSES (V_BODY_COMPLETE_BALANCED)
+// Variedad útil + cuerpo completo legible + sin cabezón.
 
 const framings = {
-  monumental_bust: `FRAMING: Monumental bust portrait. The head and upper chest dominate, but anatomy remains natural and breed-accurate. The face feels powerful and painterly, not oversized or toy-like.`,
+  seated_full: `FRAMING: Full seated portrait. The entire seated body is visible and readable, including head, chest, torso, front paws, hindquarters, and tail base where appropriate. The composition still feels premium and painterly, not zoomed out or casual.`,
 
-  classic_half: `FRAMING: Classic half-length portrait. The head, chest, and front paws are visible. The body feels substantial and proportionate. This must read like a museum portrait, not a cropped pet snapshot.`,
+  noble_three_quarter: `FRAMING: Three-quarter seated portrait. The full body mass remains readable from head through hindquarters, while the face still carries emotional weight. The composition must feel elegant and historical.`,
 
-  three_quarter: `FRAMING: Refined three-quarter portrait. The head, chest, torso, and front paws are visible with more breathing room around the subject. The composition feels elegant, noble, and varied.`,
-
-  seated_fullish: `FRAMING: Graceful seated portrait. The full seated posture is visible, including chest, torso, front paws, and enough of the body to preserve natural breed silhouette. The image still feels painterly and premium, not too zoomed out.`,
-
-  reclined: `FRAMING: Noble reclining portrait. The animal rests in a dignified reclined posture on the cushion, with clear readability of head, chest, front legs, and torso. The layout must feel like a historic painted composition, not a casual pet photo.`
+  regal_recline: `FRAMING: Full reclining portrait. The subject reclines with the entire body clearly present and anatomically complete. Head, chest, torso, front legs, hindquarters, and tail connection must remain believable and visible.`
 };
 
 const eyeLocks = {
@@ -19,92 +15,77 @@ const eyeLocks = {
   slightTurn: `GAZE: The head turns modestly to one side, creating elegance and variety, but the expression remains composed and emotionally readable.`
 };
 
-const proportionLock = `CRITICAL PROPORTION LOCK:
-Maintain natural breed-accurate anatomical proportion between head, neck, chest, torso, and front legs.
+const anatomyRules = `CRITICAL ANATOMY & VISIBILITY RULES:
+Maintain natural breed-accurate anatomical proportion between head, neck, chest, torso, front legs, hindquarters, and tail base.
 Do NOT create oversized-head distortion.
 Do NOT miniaturize the torso.
-Do NOT flatten the body beneath the face.
-The breed silhouette must remain believable and attractive.`;
+Do NOT let the rear body disappear into shadow, cushion folds, or drapery.
+Do NOT create a front-half-only animal.
+The full body must remain readable, complete, and believable.`;
 
 const styleLock = `POSE RULES:
 Avoid exaggerated comedy, goofy tilts, meme-like expressions, or awkward asymmetry.
 The subject must feel noble, calm, emotionally readable, and compositionally stable.
-The pose must look intentional, painterly, and premium.
-${proportionLock}`;
+The pose must look intentional, painterly, premium, and anatomically complete.
+${anatomyRules}`;
 
 const poses = {
   gato: [
     {
       id: 'G1',
-      text: `${framings.classic_half} ${eyeLocks.direct} POSE: The cat sits upright with elegant stillness, centered chest, and composed paws. ${styleLock}`
+      text: `${framings.seated_full} ${eyeLocks.direct} POSE: The cat sits upright with elegant stillness, tail integrated naturally, paws composed, and the full seated body clearly visible. ${styleLock}`
     },
     {
       id: 'G2',
-      text: `${framings.three_quarter} ${eyeLocks.nearDirect} POSE: The cat sits in a refined three-quarter arrangement, with subtle aristocratic turn and graceful vertical posture. ${styleLock}`
-    },
-    {
-      id: 'G3',
-      text: `${framings.seated_fullish} ${eyeLocks.slightTurn} POSE: The cat sits with poised formality, long body clearly readable, tail integrated naturally, and noble historical presence. ${styleLock}`
+      text: `${framings.noble_three_quarter} ${eyeLocks.nearDirect} POSE: The cat sits in a refined three-quarter arrangement with graceful posture and full body silhouette clearly preserved. ${styleLock}`
     }
   ],
 
   perro_grande: [
     {
       id: 'PG1',
-      text: `${framings.classic_half} ${eyeLocks.direct} POSE: The dog sits powerfully upright with broad chest, stable front paws, and calm commanding presence. ${styleLock}`
+      text: `${framings.seated_full} ${eyeLocks.direct} POSE: The dog sits powerfully upright with broad chest, stable front paws, visible hindquarters, and complete body mass. ${styleLock}`
     },
     {
       id: 'PG2',
-      text: `${framings.monumental_bust} ${eyeLocks.direct} POSE: Monumental royal portrait with strong face presence, but chest and shoulder mass remain clearly substantial and believable. ${styleLock}`
+      text: `${framings.noble_three_quarter} ${eyeLocks.nearDirect} POSE: The dog sits in a noble three-quarter pose with balanced body mass, readable hips, and complete seated structure. ${styleLock}`
     },
     {
       id: 'PG3',
-      text: `${framings.three_quarter} ${eyeLocks.nearDirect} POSE: The dog sits in a noble three-quarter pose with balanced body mass and painterly elegance. ${styleLock}`
-    },
-    {
-      id: 'PG4',
-      text: `${framings.reclined} ${eyeLocks.slightTurn} POSE: The dog reclines with aristocratic ease, front legs naturally arranged, head elevated, and body weight clearly readable. ${styleLock}`
+      text: `${framings.regal_recline} ${eyeLocks.slightTurn} POSE: The dog reclines with aristocratic ease, front legs naturally arranged, body length clearly visible, and hindquarters fully present. ${styleLock}`
     }
   ],
 
   perro_mediano: [
     {
       id: 'PM1',
-      text: `${framings.classic_half} ${eyeLocks.direct} POSE: The dog sits with proud chest, visible paws, and centered noble presence. ${styleLock}`
+      text: `${framings.seated_full} ${eyeLocks.direct} POSE: The dog sits with proud chest, visible front paws, readable torso, and complete rear body presence. ${styleLock}`
     },
     {
       id: 'PM2',
-      text: `${framings.three_quarter} ${eyeLocks.nearDirect} POSE: The dog sits in a balanced three-quarter portrait with natural body structure and elegant restraint. ${styleLock}`
-    },
-    {
-      id: 'PM3',
-      text: `${framings.seated_fullish} ${eyeLocks.slightTurn} POSE: The dog sits fully and gracefully on the cushion, with breed silhouette clearly readable and painterly dignity. ${styleLock}`
+      text: `${framings.noble_three_quarter} ${eyeLocks.nearDirect} POSE: The dog sits elegantly in a balanced three-quarter portrait with full seated anatomy preserved. ${styleLock}`
     }
   ],
 
   perro_pequeno: [
     {
       id: 'PP1',
-      text: `${framings.classic_half} ${eyeLocks.direct} POSE: The small dog sits upright with visible front paws, compact but believable chest, and strong emotional connection. ${styleLock}`
+      text: `${framings.seated_full} ${eyeLocks.direct} POSE: The small dog sits upright with compact but complete body structure, visible paws, readable hindquarters, and a refined premium posture. ${styleLock}`
     },
     {
       id: 'PP2',
-      text: `${framings.three_quarter} ${eyeLocks.nearDirect} POSE: The small dog is shown in an elegant three-quarter seated portrait, preserving body shape and avoiding toy-like distortion. ${styleLock}`
-    },
-    {
-      id: 'PP3',
-      text: `${framings.seated_fullish} ${eyeLocks.slightTurn} POSE: The small dog sits fully on the cushion with body clearly readable, refined posture, and noble visual rhythm. ${styleLock}`
+      text: `${framings.noble_three_quarter} ${eyeLocks.nearDirect} POSE: The small dog sits in a graceful three-quarter arrangement with full body silhouette preserved and no toy-like distortion. ${styleLock}`
     }
   ],
 
   default: [
     {
       id: 'DF1',
-      text: `${framings.classic_half} ${eyeLocks.direct} POSE: The animal is portrayed with calm, centered nobility and believable anatomical mass. ${styleLock}`
+      text: `${framings.seated_full} ${eyeLocks.direct} POSE: The animal is portrayed with calm, centered nobility and full-body anatomical completeness. ${styleLock}`
     },
     {
       id: 'DF2',
-      text: `${framings.three_quarter} ${eyeLocks.nearDirect} POSE: The animal is shown in a refined three-quarter composition with painterly dignity and readable body structure. ${styleLock}`
+      text: `${framings.noble_three_quarter} ${eyeLocks.nearDirect} POSE: The animal is shown in a refined three-quarter composition with full body mass preserved and clear premium portrait structure. ${styleLock}`
     }
   ]
 };
@@ -135,7 +116,6 @@ function elegirPoseControlada({ especie, raza, heroPose = null }) {
     return pool[heroPose].text;
   }
 
-  // Rotación simple pseudoaleatoria para no caer siempre en la primera.
   const idx = Math.floor(Math.random() * pool.length);
   return pool[idx].text;
 }
