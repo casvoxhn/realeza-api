@@ -1,4 +1,4 @@
-// SECCIÓN 5 — SUJETO (V_IDENTITY_LOCK_PRO)
+// SECCIÓN 5 — SUJETO (V_FULL_BODY_LOCK)
 
 module.exports = function s5_sujeto(especie) {
   const e = (especie || 'animal').toLowerCase();
@@ -18,6 +18,13 @@ No twisted anatomy.
 No malformed joints.
 No merged paws.
 No mutated appendages.
+
+FULL BODY PRESENCE LOCK:
+The animal must feel like a complete living body from head through hindquarters.
+The hips, rear body mass, hind legs, and tail base must remain anatomically present and readable.
+Do NOT let the subject appear cut off behind the chest.
+Do NOT let the back half disappear into the cushion, cape, or shadow.
+Even in a premium portrait composition, the full seated or reclining body structure must remain believable.
 
 PHOTO CLEANUP RULE:
 Remove all modern collars, leashes, harnesses, tags, clothing, human hands, and original background elements from the source image.
