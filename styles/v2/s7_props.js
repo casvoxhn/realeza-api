@@ -1,5 +1,5 @@
-// SECCIÓN 7 — PROPS v10.0 (MASTER - YIELDING BASE & ANCHOR)
-// Optimizada para Nano Banana 2: Foco en arrugas táctiles, hundimiento de peso real y anclaje piramidal.
+// SECCIÓN 7 — PROPS v11.0 (BACK TO CUSHION MASTER - PYRAMID BASE)
+// v11.0 — Eliminación completa de la silla (throne chair). Vuelta al cojín de Fable.
 
 const { pick } = require('./utils');
 
@@ -26,11 +26,11 @@ module.exports = function s7_props(estilo, numAnimales, indexHero = null) {
     ? `wide and deep, comfortably supporting the animals across the full width of the painting`
     : `significantly wider and deeper than the animal, extending elegantly and bleeding off both sides of the canvas`;
 
-  return `CUSHION CONSTRUCTION & GRAVITY (CRITICAL): A luxurious, soft, oversized throw pillow, ${ancho}. It is NOT a rigid, boxy, or tightly packed structure. It is a yielding, comfortable royal cushion filled with soft down feathers.
+  return `CUSHION CONSTRUCTION (CRITICAL): A luxurious, soft, oversized throw pillow, ${ancho}. It is NOT a rigid, boxy structure. It is a yielding, comfortable royal cushion. NO CHAIRS, NO THRONES, NO SOLID STRUCTURES. The cushion forms the absolute base.
 
-SHAPE & INDENTATION: The cushion has a relaxed, organic shape. The animal and its heavy velvet mantle rest upon it, creating a soft, natural, and VERY DEEP indentation in the center. The fabric yields entirely to the physical weight above it, sinking down.
+SHAPE & INDENTATION: The cushion has a relaxed, organic shape. The animal rests upon it, creating a soft, natural, and DEEP indentation. The fabric yields to the animal's physical weight. STRICTLY ELIMINATE any solid throne or chair structures.
 
 SURFACE TEXTURE: Made of ${cojin.tela} featuring ${cojin.bordado}. CRITICAL: The surface MUST display natural, tactile fabric wrinkles, soft draping, and relaxed creases where the velvet is compressed. STRICTLY ELIMINATE any inflated, balloon-like, or tight surface tension. NO deep button tufting. 
 
-TRIM & ANCHORING (PYRAMID BASE): A thick antique gold cord runs along the seam, with one heavy gold tassel hanging naturally. THE CUSHION ANCHORS THE COMPOSITION: The bottom of the cushion sits directly on the bottom edge of the canvas, completely bleeding off the lower frame. ZERO floor visible, ZERO stone, ZERO pedestal. The cushion forms the solid, absolute base of the portrait.`;
+TRIM & ANCHORING (PYRAMID BASE): A thick antique gold cord runs along the seam. THE CUSHION ANCHORS THE COMPOSITION: The bottom of the cushion sits directly on the bottom edge of the canvas, completely bleeding off the lower frame. ZERO floor visible, ZERO stone, ZERO pedestal. The cushion forms the solid, absolute base of the portrait.`;
 };
