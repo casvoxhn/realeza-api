@@ -1,16 +1,7 @@
-// buildPrompt.js (o el nombre de tu archivo ensamblador principal)
-// ENSAMBLADOR MAESTRO v10.0 — Calidad de Museo / Anti-IA
+// buildPrompt.js
+// ENSAMBLADOR MAESTRO v10.0 — Calidad de Museo / Anti-IA / Fix Export
 
-/**
- * Construye el prompt final uniendo todas las piezas optimizadas.
- * @param {string} analisis - El output forense de analyzeAnimal.js
- * @param {string} pose - La variante elegida de poses.js
- * @param {string} fondo - El texto generado por s2_fondo.js
- * @param {string} vestuario - El texto generado por s6_vestuario.js
- * @param {string} cojin - El texto generado por s7_props.js
- * @returns {string} El prompt maestro listo para Nano Banana 2
- */
-function buildMasterPrompt(analisis, pose, fondo, vestuario, cojin) {
+module.exports = function buildPrompt(analisis, pose, fondo, vestuario, cojin) {
   return `An exquisite masterpiece oil painting in the tradition of Dutch Golden Age portraiture (Rembrandt van Rijn and Diego Velázquez). 
 
 MASTER MATERIALITY & BRUSHWORK (ANTI-AI OVERRIDE): 
@@ -41,6 +32,4 @@ ${fondo}
 ---------------------------------------------------------
 FINAL DIRECTIVE: 
 Ensure all elements (fur, velvet, cushion) interact physically with real gravity. The outer edges of the mantle and the deepest shadows MUST dissolve into the background via masterful sfumato. The portrait must exude absolute dynastic majesty and supreme high-ticket artistic quality.`;
-}
-
-module.exports = { buildMasterPrompt };
+};
