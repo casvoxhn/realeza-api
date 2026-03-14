@@ -1,111 +1,56 @@
-// SECCIÓN 6 — VESTUARIO v9 (NO HIDE BODY)
+// SECCIÓN 6 — VESTUARIO v10.0 (MASTER - GRAVITY & SFUMATO)
+// Optimizada para Nano Banana 2: Foco en peso real (gravity-bound), caída orgánica y bordes que se funden en la sombra.
 
 const { pick } = require('./utils');
 
-const mantos = {
-  realeza: {
-    masculine: [
-      { descripcion: 'a king’s heavy muted antique crimson velvet coronation mantle with deep historical drape' },
-      { descripcion: 'a rich weighty dark burgundy matte velvet coronation mantle with solemn royal gravity' },
-      { descripcion: 'a deep faded Prussian blue velvet court mantle with noble heavy folds' }
-    ],
-    feminine: [
-      { descripcion: 'a queen’s heavy dusty antique rose velvet royal mantle with graceful weight' },
-      { descripcion: 'a warm aged ivory velvet mantle with refined aristocratic softness' },
-      { descripcion: 'a regal dark plum velvet court mantle with luxurious historical volume' }
-    ],
-    neutral: [
-      { descripcion: 'a heavy desaturated crimson velvet royal mantle with dignified folds' },
-      { descripcion: 'a rich aged burgundy velvet royal mantle draping with convincing gravity' },
-      { descripcion: 'a weighty muted navy blue velvet mantle with museum-like richness' }
-    ]
-  },
-
-  barroco: {
-    masculine: [
-      { descripcion: 'a dark wine-red baroque velvet mantle with somber old-master richness' },
-      { descripcion: 'a near-black brown velvet court mantle with dramatic depth' },
-      { descripcion: 'a heavy burnt-crimson velvet mantle with shadow-rich baroque folds' }
-    ],
-    feminine: [
-      { descripcion: 'a deep garnet velvet mantle with old-master dramatic softness' },
-      { descripcion: 'a dark muted plum velvet mantle with historical shadow depth' },
-      { descripcion: 'a warm antique cream velvet mantle with subdued baroque elegance' }
-    ],
-    neutral: [
-      { descripcion: 'a dark burgundy baroque velvet mantle with solemn painterly depth' },
-      { descripcion: 'a deep brown-black velvet mantle with heavy dramatic folds' },
-      { descripcion: 'a rusted crimson velvet mantle with aged old-world richness' }
-    ]
-  },
-
-  renacimiento: {
-    masculine: [
-      { descripcion: 'a muted olive-brown velvet mantle with refined classical elegance' },
-      { descripcion: 'a soft faded burgundy velvet mantle with noble restraint' },
-      { descripcion: 'a warm dark bronze velvet mantle with graceful court drape' }
-    ],
-    feminine: [
-      { descripcion: 'a warm faded rose velvet mantle with classical refinement' },
-      { descripcion: 'a pale aged gold velvet mantle with elegant historical softness' },
-      { descripcion: 'a soft muted berry velvet mantle with balanced noble folds' }
-    ],
-    neutral: [
-      { descripcion: 'a softly aged burgundy velvet mantle with refined classical weight' },
-      { descripcion: 'a muted olive-gold velvet mantle with painterly historical drape' },
-      { descripcion: 'a warm bronze-brown velvet mantle with restrained aristocratic richness' }
-    ]
-  }
+const atuendos = {
+  realeza: [
+    {
+      cuello: 'Heavy, luxurious bright white ermine fur collar with distinct black tail-tips. The fur is thick and tactile.',
+      cuerpo: 'A massive, heavy deep crimson velvet royal mantle. The fabric is gravity-bound, pooling and draping organically with profound weight. Rich gold thread floral embroidery catches the soft light.',
+      joya:   'An antique, heavy gold chain resting organically on the chest, featuring a single, deep-set ruby pendant.'
+    },
+    {
+      cuello: 'Voluminous white ermine fur collar, naturally framing the chest with soft, tactile volume.',
+      cuerpo: 'A heavy imperial blue velvet mantle. The fabric folds deeply, showing the rich nap of the velvet. Intricate gold arabesque embroidery follows the natural folds.',
+      joya:   'A classical gold chain with a large, dark sapphire pendant, resting heavily against the fur.'
+    }
+  ],
+  barroco: [
+    {
+      cuello: 'Aged, slightly darkened white ermine fur collar, painted with thick impasto brushwork.',
+      cuerpo: 'A profoundly dark, heavy burgundy velvet mantle. It emerges from the shadows, draping heavily. Muted, oxidized gold embroidery is woven into the heavy fabric.',
+      joya:   'A darkened, antique gold chain with a muted, deep garnet stone.'
+    },
+    {
+      cuello: 'Thick, warm-toned ermine fur lapels, softly catching the candlelight.',
+      cuerpo: 'A near-black charcoal velvet mantle, absorbing the light. The heavy fabric falls with sculptural weight, featuring subtle, faded bronze embroidery.',
+      joya:   'A heavy, tarnished gold chain with a dark onyx pendant.'
+    }
+  ],
+  renacimiento: [
+    {
+      cuello: 'Soft, naturalistic ermine fur collar, integrating smoothly with the animal’s own fur.',
+      cuerpo: 'A heavy, aged forest-green velvet mantle. The fabric cascades with extreme physical weight, pooling organically. Antique copper and gold botanical embroidery.',
+      joya:   'A delicate but heavy Renaissance gold chain with a dark emerald.'
+    },
+    {
+      cuello: 'Thick ermine fur collar with sharp black tips, painted with tactile realism.',
+      cuerpo: 'A heavy antique gold velvet mantle. Deep, soft folds show the fabric yielding to gravity. Rich tone-on-tone damask patterns.',
+      joya:   'A classic Venetian gold chain with a dark amber pendant.'
+    }
+  ]
 };
 
-const gemas = {
-  masculine: ['deep aged emerald', 'dark opaque sapphire', 'oxidized topaz'],
-  feminine: ['aged pearl', 'darkened ruby', 'muted amethyst'],
-  neutral: ['aged sapphire', 'dark ruby', 'antique topaz', 'muted amethyst', 'deep emerald', 'warm antique pearl']
-};
+module.exports = function s6_vestuario(estilo, numAnimales, indexHero = null) {
+  const pool = atuendos[estilo] || atuendos.realeza;
+  const atuendo = indexHero !== null ? pool[indexHero % pool.length] : pick(pool);
 
-module.exports = function s6_vestuario(estilo, genero, indexHero = null, hasLace = false) {
-  const generoKey = genero === 'masculine'
-    ? 'masculine'
-    : genero === 'feminine'
-      ? 'feminine'
-      : 'neutral';
+  return `WARDROBE & FABRIC PHYSICS (CRITICAL): The animal is dressed in royal attire. 
+1. COLLAR: ${atuendo.cuello}
+2. MANTLE: ${atuendo.cuerpo}
+3. JEWELRY: ${atuendo.joya}
 
-  const pool = mantos[estilo]?.[generoKey] || mantos.realeza.neutral;
-  const manto = indexHero !== null ? pool[indexHero % pool.length] : pick(pool);
-  const gema = pick(gemas[generoKey]);
-
-  let laceDesc = '';
-  if (hasLace) {
-    laceDesc = `
-PART 2a — OPTIONAL LACE DETAIL:
-A subtle aged antique lace trim may appear beneath the inner edge of the ermine collar. It must sit naturally, remain secondary, and be painted with historical oil texture. Never bright white, never sharp, never digitally crisp.`;
-  }
-
-  return `WARDROBE DIRECTION:
-${manto.descripcion}.
-
-MATERIAL EXECUTION:
-All fabrics must read as hand-painted historical textiles with a completely matte oil-painted finish.
-No glossy velvet.
-No synthetic fabric shine.
-No CGI metallic reflections.
-
-GARMENT STRUCTURE — PAINT THESE AS DISTINCT LAYERS:
-PART 1 — ERMINE COLLAR:
-Warm aged ivory ermine with distinct dark tail markings forms elegant open lapels framing the upper chest and neck. The ermine must feel soft, noble, historical, and painted in thick creamy brushwork. Never glowing white.
-
-PART 2 — VELVET MANTLE:
-The velvet rests over the shoulders and falls backward and outward with natural historical gravity. It frames the subject and enhances nobility, but must NOT conceal the hips, hindquarters, rear silhouette, or tail base. The full body must remain readable beneath and around the garment. Deep folds, broad painterly shadows, and visible oil texture are essential.
-
-${laceDesc}
-
-CHEST ORNAMENT:
-A single antique gold chain spans from one ermine lapel to the other, holding a ${gema} pendant at the center. The chain and jewel must feel painted, aged, restrained, and elegant—never flashy, never jewelry-product photography.
-
-BODY VISIBILITY RULE:
-The garment must work with a full seated or reclining animal portrait.
-Do NOT use drapery to hide the rear body.
-Do NOT swallow the animal into fabric.
-The subject must remain a complete readable body, not only a front-facing upper half.`;
+WARDROBE GRAVITY & SFUMATO: The clothing MUST NOT look stiff, pasted on, or floating. The velvet mantle must obey gravity, draping heavily over the shoulders and pooling organically onto the cushion below. The fabric yields to the animal's posture. 
+SFUMATO EDGES: The outer edges of the velvet mantle must dissolve naturally into the dark background shadows (sfumato). Do not paint hard, cut-out edges. The materiality of the velvet must be rendered with thick, tactile oil brushwork, showing highlights on the peaks of the folds and profound, lost shadows in the deep creases.`;
 };
