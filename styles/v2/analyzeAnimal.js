@@ -1,59 +1,33 @@
 // analyzeAnimal.js
-// Análisis de identidad del animal orientado a retrato premium.
-// Single: analiza una foto y devuelve string.
-// Multi: analiza cada foto por separado y devuelve texto etiquetado.
+// v10 — Análisis Forense de Alta Precisión Anatómica (Anti-Deformación)
 
-const PROMPT_ANALISIS = `You are a master portrait analyst preparing notes for a historical oil painter.
-Your job is to identify the unique physical identity of this specific animal with precision,
-while describing it in a way that supports a noble, flattering, painterly portrait.
+const PROMPT_ANALISIS = `You are an elite forensic portraitist preparing a clinical anatomical guide for a master oil painter. Your job is to describe THIS SPECIFIC animal's exact physical structure so it can be replicated 1:1. 
 
-PRISTINE CLEANLINESS OVERRIDE (CRITICAL):
-When analyzing the animal, you must completely ignore and omit any tear stains, eye discharge, saliva stains, food stains, dirt, crusting, wetness, redness, irritated tissue, or unflattering messiness.
-Describe the animal as perfectly clean, healthy, and well-kept.
-Do NOT output words like "staining", "crusting", "dirt", "discharge", "dirty", "red tissue", "messy", or "wet fur".
+PRISTINE CLEANLINESS OVERRIDE (CRITICAL): Completely ignore and omit any tear stains, eye discharge, saliva, food stains, or dirt. Describe the facial fur, eyes, and skin as perfectly clean, pristine, and healthy matching the natural coat color. DO NOT use words like "staining", "crusting", "dirt", or "discharge".
 
-IMPORTANT PORTRAIT RULE:
-Capture the subject's recognizable identity, anatomy, proportions, markings, and facial structure,
-but do NOT overcommit to the accidental pose, temporary expression, or exact gaze direction from the source photo.
-The final notes must help create a more noble, composed painted portrait—not a literal frozen snapshot.
+Describe the following with extreme forensic precision:
 
-Describe the following in clear, precise terms:
+1. EXACT ANATOMICAL PROPORTIONS (CRITICAL):
+- Head-to-body ratio (Is the head massive compared to the chest? Is the neck thick/short/long?)
+- Snout/Muzzle length and width (Crucial for breed accuracy).
+- Ear size and exact placement on the skull.
 
-EYES:
-- Eye shape (almond, round, oval, narrow, etc.)
-- Eyelid weight (open, soft, slightly heavy, drooping, etc.)
-- Iris color and clarity
-- General expression quality in flattering portrait terms (gentle, noble, alert, soulful, calm, affectionate)
-- Do NOT lock the final portrait to the exact eye direction seen in the photo
+2. EYES & SOUL:
+- Exact shape of the eye opening.
+- Eyelid weight (heavy, drooping, alert).
+- Emotional quality (regal, tender, indifferent, loyal).
+- (Describe eyes as 100% clean, clear, and biologically healthy).
 
-MUZZLE & NOSE:
-- Nose color and overall shape
-- Nostril shape and width
-- Major muzzle folds and their placement
-- Lip line and any natural asymmetry
-- Fur pattern around the muzzle, described cleanly and attractively
+3. ASYMMETRY & UNIQUE IDENTITY:
+- Note any natural asymmetry (e.g., one ear slightly lower, a crooked lip, an uneven fur patch). Perfection is fake; capture the real, slightly asymmetrical identity.
+- Exact coat colors, specific patterns, and precise location of markings.
 
-SKULL & FACE:
-- Skull width and overall head shape
-- Forehead-to-muzzle transition (stop)
-- Brow prominence
-- Cheek and jaw structure
-- Ear placement, size, and shape
-- Any distinctive asymmetry that is truly part of the animal's identity
+4. BONE STRUCTURE & MASS:
+- Width of the chest and shoulders.
+- Leg bone thickness (stout/heavy/delicate).
+- The overall physical weight and presence of the animal.
 
-BODY & COAT:
-- Neck thickness and chest presence
-- Body proportions in broad portrait terms
-- Coat type (short, dense, fluffy, silky, etc.)
-- Distinctive coat markings, patches, blaze, eyebrows, mask, mane, or tail characteristics
-
-OUTPUT RULES:
-Respond ONLY with the descriptive notes.
-No preamble.
-No explanation.
-No species announcement.
-Write as if these are notes for a painter creating a premium historical portrait of this exact animal.
-Prioritize identity, elegance, and recognizability.`;
+Respond ONLY with the clinical description. No preamble. Write as a strict anatomical blueprint for a classical painting.`;
 
 async function analizarUna(model, imageBase64) {
   const parts = [
@@ -65,49 +39,32 @@ async function analizarUna(model, imageBase64) {
       }
     }
   ];
-
   const result = await model.generateContent({
     contents: [{ role: "user", parts }],
     generationConfig: { maxOutputTokens: 1000 }
   });
-
-  return result.response.candidates[0].content.parts
-    .filter(p => p.text)
-    .map(p => p.text)
-    .join('')
-    .trim();
+  return result.response.candidates[0].content.parts.filter(p => p.text).map(p => p.text).join('').trim();
 }
 
 async function analyzeAnimal(genAI, modelId, imagesBase64) {
   try {
     const model = genAI.getGenerativeModel({ model: modelId });
-
     if (imagesBase64.length === 1) {
       const texto = await analizarUna(model, imagesBase64[0]);
       console.log(`🔬 ANÁLISIS FACIAL (1 animal):\n${texto}`);
       return texto;
+    } else {
+      const resultados = await Promise.all(
+        imagesBase64.map((img, i) => analizarUna(model, img).catch(err => {
+            console.error(`⚠️ Error analizando animal ${i + 1}:`, err.message);
+            return null;
+          })
+        )
+      );
+      const textoMulti = resultados.map((desc, i) => desc ? `ANIMAL ${i + 1}:\n${desc}` : `ANIMAL ${i + 1}: description unavailable`).join('\n\n---\n\n');
+      console.log(`🔬 ANÁLISIS FACIAL (${imagesBase64.length} animales):\n${textoMulti}`);
+      return textoMulti;
     }
-
-    const resultados = await Promise.all(
-      imagesBase64.map((img, i) =>
-        analizarUna(model, img).catch(err => {
-          console.error(`⚠️ Error analizando animal ${i + 1}:`, err.message);
-          return null;
-        })
-      )
-    );
-
-    const textoMulti = resultados
-      .map((desc, i) =>
-        desc
-          ? `ANIMAL ${i + 1}:\n${desc}`
-          : `ANIMAL ${i + 1}: description unavailable`
-      )
-      .join('\n\n---\n\n');
-
-    console.log(`🔬 ANÁLISIS FACIAL (${imagesBase64.length} animales):\n${textoMulti}`);
-    return textoMulti;
-
   } catch (err) {
     console.error('⚠️ Error en análisis facial:', err.message);
     return null;
