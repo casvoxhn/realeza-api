@@ -1,4 +1,4 @@
-// SECCIÓN 6 — VESTUARIO v8 (CONVERSION / PAINTERLY LUXURY)
+// SECCIÓN 6 — VESTUARIO v9 (NO HIDE BODY)
 
 const { pick } = require('./utils');
 
@@ -96,13 +96,16 @@ PART 1 — ERMINE COLLAR:
 Warm aged ivory ermine with distinct dark tail markings forms elegant open lapels framing the upper chest and neck. The ermine must feel soft, noble, historical, and painted in thick creamy brushwork. Never glowing white.
 
 PART 2 — VELVET MANTLE:
-The velvet rests over the shoulders and falls backward and outward with natural historical gravity. It frames the subject and enhances nobility, but does not swallow the anatomy or clutter the portrait. Deep folds, broad painterly shadows, and visible oil texture are essential.
+The velvet rests over the shoulders and falls backward and outward with natural historical gravity. It frames the subject and enhances nobility, but must NOT conceal the hips, hindquarters, rear silhouette, or tail base. The full body must remain readable beneath and around the garment. Deep folds, broad painterly shadows, and visible oil texture are essential.
 
 ${laceDesc}
 
 CHEST ORNAMENT:
 A single antique gold chain spans from one ermine lapel to the other, holding a ${gema} pendant at the center. The chain and jewel must feel painted, aged, restrained, and elegant—never flashy, never jewelry-product photography.
 
-CROPPING COMPATIBILITY RULE:
-The wardrobe must work beautifully within a tight bust portrait or refined half-length portrait. Do not force the full body to appear. Prioritize face, chest, garment framing, and noble composition.`;
+BODY VISIBILITY RULE:
+The garment must work with a full seated or reclining animal portrait.
+Do NOT use drapery to hide the rear body.
+Do NOT swallow the animal into fabric.
+The subject must remain a complete readable body, not only a front-facing upper half.`;
 };
