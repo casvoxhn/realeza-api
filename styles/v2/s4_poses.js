@@ -1,35 +1,75 @@
-// SECCIÓN 4 — POSES (V_CLEAN_MASTER)
-// Encuadres cerrados y poses orgánicas sin asfixiar a la IA.
+// SECCIÓN 4 — POSES (V_CONVERSION_MASTER)
+// Poses y encuadres diseñados para vender más: conexión visual, nobleza, claridad, consistencia.
 
 const framings = {
-  bust_portrait: `FRAMING: Tight, heroic bust portrait. The camera is zoomed in closely. The majestic chest, royal garments, and face completely fill the canvas. The velvet cushion is heavily cropped, acting only as a subtle anchor at the bottom edge. ZERO floor.`,
-  contrast_scale: `FRAMING: Extreme scale contrast. The small animal is seated in the center of a MASSIVE, over-sized velvet cushion that fills the lower half of the frame. ZERO floor.`,
+  imperial_bust: `FRAMING: Tight aristocratic bust portrait. The head, upper chest, and royal garments dominate the composition. The face is large in frame. The lower cushion appears only as a cropped anchor near the bottom edge. ZERO visible floor. ZERO full-body composition.`,
+  noble_half: `FRAMING: Refined half-length portrait. The head, chest, and front paws are visible, but the face remains dominant. The composition feels like a museum oil portrait, not a pet photo.`,
 };
 
-const globales = `The posture is proud, breathing, and completely natural, avoiding rigid symmetry.`;
+const eyeLocks = {
+  direct: `GAZE: The eyes look directly at the viewer with emotional presence and aristocratic authority.`,
+  nearDirect: `GAZE: The face is mostly frontal with strong near-direct eye contact toward the viewer.`,
+  slightTurn: `GAZE: The head turns only slightly, but the expression still feels connected and intentional, not distracted.`
+};
+
+const poseRules = `
+POSE RULES:
+Avoid exaggerated head tilts, comedic angles, excessive asymmetry, or casual modern pet-photo poses.
+The animal must feel dignified, noble, calm, and compositionally stable.
+Favor centered or near-centered head placement.
+The final result must read as a historical painted portrait that sells emotionally.
+`.trim();
 
 const poses = {
   gato: [
-    { id: 'G1', variantes: [`${framings.bust_portrait} POSE: The cat rests with elegant, aristocratic ease. ${globales}`] },
-    { id: 'G2', variantes: [`${framings.bust_portrait} POSE — THE HAUGHTY SNOB: The cat sits upright. The chin is tilted slightly upward in a gesture of serene aristocratic superiority.`] },
-    { id: 'G3', variantes: [`${framings.bust_portrait} POSE — THE INNOCENT TILT: The cat sits gracefully. The head is tilted adorably to one side, projecting sweet vulnerability.`] }
+    {
+      id: 'G1',
+      text: `${framings.imperial_bust} ${eyeLocks.direct} POSE: The cat sits upright with serene aristocratic stillness. The head is centered, the chin slightly elevated, and the chest presented with quiet authority. ${poseRules}`
+    },
+    {
+      id: 'G2',
+      text: `${framings.imperial_bust} ${eyeLocks.nearDirect} POSE: The cat sits elegantly with a subtle noble turn of the head, preserving strong facial symmetry and regal calm. ${poseRules}`
+    }
   ],
   perro_grande: [
-    { id: 'PG1', variantes: [`${framings.bust_portrait} POSE: The dog sits powerfully upright, broad chest pushing forward naturally. ${globales}`] },
-    { id: 'PG2', variantes: [`${framings.bust_portrait} POSE — THE COMMANDER: The dog lies comfortably but powerfully. Front legs extend forward with highly organic, relaxed asymmetry.`] },
-    { id: 'PG3', variantes: [`${framings.bust_portrait} POSE — THE INNOCENT TILT: The dog sits with an adorable head tilt. The chest leans slightly forward as if seeking a caress. Pure, unconditional love.`] }
+    {
+      id: 'PG1',
+      text: `${framings.noble_half} ${eyeLocks.direct} POSE: The dog sits powerfully upright with a broad chest and calm authority. The head is centered or nearly centered. The front paws rest naturally and clearly. ${poseRules}`
+    },
+    {
+      id: 'PG2',
+      text: `${framings.imperial_bust} ${eyeLocks.direct} POSE: Monumental royal bust portrait. The face dominates the image. The chest rises proudly beneath the mantle. The expression is calm, noble, and deeply present. ${poseRules}`
+    },
+    {
+      id: 'PG3',
+      text: `${framings.noble_half} ${eyeLocks.nearDirect} POSE: The dog rests in a composed half-length pose with the head only slightly turned, preserving emotional connection and noble stillness. ${poseRules}`
+    }
   ],
   perro_mediano: [
-    { id: 'PM1', variantes: [`${framings.bust_portrait} POSE: The dog sits with a tall spine and proud chest. ${globales}`] },
-    { id: 'PM2', variantes: [`${framings.bust_portrait} POSE — THE HAUGHTY SNOB: The dog sits upright. The chin is tilted upward in a distinct gesture of elegant arrogance.`] },
-    { id: 'PM3', variantes: [`${framings.bust_portrait} POSE — THE INNOCENT TILT: The dog sits gracefully with an adorable head tilt. Sweet vulnerability.`] }
+    {
+      id: 'PM1',
+      text: `${framings.imperial_bust} ${eyeLocks.direct} POSE: The dog sits with a proud chest and centered head. The expression feels intimate, noble, and emotionally engaging. ${poseRules}`
+    },
+    {
+      id: 'PM2',
+      text: `${framings.noble_half} ${eyeLocks.direct} POSE: The dog sits elegantly with a balanced body axis, calm paws, and a strong portrait presence. ${poseRules}`
+    }
   ],
   perro_pequeno: [
-    { id: 'PP1', variantes: [`${framings.contrast_scale} POSE — THE MICRO-MONARCH: The tiny dog sits proudly in the center of an immense velvet cushion. Adorable but regal.`] },
-    { id: 'PP2', variantes: [`${framings.bust_portrait} POSE — THE INNOCENT TILT: The small dog sits with an adorable head tilt, projecting immense soulfulness.`] }
+    {
+      id: 'PP1',
+      text: `${framings.imperial_bust} ${eyeLocks.direct} POSE: The small dog is portrayed as a miniature monarch. The face is large in frame, direct, soulful, and highly engaging. ${poseRules}`
+    },
+    {
+      id: 'PP2',
+      text: `${framings.noble_half} ${eyeLocks.nearDirect} POSE: The dog sits proudly on a luxurious cushion, preserving a centered noble portrait structure. ${poseRules}`
+    }
   ],
   default: [
-    { id: 'DF1', variantes: [`${framings.bust_portrait} POSE: The animal rests organically with a proud, elevated posture. ${globales}`] }
+    {
+      id: 'DF1',
+      text: `${framings.imperial_bust} ${eyeLocks.direct} POSE: The animal is portrayed with centered nobility, clear facial emphasis, and calm historical dignity. ${poseRules}`
+    }
   ]
 };
 
@@ -38,21 +78,7 @@ function detectarCategoria(especie, raza) {
   const r = (raza || '').toLowerCase();
 
   if (e.includes('cat') || e.includes('gato')) return 'gato';
+
   if (e.includes('dog') || e.includes('perro')) {
-    const razasPequenas = ['chihuahua', 'yorkshire', 'pug', 'french bulldog', 'pomeranian', 'corgi'];
-    const razasGrandes = ['doberman', 'golden', 'labrador', 'german shepherd', 'husky', 'mastiff'];
-    if (razasGrandes.some(x => r.includes(x))) return 'perro_grande';
-    if (razasPequenas.some(x => r.includes(x))) return 'perro_pequeno';
-    return 'perro_mediano';
-  }
-  return 'default';
-}
-
-function asignarPose(especie, raza) {
-  const categoria = detectarCategoria(especie, raza);
-  const pool = poses[categoria] || poses.default;
-  const poseSeleccionada = pool[Math.floor(Math.random() * pool.length)];
-  return poseSeleccionada.variantes[0];
-}
-
-module.exports = { asignarPose, poses, detectarCategoria };
+    const razasPequenas = ['chihuahua', 'yorkshire', 'pug', 'french bulldog', 'pomeranian', 'corgi', 'dachshund'];
+    const razasGrandes = ['doberman', 'golden', 'labrador', 'german shepherd', 'husky', 'mastiff', 'rottweiler', 'great dane'];
