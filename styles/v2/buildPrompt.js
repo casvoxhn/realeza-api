@@ -1,19 +1,19 @@
-// ENSAMBLADOR PRINCIPAL (V_NEXT_CONVERSION_BALANCED)
+// ENSAMBLADOR PRINCIPAL (VERSIÓN ESTABLE)
 
-const s1_lienzo    = require('./s1_lienzo');
-const s2_fondo     = require('./s2_fondo');
-const s3_estilo    = require('./s3_estilo');
+const s1_lienzo = require('./s1_lienzo');
+const s2_fondo = require('./s2_fondo');
+const s3_estilo = require('./s3_estilo');
 const { elegirPoseControlada } = require('./s4_poses');
-const s5_sujeto    = require('./s5_sujeto');
+const s5_sujeto = require('./s5_sujeto');
 const s6_vestuario = require('./s6_vestuario');
-const s7_props     = require('./s7_props');
-const s8_multi     = require('./s8_multi');
+const s7_props = require('./s7_props');
+const s8_multi = require('./s8_multi');
 
 const ESTILO_ALIAS = {
-  rey:         'realeza',
-  royal:       'realeza',
-  baroque:     'barroco',
-  renaissance: 'renacimiento',
+  rey: 'realeza',
+  royal: 'realeza',
+  baroque: 'barroco',
+  renaissance: 'renacimiento'
 };
 
 function normalizarEstilo(estilo) {
@@ -21,17 +21,28 @@ function normalizarEstilo(estilo) {
   return ESTILO_ALIAS[e] || e;
 }
 
-const NO_FRAME = `FINAL INSTRUCTION: The painting must fill the entire image edge to edge. Absolutely NO borders, NO frames, NO decorative borders, NO printed poster edges, and NO empty margins of any kind.`;
+const NO_FRAME = `
+FINAL INSTRUCTION:
+The painting must fill the entire image edge to edge.
+Absolutely NO borders.
+NO frames.
+NO poster margins.
+`;
 
 const GLOBAL_QUALITY_LOCK = `
 MASTER PAINTING DIRECTIVE:
-This must read as a genuine historical oil portrait painting, not a photo filter, not a digital render, and not AI-smoothed illustration.
-Visible painterly brushwork must exist throughout the fur, garments, cushion, and shadows.
-Use subtle natural irregularities in paint application, soft broken edges, layered oil texture, and restrained but convincing volume.
-Do NOT produce plastic smooth gradients, CGI sheen, hyper-clean digital blending, or individually rendered photographic hairs.
-The final impression must feel museum-like, noble, tactile, and authentically painted by hand.`.trim();
+This must read as a genuine historical oil painting.
+
+Use visible painterly brushwork.
+Avoid plastic smooth gradients.
+Avoid CGI sheen.
+Avoid hyper-clean digital blending.
+
+The final impression must feel museum-like and painted by hand.
+`;
 
 module.exports = function buildPrompt(params) {
+
   const {
     estilo: estiloRaw = 'realeza',
     numAnimales = 1,
@@ -40,13 +51,13 @@ module.exports = function buildPrompt(params) {
     genero = null,
     hero = null,
     imgHash = 'nohash',
-    analisisFacial = null,
+    analisisFacial = null
   } = params;
 
   const estilo = normalizarEstilo(estiloRaw);
   const isMulti = numAnimales > 1;
 
-  const heroPose  = hero?.pose  ?? null;
+  const heroPose = hero?.pose ?? null;
   const heroManto = hero?.manto ?? null;
   const heroCojin = hero?.cojin ?? null;
 
@@ -59,28 +70,22 @@ module.exports = function buildPrompt(params) {
       heroPose
     });
 
-    console.log([
-      `🎭 PROMPT`,
-      `especie:${especie}`,
-      `raza:${raza || 'sin raza'}`,
-      `estilo:${estilo}`,
-      `pose_controlada:OK`
-    ].join(' | '));
+    console.log(
+      `🎭 PROMPT | especie:${especie} | raza:${raza || 'sin raza'} | estilo:${estilo}`
+    );
   }
 
   const identidadEspecifica = analisisFacial
-    ? `SUBJECT IDENTITY DETAILS:
-Incorporate the following specific physical traits, markings, proportions, and facial identity into the painted portrait with discipline and subtlety:
+    ? `
+SUBJECT IDENTITY DETAILS:
+Incorporate these specific traits carefully into the portrait:
 
 ${analisisFacial}
 
-IDENTITY RULES:
-Preserve the recognizable facial identity of this exact animal.
-Keep the unique structure of the eyes, muzzle, brow, ears, markings, and expression.
-Translate these traits into oil paint language.
-Do NOT copy the original photo composition literally.
-Do NOT make it look photographic.
-Do NOT flatten or genericize the face.`
+Preserve the recognizable identity of the animal.
+Do not copy the exact photo pose.
+Translate these traits into classical oil painting style.
+`
     : null;
 
   const secciones = [
@@ -102,7 +107,9 @@ Do NOT flatten or genericize the face.`
     .filter(Boolean)
     .join('\n\n');
 
-  console.log(`📝 PROMPT COMPLETO | hash:${imgHash}\n${'─'.repeat(60)}\n${promptFinal}\n${'─'.repeat(60)}`);
+  console.log(
+    `📝 PROMPT COMPLETO | hash:${imgHash}\n${'-'.repeat(50)}\n${promptFinal}`
+  );
 
   return promptFinal;
 };
