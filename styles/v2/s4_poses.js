@@ -82,3 +82,28 @@ function detectarCategoria(especie, raza) {
   if (e.includes('dog') || e.includes('perro')) {
     const razasPequenas = ['chihuahua', 'yorkshire', 'pug', 'french bulldog', 'pomeranian', 'corgi', 'dachshund'];
     const razasGrandes = ['doberman', 'golden', 'labrador', 'german shepherd', 'husky', 'mastiff', 'rottweiler', 'great dane'];
+    if (razasGrandes.some(x => r.includes(x))) return 'perro_grande';
+    if (razasPequenas.some(x => r.includes(x))) return 'perro_pequeno';
+    return 'perro_mediano';
+  }
+
+  return 'default';
+}
+
+function elegirPoseControlada({ especie, raza, heroPose = null }) {
+  const categoria = detectarCategoria(especie, raza);
+  const pool = poses[categoria] || poses.default;
+
+  if (Number.isInteger(heroPose) && heroPose >= 0 && heroPose < pool.length) {
+    return pool[heroPose].text;
+  }
+
+  // Favorece siempre las poses más vendibles primero
+  return pool[0].text;
+}
+
+module.exports = {
+  poses,
+  detectarCategoria,
+  elegirPoseControlada
+};
