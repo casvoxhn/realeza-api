@@ -1,8 +1,8 @@
-// SECCIÓN 4 — POSES v10.0 (MUSEUM GRADE & PYRAMID COMPOSITION)
-// Optimizadas para Nano Banana 2: Foco en asimetría orgánica, proporciones estrictas y cero "look IA".
+// SECCIÓN 4 — POSES v10.1 (MUSEUM GRADE & PYRAMID COMPOSITION)
+// v10.1 - Sincronizado para Mantos/Capas sin mangas. Cero piso visible. Anti-IA Look.
 
 const framings = {
-  portrait: `FRAMING: Medium-close portrait crop. PYRAMID COMPOSITION: The animal's head is the apex. The cushion MUST sit exactly at the absolute bottom edge of the canvas, bleeding off the bottom and sides. ZERO floor visible. ZERO stone ledge. This anchors the image heavily. The animal's chest and head stretch naturally upward filling the top 80% of the frame. Do NOT compress or shrink the body.`,
+  portrait: `FRAMING: Medium-close portrait crop. PYRAMID COMPOSITION: The animal's head is the apex. The cushion MUST sit exactly at the absolute bottom edge of the canvas, bleeding off the bottom and sides. ZERO floor visible. ZERO stone ledge. This anchors the image heavily. The animal's chest and head stretch naturally upward filling the top 80 percent of the frame. Do NOT compress or shrink the body.`,
   close_crop: `FRAMING: Close portrait crop. Anchor the cushion firmly off the absolute bottom edge of the canvas. ZERO floor visible. Allow the animal's chest and body to fill the vertical space proudly. Proportions anatomically correct throughout.`,
   close_crop_strong: `FRAMING: Extreme close portrait crop. ZERO floor visible. The cushion bleeds off the bottom edge. Body is massive and uncompressed, chest filling the lower frame, face dominant and highly detailed.`,
   full_body: `FRAMING: Full figure. The cushion bleeds entirely off the bottom edge of the frame. ZERO floor visible. Maximum vertical room for the animal's natural height. Anatomically correct 1:1 scale.`,
@@ -38,7 +38,7 @@ const poses = {
     { id: 'G7', variantes: [`${framings.portrait} ${gato_global} POSE — ROYAL NEST: Reclines proudly. Crucially, ONE FRONT PAW rests elegantly directly ON TOP OF the thick folds of its own velvet mantle. ${miradas.gato_elevada}`] },
     { id: 'G4', variantes: [`${framings.close_crop} ${gato_global} POSE — SCULPTURAL LOAF: Compact, volumetric mass. Front paws are tucked and hidden. The body is an organic mound of fur shifting naturally to one side. ${miradas.gato_headtilt}`] },
     
-    // Poses Emocionales (Awww)
+    // Poses Emocionales
     { id: 'G8', variantes: [`${framings.close_crop} ${gato_global} POSE — INNOCENT TILT: Head is tilted naturally and adorably to one side, projecting sweet vulnerability. Front paws tucked neatly. Pure, wide-eyed affection. ${miradas.gato_headtilt}`] },
     { id: 'G9', variantes: [`${framings.portrait} ${gato_global} POSE — SWEET DEMURE: ONE FRONT PAW is delicately placed over the other in a sweet, demure gesture. Beloved, pampered companion offering gentle affection. ${miradas.gato_frontal}`] },
   ],
@@ -50,7 +50,7 @@ const poses = {
     { id: 'PG4', variantes: [`${framings.portrait} ${perro_global} POSE — THREE QUARTER MASS: Heavy body turned 3/4 to the side. Head turns powerfully back over the shoulder. Dynamic, highly dignified. ${miradas.perro_offlens}`] },
     { id: 'PG7', variantes: [`${framings.portrait} ${perro_global} POSE — ROYAL NEST: ONE FRONT PAW rests directly ON TOP OF the thick folds of its own velvet mantle. Regal ease. ${miradas.perro_girada}`] },
     
-    // Poses Emocionales (Awww)
+    // Poses Emocionales
     { id: 'PG8', variantes: [`${framings.close_crop} ${perro_global} POSE — THE LOYAL TILT: Adorable, pronounced head tilt to one side. Chest leans slightly forward seeking a caress. Pure, unconditional love. ${miradas.perro_headtilt}`] },
     { id: 'PG9', variantes: [`${framings.close_crop} ${perro_global} POSE — SWEET CHIN REST: Ultimate devotion. Heavy head rests flat directly ON TOP OF its crossed front paws on the cushion. Immense soulfulness looking up. ${miradas.perro_offlens}`] },
   ],
@@ -61,7 +61,7 @@ const poses = {
     { id: 'PM2', variantes: [`${framings.portrait} ${perro_global} POSE — SEATED NOBLE: Sits upright with a proud, tall spine. One paw planted slightly ahead. Majestic, breathing posture. ${miradas.perro_directo}`] },
     { id: 'PM6', variantes: [`${framings.portrait} ${perro_global} POSE — ROYAL NEST: ONE FRONT PAW rests directly ON TOP OF the folds of its own velvet mantle. ${miradas.perro_offlens}`] },
     
-    // Poses Emocionales (Awww)
+    // Poses Emocionales
     { id: 'PM8', variantes: [`${framings.close_crop} ${perro_global} POSE — THE LOYAL TILT: Adorable, pronounced head tilt. Posture drops its aggressive majesty to reveal pure innocence. ${miradas.perro_headtilt}`] },
     { id: 'PM9', variantes: [`${framings.close_crop} ${perro_global} POSE — SWEET CHIN REST: Head rests flat directly ON TOP OF crossed front paws. Looking up from this low, vulnerable position. ${miradas.perro_offlens}`] },
   ],
@@ -70,7 +70,7 @@ const poses = {
     { id: 'PP1', variantes: [`${framings.portrait} ${perro_global} POSE — SEATED UPRIGHT FORMAL: Sits proudly, small body nestled into the grand cushion but keeping a very upright, confident spine. ${miradas.perro_offlens}`] },
     { id: 'PP3', variantes: [`${framings.close_crop_strong} ${perro_global} POSE — CLOSE CROP PORTRAIT: Deeply volumetric face and chest fill the frame, emerging dramatically from the mantle. ${miradas.perro_offlens}`] },
     
-    // Poses Emocionales (Awww)
+    // Poses Emocionales
     { id: 'PP8', variantes: [`${framings.close_crop} ${perro_global} POSE — THE LOYAL TILT: Adorable head tilt. Tiny chest leans slightly forward. Immense soulfulness in a small frame. ${miradas.perro_headtilt}`] },
     { id: 'PP9', variantes: [`${framings.close_crop_strong} ${perro_global} POSE — SWEET CHIN REST: Head rests flat directly ON TOP OF tiny crossed front paws. Sweet emotional dependency. ${miradas.perro_offlens}`] },
   ],
