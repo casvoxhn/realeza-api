@@ -1,5 +1,3 @@
-// ENSAMBLADOR PRINCIPAL (VERSIÓN ESTABLE)
-
 const s1_lienzo = require('./s1_lienzo');
 const s2_fondo = require('./s2_fondo');
 const s3_estilo = require('./s3_estilo');
@@ -21,95 +19,63 @@ function normalizarEstilo(estilo) {
   return ESTILO_ALIAS[e] || e;
 }
 
-const NO_FRAME = `
-FINAL INSTRUCTION:
-The painting must fill the entire image edge to edge.
-Absolutely NO borders.
-NO frames.
-NO poster margins.
-`;
-
-const GLOBAL_QUALITY_LOCK = `
-MASTER PAINTING DIRECTIVE:
-This must read as a genuine historical oil painting.
-
-Use visible painterly brushwork.
-Avoid plastic smooth gradients.
-Avoid CGI sheen.
-Avoid hyper-clean digital blending.
-
-The final impression must feel museum-like and painted by hand.
-`;
-
 module.exports = function buildPrompt(params) {
 
-  const {
-    estilo: estiloRaw = 'realeza',
-    numAnimales = 1,
-    especie = 'perro',
-    raza = '',
-    genero = null,
-    hero = null,
-    imgHash = 'nohash',
-    analisisFacial = null
-  } = params;
+  const estilo = normalizarEstilo(params.estilo);
+  const numAnimales = params.numAnimales || 1;
+  const especie = params.especie || "animal";
+  const raza = params.raza || "";
+  const genero = params.genero || null;
+  const hero = params.hero || null;
+  const analisisFacial = params.analisisFacial || null;
 
-  const estilo = normalizarEstilo(estiloRaw);
+  const heroPose = hero ? hero.pose : null;
+  const heroManto = hero ? hero.manto : null;
+  const heroCojin = hero ? hero.cojin : null;
+
   const isMulti = numAnimales > 1;
 
-  const heroPose = hero?.pose ?? null;
-  const heroManto = hero?.manto ?? null;
-  const heroCojin = hero?.cojin ?? null;
-
-  let poseTexto = null;
+  let poseTexto = "";
 
   if (!isMulti) {
     poseTexto = elegirPoseControlada({
-      especie,
-      raza,
-      heroPose
+      especie: especie,
+      raza: raza,
+      heroPose: heroPose
     });
-
-    console.log(
-      `🎭 PROMPT | especie:${especie} | raza:${raza || 'sin raza'} | estilo:${estilo}`
-    );
   }
 
-  const identidadEspecifica = analisisFacial
-    ? `
-SUBJECT IDENTITY DETAILS:
-Incorporate these specific traits carefully into the portrait:
+  const secciones = [];
 
-${analisisFacial}
+  secciones.push(s1_lienzo);
+  secciones.push(s2_fondo(estilo));
+  secciones.push(s3_estilo(estilo).referencia);
+  secciones.push(s5_sujeto(especie, numAnimales));
 
-Preserve the recognizable identity of the animal.
-Do not copy the exact photo pose.
-Translate these traits into classical oil painting style.
-`
-    : null;
+  if (analisisFacial) {
+    secciones.push("SUBJECT IDENTITY DETAILS:");
+    secciones.push(analisisFacial);
+  }
 
-  const secciones = [
-    GLOBAL_QUALITY_LOCK,
-    s1_lienzo,
-    s2_fondo(estilo),
-    s3_estilo(estilo).referencia,
-    s5_sujeto(especie, numAnimales),
-    identidadEspecifica,
-    !isMulti ? poseTexto : null,
-    isMulti
-      ? s8_multi(numAnimales, estilo)
-      : s6_vestuario(estilo, genero, heroManto),
-    s7_props(estilo, numAnimales, heroCojin),
-    NO_FRAME
-  ];
+  if (!isMulti) {
+    secciones.push(poseTexto);
+  }
+
+  if (isMulti) {
+    secciones.push(s8_multi(numAnimales, estilo));
+  } else {
+    secciones.push(s6_vestuario(estilo, genero, heroManto));
+  }
+
+  secciones.push(s7_props(estilo, numAnimales, heroCojin));
+
+  secciones.push(
+    "FINAL INSTRUCTION: The painting must fill the entire image edge to edge. No frame or borders."
+  );
 
   const promptFinal = secciones
     .filter(Boolean)
-    .join('\n\n');
-
-  console.log(
-    `📝 PROMPT COMPLETO | hash:${imgHash}\n${'-'.repeat(50)}\n${promptFinal}`
-  );
+    .join("\n\n");
 
   return promptFinal;
 };
