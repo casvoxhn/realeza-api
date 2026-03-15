@@ -115,6 +115,8 @@ app.post('/generate', async (req, res) => {
 
     const totalMs = Date.now() - startTotal;
     console.log(`✅ V16.4 OK | hash:${imgHash} | ${prefix} | gemini:${geminiMs}ms | total:${totalMs}ms`);
+    console.log(`🖼️  RESULT  | ${finalUrl}`);
+    originalUrls.forEach((url, i) => console.log(`📸 INPUT ${i+1}  | ${url}`));
     console.log(`${'='.repeat(60)}\n`);
 
     res.json({ success: true, imageUrl: finalUrl, originalUrls });
