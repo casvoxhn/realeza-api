@@ -1,5 +1,5 @@
-// server.js — V16.1
-// Simplificado + log de prompt completo para debugging
+// server.js — V16.2
+// Fix: timeout explícito de 120s para Gemini (default SDK = 10s → fetch failed)
 
 const express = require('express');
 const cors = require('cors');
@@ -24,7 +24,9 @@ app.use(cors({ origin: '*' }));
 app.use(express.json({ limit: '100mb' }));
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-const genAI    = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+
+// ── FIX: timeout de 120 segundos — Gemini necesita 60-120s para generar ──────
+const genAI  = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const MODEL_ID = "gemini-3.1-flash-image-preview";
 
 const REF_FILES = {
@@ -72,7 +74,7 @@ app.post('/generate', async (req, res) => {
     const imgHash         = hashImagen(images[0]);
 
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`🚀 V16.1 START | hash:${imgHash} | cat:${currentCategory} | style:${style} | gender:${hasGender ? gender : 'neutral'} | sujetos:${numSubjects}`);
+    console.log(`🚀 V16.2 START | hash:${imgHash} | cat:${currentCategory} | style:${style} | gender:${hasGender ? gender : 'neutral'} | sujetos:${numSubjects}`);
 
     const originalUrls = await Promise.all(
       images.map(async (img, i) => {
@@ -94,7 +96,6 @@ app.post('/generate', async (req, res) => {
         imgHash,
       });
 
-      // ── LOG DEL PROMPT COMPLETO ──────────────────────────────────────
       console.log(`\n📝 PROMPT COMPLETO | hash:${imgHash}`);
       console.log(`${'─'.repeat(40)}`);
       console.log(promptText);
@@ -122,7 +123,11 @@ app.post('/generate', async (req, res) => {
     })));
     parts.push({ text: promptText });
 
-    const model   = genAI.getGenerativeModel({ model: MODEL_ID });
+    // ── FIX CLAVE: timeout de 120s explícito ─────────────────────────────────
+    const model   = genAI.getGenerativeModel(
+      { model: MODEL_ID },
+      { timeout: 120000 }   // ← 120 segundos — Gemini necesita 60-120s
+    );
     const tGemini = Date.now();
 
     const result = await model.generateContent({
@@ -142,26 +147,26 @@ app.post('/generate', async (req, res) => {
     if (!imagePart) throw new Error("Gemini no devolvió imagen.");
 
     const imageBuffer = Buffer.from(imagePart.inlineData.data, 'base64');
-    const prefix      = `V16_${currentCategory.toUpperCase()}_${(style || 'intelligent').toUpperCase().replace(/\s+/g, '_')}${hasGender ? `_${gender.toUpperCase()}` : ''}`;
+    const prefix      = `V162_${currentCategory.toUpperCase()}_${(style || 'intelligent').toUpperCase().replace(/\s+/g, '_')}${hasGender ? `_${gender.toUpperCase()}` : ''}`;
     const finalUrl    = await uploadBufferToSupabase(imageBuffer, prefix);
 
     const totalMs = Date.now() - startTotal;
-    console.log(`✅ V16.1 OK | hash:${imgHash} | ${prefix} | gemini:${geminiMs}ms | total:${totalMs}ms`);
+    console.log(`✅ V16.2 OK | hash:${imgHash} | ${prefix} | gemini:${geminiMs}ms | total:${totalMs}ms`);
     console.log(`${'='.repeat(60)}\n`);
 
     res.json({ success: true, imageUrl: finalUrl, originalUrls });
 
   } catch (error) {
     const totalMs = Date.now() - startTotal;
-    console.error(`❌ V16.1 ERROR | ${totalMs}ms | ${error.message}`);
+    console.error(`❌ V16.2 ERROR | ${totalMs}ms | ${error.message}`);
     res.status(500).json({ success: false, error: error.message });
   }
 });
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', version: 'V16.1', model: MODEL_ID, uptime: process.uptime() });
+  res.json({ status: 'ok', version: 'V16.2', model: MODEL_ID, uptime: process.uptime() });
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 V16.1 | Puerto:${PORT} | Modelo:${MODEL_ID}`);
+  console.log(`🚀 V16.2 | Puerto:${PORT} | Modelo:${MODEL_ID}`);
 });
