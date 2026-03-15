@@ -1,6 +1,6 @@
-// mascotas.js — V20.0
-// Compatible con estilos V4.0 (retornan string, no objeto)
-// Pose pool con 4 variantes aprobadas + patas sobre borde frontal
+// mascotas.js — V20.1
+// Fix punto 2: sin duplicado de patas en STEP 2 (ya está en CUSHION del estilo)
+// Fix punto 3: STEP 1 completo con todos los detalles de cara
 
 const { pick } = require('./utils/pick');
 const renacimientoStyle = require('./styles/renacimiento');
@@ -19,22 +19,17 @@ const styleMap = {
   museum_elegance:       renacimientoStyle,
   imperial_coronation:   realezaStyle,
   baroque_drama:         barrocoStyle,
-  intelligent:           barrocoStyle, // fallback seguro
+  intelligent:           barrocoStyle,
 };
 
-// ─── POOL DE POSES APROBADAS ──────────────────────────────────────────────────
-// Regla crítica en todas: patas sobre el BORDE FRONTAL, no sobre la superficie
+// ─── POOL DE POSES ────────────────────────────────────────────────────────────
+// Sin mencionar patas aquí — el bloque CUSHION del estilo ya lo describe
 const POSES = [
 
   // Pose 1 — Recostado, cabeza derecha
   `STEP 2 — POSE:
 Animal lying down naturally on the cushion.
 Chest resting on cushion surface.
-Front paws extended forward and hanging naturally
-over the FRONT EDGE of the cushion — the paws drape
-down over the front lip, slightly below the cushion surface.
-The paws do NOT rest flat on top of the cushion.
-They fall over the front edge — relaxed, natural weight.
 Head raised, looking slightly to the RIGHT.
 Full body visible in the composition.
 The animal looks completely natural and at ease.
@@ -49,11 +44,6 @@ Generous breathing room on all sides.`,
   `STEP 2 — POSE:
 Animal lying down naturally on the cushion.
 Chest resting on cushion surface.
-Front paws extended forward and hanging naturally
-over the FRONT EDGE of the cushion — the paws drape
-down over the front lip, slightly below the cushion surface.
-The paws do NOT rest flat on top of the cushion.
-They fall over the front edge — relaxed, natural weight.
 Head raised, looking slightly to the LEFT.
 Full body visible in the composition.
 The animal looks completely natural and at ease.
@@ -68,9 +58,6 @@ Generous breathing room on all sides.`,
   `STEP 2 — POSE:
 Animal sitting upright and dignified on the cushion.
 Body angled slightly to the RIGHT — natural 3/4 angle.
-Front paws resting side by side, hanging gently over
-the FRONT EDGE of the cushion — paws drape down over
-the front lip, natural and relaxed, not stiff or flat.
 Head turned to look toward the viewer.
 The animal fills the composition naturally.
 
@@ -84,9 +71,6 @@ Generous breathing room on all sides.`,
   `STEP 2 — POSE:
 Animal sitting upright and dignified on the cushion.
 Body angled slightly to the LEFT — natural 3/4 angle.
-Front paws resting side by side, hanging gently over
-the FRONT EDGE of the cushion — paws drape down over
-the front lip, natural and relaxed, not stiff or flat.
 Head turned to look toward the viewer.
 The animal fills the composition naturally.
 
@@ -98,7 +82,7 @@ Generous breathing room on all sides.`,
 
 ];
 
-// ─── BLOQUES FIJOS ────────────────────────────────────────────────────────────
+// ─── BLOQUE FIJO: FACE FIRST completo ────────────────────────────────────────
 const FACE_FIRST = `Image 1: the pet photo — the only input.
 Paint a completely NEW original oil painting from scratch.
 Not composited. Not layered. One unified painting.
@@ -118,6 +102,7 @@ Extract and transfer exactly:
 The face AND head angle are LOCKED from Image 1.
 Remove any collar or leash.`;
 
+// ─── BLOQUE FIJO: FACE CHECK ──────────────────────────────────────────────────
 const FACE_CHECK = `STEP 3 — FACE CHECK:
 Compare the painted face against Image 1.
 Head angle, facial features and expression must match exactly.
@@ -127,7 +112,7 @@ The owner must recognize their pet immediately.
 
 4:5 portrait. 4K. High thinking mode.`;
 
-// ─── BLOQUES MULTI-ANIMAL ─────────────────────────────────────────────────────
+// ─── MULTI ANIMAL ─────────────────────────────────────────────────────────────
 const scenes_2 = [
   "Both animals lie resting on the cushion — bodies low and horizontal, weight on chest and elbows, front paws extended forward hanging over the front edge. The larger one lies slightly behind and to one side, the smaller one lies in front beside it. Both faces raised and clearly visible.",
   "Both animals sit together on the cushion — upright but relaxed, bodies naturally angled slightly toward each other. Front paws hanging over the front edge of the cushion. Both faces clearly visible.",
@@ -158,9 +143,7 @@ module.exports = function mascotas(estilo, numAnimales, isGroup, genero) {
   const numSubjects = Math.max(numAnimales || 1, isGroup ? 2 : 1);
   const styleKey    = (estilo || 'barroco').toLowerCase().replace(/\s+/g, '_');
   const styleFn     = styleMap[styleKey] || barrocoStyle;
-
-  // Los estilos V4.0 retornan un string directo
-  const styleBlock = styleFn(numSubjects, isGroup, genero);
+  const styleBlock  = styleFn(numSubjects, isGroup, genero);
 
   // ── UN SOLO ANIMAL ────────────────────────────────────────────────────
   if (numSubjects === 1) {
@@ -173,9 +156,9 @@ module.exports = function mascotas(estilo, numAnimales, isGroup, genero) {
     : numSubjects === 3 ? scenes_3
     : scenes_4;
 
-  const scene          = pick(scenePool);
-  const palette        = pick(complementaryPalettes);
-  const shuffledGems   = [...gems].sort(() => Math.random() - 0.5);
+  const scene        = pick(scenePool);
+  const palette      = pick(complementaryPalettes);
+  const shuffledGems = [...gems].sort(() => Math.random() - 0.5);
 
   const multiPose = `STEP 2 — COMPOSITION (${numSubjects} animals):
 ${scene}
@@ -198,6 +181,8 @@ Study each photo carefully. For each animal extract and transfer exactly:
 - Exact facial features, markings, fur color and expression — LOCKED
 - Exact eye shape, color and gaze direction
 - Exact nose pattern and coloring
+- Exact skin/fur tone and texture
+- If tongue is out in photo — tongue is out in painting
 - Preserve each animal's natural personality
 Remove any collar or leash from all animals.`;
 
