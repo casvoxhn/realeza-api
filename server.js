@@ -1,5 +1,5 @@
-// server.js — V16.3
-// Fix: timeout 120s + referencias eliminadas (prompt ya es suficientemente descriptivo)
+// server.js — V16.4
+// Fix: timeout 180s + referencias eliminadas (prompt ya es suficientemente descriptivo)
 
 const express = require('express');
 const cors = require('cors');
@@ -48,7 +48,7 @@ app.post('/generate', async (req, res) => {
     const imgHash         = hashImagen(images[0]);
 
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`🚀 V16.3 START | hash:${imgHash} | cat:${currentCategory} | style:${style} | gender:${hasGender ? gender : 'neutral'} | sujetos:${numSubjects}`);
+    console.log(`🚀 V16.4 START | hash:${imgHash} | cat:${currentCategory} | style:${style} | gender:${hasGender ? gender : 'neutral'} | sujetos:${numSubjects}`);
 
     const originalUrls = await Promise.all(
       images.map(async (img, i) => {
@@ -89,7 +89,7 @@ app.post('/generate', async (req, res) => {
     // ── GEMINI con timeout de 120s ────────────────────────────────────────────
     const model   = genAI.getGenerativeModel(
       { model: MODEL_ID },
-      { timeout: 120000 }
+      { timeout: 180000 }
     );
     const tGemini = Date.now();
 
@@ -114,22 +114,22 @@ app.post('/generate', async (req, res) => {
     const finalUrl    = await uploadBufferToSupabase(imageBuffer, prefix);
 
     const totalMs = Date.now() - startTotal;
-    console.log(`✅ V16.3 OK | hash:${imgHash} | ${prefix} | gemini:${geminiMs}ms | total:${totalMs}ms`);
+    console.log(`✅ V16.4 OK | hash:${imgHash} | ${prefix} | gemini:${geminiMs}ms | total:${totalMs}ms`);
     console.log(`${'='.repeat(60)}\n`);
 
     res.json({ success: true, imageUrl: finalUrl, originalUrls });
 
   } catch (error) {
     const totalMs = Date.now() - startTotal;
-    console.error(`❌ V16.3 ERROR | ${totalMs}ms | ${error.message}`);
+    console.error(`❌ V16.4 ERROR | ${totalMs}ms | ${error.message}`);
     res.status(500).json({ success: false, error: error.message });
   }
 });
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', version: 'V16.3', model: MODEL_ID, uptime: process.uptime() });
+  res.json({ status: 'ok', version: 'V16.4', model: MODEL_ID, uptime: process.uptime() });
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 V16.3 | Puerto:${PORT} | Modelo:${MODEL_ID}`);
+  console.log(`🚀 V16.4 | Puerto:${PORT} | Modelo:${MODEL_ID}`);
 });
