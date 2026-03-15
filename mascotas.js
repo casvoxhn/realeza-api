@@ -1,6 +1,5 @@
-// mascotas.js — V20.1
-// Fix punto 2: sin duplicado de patas en STEP 2 (ya está en CUSHION del estilo)
-// Fix punto 3: STEP 1 completo con todos los detalles de cara
+// mascotas.js — V20.2
+// Poses inteligentes: Gemini lee la foto y elige la pose correcta por especie/tamaño
 
 const { pick } = require('./utils/pick');
 const renacimientoStyle = require('./styles/renacimiento');
@@ -22,67 +21,38 @@ const styleMap = {
   intelligent:           barrocoStyle,
 };
 
-// ─── POOL DE POSES ────────────────────────────────────────────────────────────
-// Sin mencionar patas aquí — el bloque CUSHION del estilo ya lo describe
-const POSES = [
+// ─── POSE INTELIGENTE — Gemini decide según la foto ───────────────────────────
+const POSE_BLOCK = `STEP 2 — POSE:
+Study the animal in Image 1 carefully and choose
+the most natural and dignified pose:
 
-  // Pose 1 — Recostado, cabeza derecha
-  `STEP 2 — POSE:
-Animal lying down naturally on the cushion.
-Chest resting on cushion surface.
-Head raised, looking slightly to the RIGHT.
-Full body visible in the composition.
-The animal looks completely natural and at ease.
+IF the animal is a CAT:
+→ Choose one naturally:
+   - Lying with front paws tucked under the body — loaf position, most elegant
+   - Lying with front paws extended forward resting on cushion edge
+   - Sitting upright, body angled slightly to one side, full body visible
 
-FRAMING:
-Wide open composition — full body visible.
-The animal occupies the upper 55% of the canvas.
-The cushion and ledge occupy the lower 45%.
-Generous breathing room on all sides.`,
+IF the animal is a LARGE DOG (golden, labrador, shepherd, husky, etc):
+→ Lying down, chest resting on cushion.
+   Front paws extended forward hanging over the front edge.
+   Head raised naturally.
 
-  // Pose 2 — Recostado, cabeza izquierda
-  `STEP 2 — POSE:
-Animal lying down naturally on the cushion.
-Chest resting on cushion surface.
-Head raised, looking slightly to the LEFT.
-Full body visible in the composition.
-The animal looks completely natural and at ease.
+IF the animal is a MEDIUM or SMALL DOG, puppy, or other animal:
+→ Choose naturally between:
+   - Lying down, chest on cushion, front paws over the front edge
+   - Sitting upright, full body visible, dignified
 
-FRAMING:
-Wide open composition — full body visible.
-The animal occupies the upper 55% of the canvas.
-The cushion and ledge occupy the lower 45%.
-Generous breathing room on all sides.`,
-
-  // Pose 3 — Sentado, 3/4 derecha
-  `STEP 2 — POSE:
-Animal sitting upright and dignified on the cushion.
-Body angled slightly to the RIGHT — natural 3/4 angle.
-Head turned to look toward the viewer.
-The animal fills the composition naturally.
+FOR ALL POSES:
+The animal looks completely natural — never stiff or forced.
+Head raised facing the viewer with quiet authority.
 
 FRAMING:
 Wide open composition — full body visible.
 The animal occupies the upper 55% of the canvas.
 The cushion and ledge occupy the lower 45%.
-Generous breathing room on all sides.`,
+Generous breathing room on all sides.`;
 
-  // Pose 4 — Sentado, 3/4 izquierda
-  `STEP 2 — POSE:
-Animal sitting upright and dignified on the cushion.
-Body angled slightly to the LEFT — natural 3/4 angle.
-Head turned to look toward the viewer.
-The animal fills the composition naturally.
-
-FRAMING:
-Wide open composition — full body visible.
-The animal occupies the upper 55% of the canvas.
-The cushion and ledge occupy the lower 45%.
-Generous breathing room on all sides.`,
-
-];
-
-// ─── BLOQUE FIJO: FACE FIRST completo ────────────────────────────────────────
+// ─── FACE FIRST ───────────────────────────────────────────────────────────────
 const FACE_FIRST = `Image 1: the pet photo — the only input.
 Paint a completely NEW original oil painting from scratch.
 Not composited. Not layered. One unified painting.
@@ -102,7 +72,7 @@ Extract and transfer exactly:
 The face AND head angle are LOCKED from Image 1.
 Remove any collar or leash.`;
 
-// ─── BLOQUE FIJO: FACE CHECK ──────────────────────────────────────────────────
+// ─── FACE CHECK ───────────────────────────────────────────────────────────────
 const FACE_CHECK = `STEP 3 — FACE CHECK:
 Compare the painted face against Image 1.
 Head angle, facial features and expression must match exactly.
@@ -114,18 +84,18 @@ The owner must recognize their pet immediately.
 
 // ─── MULTI ANIMAL ─────────────────────────────────────────────────────────────
 const scenes_2 = [
-  "Both animals lie resting on the cushion — bodies low and horizontal, weight on chest and elbows, front paws extended forward hanging over the front edge. The larger one lies slightly behind and to one side, the smaller one lies in front beside it. Both faces raised and clearly visible.",
-  "Both animals sit together on the cushion — upright but relaxed, bodies naturally angled slightly toward each other. Front paws hanging over the front edge of the cushion. Both faces clearly visible.",
+  "Both animals rest on the cushion — bodies low and natural, front paws extended forward hanging over the front edge. The larger one slightly behind and to one side, the smaller one in front beside it. Both faces raised and clearly visible.",
+  "Both animals rest together on the cushion — bodies natural and relaxed, angled slightly toward each other. Front paws over the front edge. Both faces clearly visible.",
 ];
 
 const scenes_3 = [
-  "Two animals lie resting in front on the cushion — bodies low, chest down, paws over the front edge. The third sits upright behind them, centered. All faces clearly visible. All on the cushion.",
-  "Three animals rest on the grand cushion — the largest lies in the center, body low and horizontal. The other two recline on each side, bodies angled slightly inward. All faces raised and clearly visible.",
+  "Two animals rest in front on the cushion — bodies low, paws over the front edge. The third sits upright behind them, centered. All faces clearly visible. All on the cushion.",
+  "Three animals rest on the grand cushion — the largest in the center, body low. The other two recline on each side, bodies angled slightly inward. All faces raised and clearly visible.",
 ];
 
 const scenes_4 = [
-  "Two animals lie in front on the cushion — paws over the front edge. Two animals sit behind them — upright and relaxed. All four on the cushion. All four faces clearly visible.",
-  "Four animals rest on the grand cushion — two slightly in front, two slightly behind, all bodies low. All four faces clearly visible.",
+  "Two animals rest in front on the cushion — paws over the front edge. Two sit behind them — upright and relaxed. All four on the cushion. All four faces clearly visible.",
+  "Four animals rest on the grand cushion — two slightly in front, two slightly behind. All bodies natural and relaxed. All four faces clearly visible.",
 ];
 
 const complementaryPalettes = [
@@ -147,8 +117,7 @@ module.exports = function mascotas(estilo, numAnimales, isGroup, genero) {
 
   // ── UN SOLO ANIMAL ────────────────────────────────────────────────────
   if (numSubjects === 1) {
-    const poseBlock = pick(POSES);
-    return [FACE_FIRST, poseBlock, styleBlock, FACE_CHECK].join('\n\n');
+    return [FACE_FIRST, POSE_BLOCK, styleBlock, FACE_CHECK].join('\n\n');
   }
 
   // ── MÚLTIPLES ANIMALES ────────────────────────────────────────────────
