@@ -1,11 +1,11 @@
-// styles/renacimiento.js — The Elegant Portrait
-// Luz suave difusa, paleta cálida apagada, estilo Renacimiento flamenco
+// styles/renacimiento.js — The Elegant Portrait — V2.0
+// Fondo: cielo tormentoso Flemish, cojín gris oscuro
 
 module.exports = function renacimientoStyle(gender) {
   return {
     role: [
 
-      // ── IDENTIDAD — lo más importante ──────────────────────────────
+      // ── IDENTIDAD ──────────────────────────────────────────────
       "IDENTITY LOCK — HIGHEST PRIORITY:",
       "Extract and transfer the exact face from the photo — same markings,",
       "fur color, eye shape, eye color, expression and head angle.",
@@ -14,7 +14,7 @@ module.exports = function renacimientoStyle(gender) {
       "Remove any collar, leash or accessory — replace with royal costume only.",
       "",
 
-      // ── ILUMINACIÓN ────────────────────────────────────────────────
+      // ── ILUMINACIÓN ────────────────────────────────────────────
       "LIGHTING:",
       "Soft diffused northern light from upper left — gentle and even.",
       "Less dramatic than Baroque — warm ivory tones on lit surfaces.",
@@ -22,39 +22,45 @@ module.exports = function renacimientoStyle(gender) {
       "One soft specular catchlight in each eye — alive and present.",
       "",
 
-      // ── FONDO ──────────────────────────────────────────────────────
+      // ── FONDO ──────────────────────────────────────────────────
       "BACKGROUND:",
-      "Near-black charcoal grey. Subtle warm ochre glow only directly",
-      "behind the head — very soft, barely visible. Nothing else.",
-      "No walls, no objects, no furniture. Pure dark like a Flemish master.",
+      "Dramatic Renaissance sky — dark stormy clouds filling the upper half.",
+      "A break of pale golden light on the left horizon — warm and atmospheric.",
+      "Painted in the style of 16th century Flemish portraiture.",
+      "The sky has depth and movement — not flat, not solid.",
+      "No walls, no furniture, no objects. Only sky and atmosphere.",
       "",
 
-      // ── VESTIMENTA ─────────────────────────────────────────────────
+      // ── VESTIMENTA ─────────────────────────────────────────────
       "COSTUME:",
       "White ermine mantle with small evenly-distributed black spots —",
       "classic royal ermine pattern. Drapes from behind the shoulders,",
       "the ermine border frames the chest opening naturally.",
-      "Delicate gold and rose-pink lace trim along the ermine border.",
-      "Deep burgundy velvet cape — sits behind the animal at shoulder level,",
-      "visible on both sides. NOT falling from above, NOT dominating any corner.",
+      "Gold and cream lace trim along the ermine border.",
+      "Elaborate floral embroidery detail along the cape edge.",
+      "Deep dark burgundy velvet cape with floral embroidery —",
+      "drapes over the animal's back and falls to one side naturally.",
       "Deep luminous fold shadows on the velvet.",
       "Double gold chain with ornate floral pendant resting at chest center.",
       "",
 
-      // ── COJÍN ──────────────────────────────────────────────────────
+      // ── COJÍN ──────────────────────────────────────────────────
       "CUSHION:",
-      "Large generous gold ochre velvet cushion — heavily stuffed, almost square.",
+      "Large generous dark grey velvet cushion — heavily stuffed, almost square.",
       "Braided rope trim along all edges. Single large gold tassel at front center.",
-      "Stone ledge clearly visible below. Cushion fills the lower third of canvas.",
+      "Simple flat grey stone ledge below — clean, no carvings, no decoration.",
+      "Cushion fills the lower third of canvas.",
       "",
 
-      // ── ESTILO PICTÓRICO ───────────────────────────────────────────
+      // ── ESTILO PICTÓRICO ───────────────────────────────────────
       "PAINTING STYLE:",
-      "16th century Flemish Renaissance oil painting. Smooth sfumato blending.",
+      "16th century Flemish Renaissance oil painting.",
+      "Smooth sfumato blending on fur and sky transitions.",
       "Muted warm palette — ivory, gold, deep burgundy, warm brown.",
-      "Visible fine brushwork. Museum quality. Canvas texture visible throughout.",
+      "Visible fine brushwork on sky and fabric.",
+      "Museum quality. Canvas texture visible throughout.",
       "Photorealistic animal face with individual fur strands.",
-      "Velvet with directional sheen. Zero digital artifacts.",
+      "Zero digital artifacts.",
 
     ].join("\n")
   };
