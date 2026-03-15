@@ -1,6 +1,6 @@
-// realeza.js — V4.0
+// realeza.js — V4.1
 // The Royal Portrait — Imperial Opulence
-// 3 color variants picked randomly per generation
+// Fix: fondo más sutil — sin halo brillante, igual al competidor
 
 const { pick } = require('../utils/pick');
 
@@ -109,11 +109,12 @@ module.exports = function realezaStyle(numSubjects, isGroup, genero) {
 
   const background = `
 BACKGROUND:
-Near-black in the upper corners — deep umber darkness.
-A warm golden-amber glow behind the animal's head — more intense than baroque.
-Rich golden warmth radiating softly outward — like torchlight behind royalty.
-Upper left corner pure black. The glow is concentrated and warm.
-NO curtains. NO walls. NO objects. Pure atmospheric darkness with golden warmth.`;
+Near-black charcoal grey — almost pure black on the left and upper corners.
+A very subtle warm umber-ochre gradient drifting toward the right side only —
+barely perceptible, like the faintest candlelight reflected on a dark wall far behind.
+NOT bright. NOT a halo. NOT radiating outward. Just a whisper of warmth.
+The left side is pure black. The warmth is only a ghost on the right.
+NO curtains. NO walls. NO objects. Pure atmospheric darkness.`;
 
   const paintingStyle = `
 PAINTING STYLE:
