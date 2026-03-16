@@ -1,5 +1,6 @@
-// realeza.js — V4.2
+// realeza.js — V4.3
 // Fix: orden correcto cushion → costume, sin mezcla de bloques
+// V4.3: paintingStyle elevado — técnica de óleo, sin render digital, pelaje en capas
 
 const { pick } = require('../utils/pick');
 
@@ -121,14 +122,21 @@ module.exports = function realezaStyle(numSubjects, isGroup, genero) {
   const paintingStyle = [
     "PAINTING STYLE:",
     "17th century Imperial court portrait — the most opulent of the three styles.",
-    "Museum quality oil painting on canvas with visible craquelure.",
-    "Warm amber varnish patina — the richest, most golden tone.",
+    "This is a physical oil painting on aged canvas. Do NOT render this digitally.",
+    "Do NOT use smooth AI gradients. Do NOT produce a clean digital illustration.",
+    "FUR TECHNIQUE: paint a dark undertone base layer first.",
+    "Then add individual lighter fur strands on top with short directional brushstrokes",
+    "following the natural direction of hair growth. Fur has depth —",
+    "shadow underneath, individual hairs catching warm light on top.",
+    "Never smooth fur. Always layered, textured, painterly.",
+    "GOLD: all gold embroidery and chains are aged warm ochre — not bright yellow.",
+    "Individual thread detail visible on embroidery. Metallic but muted.",
+    "Visible impasto brushwork on background. Canvas weave texture throughout.",
+    "Fine craquelure in dark areas and deep shadows — aged oil paint.",
     "Chiaroscuro from upper left — dramatic contrast, maximum velvet depth.",
-    "Impasto on the background. Smooth luminous rendering of the animal's face.",
-    "Gold embroidery painted with individual thread detail and specular highlights.",
-    "Muted but rich palette: deep crimson or royal blue, burnt gold, warm ivory, umber.",
-    "Photorealistic animal face and fur. Zero digital artifacts.",
-    "Every element must feel heavy, real, expensive. This is royalty.",
+    "Muted but rich palette: deep crimson or royal blue, aged gold, warm ivory, umber.",
+    "Every element must feel heavy, real, expensive — like a painting in a museum.",
+    "Zero digital artifacts. Zero smooth gradients.",
   ].join("\n");
 
   return [background, variante.cushion, variante.costume, paintingStyle].join("\n\n");
