@@ -1,7 +1,8 @@
-// barroco.js — V4.1
+// barroco.js — V4.2
 // The Classic Portrait — Baroque Dramatic
 // 3 color variants picked randomly per generation
 // V4.1: paintingStyle elevado — técnica de óleo, sin render digital, pelaje en capas
+// V4.2: física de tela y técnica de material específica por variante
 
 const { pick } = require('../utils/pick');
 
@@ -17,6 +18,10 @@ Sides billow outward — wider than the animal's body.
 The animal's front paws hang over the FRONT EDGE of the cushion —
 paws drape down over the front lip, slightly below the cushion surface.
 Paws do NOT rest flat on top. They fall over the edge — relaxed weight.
+VELVET TECHNIQUE: paint the nap direction — long directional strokes
+following the fabric grain. Bright highlight on the top surface where light
+strikes directly. Deep shadow on the front face and side panels.
+The velvet transitions from ochre-gold in light to deep warm brown in shadow.
 TRIM: Twisted gold rope cord along the bottom. One large gold tassel at front center.
 LEDGE: Simple flat grey stone beneath — clean, no carvings, no reflection.`,
 
@@ -24,9 +29,17 @@ LEDGE: Simple flat grey stone beneath — clean, no carvings, no reflection.`,
 ERMINE MANTLE:
 White fur shoulder mantle, small evenly-distributed black spots.
 Drapes over the back and shoulders — animal's chest and paws fully visible.
-Pink and gold lace trim along the front border.
+ERMINE TECHNIQUE: individual short white fur strands painted with fine
+directional brushstrokes. Not smooth — each hair has direction and slight shadow.
+The black spots have soft edges — painted, not stamped.
+Pink and gold lace trim along the front border — individual lace thread detail visible.
 CAPE: Deep CRIMSON velvet — falls behind and to one side only.
-NOT in front or on sides. Deep dramatic fold shadows.
+CAPE PHYSICS: the folds are irregular and asymmetric — real gravity pulling the
+fabric down. No two folds are the same width. Deep shadow carved into each fold.
+The velvet absorbs light — matte surface, only the highest fold edges catch light.
+NOT in front or on sides.
+TRANSITION: where the ermine meets the animal's fur — paint both materials
+blending naturally at the boundary. No hard edge. No paste-on effect.
 Double gold chain on chest against the animal's own fur.`,
   },
 
@@ -40,6 +53,10 @@ Sides billow outward — wider than the animal's body.
 The animal's front paws hang over the FRONT EDGE of the cushion —
 paws drape down over the front lip, slightly below the cushion surface.
 Paws do NOT rest flat on top. They fall over the edge — relaxed weight.
+VELVET TECHNIQUE: paint the nap direction — long directional strokes
+following the fabric grain. Bright highlight on the top surface where light
+strikes directly. Deep shadow on the front face and side panels.
+The velvet transitions from ochre-gold in light to deep warm brown in shadow.
 TRIM: Twisted gold rope cord along the bottom. One large gold tassel at front center.
 LEDGE: Simple flat grey stone beneath — clean, no carvings, no reflection.`,
 
@@ -47,9 +64,17 @@ LEDGE: Simple flat grey stone beneath — clean, no carvings, no reflection.`,
 ERMINE MANTLE:
 White fur shoulder mantle, small evenly-distributed black spots.
 Drapes over the back and shoulders — animal's chest and paws fully visible.
-Pink and gold lace trim along the front border.
+ERMINE TECHNIQUE: individual short white fur strands painted with fine
+directional brushstrokes. Not smooth — each hair has direction and slight shadow.
+The black spots have soft painted edges — not stamped, not perfect circles.
+Pink and gold lace trim along the front border — individual thread detail visible.
 CAPE: Deep DARK BURGUNDY velvet — almost black-red in the deep shadows.
 Falls behind and to one side only. NOT in front or on sides.
+CAPE PHYSICS: heavy fabric with real gravitational weight. The folds collapse
+unevenly — wide folds next to narrow ones. The deepest folds are near-black.
+Only the very edge of each fold catches any light at all.
+TRANSITION: where the ermine meets the animal's fur — paint both materials
+blending naturally at the boundary. No hard edge. No paste-on effect.
 Heavy dramatic fold shadows — the fabric has real weight.
 Double gold chain on chest against the animal's own fur.`,
   },
@@ -65,6 +90,9 @@ Sides billow outward — wider than the animal's body.
 The animal's front paws hang over the FRONT EDGE of the cushion —
 paws drape down over the front lip, slightly below the cushion surface.
 Paws do NOT rest flat on top. They fall over the edge — relaxed weight.
+VELVET TECHNIQUE: long directional brushstrokes following the nap.
+The top surface catches warm amber light — bronze and olive tones visible.
+The sides fall into deep cool shadow — almost brown-black at the bottom.
 TRIM: Dark gold rope cord along the bottom. One large gold tassel at front center.
 LEDGE: Simple flat grey stone beneath — clean, no carvings.`,
 
@@ -72,10 +100,19 @@ LEDGE: Simple flat grey stone beneath — clean, no carvings.`,
 ERMINE MANTLE:
 White fur shoulder mantle, small evenly-distributed black spots.
 Drapes over the back and shoulders — animal's chest and paws fully visible.
-Gold and ivory lace trim along the front border.
+ERMINE TECHNIQUE: individual short white fur strands with fine directional
+brushstrokes. The fur catches warm light on top, cool shadow underneath.
+Not smooth — textured, physical, painted hair by hair in the light areas.
+The black spots are soft-edged and slightly irregular — naturally painted.
+Gold and ivory lace trim along the front border — visible individual threads.
 CAPE: Deep MIDNIGHT BLUE velvet — rich dark blue with blue-black depth in shadows.
 Falls behind and to one side only. NOT in front or on sides.
-Deep dramatic fold shadows — the fabric absorbs the light.
+CAPE PHYSICS: the midnight blue velvet is the heaviest fabric — it falls in
+long deep folds with maximum shadow. The color shifts from deep cobalt in light
+to near-black in shadow. Folds are wide and dramatic, irregular in spacing.
+TRANSITION: where the ermine meets the animal's fur — paint both materials
+blending naturally at the boundary. No hard edge. No paste-on effect.
+Deep dramatic fold shadows — the fabric absorbs the light completely.
 Double gold chain on chest against the animal's own fur.`,
   },
 
