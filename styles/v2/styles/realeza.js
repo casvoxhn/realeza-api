@@ -1,174 +1,179 @@
-// renacimiento.js — V4.4
-// V4.4: ledge cambiado a antepecho delgado de piedra — exterior flamenco
+// realeza.js — V4.7
+// V4.7: ledge reemplazado por superficie de tela drapeada de satén
 
 const { pick } = require('../utils/pick');
 
 const VARIANTES = [
 
-  // ── VARIANTE 1: Gris oscuro + Borgoña-café ────────────────────────────────
+  // ── VARIANTE 1: Carmesí + Bordado dorado ──────────────────────────────────
   {
-    cushion: `
-CUSHION — paint with full detail:
-A large DARK GREY velvet cushion — deep charcoal tone with subtle warm undertones.
-SHAPE: nearly square — width and height almost equal. Not wide and flat.
-SIZE: occupies approximately 30-35% of the canvas height. Proportional — the animal is the protagonist.
-Heavily stuffed and plump. Top surface bulges upward generously in the center.
-Sides fall naturally with slight outward curve — contained, not wider than the animal's body.
-The animal's front paws hang over the FRONT EDGE of the cushion —
-paws drape down over the front lip, slightly below the cushion surface.
-Paws do NOT rest flat on top. They fall over the edge — natural weight.
-VELVET TECHNIQUE: long directional brushstrokes following the nap direction.
-Top surface: warm charcoal catching the horizon light — subtle warm undertone.
-Front face and sides: deep cool shadow, near-black at the bottom edge.
-The light-to-shadow graduation is dramatic — the fabric has real physical depth.
-TRIM: Twisted gold rope cord along the bottom. One gold tassel at front center.
-BASE: A thin flat stone parapet edge — muted grey, slightly weathered.
-Very slim — just a narrow horizontal band beneath the cushion tassel.
-Suggests an outdoor balcony or window ledge. Consistent with Flemish portraiture.`,
+    cushion: [
+      "CUSHION — paint with extraordinary detail:",
+      "A large DEEP CRIMSON velvet cushion — heavily stuffed and plump.",
+      "SHAPE: nearly square — width and height almost equal. Not wide and flat.",
+      "SIZE: occupies approximately 30-35% of the canvas height. Proportional — the animal is the protagonist.",
+      "Top surface bulges dramatically upward in the center.",
+      "Sides fall naturally with slight outward curve — contained, not wider than the animal's body.",
+      "The animal's front paws hang over the FRONT EDGE of the cushion —",
+      "paws drape down over the front lip, slightly below the cushion surface.",
+      "Paws do NOT rest flat on top. They fall over the edge — natural weight.",
+      "VELVET TECHNIQUE: long directional brushstrokes following the nap.",
+      "Top surface: rich crimson catching warm light. Front face and sides: deep burgundy shadow.",
+      "TRIM: Thick twisted gold rope cord at the bottom.",
+      "One large ornate gold tassel at front center — elaborate, with visible threads.",
+      "BASE: A low draped fabric surface beneath the cushion — like a muted silk or satin cloth",
+      "covering a low pedestal, falling softly over the edges in gentle folds.",
+      "Same dark muted tone as the background — barely visible, minimal height.",
+      "Just enough to elevate the cushion slightly above the canvas bottom.",
+    ].join("\n"),
 
-    costume: `
-ERMINE MANTLE:
-White fur shoulder mantle, small evenly-distributed black spots.
-Drapes over the back and shoulders — animal's chest and paws fully visible.
-ERMINE TECHNIQUE: individual short white fur strands painted with fine
-directional brushstrokes. Warm ivory in the light, cool grey-white in shadow.
-Not smooth — each hair has direction and slight shadow beneath it.
-The black spots have soft painted edges — irregular, not stamped.
-Cream-gold lace trim along the front border — individual thread detail visible.
-Elaborate floral embroidery along the cape edge: rose and vine motifs
-in terracotta, cream and gold thread — key feature of this style.
-Individual embroidery stitches visible — raised slightly above the fabric.
-CAPE: Deep DARK BURGUNDY-BROWN velvet — darker and richer than crimson.
-Falls heavily behind and to one side. NOT in front or sides.
-CAPE PHYSICS: heavy fabric with real gravitational weight. The folds collapse
-unevenly — wide folds next to narrow ones, asymmetric and natural.
-The deepest folds are near-black. Only the very edge of each fold catches light.
-The floral embroidery continues onto the visible cape edge.
-TRANSITION: where the ermine meets the animal's fur — paint both materials
-blending naturally at the boundary. No hard edge. No paste-on effect.
-Double gold chain with a pendant medallion on the animal's chest.`,
+    costume: [
+      "ERMINE MANTLE:",
+      "Thick voluminous white fur mantle, small evenly-distributed black spots.",
+      "Drapes over the back and shoulders — animal's chest and paws fully visible.",
+      "ERMINE TECHNIQUE: individual short white fur strands painted with fine",
+      "directional brushstrokes. Not smooth — each hair has direction and shadow.",
+      "The fur catches warm light on top, cool blue-white in shadow underneath.",
+      "The black spots have soft painted edges — not stamped, slightly irregular.",
+      "Rich pink and gold lace trim along the border — individual lace thread detail visible.",
+      "A decorative gold clasp at the chest closure point.",
+      "CAPE: Deep BURGUNDY-CRIMSON velvet — falls behind and to one side only.",
+      "CAPE PHYSICS: heavy velvet with real gravitational weight. Folds collapse",
+      "unevenly — wide folds next to narrow ones, asymmetric and natural.",
+      "The deepest folds are near-black. Only the very edge of each fold catches light.",
+      "GOLD ARABESQUE EMBROIDERY along the cape's visible edge — scrolling botanical motifs.",
+      "NOT in front or on sides. Maximum velvet richness — deep dramatic fold shadows.",
+      "TRANSITION: where the ermine meets the animal's fur — paint both materials",
+      "blending naturally at the boundary. No hard edge. No paste-on effect.",
+      "Gold MEDALLION pendant on the animal's chest — centered, prominent.",
+      "The medallion has a green gemstone catching the warm light.",
+    ].join("\n"),
   },
 
-  // ── VARIANTE 2: Gris azulado + Verde bosque ───────────────────────────────
+  // ── VARIANTE 2: Borgoña profundo + Bordado dorado ─────────────────────────
   {
-    cushion: `
-CUSHION — paint with full detail:
-A large BLUE-GREY velvet cushion — cool slate tone, like storm clouds catching pale light.
-SHAPE: nearly square — width and height almost equal. Not wide and flat.
-SIZE: occupies approximately 30-35% of the canvas height. Proportional — the animal is the protagonist.
-Heavily stuffed and plump. Top surface bulges upward generously in the center.
-Sides fall naturally with slight outward curve — contained, not wider than the animal's body.
-The animal's front paws hang over the FRONT EDGE of the cushion —
-paws drape down over the front lip, slightly below the cushion surface.
-Paws do NOT rest flat on top. They fall over the edge — natural weight.
-VELVET TECHNIQUE: long directional brushstrokes following the nap direction.
-Top surface: cool slate-blue catching pale diffused light from the stormy sky.
-Front face and sides: deep blue-grey shadow, almost slate-black at the bottom.
-The cool tone of the cushion echoes the stormy sky above — unified palette.
-TRIM: Twisted silver-gold rope cord along the bottom. One gold tassel at front center.
-BASE: A thin flat stone parapet edge — muted grey, slightly weathered.
-Very slim — just a narrow horizontal band beneath the cushion tassel.
-Suggests an outdoor balcony or window ledge. Consistent with Flemish portraiture.`,
+    cushion: [
+      "CUSHION — paint with extraordinary detail:",
+      "A large DEEP BURGUNDY velvet cushion — dark wine red, almost black in the deepest shadows.",
+      "SHAPE: nearly square — width and height almost equal. Not wide and flat.",
+      "SIZE: occupies approximately 30-35% of the canvas height. Proportional — the animal is the protagonist.",
+      "Massively stuffed — top surface bulges dramatically upward in the center.",
+      "Sides fall naturally with slight outward curve — contained, not wider than the animal's body.",
+      "The animal's front paws hang over the FRONT EDGE of the cushion —",
+      "paws drape down over the front lip, slightly below the cushion surface.",
+      "Paws do NOT rest flat on top. They fall over the edge — natural weight.",
+      "VELVET TECHNIQUE: long directional brushstrokes following the nap.",
+      "Top surface: deep burgundy-wine in light. Front face and sides: near-black in shadow.",
+      "TRIM: Thick twisted gold rope cord at the bottom.",
+      "One large ornate gold tassel at front center — elaborate, prominent.",
+      "BASE: A low draped fabric surface beneath the cushion — like a muted silk or satin cloth",
+      "covering a low pedestal, falling softly over the edges in gentle folds.",
+      "Same dark muted tone as the background — barely visible, minimal height.",
+      "Just enough to elevate the cushion slightly above the canvas bottom.",
+    ].join("\n"),
 
-    costume: `
-ERMINE MANTLE:
-White fur shoulder mantle, small evenly-distributed black spots.
-Drapes over the back and shoulders — animal's chest and paws fully visible.
-ERMINE TECHNIQUE: individual short white fur strands painted with fine
-directional brushstrokes. Cool white in light, blue-grey in shadow.
-Not smooth — textured, physical, painted hair by hair in the light areas.
-The black spots are soft-edged and slightly irregular — naturally painted.
-Silver and gold lace trim along the front border — individual threads visible.
-Elaborate floral embroidery: botanical motifs in sage green, cream and gold.
-Individual stitches slightly raised — tactile and real.
-CAPE: Deep FOREST GREEN velvet — rich, dark, like deep moss in shadow.
-Falls behind and to one side only. NOT in front or sides.
-CAPE PHYSICS: the forest green velvet is dense and heavy — it falls in
-long irregular folds. Wide folds collapse next to narrow ones.
-The deepest shadow in the folds is near-black-green. Only fold edges catch light.
-Green embroidery continues onto the visible cape edge.
-TRANSITION: where the ermine meets the animal's fur — paint both materials
-blending naturally at the boundary. No hard edge. No paste-on effect.
-Double gold chain with a pendant on the animal's chest.`,
+    costume: [
+      "ERMINE MANTLE:",
+      "Thick voluminous white fur mantle, small evenly-distributed black spots.",
+      "Drapes over the back and shoulders — animal's chest and paws fully visible.",
+      "ERMINE TECHNIQUE: individual short white fur strands painted with fine",
+      "directional brushstrokes. Warm light on top, cool shadow underneath.",
+      "Not smooth — textured, physical, painted hair by hair in the light areas.",
+      "The black spots are soft-edged and slightly irregular — naturally painted.",
+      "Gold lace trim along the border — rich and ornate, individual threads visible.",
+      "CAPE: Deep BURGUNDY velvet — same dark wine tone as the cushion.",
+      "CAPE PHYSICS: the folds are irregular and asymmetric — real gravity.",
+      "Wide folds collapse next to narrow ones. No two folds are the same.",
+      "The deepest shadow in the folds is near-black — the velvet absorbs all light.",
+      "GOLD ARABESQUE EMBROIDERY along the cape's visible edge — matching motifs.",
+      "Falls behind and to one side only. Heavy dramatic fold shadows.",
+      "TRANSITION: where the ermine meets the animal's fur — paint both materials",
+      "blending naturally at the boundary. No hard edge. No paste-on effect.",
+      "Gold MEDALLION pendant centered on the animal's chest.",
+      "The medallion has a sapphire blue gemstone catching the warm light.",
+    ].join("\n"),
   },
 
-  // ── VARIANTE 3: Azul pizarra + Borgoña ────────────────────────────────────
+  // ── VARIANTE 3: Azul real + Bordado dorado ────────────────────────────────
   {
-    cushion: `
-CUSHION — paint with full detail:
-A large SLATE BLUE velvet cushion — deep cool indigo-grey, rich and dignified.
-SHAPE: nearly square — width and height almost equal. Not wide and flat.
-SIZE: occupies approximately 30-35% of the canvas height. Proportional — the animal is the protagonist.
-Heavily stuffed and plump. Top surface bulges upward generously in the center.
-Sides fall naturally with slight outward curve — contained, not wider than the animal's body.
-The animal's front paws hang over the FRONT EDGE of the cushion —
-paws drape down over the front lip, slightly below the cushion surface.
-Paws do NOT rest flat on top. They fall over the edge — natural weight.
-VELVET TECHNIQUE: long directional brushstrokes following the nap direction.
-Top surface: pale cool indigo-grey catching the diffused sky light.
-Front face and sides: deep indigo shadow, near-black at the bottom fold.
-The nap direction is clearly visible — strokes reveal the fabric structure.
-TRIM: Twisted gold rope cord along the bottom. One gold tassel at front center.
-BASE: A thin flat stone parapet edge — muted grey, slightly weathered.
-Very slim — just a narrow horizontal band beneath the cushion tassel.
-Suggests an outdoor balcony or window ledge. Consistent with Flemish portraiture.`,
+    cushion: [
+      "CUSHION — paint with extraordinary detail:",
+      "A large ROYAL BLUE velvet cushion — deep, rich cobalt-navy, regal and commanding.",
+      "SHAPE: nearly square — width and height almost equal. Not wide and flat.",
+      "SIZE: occupies approximately 30-35% of the canvas height. Proportional — the animal is the protagonist.",
+      "Massively stuffed — top surface bulges dramatically upward in the center.",
+      "Sides fall naturally with slight outward curve — contained, not wider than the animal's body.",
+      "The animal's front paws hang over the FRONT EDGE of the cushion —",
+      "paws drape down over the front lip, slightly below the cushion surface.",
+      "Paws do NOT rest flat on top. They fall over the edge — natural weight.",
+      "VELVET TECHNIQUE: long directional brushstrokes following the nap.",
+      "Top surface: deep cobalt catching warm amber light. Sides: blue-black in deep shadow.",
+      "TRIM: Thick twisted gold rope cord at the bottom.",
+      "One large ornate gold tassel at front center — the most elaborate of all.",
+      "BASE: A low draped fabric surface beneath the cushion — like a muted silk or satin cloth",
+      "covering a low pedestal, falling softly over the edges in gentle folds.",
+      "Same dark muted tone as the background — barely visible, minimal height.",
+      "Just enough to elevate the cushion slightly above the canvas bottom.",
+    ].join("\n"),
 
-    costume: `
-ERMINE MANTLE:
-White fur shoulder mantle, small evenly-distributed black spots.
-Drapes over the back and shoulders — animal's chest and paws fully visible.
-ERMINE TECHNIQUE: individual short white fur strands with fine directional
-brushstrokes. Warm ivory where the horizon light catches it, cool in shadow.
-Not smooth — each hair strand has direction, thickness and shadow.
-Black spots: soft painted edges, slightly irregular in size — never perfect circles.
-Gold lace trim along the front border with small floral details — threads visible.
-Floral embroidery along the cape: muted roses in dusty rose and gold.
-Individual embroidery stitches clearly visible — raised above the velvet.
-CAPE: Deep BURGUNDY velvet — warm wine red with brown undertones.
-Falls behind and to one side only. NOT in front or sides.
-CAPE PHYSICS: the burgundy velvet falls in asymmetric folds — no two folds
-the same width. The fabric has weight and presence. Deep shadow carved into
-each fold. Only the very edge of each fold catches any warm light.
-TRANSITION: where the ermine meets the animal's fur — paint both materials
-blending naturally at the boundary. No hard edge. No paste-on effect.
-Heavy dramatic fold shadows — the fabric has real presence.
-Double gold chain with a pendant on the animal's chest.`,
+    costume: [
+      "ERMINE MANTLE:",
+      "Thick voluminous white fur mantle, small evenly-distributed black spots.",
+      "Drapes over the back and shoulders — animal's chest and paws fully visible.",
+      "ERMINE TECHNIQUE: individual short white fur strands with fine directional",
+      "brushstrokes. Warm ivory in light, cool blue-white in shadow.",
+      "Not smooth — each hair strand has direction, thickness and shadow.",
+      "Black spots: soft painted edges, slightly irregular in size — never perfect.",
+      "Gold lace trim along the border — the richest, most ornate version.",
+      "Individual lace threads and floral motifs clearly visible.",
+      "CAPE: ROYAL BLUE velvet — deep cobalt richness, falls behind and to one side only.",
+      "CAPE PHYSICS: the royal blue velvet is heavy and commanding — it falls in",
+      "long dramatic folds. Each fold casts deep blue-black shadow on the next.",
+      "The folds are wide, irregular, asymmetric — natural fabric under gravity.",
+      "GOLD EMBROIDERY: fleurs-de-lis and star motifs along the cape edge.",
+      "NOT in front or on sides. Deep dramatic fold shadows.",
+      "TRANSITION: where the ermine meets the animal's fur — paint both materials",
+      "blending naturally at the boundary. No hard edge. No paste-on effect.",
+      "Gold MEDALLION pendant centered on the chest — the most prominent version.",
+      "The medallion has a ruby red gemstone — brilliant against the gold.",
+    ].join("\n"),
   },
 
 ];
 
-module.exports = function renacimientoStyle(numSubjects, isGroup, genero) {
+module.exports = function realezaStyle(numSubjects, isGroup, genero) {
 
   const variante = pick(VARIANTES);
 
-  const background = `
-BACKGROUND:
-A dramatic Renaissance sky — dark stormy clouds fill the upper portion.
-Painted in the style of 16th century Flemish portraiture.
-Heavy, turbulent, dark grey-green clouds with deep shadows between the masses.
-CLOUD TECHNIQUE: loose expressive brushstrokes — each cloud mass has visible
-paint direction. The clouds are NOT smooth. Individual brushmarks visible.
-A break of pale golden-cream light on the LEFT horizon — warm and luminous.
-The horizon light comes from below-left — it bathes the animal from that direction.
-A hint of teal-blue sky visible through the cloud break on the right.
-NO solid dark wall. The sky fills the upper 40% of the canvas.`;
+  const background = [
+    "BACKGROUND:",
+    "Near-black charcoal grey — almost pure black on the left and upper corners.",
+    "A very subtle warm umber-ochre gradient drifting toward the right side only —",
+    "barely perceptible, like the faintest candlelight reflected on a dark wall far behind.",
+    "NOT bright. NOT a halo. NOT radiating outward. Just a whisper of warmth.",
+    "The left side is pure black. The warmth is only a ghost on the right.",
+    "NO curtains. NO walls. NO objects. Pure atmospheric darkness.",
+  ].join("\n");
 
-  const paintingStyle = `
-PAINTING STYLE:
-16th century Renaissance Flemish oil painting. Do NOT render this digitally.
-Do NOT use smooth AI gradients. Do NOT produce a clean digital illustration.
-FUR TECHNIQUE: paint a dark undertone base layer first.
-Then add individual lighter fur strands on top with short directional brushstrokes
-following the natural direction of hair growth. Fur has depth —
-shadow underneath, individual hairs catching the warm horizon light on top.
-Never smooth fur. Always layered, textured, painterly.
-GOLD: all chains and trim are aged warm ochre — not bright yellow. Metallic but muted.
-Sfumato blending on face transitions — soft edges between light and shadow on the face.
-Visible canvas texture and fine craquelure throughout — most visible in dark areas.
-Warm muted palette unified by a thin golden glaze over the whole composition.
-Loose expressive brushwork for clouds. Directional strokes on all fabric.
-Every element must feel physical, aged, painted — like a Flemish master painting.
-Zero digital artifacts. Zero smooth gradients.`;
+  const paintingStyle = [
+    "PAINTING STYLE:",
+    "17th century Imperial court portrait — the most opulent of the three styles.",
+    "This is a physical oil painting on aged canvas. Do NOT render this digitally.",
+    "Do NOT use smooth AI gradients. Do NOT produce a clean digital illustration.",
+    "FUR TECHNIQUE: paint a dark undertone base layer first.",
+    "Then add individual lighter fur strands on top with short directional brushstrokes",
+    "following the natural direction of hair growth. Fur has depth —",
+    "shadow underneath, individual hairs catching warm light on top.",
+    "Never smooth fur. Always layered, textured, painterly.",
+    "GOLD: all gold embroidery and chains are aged warm ochre — not bright yellow.",
+    "Individual thread detail visible on embroidery. Metallic but muted.",
+    "Visible impasto brushwork on background. Canvas weave texture throughout.",
+    "Fine craquelure in dark areas and deep shadows — aged oil paint.",
+    "Chiaroscuro from upper left — dramatic contrast, maximum velvet depth.",
+    "Muted but rich palette: deep crimson or royal blue, aged gold, warm ivory, umber.",
+    "Every element must feel heavy, real, expensive — like a painting in a museum.",
+    "Zero digital artifacts. Zero smooth gradients.",
+  ].join("\n");
 
-  return [background, variante.cushion, variante.costume, paintingStyle].join('\n');
+  return [background, variante.cushion, variante.costume, paintingStyle].join("\n\n");
 };
