@@ -1,16 +1,12 @@
-// barroco.js — V4.4
+// barroco.js — V4.5
 // The Classic Portrait — Baroque Dramatic
-// 3 color variants picked randomly per generation
-// V4.1: paintingStyle elevado — técnica de óleo, sin render digital, pelaje en capas
-// V4.2: física de tela y técnica de material específica por variante
-// V4.3: cushion sides proporcionados — no más ancho que el animal
-// V4.4: cushion casi cuadrado, ocupa 30-35% del canvas height
+// V4.5: ledge eliminado — fondo oscuro absorbe la base del cojín
 
 const { pick } = require('../utils/pick');
 
 const VARIANTES = [
 
-  // ── VARIANTE 1: Dorado + Carmesí (el clásico) ─────────────────────────────
+  // ── VARIANTE 1: Dorado + Carmesí ──────────────────────────────────────────
   {
     cushion: `
 CUSHION — paint with full detail:
@@ -27,7 +23,8 @@ following the fabric grain. Bright highlight on the top surface where light
 strikes directly. Deep shadow on the front face and side panels.
 The velvet transitions from ochre-gold in light to deep warm brown in shadow.
 TRIM: Twisted gold rope cord along the bottom. One large gold tassel at front center.
-LEDGE: Simple flat grey stone beneath — clean, no carvings, no reflection.`,
+BASE: The bottom of the cushion fades naturally into the dark background —
+no ledge, no stone, no surface. The darkness absorbs the base completely.`,
 
     costume: `
 ERMINE MANTLE:
@@ -64,7 +61,8 @@ following the fabric grain. Bright highlight on the top surface where light
 strikes directly. Deep shadow on the front face and side panels.
 The velvet transitions from ochre-gold in light to deep warm brown in shadow.
 TRIM: Twisted gold rope cord along the bottom. One large gold tassel at front center.
-LEDGE: Simple flat grey stone beneath — clean, no carvings, no reflection.`,
+BASE: The bottom of the cushion fades naturally into the dark background —
+no ledge, no stone, no surface. The darkness absorbs the base completely.`,
 
     costume: `
 ERMINE MANTLE:
@@ -102,7 +100,8 @@ VELVET TECHNIQUE: long directional brushstrokes following the nap.
 The top surface catches warm amber light — bronze and olive tones visible.
 The sides fall into deep cool shadow — almost brown-black at the bottom.
 TRIM: Dark gold rope cord along the bottom. One large gold tassel at front center.
-LEDGE: Simple flat grey stone beneath — clean, no carvings.`,
+BASE: The bottom of the cushion fades naturally into the dark background —
+no ledge, no stone, no surface. The darkness absorbs the base completely.`,
 
     costume: `
 ERMINE MANTLE:
