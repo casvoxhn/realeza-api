@@ -1,6 +1,7 @@
-// server.js — V16.5
-// Fix: timeout 180s + referencias eliminadas (prompt ya es suficientemente descriptivo)
-// Fix V16.5: deduplicación de requests, timeout Express, keep-alive headers
+// server.js — V16.6
+// Fix: timeout 180s + referencias eliminadas
+// Fix V16.5: deduplicación, timeout Express, keep-alive
+// Fix V16.6: in-memory job queue — soporta usuarios simultáneos sin Redis
 
 const express = require('express');
 const cors = require('cors');
@@ -16,18 +17,32 @@ const getParejasPrompt  = require('./parejas');
 const getRetratosPrompt = require('./retratos');
 const getMujerPrompt    = require('./mujer');
 
-const app    = express();
-const PORT   = process.env.PORT || 3000;
+const app  = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(cors({ origin: '*' }));
 app.use(express.json({ limit: '100mb' }));
 
-const supabase   = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-const genAI      = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
-const MODEL_ID   = "gemini-3.1-flash-image-preview";
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+const genAI    = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+const MODEL_ID = "gemini-3.1-flash-image-preview";
 
-// ── Deduplicación: evita que el mismo hash se procese dos veces simultáneamente
-const activeRequests = new Set();
+// ── JOB QUEUE ─────────────────────────────────────────────────────────────────
+// Cada job tiene: { status, imageUrl, error, createdAt }
+// Status: 'pending' | 'processing' | 'done' | 'error'
+const jobs = new Map();
+
+// Limpieza automática de jobs viejos cada 10 minutos (evita memory leak)
+setInterval(() => {
+  const cutoff = Date.now() - 30 * 60 * 1000; // 30 minutos
+  for (const [id, job] of jobs.entries()) {
+    if (job.createdAt < cutoff) jobs.delete(id);
+  }
+}, 10 * 60 * 1000);
+
+function generateJobId() {
+  return crypto.randomBytes(12).toString('hex');
+}
 
 function hashImagen(base64) {
   return crypto.createHash('md5').update(base64.slice(0, 500)).digest('hex').slice(0, 8);
@@ -41,38 +56,21 @@ async function uploadBufferToSupabase(buffer, prefix) {
   return data.publicUrl;
 }
 
-app.post('/generate', async (req, res) => {
+// ── WORKER: procesa el job en background ─────────────────────────────────────
+async function processJob(jobId, { images, style, category, gender }) {
   const startTotal = Date.now();
+  const imgHash    = hashImagen(images[0]);
 
-  // ── Keep-alive: evita que browsers/proxies corten la conexión en ~30-60s ──
-  res.setHeader('Connection', 'keep-alive');
-  res.setHeader('Keep-Alive', 'timeout=180');
-
-  // ── Timeout de Express: cierra limpiamente si no responde en 175s ──────────
-  res.setTimeout(175000, () => {
-    console.error(`❌ V16.5 EXPRESS TIMEOUT`);
-    if (!res.headersSent) {
-      res.status(504).json({ success: false, error: 'Request timeout — intenta de nuevo.' });
-    }
-  });
+  jobs.set(jobId, { ...jobs.get(jobId), status: 'processing' });
 
   try {
-    const { images, style, category, gender } = req.body;
     const numSubjects     = images.length;
     const isGroup         = numSubjects > 1;
     const currentCategory = category || 'mascota';
     const hasGender       = gender && (gender === 'masculine' || gender === 'feminine');
-    const imgHash         = hashImagen(images[0]);
-
-    // ── Deduplicación: rechaza si ya hay una generación activa con el mismo hash
-    if (activeRequests.has(imgHash)) {
-      console.warn(`⚠️ V16.5 DUPLICATE | hash:${imgHash} — ignorado`);
-      return res.status(429).json({ success: false, error: 'Generación en progreso, espera un momento.' });
-    }
-    activeRequests.add(imgHash);
 
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`🚀 V16.5 START | hash:${imgHash} | cat:${currentCategory} | style:${style} | gender:${hasGender ? gender : 'neutral'} | sujetos:${numSubjects}`);
+    console.log(`🚀 V16.6 START | job:${jobId} | hash:${imgHash} | cat:${currentCategory} | style:${style} | sujetos:${numSubjects}`);
 
     const originalUrls = await Promise.all(
       images.map(async (img, i) => {
@@ -93,7 +91,6 @@ app.post('/generate', async (req, res) => {
         imgHash,
       });
       console.log(`\n📝 PROMPT | hash:${imgHash}\n${'─'.repeat(40)}\n${promptText}\n${'─'.repeat(40)}\n`);
-
     } else {
       if (currentCategory === 'mujer')         promptText = getMujerPrompt(style, numSubjects, isGroup);
       else if (currentCategory === 'retratos') promptText = getRetratosPrompt(style, numSubjects, isGroup);
@@ -102,7 +99,6 @@ app.post('/generate', async (req, res) => {
       else if (currentCategory === 'familia')  promptText = getFamiliaPrompt(style, numSubjects, isGroup);
     }
 
-    // ── PARTES: solo la foto del cliente + el prompt ──────────────────────────
     const parts = [
       ...images.map(img => ({
         inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }
@@ -110,11 +106,7 @@ app.post('/generate', async (req, res) => {
       { text: promptText }
     ];
 
-    // ── GEMINI con timeout de 180s ────────────────────────────────────────────
-    const model   = genAI.getGenerativeModel(
-      { model: MODEL_ID },
-      { timeout: 180000 }
-    );
+    const model   = genAI.getGenerativeModel({ model: MODEL_ID }, { timeout: 180000 });
     const tGemini = Date.now();
 
     const result = await model.generateContent({
@@ -138,30 +130,81 @@ app.post('/generate', async (req, res) => {
     const finalUrl    = await uploadBufferToSupabase(imageBuffer, prefix);
 
     const totalMs = Date.now() - startTotal;
-    console.log(`✅ V16.5 OK | hash:${imgHash} | ${prefix} | gemini:${geminiMs}ms | total:${totalMs}ms`);
+    console.log(`✅ V16.6 OK | job:${jobId} | hash:${imgHash} | gemini:${geminiMs}ms | total:${totalMs}ms`);
     console.log(`🖼️  RESULT  | ${finalUrl}`);
     originalUrls.forEach((url, i) => console.log(`📸 INPUT ${i+1}  | ${url}`));
     console.log(`${'='.repeat(60)}\n`);
 
-    res.json({ success: true, imageUrl: finalUrl, originalUrls });
+    jobs.set(jobId, {
+      ...jobs.get(jobId),
+      status:       'done',
+      imageUrl:     finalUrl,
+      originalUrls: originalUrls,
+    });
 
   } catch (error) {
     const totalMs = Date.now() - startTotal;
-    console.error(`❌ V16.5 ERROR | ${totalMs}ms | ${error.message}`);
-    if (!res.headersSent) {
-      res.status(500).json({ success: false, error: error.message });
-    }
-  } finally {
-    // ── Siempre liberar el hash al terminar, sea éxito o error ───────────────
-    const imgHash = hashImagen(req.body?.images?.[0] || '');
-    activeRequests.delete(imgHash);
+    console.error(`❌ V16.6 ERROR | job:${jobId} | ${totalMs}ms | ${error.message}`);
+    jobs.set(jobId, { ...jobs.get(jobId), status: 'error', error: error.message });
   }
+}
+
+// ── POST /generate — retorna jobId inmediatamente ─────────────────────────────
+app.post('/generate', (req, res) => {
+  const { images, style, category, gender } = req.body;
+
+  if (!images || images.length === 0) {
+    return res.status(400).json({ success: false, error: 'No images provided.' });
+  }
+
+  const jobId = generateJobId();
+  jobs.set(jobId, { status: 'pending', createdAt: Date.now() });
+
+  // Lanza el trabajo en background — no bloquea la respuesta
+  processJob(jobId, { images, style, category, gender });
+
+  console.log(`📋 JOB CREATED | ${jobId}`);
+  res.json({ success: true, jobId });
 });
 
+// ── GET /status/:jobId — polling endpoint ─────────────────────────────────────
+app.get('/status/:jobId', (req, res) => {
+  const { jobId } = req.params;
+  const job = jobs.get(jobId);
+
+  if (!job) {
+    return res.status(404).json({ success: false, error: 'Job not found.' });
+  }
+
+  if (job.status === 'done') {
+    return res.json({
+      success:      true,
+      status:       'done',
+      imageUrl:     job.imageUrl,
+      originalUrls: job.originalUrls,
+    });
+  }
+
+  if (job.status === 'error') {
+    return res.json({ success: false, status: 'error', error: job.error });
+  }
+
+  // pending o processing
+  res.json({ success: true, status: job.status });
+});
+
+// ── GET /health ───────────────────────────────────────────────────────────────
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', version: 'V16.5', model: MODEL_ID, uptime: process.uptime() });
+  res.json({
+    status:    'ok',
+    version:   'V16.6',
+    model:     MODEL_ID,
+    uptime:    process.uptime(),
+    activeJobs: [...jobs.values()].filter(j => j.status === 'processing').length,
+    totalJobs:  jobs.size,
+  });
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 V16.5 | Puerto:${PORT} | Modelo:${MODEL_ID}`);
+  console.log(`🚀 V16.6 | Puerto:${PORT} | Modelo:${MODEL_ID} | Queue: in-memory`);
 });
