@@ -1,5 +1,6 @@
-// server.js — V16.4
+// server.js — V16.5
 // Fix: timeout 180s + referencias eliminadas (prompt ya es suficientemente descriptivo)
+// Fix V16.5: deduplicación de requests, timeout Express, keep-alive headers
 
 const express = require('express');
 const cors = require('cors');
@@ -25,6 +26,9 @@ const supabase   = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_A
 const genAI      = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const MODEL_ID   = "gemini-3.1-flash-image-preview";
 
+// ── Deduplicación: evita que el mismo hash se procese dos veces simultáneamente
+const activeRequests = new Set();
+
 function hashImagen(base64) {
   return crypto.createHash('md5').update(base64.slice(0, 500)).digest('hex').slice(0, 8);
 }
@@ -39,6 +43,19 @@ async function uploadBufferToSupabase(buffer, prefix) {
 
 app.post('/generate', async (req, res) => {
   const startTotal = Date.now();
+
+  // ── Keep-alive: evita que browsers/proxies corten la conexión en ~30-60s ──
+  res.setHeader('Connection', 'keep-alive');
+  res.setHeader('Keep-Alive', 'timeout=180');
+
+  // ── Timeout de Express: cierra limpiamente si no responde en 175s ──────────
+  res.setTimeout(175000, () => {
+    console.error(`❌ V16.5 EXPRESS TIMEOUT`);
+    if (!res.headersSent) {
+      res.status(504).json({ success: false, error: 'Request timeout — intenta de nuevo.' });
+    }
+  });
+
   try {
     const { images, style, category, gender } = req.body;
     const numSubjects     = images.length;
@@ -47,8 +64,15 @@ app.post('/generate', async (req, res) => {
     const hasGender       = gender && (gender === 'masculine' || gender === 'feminine');
     const imgHash         = hashImagen(images[0]);
 
+    // ── Deduplicación: rechaza si ya hay una generación activa con el mismo hash
+    if (activeRequests.has(imgHash)) {
+      console.warn(`⚠️ V16.5 DUPLICATE | hash:${imgHash} — ignorado`);
+      return res.status(429).json({ success: false, error: 'Generación en progreso, espera un momento.' });
+    }
+    activeRequests.add(imgHash);
+
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`🚀 V16.4 START | hash:${imgHash} | cat:${currentCategory} | style:${style} | gender:${hasGender ? gender : 'neutral'} | sujetos:${numSubjects}`);
+    console.log(`🚀 V16.5 START | hash:${imgHash} | cat:${currentCategory} | style:${style} | gender:${hasGender ? gender : 'neutral'} | sujetos:${numSubjects}`);
 
     const originalUrls = await Promise.all(
       images.map(async (img, i) => {
@@ -86,7 +110,7 @@ app.post('/generate', async (req, res) => {
       { text: promptText }
     ];
 
-    // ── GEMINI con timeout de 120s ────────────────────────────────────────────
+    // ── GEMINI con timeout de 180s ────────────────────────────────────────────
     const model   = genAI.getGenerativeModel(
       { model: MODEL_ID },
       { timeout: 180000 }
@@ -114,7 +138,7 @@ app.post('/generate', async (req, res) => {
     const finalUrl    = await uploadBufferToSupabase(imageBuffer, prefix);
 
     const totalMs = Date.now() - startTotal;
-    console.log(`✅ V16.4 OK | hash:${imgHash} | ${prefix} | gemini:${geminiMs}ms | total:${totalMs}ms`);
+    console.log(`✅ V16.5 OK | hash:${imgHash} | ${prefix} | gemini:${geminiMs}ms | total:${totalMs}ms`);
     console.log(`🖼️  RESULT  | ${finalUrl}`);
     originalUrls.forEach((url, i) => console.log(`📸 INPUT ${i+1}  | ${url}`));
     console.log(`${'='.repeat(60)}\n`);
@@ -123,15 +147,21 @@ app.post('/generate', async (req, res) => {
 
   } catch (error) {
     const totalMs = Date.now() - startTotal;
-    console.error(`❌ V16.4 ERROR | ${totalMs}ms | ${error.message}`);
-    res.status(500).json({ success: false, error: error.message });
+    console.error(`❌ V16.5 ERROR | ${totalMs}ms | ${error.message}`);
+    if (!res.headersSent) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  } finally {
+    // ── Siempre liberar el hash al terminar, sea éxito o error ───────────────
+    const imgHash = hashImagen(req.body?.images?.[0] || '');
+    activeRequests.delete(imgHash);
   }
 });
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', version: 'V16.4', model: MODEL_ID, uptime: process.uptime() });
+  res.json({ status: 'ok', version: 'V16.5', model: MODEL_ID, uptime: process.uptime() });
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 V16.4 | Puerto:${PORT} | Modelo:${MODEL_ID}`);
+  console.log(`🚀 V16.5 | Puerto:${PORT} | Modelo:${MODEL_ID}`);
 });
