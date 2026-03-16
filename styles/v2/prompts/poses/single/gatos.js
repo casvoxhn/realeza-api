@@ -1,6 +1,7 @@
-// poses/single/gatos.js — V2.0
+// poses/single/gatos.js — V2.1
 // Fix: proporciones naturales agregadas a todas las poses
 // Fix P3: eliminados bloques de capa/armiño duplicados (ya están en los estilos)
+// V2.1: "ledge" removido del framing — ya no existe ledge en los estilos
 
 const { pick } = require('../../../utils/pick');
 
@@ -25,7 +26,7 @@ same color and fur as the body. If not visible, omit it.
 FRAMING:
 Wide open composition — full body visible.
 The animal occupies the upper 55% of the canvas.
-The cushion and ledge occupy the lower 45%.
+The cushion occupies the lower 45%.
 Generous breathing room on all sides.`,
 
   // P1B — Cuerpo opuesto a la dirección de la cara
@@ -47,7 +48,7 @@ same color and fur as the body. If not visible, omit it.
 FRAMING:
 Wide open composition — full body visible.
 The animal occupies the upper 55% of the canvas.
-The cushion and ledge occupy the lower 45%.
+The cushion occupies the lower 45%.
 Generous breathing room on all sides.`,
 
   // P2 — Sentado erguido 3/4
@@ -66,7 +67,7 @@ same color and fur as the body. If not visible, omit it.
 FRAMING:
 Wide open composition — full sitting body visible.
 The animal occupies the upper 60% of the canvas.
-The cushion and ledge occupy the lower 40%.
+The cushion occupies the lower 40%.
 Generous breathing room on all sides.`,
 
   // P3 — Loaf
