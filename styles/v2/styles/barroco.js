@@ -1,6 +1,6 @@
-// barroco.js — V4.7
+// barroco.js — V4.8
 // The Classic Portrait — Baroque Dramatic
-// V4.7: cape con restricción explícita de longitud — no cortina, no piso
+// V4.8: cape fix — prenda sobre el animal, no cortina de fondo
 
 const { pick } = require('../utils/pick');
 
@@ -35,13 +35,12 @@ ERMINE TECHNIQUE: individual short white fur strands painted with fine
 directional brushstrokes. Not smooth — each hair has direction and slight shadow.
 The black spots have soft edges — painted, not stamped.
 Pink and gold lace trim along the front border — individual lace thread detail visible.
-CAPE: Deep CRIMSON velvet shoulder cape.
-SHORT garment — covers the back and shoulders only. Maximum length to mid-body.
-NOT a floor-length drape. NOT a curtain. NOT a backdrop.
-Falls behind and to one side only — never in front, never to the sides.
-CAPE PHYSICS: the folds are irregular and asymmetric — real gravity.
-No two folds are the same width. Deep shadow carved into each fold.
-The velvet absorbs light — matte surface, only fold edges catch light.
+CAPE: Deep CRIMSON velvet cape — worn by the animal, draped over its back.
+Attached to the ermine mantle at the shoulders.
+Flows naturally down from the animal's back and trails onto the cushion behind it.
+The cape is ON the animal — not a background curtain, not a wall hanging.
+The velvet fabric touches the animal's sides naturally where it drapes.
+Heavy dramatic fold shadows — real fabric weight pulling downward.
 TRANSITION: where the ermine meets the animal's fur — paint both materials
 blending naturally at the boundary. No hard edge. No paste-on effect.
 Double gold chain on chest against the animal's own fur.`,
@@ -76,13 +75,12 @@ ERMINE TECHNIQUE: individual short white fur strands painted with fine
 directional brushstrokes. Not smooth — each hair has direction and slight shadow.
 The black spots have soft painted edges — not stamped, not perfect circles.
 Pink and gold lace trim along the front border — individual thread detail visible.
-CAPE: Deep DARK BURGUNDY velvet shoulder cape.
-SHORT garment — covers the back and shoulders only. Maximum length to mid-body.
-NOT a floor-length drape. NOT a curtain. NOT a backdrop.
-Falls behind and to one side only — never in front, never to the sides.
-CAPE PHYSICS: heavy fabric with real gravitational weight. The folds collapse
-unevenly — wide folds next to narrow ones. The deepest folds are near-black.
-Only the very edge of each fold catches any light at all.
+CAPE: Deep DARK BURGUNDY velvet cape — worn by the animal, draped over its back.
+Attached to the ermine mantle at the shoulders.
+Flows naturally down from the animal's back and trails onto the cushion behind it.
+The cape is ON the animal — not a background curtain, not a wall hanging.
+The velvet fabric touches the animal's sides naturally where it drapes.
+Heavy dramatic fold shadows — the fabric has real weight pulling downward.
 TRANSITION: where the ermine meets the animal's fur — paint both materials
 blending naturally at the boundary. No hard edge. No paste-on effect.
 Double gold chain on chest against the animal's own fur.`,
@@ -118,13 +116,13 @@ brushstrokes. The fur catches warm light on top, cool shadow underneath.
 Not smooth — textured, physical, painted hair by hair in the light areas.
 The black spots are soft-edged and slightly irregular — naturally painted.
 Gold and ivory lace trim along the front border — visible individual threads.
-CAPE: Deep MIDNIGHT BLUE velvet shoulder cape.
-SHORT garment — covers the back and shoulders only. Maximum length to mid-body.
-NOT a floor-length drape. NOT a curtain. NOT a backdrop.
-Falls behind and to one side only — never in front, never to the sides.
-CAPE PHYSICS: the midnight blue velvet falls in long deep folds with maximum shadow.
+CAPE: Deep MIDNIGHT BLUE velvet cape — worn by the animal, draped over its back.
+Attached to the ermine mantle at the shoulders.
+Flows naturally down from the animal's back and trails onto the cushion behind it.
+The cape is ON the animal — not a background curtain, not a wall hanging.
+The velvet fabric touches the animal's sides naturally where it drapes.
 Color shifts from deep cobalt in light to near-black in shadow.
-Folds are wide and dramatic, irregular in spacing.
+Folds are wide and dramatic, irregular in spacing — real fabric weight.
 TRANSITION: where the ermine meets the animal's fur — paint both materials
 blending naturally at the boundary. No hard edge. No paste-on effect.
 Double gold chain on chest against the animal's own fur.`,
