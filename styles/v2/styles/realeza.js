@@ -1,5 +1,5 @@
-// realeza.js — V4.6
-// V4.6: cushion casi cuadrado, ocupa 30-35% del canvas height
+// realeza.js — V4.7
+// V4.7: ledge reemplazado por superficie de tela drapeada de satén
 
 const { pick } = require('../utils/pick');
 
@@ -21,7 +21,10 @@ const VARIANTES = [
       "Top surface: rich crimson catching warm light. Front face and sides: deep burgundy shadow.",
       "TRIM: Thick twisted gold rope cord at the bottom.",
       "One large ornate gold tassel at front center — elaborate, with visible threads.",
-      "LEDGE: Simple flat grey stone beneath — clean, no carvings.",
+      "BASE: A low draped fabric surface beneath the cushion — like a muted silk or satin cloth",
+      "covering a low pedestal, falling softly over the edges in gentle folds.",
+      "Same dark muted tone as the background — barely visible, minimal height.",
+      "Just enough to elevate the cushion slightly above the canvas bottom.",
     ].join("\n"),
 
     costume: [
@@ -63,7 +66,10 @@ const VARIANTES = [
       "Top surface: deep burgundy-wine in light. Front face and sides: near-black in shadow.",
       "TRIM: Thick twisted gold rope cord at the bottom.",
       "One large ornate gold tassel at front center — elaborate, prominent.",
-      "LEDGE: Simple flat grey stone beneath — clean, no carvings.",
+      "BASE: A low draped fabric surface beneath the cushion — like a muted silk or satin cloth",
+      "covering a low pedestal, falling softly over the edges in gentle folds.",
+      "Same dark muted tone as the background — barely visible, minimal height.",
+      "Just enough to elevate the cushion slightly above the canvas bottom.",
     ].join("\n"),
 
     costume: [
@@ -104,7 +110,10 @@ const VARIANTES = [
       "Top surface: deep cobalt catching warm amber light. Sides: blue-black in deep shadow.",
       "TRIM: Thick twisted gold rope cord at the bottom.",
       "One large ornate gold tassel at front center — the most elaborate of all.",
-      "LEDGE: Simple flat grey stone beneath — clean, no carvings.",
+      "BASE: A low draped fabric surface beneath the cushion — like a muted silk or satin cloth",
+      "covering a low pedestal, falling softly over the edges in gentle folds.",
+      "Same dark muted tone as the background — barely visible, minimal height.",
+      "Just enough to elevate the cushion slightly above the canvas bottom.",
     ].join("\n"),
 
     costume: [
