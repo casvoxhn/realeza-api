@@ -1,20 +1,19 @@
-// mascotas.js — V21.0
-// Conectado a la nueva estructura modular de prompts/
-// Poses separadas por especie + core reutilizable
+// mascotas.js — V21.1
+// Fix: eliminado ERMINE_BLOCK duplicado (ya está en los estilos)
+// Fix: patas PD3 sentado menos rígidas
 
 const { pick } = require('./utils/pick');
-const faceFirst  = require('./prompts/core/face_first');
-const faceCheck  = require('./prompts/core/face_check');
-const posasGatos = require('./prompts/poses/single/gatos');
+const faceFirst   = require('./prompts/core/face_first');
+const faceCheck   = require('./prompts/core/face_check');
+const posasGatos  = require('./prompts/poses/single/gatos');
 const posasPerros = require('./prompts/poses/single/perros');
-const posasOtros = require('./prompts/poses/single/otros');
-const poseMulti  = require('./prompts/poses/multi/mascotas');
+const posasOtros  = require('./prompts/poses/single/otros');
+const poseMulti   = require('./prompts/poses/multi/mascotas');
 
 const renacimientoStyle = require('./styles/renacimiento');
 const realezaStyle      = require('./styles/realeza');
 const barrocoStyle      = require('./styles/barroco');
 
-// ─── MAPA DE ESTILOS ──────────────────────────────────────────────────────────
 const styleMap = {
   renacimiento:          renacimientoStyle,
   barroco:               barrocoStyle,
@@ -29,31 +28,6 @@ const styleMap = {
   intelligent:           barrocoStyle,
 };
 
-// ─── DETECCIÓN DE ESPECIE POR PROMPT ─────────────────────────────────────────
-// Gemini lee la foto y elige el pool correcto
-const SPECIES_DETECTION = `Before choosing the pose, identify the species in Image 1:
-- If it is a CAT → use a cat pose
-- If it is a DOG → use a dog pose  
-- If it is another animal → use a natural pose appropriate for this species`;
-
-// ─── ERMINE BOUNDARY — aplica a todas las poses ───────────────────────────────
-const ERMINE_BLOCK = `ERMINE MANTLE:
-Sits on the shoulders only — does NOT compress the body.
-Drapes naturally with weight and softness.
-The animal's chest and front are fully visible below.
-White fur with small evenly-distributed black spots.
-Pink and gold lace trim along the visible border.
-The ermine is a SEPARATE garment — distinct from the animal's own coat.
-
-CAPE:
-Large dramatic velvet cape — falls ONLY behind and to one side.
-Creates rich backdrop of deep color.
-NOT in front. NOT on the sides. ONLY behind.
-Deep dramatic fold shadows.
-
-Double gold chain on chest against animal's own fur.`;
-
-// ─── EXPORT PRINCIPAL ─────────────────────────────────────────────────────────
 module.exports = function mascotas(estilo, numAnimales, isGroup, genero) {
   const numSubjects = Math.max(numAnimales || 1, isGroup ? 2 : 1);
   const styleKey    = (estilo || 'barroco').toLowerCase().replace(/\s+/g, '_');
@@ -62,9 +36,10 @@ module.exports = function mascotas(estilo, numAnimales, isGroup, genero) {
 
   // ── UN SOLO ANIMAL ────────────────────────────────────────────────────
   if (numSubjects === 1) {
-
-    // El prompt detecta la especie y elige la pose apropiada
-    const poseBlock = `${SPECIES_DETECTION}
+    const poseBlock = `Before choosing the pose, identify the species in Image 1:
+- If it is a CAT → use a cat pose
+- If it is a DOG → use a dog pose
+- If it is another animal → use a natural pose for this species
 
 IF CAT:
 ${posasGatos()}
@@ -75,7 +50,8 @@ ${posasPerros()}
 IF OTHER ANIMAL:
 ${posasOtros()}`;
 
-    return [faceFirst, poseBlock, ERMINE_BLOCK, styleBlock, faceCheck].join('\n\n');
+    // Orden limpio: face_first → pose → style → face_check
+    return [faceFirst, poseBlock, styleBlock, faceCheck].join('\n\n');
   }
 
   // ── MÚLTIPLES ANIMALES ────────────────────────────────────────────────
@@ -101,5 +77,5 @@ Compare each painted face against its source photo.
 Every animal must be recognizable. Correct any drift.
 4:5 portrait. 4K. High thinking mode.`;
 
-  return [multiFaceFirst, multiPoseBlock, ERMINE_BLOCK, styleBlock, multiFaceCheck].join('\n\n');
+  return [multiFaceFirst, multiPoseBlock, styleBlock, multiFaceCheck].join('\n\n');
 };
