@@ -1,10 +1,8 @@
 // styles/realeza.js — The Royal Portrait
-// Máxima opulencia, dorado intenso, joya elaborada, fondo con glow dorado
-
+// V2.0 — Aesthetic upgrade: painterly oil technique, desaturated opulence, aged canvas
 module.exports = function realezaStyle(gender) {
   return {
     role: [
-
       // ── IDENTIDAD — lo más importante ──────────────────────────────
       "IDENTITY LOCK — HIGHEST PRIORITY:",
       "Extract and transfer the exact face from the photo — same markings,",
@@ -13,53 +11,66 @@ module.exports = function realezaStyle(gender) {
       "The owner must recognize their pet immediately.",
       "Remove any collar, leash or accessory — replace with royal costume only.",
       "",
-
       // ── ILUMINACIÓN ────────────────────────────────────────────────
       "LIGHTING:",
-      "Warm golden light from upper left — richer and more opulent than Baroque.",
-      "The gold embroidery and jewels catch the light brilliantly.",
-      "Deep velvet shadows — maximum contrast between lit gold and dark velvet.",
-      "One sharp golden catchlight in each eye — regal and commanding.",
+      "Single warm amber-gold light source from upper left at 45 degrees.",
+      "Strong chiaroscuro — the lit side of the face is warm and bright,",
+      "the shadow side drops into near-darkness. No fill light. No softboxes.",
+      "One precise sharp catchlight in each eye — small, white, gives life.",
+      "The gold embroidery catches light with aged warm gleam — not bright shine.",
+      "Shadow areas are very deep — near black. This is not evenly lit.",
       "",
-
       // ── FONDO ──────────────────────────────────────────────────────
       "BACKGROUND:",
-      "Near-black on corners. Rich warm amber-gold gradient glowing behind",
-      "the head — more luminous than Baroque. Throne room feeling.",
-      "No walls, no objects, no architecture. Pure atmospheric darkness",
-      "with a golden aura — maximum opulence.",
+      "Deep near-black vignette consuming all four corners.",
+      "Warm amber-ochre atmospheric glow concentrated behind the head only.",
+      "The glow is subtle and warm — like candlelight through old varnish.",
+      "Loose visible brushstrokes throughout the background — NOT a smooth gradient.",
+      "Individual paint marks going in different directions — exactly like",
+      "a 17th century Dutch master portrait background.",
+      "No walls. No architecture. Pure atmospheric darkness with warm center glow.",
       "",
-
       // ── VESTIMENTA ─────────────────────────────────────────────────
       "COSTUME:",
-      "White ermine mantle with small evenly-distributed black spots —",
-      "classic royal ermine pattern. Drapes from behind the shoulders,",
-      "the ermine border frames the chest opening naturally.",
-      "Elaborate gold embroidery with floral motifs along the ermine border.",
-      "Deep royal blue velvet cape — sits behind the animal at shoulder level,",
-      "visible on both sides. NOT falling from above, NOT dominating any corner.",
-      "Deep luminous fold shadows on the royal blue velvet.",
-      "Ornate double gold chain with large gemstone medallion at chest center —",
-      "the jewel catches the light dramatically.",
+      "White ermine mantle — individual fur hairs visible, not smooth white.",
+      "Small evenly-distributed black spots on the ermine — classic royal pattern.",
+      "Drapes from behind the shoulders, ermine border frames the chest naturally.",
+      "Gold embroidery with floral motifs along the ermine border —",
+      "aged gold thread, not bright yellow. Warm tarnished gleam.",
+      "Deep burgundy-wine velvet cape — very dark, almost wine-black.",
+      "NOT bright red. NOT crimson. The velvet absorbs light — matte and heavy.",
+      "Sits behind the animal at shoulder level, visible on both sides.",
+      "NEVER in front. NEVER covering the face or chest.",
+      "Deep dramatic fold shadows carved into the velvet — real physical weight.",
+      "Ornate double gold chain at chest — aged gold, warm tone, not shiny.",
+      "Large gemstone medallion pendant — deep emerald or sapphire, catches light.",
       "",
-
       // ── COJÍN ──────────────────────────────────────────────────────
       "CUSHION:",
-      "Large generous deep burgundy velvet cushion — heavily stuffed, almost square.",
-      "Elaborate gold fringe trim along all edges. Large ornate gold tassels",
-      "at each corner. Stone ledge clearly visible below.",
-      "Cushion fills the lower third of canvas. Maximum richness and detail.",
+      "Large heavily-stuffed deep burgundy velvet cushion — almost square.",
+      "The same dark wine-burgundy as the cape — unified palette.",
+      "Directional velvet sheen — bright highlight on the top surface,",
+      "deep shadow falling on front face and sides.",
+      "Aged gold fringe trim along all edges — individual fringe strands visible.",
+      "One large ornate gold tassel at front center.",
+      "Stone ledge clearly visible below — plain flat grey, no decoration.",
       "",
-
-      // ── ESTILO PICTÓRICO ───────────────────────────────────────────
-      "PAINTING STYLE:",
-      "Grand royal portrait oil painting — maximum richness in every element.",
-      "Gold gleams. Velvet is deep and luxurious. Every surface has weight.",
-      "Photorealistic animal face with individual fur strands.",
-      "Canvas texture visible throughout. Museum quality.",
-      "Muted but opulent palette — royal blue, deep burgundy, gold, ivory.",
-      "Zero digital artifacts. Zero smooth gradients.",
-
+      // ── TÉCNICA PICTÓRICA ──────────────────────────────────────────
+      "PAINTING TECHNIQUE:",
+      "This is a physical oil painting on canvas. Not a digital render.",
+      "Do NOT render this digitally. Do NOT use smooth AI gradients anywhere.",
+      "FUR: dark undertone base layer first.",
+      "Individual lighter fur strands painted on top with short directional",
+      "brushstrokes following the natural direction of hair growth.",
+      "Fur has depth — shadow underneath, individual hairs catching light on top.",
+      "VELVET: painted with long directional strokes. Nap direction visible.",
+      "BACKGROUND: loose expressive brushwork — strokes visible and intentional.",
+      "Fine craquelure throughout — most visible in dark areas and deep shadows.",
+      "Canvas weave texture visible under the paint in all areas.",
+      "Muted desaturated palette throughout — no vivid digital colors.",
+      "All reds are deep burgundy-wine. All golds are aged warm ochre.",
+      "The entire painting looks like it was executed in the 17th century",
+      "and has hung in a museum for 300 years.",
     ].join("\n")
   };
 };
