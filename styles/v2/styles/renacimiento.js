@@ -1,7 +1,9 @@
-// renacimiento.js — V4.1
+// renacimiento.js — V4.3
 // The Elegant Portrait — Renaissance Flemish
 // 3 color variants picked randomly per generation
 // V4.1: física de tela, técnica de armiño, transición animal→ropa, paintingStyle elevado
+// V4.2: cushion sides proporcionados — no más ancho que el animal
+// V4.3: cushion casi cuadrado, ocupa 30-35% del canvas height
 
 const { pick } = require('../utils/pick');
 
@@ -11,10 +13,11 @@ const VARIANTES = [
   {
     cushion: `
 CUSHION — paint with full detail:
-A large, extremely voluminous DARK GREY velvet cushion —
-deep charcoal tone with subtle warm undertones where light catches it.
-Heavily stuffed and plump. Top surface bulges upward generously.
-Sides billow outward — wider than the animal's body.
+A large DARK GREY velvet cushion — deep charcoal tone with subtle warm undertones.
+SHAPE: nearly square — width and height almost equal. Not wide and flat.
+SIZE: occupies approximately 30-35% of the canvas height. Proportional — the animal is the protagonist.
+Heavily stuffed and plump. Top surface bulges upward generously in the center.
+Sides fall naturally with slight outward curve — contained, not wider than the animal's body.
 The animal's front paws hang over the FRONT EDGE of the cushion —
 paws drape down over the front lip, slightly below the cushion surface.
 Paws do NOT rest flat on top. They fall over the edge — natural weight.
@@ -52,10 +55,11 @@ Double gold chain with a pendant medallion on the animal's chest.`,
   {
     cushion: `
 CUSHION — paint with full detail:
-A large, extremely voluminous BLUE-GREY velvet cushion —
-a cool slate tone, like storm clouds catching pale light.
-Heavily stuffed and plump. Top surface bulges upward generously.
-Sides billow outward — wider than the animal's body.
+A large BLUE-GREY velvet cushion — cool slate tone, like storm clouds catching pale light.
+SHAPE: nearly square — width and height almost equal. Not wide and flat.
+SIZE: occupies approximately 30-35% of the canvas height. Proportional — the animal is the protagonist.
+Heavily stuffed and plump. Top surface bulges upward generously in the center.
+Sides fall naturally with slight outward curve — contained, not wider than the animal's body.
 The animal's front paws hang over the FRONT EDGE of the cushion —
 paws drape down over the front lip, slightly below the cushion surface.
 Paws do NOT rest flat on top. They fall over the edge — natural weight.
@@ -92,10 +96,11 @@ Double gold chain with a pendant on the animal's chest.`,
   {
     cushion: `
 CUSHION — paint with full detail:
-A large, extremely voluminous SLATE BLUE velvet cushion —
-deep cool indigo-grey, rich and dignified.
-Heavily stuffed and plump. Top surface bulges upward generously.
-Sides billow outward — wider than the animal's body.
+A large SLATE BLUE velvet cushion — deep cool indigo-grey, rich and dignified.
+SHAPE: nearly square — width and height almost equal. Not wide and flat.
+SIZE: occupies approximately 30-35% of the canvas height. Proportional — the animal is the protagonist.
+Heavily stuffed and plump. Top surface bulges upward generously in the center.
+Sides fall naturally with slight outward curve — contained, not wider than the animal's body.
 The animal's front paws hang over the FRONT EDGE of the cushion —
 paws drape down over the front lip, slightly below the cushion surface.
 Paws do NOT rest flat on top. They fall over the edge — natural weight.
