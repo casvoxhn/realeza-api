@@ -1,10 +1,9 @@
 // styles/barroco.js — The Classic Portrait
 // Chiaroscuro dramático, Rembrandt, fondo muy oscuro, contrastes profundos
-
+// V2.0 — Aesthetic upgrade: desaturated palette, visible brushwork, fur underlayer, craquelure
 module.exports = function barrocoStyle(gender) {
   return {
     role: [
-
       // ── IDENTIDAD — lo más importante ──────────────────────────────
       "IDENTITY LOCK — HIGHEST PRIORITY:",
       "Extract and transfer the exact face from the photo — same markings,",
@@ -13,53 +12,56 @@ module.exports = function barrocoStyle(gender) {
       "The owner must recognize their pet immediately.",
       "Remove any collar, leash or accessory — replace with royal costume only.",
       "",
-
       // ── ILUMINACIÓN ────────────────────────────────────────────────
       "LIGHTING:",
       "Single warm amber-gold light source from upper left at 45 degrees.",
-      "Rembrandt chiaroscuro — bright illumination on the left side of the face,",
-      "deep shadow gradually falling on the right side.",
+      "Rembrandt chiaroscuro — strong illumination on the left side of the face,",
+      "deep shadow consuming 60-70% of the background. Almost no fill light.",
       "One sharp white specular catchlight in each eye — gives life and depth.",
-      "The warm coat shows ivory tones on the lit side, cool grey-blue in shadow.",
+      "The shadow side of the face drops into near-darkness — do not lighten it.",
       "",
-
       // ── FONDO ──────────────────────────────────────────────────────
       "BACKGROUND:",
-      "Near-black dark charcoal grey — nearly black on left corner.",
-      "Very subtle warm ochre gradient only directly behind the head.",
-      "Barely visible — almost imperceptible. No walls, no objects.",
+      "Deep black vignette at all corners bleeding inward.",
+      "Warm amber-ochre glow concentrated behind the head — center-right area only.",
+      "Loose visible brushstrokes in the background — NOT a smooth gradient.",
+      "Individual paint strokes clearly visible, going in different directions.",
       "Pure dark abstract background exactly like a 17th century Dutch master.",
+      "No walls, no objects. 80% of background in near-darkness.",
       "",
-
       // ── VESTIMENTA ─────────────────────────────────────────────────
       "COSTUME:",
       "White ermine mantle with small evenly-distributed black spots —",
       "classic royal ermine pattern. Drapes from behind the shoulders,",
       "the ermine border frames the chest opening naturally.",
       "Delicate pink and gold lace trim along the ermine border — clearly visible.",
-      "Deep crimson red velvet cape — sits behind the animal at shoulder level,",
-      "visible on both sides. NOT falling from above, NOT dominating any corner.",
-      "Deep dramatic fold shadows on the crimson velvet.",
+      "Deep burgundy-brown velvet cape — darker than crimson, almost wine-black.",
+      "Sits behind the animal at shoulder level, visible on both sides.",
+      "NOT falling from above, NOT dominating any corner.",
+      "Deep dramatic fold shadows on the velvet — muted, desaturated red tones.",
       "Double gold chain resting at chest center against the animal's own fur.",
       "",
-
       // ── COJÍN ──────────────────────────────────────────────────────
       "CUSHION:",
       "Large generous gold ochre velvet cushion — heavily stuffed, almost square.",
+      "Aged, muted gold tone — not bright yellow, closer to dark antique ochre.",
       "Braided rope trim along all edges. Single large gold tassel at front center.",
       "Stone ledge clearly visible below. Cushion fills the lower third of canvas.",
       "Directional velvet sheen — lighter where light hits, darker in folds.",
       "",
-
       // ── ESTILO PICTÓRICO ───────────────────────────────────────────
       "PAINTING STYLE:",
       "17th century Baroque oil painting. Style of Rembrandt and Frans Hals.",
+      "Muted, heavily desaturated palette throughout — no vivid digital colors.",
+      "All reds are deep burgundy-brown. All golds are aged ochre. Never bright.",
+      "FUR TECHNIQUE: dark undertone base layer first.",
+      "Individual lighter hair strands painted on top with directional brushstrokes",
+      "following natural hair growth. Never smooth — always layered and textured.",
       "Visible impasto brushstrokes on background and fabric.",
-      "Rich deep muted color palette — crimson, gold, ivory, deep ochre.",
-      "Photorealistic animal face with individual fur strands.",
-      "Canvas craquelure texture visible. Museum quality.",
-      "Deep luminous velvet shadows. Zero digital artifacts.",
-
+      "Fine craquelure throughout — most visible in dark areas and deep shadows.",
+      "Canvas weave texture visible under paint layers everywhere.",
+      "This must look like a physical aged oil painting hanging in a museum.",
+      "Zero digital artifacts. Zero smooth AI gradients.",
     ].join("\n")
   };
 };
