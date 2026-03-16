@@ -1,5 +1,5 @@
-// renacimiento.js — V4.4
-// V4.4: ledge cambiado a antepecho delgado de piedra — exterior flamenco
+// renacimiento.js — V4.5
+// V4.5: cape fix — prenda sobre el animal, no cortina de fondo
 
 const { pick } = require('../utils/pick');
 
@@ -20,7 +20,6 @@ Paws do NOT rest flat on top. They fall over the edge — natural weight.
 VELVET TECHNIQUE: long directional brushstrokes following the nap direction.
 Top surface: warm charcoal catching the horizon light — subtle warm undertone.
 Front face and sides: deep cool shadow, near-black at the bottom edge.
-The light-to-shadow graduation is dramatic — the fabric has real physical depth.
 TRIM: Twisted gold rope cord along the bottom. One gold tassel at front center.
 BASE: A thin flat stone parapet edge — muted grey, slightly weathered.
 Very slim — just a narrow horizontal band beneath the cushion tassel.
@@ -38,11 +37,12 @@ Cream-gold lace trim along the front border — individual thread detail visible
 Elaborate floral embroidery along the cape edge: rose and vine motifs
 in terracotta, cream and gold thread — key feature of this style.
 Individual embroidery stitches visible — raised slightly above the fabric.
-CAPE: Deep DARK BURGUNDY-BROWN velvet — darker and richer than crimson.
-Falls heavily behind and to one side. NOT in front or sides.
-CAPE PHYSICS: heavy fabric with real gravitational weight. The folds collapse
-unevenly — wide folds next to narrow ones, asymmetric and natural.
-The deepest folds are near-black. Only the very edge of each fold catches light.
+CAPE: Deep DARK BURGUNDY-BROWN velvet cape — worn by the animal, draped over its back.
+Attached to the ermine mantle at the shoulders.
+Flows naturally down from the animal's back and trails onto the cushion behind it.
+The cape is ON the animal — not a background curtain, not a wall hanging.
+The velvet fabric touches the animal's sides naturally where it drapes.
+Heavy dramatic fold shadows — real fabric weight pulling downward.
 The floral embroidery continues onto the visible cape edge.
 TRANSITION: where the ermine meets the animal's fur — paint both materials
 blending naturally at the boundary. No hard edge. No paste-on effect.
@@ -64,7 +64,6 @@ Paws do NOT rest flat on top. They fall over the edge — natural weight.
 VELVET TECHNIQUE: long directional brushstrokes following the nap direction.
 Top surface: cool slate-blue catching pale diffused light from the stormy sky.
 Front face and sides: deep blue-grey shadow, almost slate-black at the bottom.
-The cool tone of the cushion echoes the stormy sky above — unified palette.
 TRIM: Twisted silver-gold rope cord along the bottom. One gold tassel at front center.
 BASE: A thin flat stone parapet edge — muted grey, slightly weathered.
 Very slim — just a narrow horizontal band beneath the cushion tassel.
@@ -81,11 +80,12 @@ The black spots are soft-edged and slightly irregular — naturally painted.
 Silver and gold lace trim along the front border — individual threads visible.
 Elaborate floral embroidery: botanical motifs in sage green, cream and gold.
 Individual stitches slightly raised — tactile and real.
-CAPE: Deep FOREST GREEN velvet — rich, dark, like deep moss in shadow.
-Falls behind and to one side only. NOT in front or sides.
-CAPE PHYSICS: the forest green velvet is dense and heavy — it falls in
-long irregular folds. Wide folds collapse next to narrow ones.
-The deepest shadow in the folds is near-black-green. Only fold edges catch light.
+CAPE: Deep FOREST GREEN velvet cape — worn by the animal, draped over its back.
+Attached to the ermine mantle at the shoulders.
+Flows naturally down from the animal's back and trails onto the cushion behind it.
+The cape is ON the animal — not a background curtain, not a wall hanging.
+The velvet fabric touches the animal's sides naturally where it drapes.
+Heavy dramatic fold shadows — real fabric weight pulling downward.
 Green embroidery continues onto the visible cape edge.
 TRANSITION: where the ermine meets the animal's fur — paint both materials
 blending naturally at the boundary. No hard edge. No paste-on effect.
@@ -107,7 +107,6 @@ Paws do NOT rest flat on top. They fall over the edge — natural weight.
 VELVET TECHNIQUE: long directional brushstrokes following the nap direction.
 Top surface: pale cool indigo-grey catching the diffused sky light.
 Front face and sides: deep indigo shadow, near-black at the bottom fold.
-The nap direction is clearly visible — strokes reveal the fabric structure.
 TRIM: Twisted gold rope cord along the bottom. One gold tassel at front center.
 BASE: A thin flat stone parapet edge — muted grey, slightly weathered.
 Very slim — just a narrow horizontal band beneath the cushion tassel.
@@ -124,14 +123,14 @@ Black spots: soft painted edges, slightly irregular in size — never perfect ci
 Gold lace trim along the front border with small floral details — threads visible.
 Floral embroidery along the cape: muted roses in dusty rose and gold.
 Individual embroidery stitches clearly visible — raised above the velvet.
-CAPE: Deep BURGUNDY velvet — warm wine red with brown undertones.
-Falls behind and to one side only. NOT in front or sides.
-CAPE PHYSICS: the burgundy velvet falls in asymmetric folds — no two folds
-the same width. The fabric has weight and presence. Deep shadow carved into
-each fold. Only the very edge of each fold catches any warm light.
+CAPE: Deep BURGUNDY velvet cape — worn by the animal, draped over its back.
+Attached to the ermine mantle at the shoulders.
+Flows naturally down from the animal's back and trails onto the cushion behind it.
+The cape is ON the animal — not a background curtain, not a wall hanging.
+The velvet fabric touches the animal's sides naturally where it drapes.
+Heavy dramatic fold shadows — real fabric weight pulling downward.
 TRANSITION: where the ermine meets the animal's fur — paint both materials
 blending naturally at the boundary. No hard edge. No paste-on effect.
-Heavy dramatic fold shadows — the fabric has real presence.
 Double gold chain with a pendant on the animal's chest.`,
   },
 
