@@ -1,5 +1,6 @@
-// poses/single/otros.js — V2.0
+// poses/single/otros.js — V2.1
 // Poses para otras especies: conejos, aves, reptiles, caballos, roedores, etc.
+// V2.1: "ledge" removido del framing — ya no existe ledge en los estilos
 
 const { pick } = require('../../../utils/pick');
 
@@ -27,7 +28,7 @@ same color as the body. If not visible, omit it.
 FRAMING:
 Wide open composition — full body visible.
 The animal occupies the upper 55% of the canvas.
-The cushion and ledge occupy the lower 45%.
+The cushion occupies the lower 45%.
 Generous breathing room on all sides.`,
 
   // O2 — Sentado erguido (conejos, roedores medianos)
@@ -50,7 +51,7 @@ same color as the body. If not visible, omit it.
 FRAMING:
 Wide open composition — full body visible.
 The animal occupies the upper 60% of the canvas.
-The cushion and ledge occupy the lower 40%.
+The cushion occupies the lower 40%.
 Generous breathing room on all sides.`,
 
   // O3 — Perchado/parado (aves: loros, cacatúas, etc.)
@@ -94,10 +95,7 @@ Generous breathing room on all sides.`,
 
 ];
 
-// Detectar especie y asignar pose apropiada
 module.exports = () => {
-  // El modelo detecta la especie en el prompt principal
-  // y elige la pose adecuada de este pool
   return `Study the animal species in Image 1 carefully.
 Choose the most natural and dignified pose for this specific species:
 
