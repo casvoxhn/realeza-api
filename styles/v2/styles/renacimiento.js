@@ -1,15 +1,11 @@
-// renacimiento.js — V4.3
-// The Elegant Portrait — Renaissance Flemish
-// 3 color variants picked randomly per generation
-// V4.1: física de tela, técnica de armiño, transición animal→ropa, paintingStyle elevado
-// V4.2: cushion sides proporcionados — no más ancho que el animal
-// V4.3: cushion casi cuadrado, ocupa 30-35% del canvas height
+// renacimiento.js — V4.4
+// V4.4: ledge cambiado a antepecho delgado de piedra — exterior flamenco
 
 const { pick } = require('../utils/pick');
 
 const VARIANTES = [
 
-  // ── VARIANTE 1: Gris oscuro + Borgoña-café (el clásico) ───────────────────
+  // ── VARIANTE 1: Gris oscuro + Borgoña-café ────────────────────────────────
   {
     cushion: `
 CUSHION — paint with full detail:
@@ -26,7 +22,9 @@ Top surface: warm charcoal catching the horizon light — subtle warm undertone.
 Front face and sides: deep cool shadow, near-black at the bottom edge.
 The light-to-shadow graduation is dramatic — the fabric has real physical depth.
 TRIM: Twisted gold rope cord along the bottom. One gold tassel at front center.
-LEDGE: Simple flat grey stone beneath — plain, no carvings, no decoration.`,
+BASE: A thin flat stone parapet edge — muted grey, slightly weathered.
+Very slim — just a narrow horizontal band beneath the cushion tassel.
+Suggests an outdoor balcony or window ledge. Consistent with Flemish portraiture.`,
 
     costume: `
 ERMINE MANTLE:
@@ -68,7 +66,9 @@ Top surface: cool slate-blue catching pale diffused light from the stormy sky.
 Front face and sides: deep blue-grey shadow, almost slate-black at the bottom.
 The cool tone of the cushion echoes the stormy sky above — unified palette.
 TRIM: Twisted silver-gold rope cord along the bottom. One gold tassel at front center.
-LEDGE: Simple flat grey stone beneath — plain, no carvings.`,
+BASE: A thin flat stone parapet edge — muted grey, slightly weathered.
+Very slim — just a narrow horizontal band beneath the cushion tassel.
+Suggests an outdoor balcony or window ledge. Consistent with Flemish portraiture.`,
 
     costume: `
 ERMINE MANTLE:
@@ -109,7 +109,9 @@ Top surface: pale cool indigo-grey catching the diffused sky light.
 Front face and sides: deep indigo shadow, near-black at the bottom fold.
 The nap direction is clearly visible — strokes reveal the fabric structure.
 TRIM: Twisted gold rope cord along the bottom. One gold tassel at front center.
-LEDGE: Simple flat grey stone beneath — plain, no carvings.`,
+BASE: A thin flat stone parapet edge — muted grey, slightly weathered.
+Very slim — just a narrow horizontal band beneath the cushion tassel.
+Suggests an outdoor balcony or window ledge. Consistent with Flemish portraiture.`,
 
     costume: `
 ERMINE MANTLE:
