@@ -1,5 +1,5 @@
-// poses/single/perros.js
-// 3 poses aprobadas para perros — todas probadas y validadas
+// poses/single/perros.js — V2.0
+// Fix PD3: patas menos rígidas, más naturales
 
 const { pick } = require('../../../utils/pick');
 
@@ -49,13 +49,13 @@ The animal occupies the upper 55% of the canvas.
 The cushion and ledge occupy the lower 45%.
 Generous breathing room on all sides.`,
 
-  // PD3 — Sentado erguido
+  // PD3 — Sentado erguido (fix: patas naturales, no rígidas)
   `STEP 2 — POSE:
 The dog sits upright and dignified on the cushion.
 Body angled slightly to one side — not perfectly frontal.
 The chest is open and visible facing the viewer.
-Both front paws rest naturally on the cushion surface,
-side by side, pointing forward — composed and natural.
+Both front paws rest close together naturally on the cushion —
+relaxed and slightly angled inward, not rigid or spread wide.
 The hindquarters are settled beneath the body.
 The full body is visible — chest, front legs and lower body.
 The posture is dignified and natural — never stiff or forced.
