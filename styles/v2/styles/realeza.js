@@ -1,135 +1,76 @@
-// realeza.js — V4.2
-// Fix: orden correcto cushion → costume, sin mezcla de bloques
-
-const { pick } = require('../utils/pick');
-
-const VARIANTES = [
-
-  // ── VARIANTE 1: Carmesí + Bordado dorado ──────────────────────────────────
-  {
-    cushion: [
-      "CUSHION — paint with extraordinary detail:",
-      "A large, extremely voluminous DEEP CRIMSON velvet cushion —",
-      "rich saturated red with deep burgundy shadow in the folds.",
-      "Massively stuffed — top surface bulges dramatically upward.",
-      "Sides billow outward — wider than the animal's body on both sides.",
-      "The animal's front paws hang over the FRONT EDGE of the cushion —",
-      "paws drape down over the front lip, slightly below the cushion surface.",
-      "Paws do NOT rest flat on top. They fall over the edge — natural weight.",
-      "EMBROIDERY: Along the front face — elaborate ARABESQUE gold embroidery:",
-      "scrolling vines, acanthus leaves, floral rosettes stitched into the crimson velvet.",
-      "Dense, ornate, clearly visible. Gold thread with metallic specular reflection.",
-      "TRIM: Thick twisted gold rope cord at the bottom.",
-      "One large ornate gold tassel at front center — elaborate, with visible threads.",
-      "LEDGE: Simple flat grey stone beneath — clean, no carvings.",
-    ].join("\n"),
-
-    costume: [
-      "ERMINE MANTLE:",
-      "Thick voluminous white fur mantle, small evenly-distributed black spots.",
-      "Drapes over the back and shoulders — animal's chest and paws fully visible.",
-      "Rich pink and gold lace trim along the border — more elaborate than baroque.",
-      "A decorative gold clasp at the chest closure point.",
-      "CAPE: Deep BURGUNDY-CRIMSON velvet — falls behind and to one side only.",
-      "GOLD ARABESQUE EMBROIDERY along the cape's visible edge — scrolling botanical motifs.",
-      "NOT in front or on sides. Maximum velvet richness — deep dramatic fold shadows.",
-      "Gold MEDALLION pendant on the animal's chest — centered, prominent.",
-      "The medallion has a green gemstone catching the warm light.",
-    ].join("\n"),
-  },
-
-  // ── VARIANTE 2: Borgoña profundo + Bordado dorado ─────────────────────────
-  {
-    cushion: [
-      "CUSHION — paint with extraordinary detail:",
-      "A large, extremely voluminous DEEP BURGUNDY velvet cushion —",
-      "dark wine red, almost black in the deepest shadows, rich in the light.",
-      "Massively stuffed — top surface bulges dramatically upward.",
-      "Sides billow outward — wider than the animal's body on both sides.",
-      "The animal's front paws hang over the FRONT EDGE of the cushion —",
-      "paws drape down over the front lip, slightly below the cushion surface.",
-      "Paws do NOT rest flat on top. They fall over the edge — natural weight.",
-      "EMBROIDERY: Along the front face — elaborate ARABESQUE gold embroidery:",
-      "scrolling vines, acanthus leaves, rosettes stitched into the burgundy velvet.",
-      "Dense, ornate, clearly visible. Gold thread with metallic specular highlights.",
-      "TRIM: Thick twisted gold rope cord at the bottom.",
-      "One large ornate gold tassel at front center — elaborate, prominent.",
-      "LEDGE: Simple flat grey stone beneath — clean, no carvings.",
-    ].join("\n"),
-
-    costume: [
-      "ERMINE MANTLE:",
-      "Thick voluminous white fur mantle, small evenly-distributed black spots.",
-      "Drapes over the back and shoulders — animal's chest and paws fully visible.",
-      "Gold lace trim along the border — rich and ornate.",
-      "CAPE: Deep BURGUNDY velvet — same dark wine tone as the cushion.",
-      "GOLD ARABESQUE EMBROIDERY along the cape's visible edge — matching motifs.",
-      "Falls behind and to one side only. Heavy dramatic fold shadows.",
-      "Gold MEDALLION pendant centered on the animal's chest.",
-      "The medallion has a sapphire blue gemstone catching the warm light.",
-    ].join("\n"),
-  },
-
-  // ── VARIANTE 3: Azul real + Bordado dorado ────────────────────────────────
-  {
-    cushion: [
-      "CUSHION — paint with extraordinary detail:",
-      "A large, extremely voluminous ROYAL BLUE velvet cushion —",
-      "deep, rich cobalt-navy, regal and commanding.",
-      "Massively stuffed — top surface bulges dramatically upward.",
-      "Sides billow outward — wider than the animal's body on both sides.",
-      "The animal's front paws hang over the FRONT EDGE of the cushion —",
-      "paws drape down over the front lip, slightly below the cushion surface.",
-      "Paws do NOT rest flat on top. They fall over the edge — natural weight.",
-      "EMBROIDERY: Along the front face — elaborate ARABESQUE gold embroidery:",
-      "scrolling fleurs-de-lis, acanthus, star rosettes stitched into the blue velvet.",
-      "Dense and ornate. Gold thread with brilliant metallic specular reflection.",
-      "TRIM: Thick twisted gold rope cord at the bottom.",
-      "One large ornate gold tassel at front center — the most elaborate of all.",
-      "LEDGE: Simple flat grey stone beneath — clean, no carvings.",
-    ].join("\n"),
-
-    costume: [
-      "ERMINE MANTLE:",
-      "Thick voluminous white fur mantle, small evenly-distributed black spots.",
-      "Drapes over the back and shoulders — animal's chest and paws fully visible.",
-      "Gold lace trim along the border — the richest, most ornate version.",
-      "CAPE: ROYAL BLUE velvet — deep cobalt richness, falls behind and to one side only.",
-      "GOLD EMBROIDERY: fleurs-de-lis and star motifs along the cape edge.",
-      "NOT in front or on sides. Deep dramatic fold shadows.",
-      "Gold MEDALLION pendant centered on the chest — the most prominent version.",
-      "The medallion has a ruby red gemstone — brilliant against the gold.",
-    ].join("\n"),
-  },
-
-];
-
-module.exports = function realezaStyle(numSubjects, isGroup, genero) {
-
-  const variante = pick(VARIANTES);
-
-  const background = [
-    "BACKGROUND:",
-    "Near-black charcoal grey — almost pure black on the left and upper corners.",
-    "A very subtle warm umber-ochre gradient drifting toward the right side only —",
-    "barely perceptible, like the faintest candlelight reflected on a dark wall far behind.",
-    "NOT bright. NOT a halo. NOT radiating outward. Just a whisper of warmth.",
-    "The left side is pure black. The warmth is only a ghost on the right.",
-    "NO curtains. NO walls. NO objects. Pure atmospheric darkness.",
-  ].join("\n");
-
-  const paintingStyle = [
-    "PAINTING STYLE:",
-    "17th century Imperial court portrait — the most opulent of the three styles.",
-    "Museum quality oil painting on canvas with visible craquelure.",
-    "Warm amber varnish patina — the richest, most golden tone.",
-    "Chiaroscuro from upper left — dramatic contrast, maximum velvet depth.",
-    "Impasto on the background. Smooth luminous rendering of the animal's face.",
-    "Gold embroidery painted with individual thread detail and specular highlights.",
-    "Muted but rich palette: deep crimson or royal blue, burnt gold, warm ivory, umber.",
-    "Photorealistic animal face and fur. Zero digital artifacts.",
-    "Every element must feel heavy, real, expensive. This is royalty.",
-  ].join("\n");
-
-  return [background, variante.cushion, variante.costume, paintingStyle].join("\n\n");
+// styles/realeza.js — The Royal Portrait
+// V2.0 — Aesthetic upgrade: painterly oil technique, desaturated opulence, aged canvas
+module.exports = function realezaStyle(gender) {
+  return {
+    role: [
+      // ── IDENTIDAD — lo más importante ──────────────────────────────
+      "IDENTITY LOCK — HIGHEST PRIORITY:",
+      "Extract and transfer the exact face from the photo — same markings,",
+      "fur color, eye shape, eye color, expression and head angle.",
+      "Preserve the animal's natural personality exactly as it is.",
+      "The owner must recognize their pet immediately.",
+      "Remove any collar, leash or accessory — replace with royal costume only.",
+      "",
+      // ── ILUMINACIÓN ────────────────────────────────────────────────
+      "LIGHTING:",
+      "Single warm amber-gold light source from upper left at 45 degrees.",
+      "Strong chiaroscuro — the lit side of the face is warm and bright,",
+      "the shadow side drops into near-darkness. No fill light. No softboxes.",
+      "One precise sharp catchlight in each eye — small, white, gives life.",
+      "The gold embroidery catches light with aged warm gleam — not bright shine.",
+      "Shadow areas are very deep — near black. This is not evenly lit.",
+      "",
+      // ── FONDO ──────────────────────────────────────────────────────
+      "BACKGROUND:",
+      "Deep near-black vignette consuming all four corners.",
+      "Warm amber-ochre atmospheric glow concentrated behind the head only.",
+      "The glow is subtle and warm — like candlelight through old varnish.",
+      "Loose visible brushstrokes throughout the background — NOT a smooth gradient.",
+      "Individual paint marks going in different directions — exactly like",
+      "a 17th century Dutch master portrait background.",
+      "No walls. No architecture. Pure atmospheric darkness with warm center glow.",
+      "",
+      // ── VESTIMENTA ─────────────────────────────────────────────────
+      "COSTUME:",
+      "White ermine mantle — individual fur hairs visible, not smooth white.",
+      "Small evenly-distributed black spots on the ermine — classic royal pattern.",
+      "Drapes from behind the shoulders, ermine border frames the chest naturally.",
+      "Gold embroidery with floral motifs along the ermine border —",
+      "aged gold thread, not bright yellow. Warm tarnished gleam.",
+      "Deep burgundy-wine velvet cape — very dark, almost wine-black.",
+      "NOT bright red. NOT crimson. The velvet absorbs light — matte and heavy.",
+      "Sits behind the animal at shoulder level, visible on both sides.",
+      "NEVER in front. NEVER covering the face or chest.",
+      "Deep dramatic fold shadows carved into the velvet — real physical weight.",
+      "Ornate double gold chain at chest — aged gold, warm tone, not shiny.",
+      "Large gemstone medallion pendant — deep emerald or sapphire, catches light.",
+      "",
+      // ── COJÍN ──────────────────────────────────────────────────────
+      "CUSHION:",
+      "Large heavily-stuffed deep burgundy velvet cushion — almost square.",
+      "The same dark wine-burgundy as the cape — unified palette.",
+      "Directional velvet sheen — bright highlight on the top surface,",
+      "deep shadow falling on front face and sides.",
+      "Aged gold fringe trim along all edges — individual fringe strands visible.",
+      "One large ornate gold tassel at front center.",
+      "Stone ledge clearly visible below — plain flat grey, no decoration.",
+      "",
+      // ── TÉCNICA PICTÓRICA ──────────────────────────────────────────
+      "PAINTING TECHNIQUE:",
+      "This is a physical oil painting on canvas. Not a digital render.",
+      "Do NOT render this digitally. Do NOT use smooth AI gradients anywhere.",
+      "FUR: dark undertone base layer first.",
+      "Individual lighter fur strands painted on top with short directional",
+      "brushstrokes following the natural direction of hair growth.",
+      "Fur has depth — shadow underneath, individual hairs catching light on top.",
+      "VELVET: painted with long directional strokes. Nap direction visible.",
+      "BACKGROUND: loose expressive brushwork — strokes visible and intentional.",
+      "Fine craquelure throughout — most visible in dark areas and deep shadows.",
+      "Canvas weave texture visible under the paint in all areas.",
+      "Muted desaturated palette throughout — no vivid digital colors.",
+      "All reds are deep burgundy-wine. All golds are aged warm ochre.",
+      "The entire painting looks like it was executed in the 17th century",
+      "and has hung in a museum for 300 years.",
+    ].join("\n")
+  };
 };
