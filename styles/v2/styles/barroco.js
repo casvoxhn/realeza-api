@@ -1,6 +1,7 @@
-// barroco.js — V4.5
+// barroco.js — V4.6
 // The Classic Portrait — Baroque Dramatic
-// V4.5: ledge eliminado — fondo oscuro absorbe la base del cojín
+// V4.5: ledge eliminado — fondo oscuro absorbe la base
+// V4.6: BASE cambiado a piso plano visible — umber cálido, simple y discreto
 
 const { pick } = require('../utils/pick');
 
@@ -23,8 +24,9 @@ following the fabric grain. Bright highlight on the top surface where light
 strikes directly. Deep shadow on the front face and side panels.
 The velvet transitions from ochre-gold in light to deep warm brown in shadow.
 TRIM: Twisted gold rope cord along the bottom. One large gold tassel at front center.
-BASE: The bottom of the cushion fades naturally into the dark background —
-no ledge, no stone, no surface. The darkness absorbs the base completely.`,
+BASE: A simple flat dark surface beneath the cushion —
+warm umber-brown tone, barely lighter than the background.
+Plain, no texture, no decoration. Just a flat floor grounding the cushion.`,
 
     costume: `
 ERMINE MANTLE:
@@ -61,8 +63,9 @@ following the fabric grain. Bright highlight on the top surface where light
 strikes directly. Deep shadow on the front face and side panels.
 The velvet transitions from ochre-gold in light to deep warm brown in shadow.
 TRIM: Twisted gold rope cord along the bottom. One large gold tassel at front center.
-BASE: The bottom of the cushion fades naturally into the dark background —
-no ledge, no stone, no surface. The darkness absorbs the base completely.`,
+BASE: A simple flat dark surface beneath the cushion —
+warm umber-brown tone, barely lighter than the background.
+Plain, no texture, no decoration. Just a flat floor grounding the cushion.`,
 
     costume: `
 ERMINE MANTLE:
@@ -100,8 +103,9 @@ VELVET TECHNIQUE: long directional brushstrokes following the nap.
 The top surface catches warm amber light — bronze and olive tones visible.
 The sides fall into deep cool shadow — almost brown-black at the bottom.
 TRIM: Dark gold rope cord along the bottom. One large gold tassel at front center.
-BASE: The bottom of the cushion fades naturally into the dark background —
-no ledge, no stone, no surface. The darkness absorbs the base completely.`,
+BASE: A simple flat dark surface beneath the cushion —
+warm umber-brown tone, barely lighter than the background.
+Plain, no texture, no decoration. Just a flat floor grounding the cushion.`,
 
     costume: `
 ERMINE MANTLE:
