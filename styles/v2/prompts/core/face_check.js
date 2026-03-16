@@ -8,4 +8,4 @@ Tongue out if it was out. Eyes exact. Markings exact.
 If anything drifted — correct it before finalizing.
 The owner must recognize their pet immediately.
 
-4:5 portrait. 4K. High thinking mode.`;
+4:5 portrait. High thinking mode.`;
