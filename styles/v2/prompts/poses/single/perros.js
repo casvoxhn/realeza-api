@@ -1,5 +1,6 @@
-// poses/single/perros.js — V2.0
-// Fix PD3: patas menos rígidas, más naturales
+// poses/single/perros.js — V3.0
+// Fix PD2: patas más naturales, menos rígidas
+// Restaurado PD3 a versión original aprobada
 
 const { pick } = require('../../../utils/pick');
 
@@ -26,6 +27,7 @@ The cushion and ledge occupy the lower 45%.
 Generous breathing room on all sides.`,
 
   // PD2 — Recostado diagonal, cuerpo opuesto a la cara
+  // Fix: patas más naturales y relajadas
   `STEP 2 — POSE:
 First study the face direction in Image 1.
 The body is placed in the OPPOSITE direction from the face.
@@ -33,8 +35,8 @@ The body is placed in the OPPOSITE direction from the face.
 The dog lies in a natural diagonal position on the cushion.
 Body oriented to one side — the opposite side from the face direction.
 Weight resting on the chest and elbows — settled and heavy.
-Both front paws extended forward, resting naturally on the cushion,
-hanging slightly over the front edge.
+Both front paws extended forward, relaxed and slightly angled inward —
+not rigid, not spread wide, resting naturally on the cushion surface.
 The hindquarters extend naturally to the side behind.
 The head rises naturally and turns toward the viewer —
 face direction exactly as locked in Step 1.
@@ -49,13 +51,13 @@ The animal occupies the upper 55% of the canvas.
 The cushion and ledge occupy the lower 45%.
 Generous breathing room on all sides.`,
 
-  // PD3 — Sentado erguido (fix: patas naturales, no rígidas)
+  // PD3 — Sentado erguido (versión original aprobada)
   `STEP 2 — POSE:
 The dog sits upright and dignified on the cushion.
 Body angled slightly to one side — not perfectly frontal.
 The chest is open and visible facing the viewer.
-Both front paws rest close together naturally on the cushion —
-relaxed and slightly angled inward, not rigid or spread wide.
+Both front paws rest naturally on the cushion surface,
+side by side, pointing forward — composed and natural.
 The hindquarters are settled beneath the body.
 The full body is visible — chest, front legs and lower body.
 The posture is dignified and natural — never stiff or forced.
