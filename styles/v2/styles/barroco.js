@@ -1,8 +1,10 @@
-// barroco.js — V4.2
+// barroco.js — V4.4
 // The Classic Portrait — Baroque Dramatic
 // 3 color variants picked randomly per generation
 // V4.1: paintingStyle elevado — técnica de óleo, sin render digital, pelaje en capas
 // V4.2: física de tela y técnica de material específica por variante
+// V4.3: cushion sides proporcionados — no más ancho que el animal
+// V4.4: cushion casi cuadrado, ocupa 30-35% del canvas height
 
 const { pick } = require('../utils/pick');
 
@@ -12,9 +14,11 @@ const VARIANTES = [
   {
     cushion: `
 CUSHION — paint with full detail:
-A large, extremely voluminous GOLD OCHRE velvet cushion — heavily stuffed,
-visibly plump and round. Top surface bulges upward generously.
-Sides billow outward — wider than the animal's body.
+A large GOLD OCHRE velvet cushion — heavily stuffed and plump.
+SHAPE: nearly square — width and height almost equal. Not wide and flat.
+SIZE: occupies approximately 30-35% of the canvas height. Proportional — the animal is the protagonist.
+Top surface bulges upward generously in the center.
+Sides fall naturally with slight outward curve — contained, not wider than the animal's body.
 The animal's front paws hang over the FRONT EDGE of the cushion —
 paws drape down over the front lip, slightly below the cushion surface.
 Paws do NOT rest flat on top. They fall over the edge — relaxed weight.
@@ -47,9 +51,11 @@ Double gold chain on chest against the animal's own fur.`,
   {
     cushion: `
 CUSHION — paint with full detail:
-A large, extremely voluminous GOLD OCHRE velvet cushion — heavily stuffed,
-visibly plump and round. Top surface bulges upward generously.
-Sides billow outward — wider than the animal's body.
+A large GOLD OCHRE velvet cushion — heavily stuffed and plump.
+SHAPE: nearly square — width and height almost equal. Not wide and flat.
+SIZE: occupies approximately 30-35% of the canvas height. Proportional — the animal is the protagonist.
+Top surface bulges upward generously in the center.
+Sides fall naturally with slight outward curve — contained, not wider than the animal's body.
 The animal's front paws hang over the FRONT EDGE of the cushion —
 paws drape down over the front lip, slightly below the cushion surface.
 Paws do NOT rest flat on top. They fall over the edge — relaxed weight.
@@ -83,10 +89,12 @@ Double gold chain on chest against the animal's own fur.`,
   {
     cushion: `
 CUSHION — paint with full detail:
-A large, extremely voluminous BRONZE-OLIVE velvet cushion —
+A large BRONZE-OLIVE velvet cushion —
 deep warm khaki-gold tone, like aged bronze in candlelight.
-Heavily stuffed and plump. Top surface bulges upward.
-Sides billow outward — wider than the animal's body.
+SHAPE: nearly square — width and height almost equal. Not wide and flat.
+SIZE: occupies approximately 30-35% of the canvas height. Proportional — the animal is the protagonist.
+Heavily stuffed and plump. Top surface bulges upward in the center.
+Sides fall naturally with slight outward curve — contained, not wider than the animal's body.
 The animal's front paws hang over the FRONT EDGE of the cushion —
 paws drape down over the front lip, slightly below the cushion surface.
 Paws do NOT rest flat on top. They fall over the edge — relaxed weight.
