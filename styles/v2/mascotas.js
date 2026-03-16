@@ -1,7 +1,7 @@
-// mascotas.js — V21.1
+// mascotas.js — V21.2
 // Fix: eliminado ERMINE_BLOCK duplicado (ya está en los estilos)
 // Fix: patas PD3 sentado menos rígidas
-
+// Fix V21.2: XML tags en poseBlock para evitar que Gemini ejecute otros() por defecto
 const { pick } = require('./utils/pick');
 const faceFirst   = require('./prompts/core/face_first');
 const faceCheck   = require('./prompts/core/face_check');
@@ -9,11 +9,9 @@ const posasGatos  = require('./prompts/poses/single/gatos');
 const posasPerros = require('./prompts/poses/single/perros');
 const posasOtros  = require('./prompts/poses/single/otros');
 const poseMulti   = require('./prompts/poses/multi/mascotas');
-
 const renacimientoStyle = require('./styles/renacimiento');
 const realezaStyle      = require('./styles/realeza');
 const barrocoStyle      = require('./styles/barroco');
-
 const styleMap = {
   renacimiento:          renacimientoStyle,
   barroco:               barrocoStyle,
@@ -27,39 +25,37 @@ const styleMap = {
   baroque_drama:         barrocoStyle,
   intelligent:           barrocoStyle,
 };
-
 module.exports = function mascotas(estilo, numAnimales, isGroup, genero) {
   const numSubjects = Math.max(numAnimales || 1, isGroup ? 2 : 1);
   const styleKey    = (estilo || 'barroco').toLowerCase().replace(/\s+/g, '_');
   const styleFn     = styleMap[styleKey] || barrocoStyle;
   const styleBlock  = styleFn(numSubjects, isGroup, genero);
-
   // ── UN SOLO ANIMAL ────────────────────────────────────────────────────
   if (numSubjects === 1) {
-    const poseBlock = `Before choosing the pose, identify the species in Image 1:
-- If it is a CAT → use a cat pose
-- If it is a DOG → use a dog pose
-- If it is another animal → use a natural pose for this species
+    const poseBlock = `STEP 2 — POSE SELECTION:
+First, identify the species in Image 1.
+Then read ONLY the section that matches. Ignore all others completely.
 
-IF CAT:
+<IF_CAT>
 ${posasGatos()}
+</IF_CAT>
 
-IF DOG:
+<IF_DOG>
 ${posasPerros()}
+</IF_DOG>
 
-IF OTHER ANIMAL:
-${posasOtros()}`;
+<IF_OTHER_ANIMAL>
+${posasOtros()}
+</IF_OTHER_ANIMAL>
 
+IMPORTANT: Use ONLY the section that matches the species. Do not blend sections.`;
     // Orden limpio: face_first → pose → style → face_check
     return [faceFirst, poseBlock, styleBlock, faceCheck].join('\n\n');
   }
-
   // ── MÚLTIPLES ANIMALES ────────────────────────────────────────────────
   const multiPoseBlock = poseMulti(numSubjects);
-
   const multiFaceFirst = `Paint ${numSubjects} animals from the photos in one unified oil painting.
 Not composited. Not layered. One single painting.
-
 STEP 1 — FACE FIRST:
 For each animal extract and transfer exactly:
 - Exact facial features, markings, fur color and expression — LOCKED
@@ -71,11 +67,9 @@ For each animal extract and transfer exactly:
 Each face is LOCKED. Bodies are built around each face.
 For body parts not visible: use visible fur color as reference.
 Remove any collar or leash.`;
-
   const multiFaceCheck = `STEP 3 — FACE CHECK:
 Compare each painted face against its source photo.
 Every animal must be recognizable. Correct any drift.
 4:5 portrait. 4K. High thinking mode.`;
-
   return [multiFaceFirst, multiPoseBlock, styleBlock, multiFaceCheck].join('\n\n');
 };
