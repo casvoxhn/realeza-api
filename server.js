@@ -1,7 +1,8 @@
-// server.js — V16.6
+// server.js — V16.7
 // Fix: timeout 180s + referencias eliminadas
 // Fix V16.5: deduplicación, timeout Express, keep-alive
 // Fix V16.6: in-memory job queue — soporta usuarios simultáneos sin Redis
+// Fix V16.7: humanos ruteados a buildPrompt — archivos legacy eliminados
 
 const express = require('express');
 const cors = require('cors');
@@ -10,12 +11,7 @@ const { createClient } = require('@supabase/supabase-js');
 const crypto = require('crypto');
 require('dotenv').config();
 
-const buildPrompt       = require('./styles/v2/buildPrompt');
-const getFamiliaPrompt  = require('./familia');
-const getNinosPrompt    = require('./ninos');
-const getParejasPrompt  = require('./parejas');
-const getRetratosPrompt = require('./retratos');
-const getMujerPrompt    = require('./mujer');
+const buildPrompt = require('./styles/v2/buildPrompt');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -28,13 +24,10 @@ const genAI    = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const MODEL_ID = "gemini-3.1-flash-image-preview";
 
 // ── JOB QUEUE ─────────────────────────────────────────────────────────────────
-// Cada job tiene: { status, imageUrl, error, createdAt }
-// Status: 'pending' | 'processing' | 'done' | 'error'
 const jobs = new Map();
 
-// Limpieza automática de jobs viejos cada 10 minutos (evita memory leak)
 setInterval(() => {
-  const cutoff = Date.now() - 30 * 60 * 1000; // 30 minutos
+  const cutoff = Date.now() - 30 * 60 * 1000;
   for (const [id, job] of jobs.entries()) {
     if (job.createdAt < cutoff) jobs.delete(id);
   }
@@ -56,8 +49,27 @@ async function uploadBufferToSupabase(buffer, prefix) {
   return data.publicUrl;
 }
 
-// ── WORKER: procesa el job en background ─────────────────────────────────────
-async function processJob(jobId, { images, style, category, gender }) {
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function isMascotasCategory(cat) {
+  return !cat || cat === 'mascota' || cat === 'mascotas';
+}
+
+function isHumanosCategory(cat) {
+  return (
+    cat === 'humanos'  ||
+    cat === 'humano'   ||
+    cat === 'mujer'    ||
+    cat === 'hombre'   ||
+    cat === 'retratos' ||
+    cat === 'parejas'  ||
+    cat === 'familia'  ||
+    cat === 'ninos'    ||
+    cat === 'niños'
+  );
+}
+
+// ── WORKER ────────────────────────────────────────────────────────────────────
+async function processJob(jobId, { images, style, category, gender, ninos }) {
   const startTotal = Date.now();
   const imgHash    = hashImagen(images[0]);
 
@@ -70,7 +82,7 @@ async function processJob(jobId, { images, style, category, gender }) {
     const hasGender       = gender && (gender === 'masculine' || gender === 'feminine');
 
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`🚀 V16.6 START | job:${jobId} | hash:${imgHash} | cat:${currentCategory} | style:${style} | sujetos:${numSubjects}`);
+    console.log(`🚀 V16.7 START | job:${jobId} | hash:${imgHash} | cat:${currentCategory} | style:${style} | sujetos:${numSubjects}`);
 
     const originalUrls = await Promise.all(
       images.map(async (img, i) => {
@@ -79,10 +91,10 @@ async function processJob(jobId, { images, style, category, gender }) {
       })
     );
 
-    const isMascotas = !currentCategory || currentCategory === 'mascota' || currentCategory === 'mascotas';
     let promptText = "";
 
-    if (isMascotas) {
+    if (isMascotasCategory(currentCategory)) {
+      // ── MASCOTAS — exactamente igual que V16.6 ──────────────────────────
       promptText = buildPrompt({
         estilo:      style || 'intelligent',
         numAnimales: numSubjects,
@@ -90,14 +102,20 @@ async function processJob(jobId, { images, style, category, gender }) {
         genero:      hasGender ? gender : null,
         imgHash,
       });
-      console.log(`\n📝 PROMPT | hash:${imgHash}\n${'─'.repeat(40)}\n${promptText}\n${'─'.repeat(40)}\n`);
-    } else {
-      if (currentCategory === 'mujer')         promptText = getMujerPrompt(style, numSubjects, isGroup);
-      else if (currentCategory === 'retratos') promptText = getRetratosPrompt(style, numSubjects, isGroup);
-      else if (currentCategory === 'parejas')  promptText = getParejasPrompt(style, numSubjects, isGroup);
-      else if (currentCategory === 'ninos')    promptText = getNinosPrompt(style, numSubjects, isGroup);
-      else if (currentCategory === 'familia')  promptText = getFamiliaPrompt(style, numSubjects, isGroup);
+    } else if (isHumanosCategory(currentCategory)) {
+      // ── HUMANOS — sistema nuevo ──────────────────────────────────────────
+      promptText = buildPrompt({
+        estilo:      style || 'intelligent',
+        numAnimales: numSubjects,
+        especie:     '',
+        genero:      hasGender ? gender : null,
+        categoria:   currentCategory,
+        ninos:       ninos || [],
+        imgHash,
+      });
     }
+
+    console.log(`\n📝 PROMPT | hash:${imgHash}\n${'─'.repeat(40)}\n${promptText}\n${'─'.repeat(40)}\n`);
 
     const parts = [
       ...images.map(img => ({
@@ -126,11 +144,11 @@ async function processJob(jobId, { images, style, category, gender }) {
     if (!imagePart) throw new Error("Gemini no devolvió imagen.");
 
     const imageBuffer = Buffer.from(imagePart.inlineData.data, 'base64');
-    const prefix      = `V163_${currentCategory.toUpperCase()}_${(style || 'intelligent').toUpperCase().replace(/\s+/g, '_')}${hasGender ? `_${gender.toUpperCase()}` : ''}`;
+    const prefix      = `V167_${currentCategory.toUpperCase()}_${(style || 'intelligent').toUpperCase().replace(/\s+/g, '_')}${hasGender ? `_${gender.toUpperCase()}` : ''}`;
     const finalUrl    = await uploadBufferToSupabase(imageBuffer, prefix);
 
     const totalMs = Date.now() - startTotal;
-    console.log(`✅ V16.6 OK | job:${jobId} | hash:${imgHash} | gemini:${geminiMs}ms | total:${totalMs}ms`);
+    console.log(`✅ V16.7 OK | job:${jobId} | hash:${imgHash} | gemini:${geminiMs}ms | total:${totalMs}ms`);
     console.log(`🖼️  RESULT  | ${finalUrl}`);
     originalUrls.forEach((url, i) => console.log(`📸 INPUT ${i+1}  | ${url}`));
     console.log(`${'='.repeat(60)}\n`);
@@ -144,14 +162,14 @@ async function processJob(jobId, { images, style, category, gender }) {
 
   } catch (error) {
     const totalMs = Date.now() - startTotal;
-    console.error(`❌ V16.6 ERROR | job:${jobId} | ${totalMs}ms | ${error.message}`);
+    console.error(`❌ V16.7 ERROR | job:${jobId} | ${totalMs}ms | ${error.message}`);
     jobs.set(jobId, { ...jobs.get(jobId), status: 'error', error: error.message });
   }
 }
 
-// ── POST /generate — retorna jobId inmediatamente ─────────────────────────────
+// ── POST /generate ─────────────────────────────────────────────────────────────
 app.post('/generate', (req, res) => {
-  const { images, style, category, gender } = req.body;
+  const { images, style, category, gender, ninos } = req.body;
 
   if (!images || images.length === 0) {
     return res.status(400).json({ success: false, error: 'No images provided.' });
@@ -160,14 +178,13 @@ app.post('/generate', (req, res) => {
   const jobId = generateJobId();
   jobs.set(jobId, { status: 'pending', createdAt: Date.now() });
 
-  // Lanza el trabajo en background — no bloquea la respuesta
-  processJob(jobId, { images, style, category, gender });
+  processJob(jobId, { images, style, category, gender, ninos });
 
   console.log(`📋 JOB CREATED | ${jobId}`);
   res.json({ success: true, jobId });
 });
 
-// ── GET /status/:jobId — polling endpoint ─────────────────────────────────────
+// ── GET /status/:jobId ─────────────────────────────────────────────────────────
 app.get('/status/:jobId', (req, res) => {
   const { jobId } = req.params;
   const job = jobs.get(jobId);
@@ -189,15 +206,14 @@ app.get('/status/:jobId', (req, res) => {
     return res.json({ success: false, status: 'error', error: job.error });
   }
 
-  // pending o processing
   res.json({ success: true, status: job.status });
 });
 
-// ── GET /health ───────────────────────────────────────────────────────────────
+// ── GET /health ────────────────────────────────────────────────────────────────
 app.get('/health', (req, res) => {
   res.json({
     status:    'ok',
-    version:   'V16.6',
+    version:   'V16.7',
     model:     MODEL_ID,
     uptime:    process.uptime(),
     activeJobs: [...jobs.values()].filter(j => j.status === 'processing').length,
@@ -205,7 +221,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Graceful shutdown — marca jobs activos como error antes de morir
+// Graceful shutdown
 process.on('SIGTERM', () => {
   console.log('⚠️ SIGTERM recibido — limpiando jobs activos...');
   for (const [id, job] of jobs.entries()) {
@@ -213,10 +229,9 @@ process.on('SIGTERM', () => {
       jobs.set(id, { ...job, status: 'error', error: 'Server restarted. Please try again.' });
     }
   }
-  // Dale 2 segundos para que el frontend haga polling y reciba el error
   setTimeout(() => process.exit(0), 2000);
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 V16.6 | Puerto:${PORT} | Modelo:${MODEL_ID} | Queue: in-memory`);
+  console.log(`🚀 V16.7 | Puerto:${PORT} | Modelo:${MODEL_ID} | Queue: in-memory`);
 });
