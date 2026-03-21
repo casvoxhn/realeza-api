@@ -1,8 +1,9 @@
-// poses/single/perros.js — V2.3
+// poses/single/perros.js — V2.4
 // Fix: proporciones y anclaje de cuerpo
 // V2.1: patas corregidas — nunca "slightly below"
 // V2.2: body anchor fix — cuerpo completo sobre cojín, cojín se hunde bajo el peso
 // V2.3: body language — relajado, digno, nunca taxidérmico
+// V2.4: PD4 agregado — lateral, patas completamente sobre el cojín
 const { pick } = require('../../../utils/pick');
 
 // Línea universal de anclaje — aplica a poses recostadas
@@ -66,7 +67,7 @@ The animal occupies the upper 55% of the canvas.
 The cushion and ledge occupy the lower 45%.
 Generous breathing room on all sides.`,
 
-  // PD3 — Sentado erguido (sin cambios)
+  // PD3 — Sentado erguido
   `STEP 2 — POSE:
 The dog sits upright and dignified on the cushion.
 Body angled slightly to one side — not perfectly frontal.
@@ -83,6 +84,29 @@ FRAMING:
 Wide open composition — full sitting body visible.
 The animal occupies the upper 60% of the canvas.
 The cushion and ledge occupy the lower 40%.
+Generous breathing room on all sides.`,
+
+  // PD4 — Recostado lateral, patas completamente sobre el cojín
+  `STEP 2 — POSE:
+The dog lies in a natural lateral position on the cushion.
+The body is angled — more to the side than frontal.
+The viewer can clearly see the dog's flank and body depth.
+${BODY_ANCHOR}
+${BODY_LANGUAGE}
+Both front paws rest COMPLETELY FLAT on the cushion surface —
+not draping over the edge, not hanging down.
+The paws are fully supported by the cushion at all times.
+The hindquarters rest fully on the cushion — visible and settled.
+The body spreads wide and occupies the full cushion surface.
+The head rises naturally and turns toward the viewer —
+face direction exactly as locked in Step 1.
+The pose feels organic — like the dog naturally settled here.
+Paint the tail only if clearly visible in Image 1 —
+same color and fur as the body. If not visible, omit it.
+FRAMING:
+Wide open composition — full body visible.
+The animal occupies the upper 55% of the canvas.
+The cushion and ledge occupy the lower 45%.
 Generous breathing room on all sides.`,
 ];
 
