@@ -88,4 +88,3 @@ Canvas texture and fine craquelure visible throughout.
 Every brushstroke has direction and purpose — like an 18th century master.
 4:5 portrait. 4K. High thinking mode.`;
 };
-```
