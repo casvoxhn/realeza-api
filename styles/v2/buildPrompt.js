@@ -1,7 +1,9 @@
-// buildPrompt.js — V1.0
-// styles/v2/buildPrompt.js 
-
+// buildPrompt.js — V1.1
+// styles/v2/buildPrompt.js
+// V1.0: mascotas
+// V1.1: humanos agregados — mascotas sin tocar
 const mascotas = require('./mascotas');
+const humanos  = require('./humanos');
 
 function weightedPick(options) {
   const total  = options.reduce((sum, o) => sum + o.weight, 0);
@@ -37,25 +39,47 @@ function resolveStyle(estilo, especie) {
   ]);
 }
 
+function isHumanCategory(categoria) {
+  const cat = (categoria || '').toLowerCase();
+  return (
+    cat === 'humanos'  ||
+    cat === 'humano'   ||
+    cat === 'mujer'    ||
+    cat === 'hombre'   ||
+    cat === 'retratos' ||
+    cat === 'parejas'  ||
+    cat === 'familia'  ||
+    cat === 'ninos'    ||
+    cat === 'niños'
+  );
+}
+
 module.exports = function buildPrompt({
   estilo, numAnimales, especie, raza,
   genero, animales, hero, imgHash, analisisFacial,
+  categoria, ninos,
 }) {
   const numSubjects   = numAnimales || 1;
   const isGroup       = numSubjects > 1;
   const resolvedStyle = resolveStyle(estilo, especie);
 
-  console.log(`🎨 PROMPT | hash:${imgHash} | estilo_in:${estilo} | estilo_out:${resolvedStyle} | animales:${numSubjects} | especie:${especie}`);
+  console.log(`🎨 PROMPT | hash:${imgHash} | estilo_in:${estilo} | estilo_out:${resolvedStyle} | animales:${numSubjects} | especie:${especie} | cat:${categoria}`);
 
-  let prompt = mascotas(resolvedStyle, numSubjects, isGroup, genero);
+  // ── RUTEO — mascotas intacto, humanos nuevo ───────────────────────────────
+  let prompt;
+
+  if (isHumanCategory(categoria)) {
+    prompt = humanos(resolvedStyle, numSubjects, isGroup, genero, ninos || []);
+  } else {
+    // mascotas — exactamente igual que V1.0
+    prompt = mascotas(resolvedStyle, numSubjects, isGroup, genero);
+  }
 
   if (analisisFacial) {
-    prompt = [
-      "FACIAL ANALYSIS FROM PHOTO — Use this to paint the exact face of the animal:",
-      analisisFacial,
-      "",
-      prompt
-    ].join("\n");
+    const label = isHumanCategory(categoria)
+      ? "FACIAL ANALYSIS FROM PHOTO — Use this to paint the exact face of the person:"
+      : "FACIAL ANALYSIS FROM PHOTO — Use this to paint the exact face of the animal:";
+    prompt = [label, analisisFacial, "", prompt].join("\n");
   }
 
   return prompt;
