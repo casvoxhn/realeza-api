@@ -1,9 +1,10 @@
-// poses/single/gatos.js — V2.3
+// poses/single/gatos.js — V2.4
 // Fix: proporciones naturales agregadas a todas las poses
 // Fix P3: eliminados bloques de capa/armiño duplicados (ya están en los estilos)
 // V2.1: "ledge" removido del framing — ya no existe ledge en los estilos
 // V2.2: body anchor fix en P1 y P1B — cuerpo no desaparece bajo capa
 // V2.3: body anchor expandido — cuartos traseros sobre cojín, cojín se hunde bajo el peso
+// V2.4: body language agregado — relajado, digno, nunca taxidérmico + P4 lateral
 const { pick } = require('../../../utils/pick');
 
 // Línea universal de proporciones — aplica a todas las poses
@@ -22,12 +23,20 @@ The cat looks heavy, settled and completely at ease — not propped up.
 If the cat wears a cape or garment, it drapes OVER a clearly defined body.
 The body mass beneath any clothing is always visible — never hidden or merged with the cushion.`;
 
+// Lenguaje corporal — relajado y digno
+const BODY_LANGUAGE = `The animal's body language is relaxed, natural and dignified.
+Muscles soft — no tension, no stiffness, no forced symmetry.
+The weight feels heavy and settled — gravity pulling the body into the cushion.
+The limbs fall naturally — composed but never rigid.
+The overall feeling is calm and noble — alive, never posed or taxidermic.`;
+
 const POSES = [
   // P1 — Recostado 3/4 diagonal izquierda
   `STEP 2 — POSE:
 The cat rests in a natural diagonal position on the cushion.
 Body weight on lower chest and elbows.
 ${BODY_ANCHOR}
+${BODY_LANGUAGE}
 Body oriented slightly to the LEFT — right flank toward viewer.
 Both front paws extend naturally forward, resting on cushion surface.
 Hindquarters settle naturally to the left and slightly behind.
@@ -50,6 +59,7 @@ The body rests diagonally on the cushion — oriented to the
 OPPOSITE side from where the face looks in Image 1.
 Body weight on lower chest and elbows.
 ${BODY_ANCHOR}
+${BODY_LANGUAGE}
 Hindquarters extend naturally to that opposite side.
 Both front paws extend forward resting on the cushion.
 The head turns naturally back over the shoulder toward the viewer.
@@ -102,6 +112,30 @@ The face occupies the upper portion of the canvas.
 The body and cushion fill the lower portion naturally.
 The body may extend slightly beyond the frame edges.
 Do NOT compress the composition.`,
+
+  // P4 — Recostado lateral, patas completamente sobre el cojín
+  `STEP 2 — POSE:
+The cat lies in a natural lateral position on the cushion.
+The body is angled — more to the side than frontal.
+The viewer can clearly see the cat's flank and body depth.
+${BODY_ANCHOR}
+${BODY_LANGUAGE}
+Both front paws rest COMPLETELY FLAT on the cushion surface —
+not draping over the edge, not hanging down.
+The paws are fully supported by the cushion at all times.
+The hindquarters rest fully on the cushion — visible and settled.
+The body spreads wide and occupies the full cushion surface.
+The head rises naturally and turns toward the viewer —
+face direction exactly as locked in Step 1.
+The pose feels organic — like the cat naturally settled here.
+${PROPORTIONS}
+Paint the tail only if clearly visible in Image 1 —
+same color and fur as the body. If not visible, omit it.
+FRAMING:
+Wide open composition — full body visible.
+The animal occupies the upper 55% of the canvas.
+The cushion occupies the lower 45%.
+Generous breathing room on all sides.`,
 ];
 
 module.exports = () => pick(POSES);
