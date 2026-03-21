@@ -1,39 +1,50 @@
-// styles/v2/styles/renacimiento_humano.js — V2.0
-// V2.0: vestuario de época real — inspirado en retratos renacentistas/victorianos
-// Sin capas de armiño — ropa period-appropriate por género y edad
+// styles/v2/styles/renacimiento_humano.js — V3.0
+// V3.0: fondo paisaje natural consistente — calidad obra de arte
 
 module.exports = function renacimientoHumano(numSubjects, isGroup, genero) {
   return `PAINTING STYLE — 16th Century Renaissance Portrait:
 A hyperrealistic oil painting in the tradition of Raphael, Titian and Bronzino.
-Fine craquelure across the paint surface — warm amber varnish patina.
-Visible directional brushwork in fabric, hair and skin throughout.
+This painting will be printed large and hung on a wall — every detail must
+be worthy of a museum-quality work of art.
+Fine craquelure across the entire paint surface — warm amber varnish patina.
+Visible directional brushwork throughout — fabric, hair, skin, foliage.
 
-BACKGROUND:
-Natural landscape setting — a forest glade or rocky outcrop.
-Warm atmospheric depth — trees, foliage and soft sky visible behind the subject.
-The background recedes naturally — never competing with the subject.
-Soft warm light filtering through the trees from one side.
-The setting feels like a genuine outdoor portrait sitting.
+BACKGROUND — MOST IMPORTANT AFTER THE FACE:
+A rich natural landscape — tall ancient trees with full canopy overhead.
+Warm golden-green light filters through the leaves from the upper left.
+Rocky outcrops and mossy ground visible at the base.
+Soft wildflowers at the edges — delicate, never dominant.
+A warm golden sky visible through breaks in the canopy — late afternoon light.
+The landscape recedes naturally into atmospheric haze — deep and painterly.
+The background is lush, warm and alive — never flat, never empty.
+This is the landscape of a Flemish or Italian Renaissance master —
+every leaf, every rock painted with care and depth.
+The subject is seated or standing slightly in front of this landscape —
+the background frames and elevates them without competing.
 
 LIGHTING:
-Classic Renaissance three-quarter lighting.
-Warm golden light from one side — illuminates the face and hands fully.
-The opposite side falls into soft warm shadow — sfumato transitions.
-No harsh edges on the face. The face is the brightest element.
+Warm golden light from the upper left — the same light as the landscape.
+Three-quarter illumination on the face — one side warm and bright,
+the other in soft warm shadow.
+Sfumato transitions on the face — no harsh edges anywhere.
+The face and hands are the most luminous elements in the painting.
+The landscape light is consistent with the portrait light — one unified scene.
 
 SKIN:
-Warm layered tones — ochre, sienna and cream.
+Warm layered tones — ochre, sienna and cream built up in layers.
 Sfumato blending on all face transitions.
-Individual texture visible — never smooth or plastic.
-Subtle color variation — warmer on nose and cheeks, cooler in shadows.
+Individual pore texture visible — never smooth or plastic.
+Warm on the cheeks and nose, cooler in the temples and jaw shadows.
 
 HANDS:
 Full anatomical detail — tendons, knuckles, natural skin tone.
-Expressive and natural — never stiff or generic.
+Warm light catches the back of the hand, soft shadow in the palm.
+Expressive and natural — never stiff.
 
 HAIR:
 Individual directional strands — never a solid mass.
-Warm highlights catching the light, deep shadows between strands.
+Warm golden highlights catching the landscape light.
+Deep warm shadows between the strands — depth and volume.
 Natural weight and fall — alive and painterly.
 
 COSTUME — assign by gender and age:
@@ -58,20 +69,21 @@ FOR BOYS:
 A velvet suit — jacket and trousers in a deep jewel tone
 (navy blue, forest green, deep burgundy or dark brown).
 A white lace or ruffled collar — prominent and crisp.
-The suit is scaled naturally to the child's body — never adult-sized.
-Simple but elegant — the child looks like a child of nobility.
+Scaled naturally to the child's body — never adult-sized.
 
 FOR GIRLS:
 A velvet dress with full skirt — deep jewel tone
 (crimson red, royal blue, forest green or warm amber).
 A white lace collar at the neckline — individual thread detail visible.
-The dress is scaled naturally to the child's body.
-Simple, elegant and age-appropriate — a noble child's attire.
+Scaled naturally to the child's body.
 
-PAINTING TECHNIQUE:
-Zero digital artifacts. Zero smooth gradients.
-Every element physical, aged, painted — like a Renaissance master.
-Warm muted palette unified by a thin golden glaze.
-Canvas texture and craquelure visible throughout.
+PAINTING QUALITY — NON-NEGOTIABLE:
+This painting will be printed at large scale and hung on a wall.
+Every element must be rendered with museum-quality detail.
+Zero digital artifacts. Zero smooth gradients. Zero AI plastic look.
+The paint surface must feel physical — textured, aged, real.
+Warm muted palette unified by a thin golden glaze over the whole composition.
+Canvas texture and fine craquelure visible throughout — especially in darks.
+Every brushstroke has direction and purpose — like a Renaissance master.
 4:5 portrait. 4K. High thinking mode.`;
 };
