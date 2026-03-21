@@ -1,4 +1,5 @@
 // buildPrompt.js — V1.2
+// styles/v2/buildPrompt.js
 // V1.0: mascotas
 // V1.1: humanos agregados
 // V1.2: humano_mascota agregado
@@ -70,15 +71,10 @@ module.exports = function buildPrompt({
   let prompt;
 
   if (categoria === 'humano_mascota') {
-    // ── Mixto humano + mascota ─────────────────────────────────────────
     prompt = humanomascota(resolvedStyle, numSubjects, isGroup, genero, ninos || []);
-
   } else if (isHumanCategory(categoria)) {
-    // ── Solo humanos ───────────────────────────────────────────────────
     prompt = humanos(resolvedStyle, numSubjects, isGroup, genero, ninos || []);
-
   } else {
-    // ── Mascotas — exactamente igual que siempre ───────────────────────
     prompt = mascotas(resolvedStyle, numSubjects, isGroup, genero);
   }
 
@@ -91,12 +87,3 @@ module.exports = function buildPrompt({
 
   return prompt;
 };
-```
-
----
-
-**Resumen de archivos a subir:**
-```
-styles/v2/humano_mascota.js   ← nuevo
-styles/v2/buildPrompt.js      ← V1.2
-server.js                     ← V16.9
