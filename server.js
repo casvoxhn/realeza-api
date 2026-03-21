@@ -1,11 +1,11 @@
-// server.js — V16.9
+// server.js — V16.10
 // Fix: timeout 180s + referencias eliminadas
 // Fix V16.5: deduplicación, timeout Express, keep-alive
 // Fix V16.6: in-memory job queue — soporta usuarios simultáneos sin Redis
 // Fix V16.7: humanos ruteados a buildPrompt — archivos legacy eliminados
 // Fix V16.8: detección automática de sujetos
 // Fix V16.9: detección mejorada — niños nunca clasificados como animales
-//            niño+mascota ruteado correctamente a humano_mascota
+// Fix V16.10: subjects pasado a buildPrompt — orden dinámico humano/mascota
 
 const express = require('express');
 const cors = require('cors');
@@ -107,12 +107,9 @@ function resolveCategory(subjects) {
     .map((t, i) => t === 'human_child' ? i + 1 : null)
     .filter(Boolean);
 
-  // ── Solo mascotas ──────────────────────────────────────────────────────
-  if (!hasHuman && hasAnimal) {
+  if (!hasHuman && hasAnimal)
     return { categoria: 'mascotas', ninos: [] };
-  }
 
-  // ── Solo humanos ───────────────────────────────────────────────────────
   if (hasHuman && !hasAnimal) {
     if (humanCount === 1 && hasHumanChild && !hasHumanAdult)
       return { categoria: 'ninos',    ninos: childIndices };
@@ -123,12 +120,9 @@ function resolveCategory(subjects) {
     return   { categoria: 'familia',  ninos: childIndices };
   }
 
-  // ── Mixto — humano(s) + mascota(s) ────────────────────────────────────
-  if (hasHuman && hasAnimal) {
+  if (hasHuman && hasAnimal)
     return { categoria: 'humano_mascota', ninos: childIndices };
-  }
 
-  // Fallback
   return { categoria: 'mascotas', ninos: [] };
 }
 
@@ -145,7 +139,7 @@ async function processJob(jobId, { images, style, category, gender }) {
     const hasGender   = gender && (gender === 'masculine' || gender === 'feminine');
 
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`🚀 V16.9 START | job:${jobId} | hash:${imgHash} | style:${style} | sujetos:${numSubjects}`);
+    console.log(`🚀 V16.10 START | job:${jobId} | hash:${imgHash} | style:${style} | sujetos:${numSubjects}`);
 
     // ── Subir originales ────────────────────────────────────────────────
     const originalUrls = await Promise.all(
@@ -161,8 +155,6 @@ async function processJob(jobId, { images, style, category, gender }) {
     const subjects = await detectSubjects(images, model);
     const detected = resolveCategory(subjects);
 
-    // Si el frontend mandó categoría explícita — respetarla
-    // Si no — usar la detectada
     const finalCategory = category && category !== 'mascota' && category !== 'mascotas'
       ? category
       : detected.categoria;
@@ -178,6 +170,7 @@ async function processJob(jobId, { images, style, category, gender }) {
       genero:      hasGender ? gender : null,
       categoria:   finalCategory,
       ninos:       finalNinos,
+      subjects:    subjects,        // ← orden dinámico para humano_mascota
       imgHash,
     });
 
@@ -209,11 +202,11 @@ async function processJob(jobId, { images, style, category, gender }) {
     if (!imagePart) throw new Error("Gemini no devolvió imagen.");
 
     const imageBuffer = Buffer.from(imagePart.inlineData.data, 'base64');
-    const prefix      = `V169_${finalCategory.toUpperCase()}_${(style || 'intelligent').toUpperCase().replace(/\s+/g, '_')}${hasGender ? `_${gender.toUpperCase()}` : ''}`;
+    const prefix      = `V1610_${finalCategory.toUpperCase()}_${(style || 'intelligent').toUpperCase().replace(/\s+/g, '_')}${hasGender ? `_${gender.toUpperCase()}` : ''}`;
     const finalUrl    = await uploadBufferToSupabase(imageBuffer, prefix);
 
     const totalMs = Date.now() - startTotal;
-    console.log(`✅ V16.9 OK | job:${jobId} | hash:${imgHash} | gemini:${geminiMs}ms | total:${totalMs}ms`);
+    console.log(`✅ V16.10 OK | job:${jobId} | hash:${imgHash} | gemini:${geminiMs}ms | total:${totalMs}ms`);
     console.log(`🖼️  RESULT  | ${finalUrl}`);
     originalUrls.forEach((url, i) => console.log(`📸 INPUT ${i+1}  | ${url}`));
     console.log(`${'='.repeat(60)}\n`);
@@ -227,7 +220,7 @@ async function processJob(jobId, { images, style, category, gender }) {
 
   } catch (error) {
     const totalMs = Date.now() - startTotal;
-    console.error(`❌ V16.9 ERROR | job:${jobId} | ${totalMs}ms | ${error.message}`);
+    console.error(`❌ V16.10 ERROR | job:${jobId} | ${totalMs}ms | ${error.message}`);
     jobs.set(jobId, { ...jobs.get(jobId), status: 'error', error: error.message });
   }
 }
@@ -278,7 +271,7 @@ app.get('/status/:jobId', (req, res) => {
 app.get('/health', (req, res) => {
   res.json({
     status:     'ok',
-    version:    'V16.9',
+    version:    'V16.10',
     model:      MODEL_ID,
     uptime:     process.uptime(),
     activeJobs: [...jobs.values()].filter(j => j.status === 'processing').length,
@@ -298,5 +291,5 @@ process.on('SIGTERM', () => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 V16.9 | Puerto:${PORT} | Modelo:${MODEL_ID} | Queue: in-memory`);
+  console.log(`🚀 V16.10 | Puerto:${PORT} | Modelo:${MODEL_ID} | Queue: in-memory`);
 });
