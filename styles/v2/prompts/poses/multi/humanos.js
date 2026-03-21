@@ -17,7 +17,6 @@ const MULTI_RULES = `CRITICAL RULES — apply to every person:
 - Children look like children — their scale, energy and innocence preserved
 - Pets look like themselves — their species character fully intact`;
 
-// ─── 2 PERSONAS ───────────────────────────────────────────────────────────────
 const SCENES_2 = [
 
   `SCENE — Classic couple portrait (2 people):
@@ -50,7 +49,6 @@ The composition feels like a genuine bond.`,
 
 ];
 
-// ─── 3 PERSONAS ───────────────────────────────────────────────────────────────
 const SCENES_3 = [
 
   `SCENE — Family trio (2 adults + 1 child):
@@ -83,7 +81,6 @@ The composition feels warm and genuine.`,
 
 ];
 
-// ─── 4 PERSONAS ───────────────────────────────────────────────────────────────
 const SCENES_4 = [
 
   `SCENE — Classic family portrait (2 adults + 2 children):
@@ -114,38 +111,27 @@ The composition feels like a genuine family moment.`,
 
 ];
 
-// ─── PALETAS COORDINADAS ──────────────────────────────────────────────────────
 const GROUP_PALETTES = [
-  // Palette 1 — crimson + navy + green + brown
   {
-    adult_m:  "deep forest green velvet frock coat with gold embroidery, white lace shirt",
-    adult_f:  "deep crimson velvet gown with white lace collar",
-    boy:      "navy blue velvet suit with white lace collar",
-    girl:     "crimson red velvet dress with white lace collar",
-    teen_m:   "dark brown tailcoat with white cravat",
-    teen_f:   "forest green velvet gown with white lace trim",
+    adult_m: "deep forest green velvet frock coat with gold embroidery, white lace shirt",
+    adult_f: "deep crimson velvet gown with white lace collar",
+    boy:     "navy blue velvet suit with white lace collar",
+    girl:    "crimson red velvet dress with white lace collar",
   },
-  // Palette 2 — burgundy + blue + amber
   {
-    adult_m:  "deep burgundy velvet jacket with gold embroidery, white ruffled shirt",
-    adult_f:  "warm amber silk gown with lace collar and embroidered bodice",
-    boy:      "forest green velvet suit with white lace collar",
-    girl:     "royal blue velvet dress with white lace collar",
-    teen_m:   "navy blue tailcoat with white cravat",
-    teen_f:   "deep crimson velvet gown with white lace trim",
+    adult_m: "deep burgundy velvet jacket with gold embroidery, white ruffled shirt",
+    adult_f: "warm amber silk gown with lace collar and embroidered bodice",
+    boy:     "forest green velvet suit with white lace collar",
+    girl:    "royal blue velvet dress with white lace collar",
   },
-  // Palette 3 — green + crimson + blue
   {
-    adult_m:  "charcoal grey frock coat with subtle embroidery, white jabot",
-    adult_f:  "forest green velvet gown with gold trim and white lace collar",
-    boy:      "deep burgundy velvet suit with white lace collar",
-    girl:     "royal blue velvet dress with white lace collar",
-    teen_m:   "deep green velvet jacket with gold buttons, white shirt",
-    teen_f:   "warm amber gown with lace collar",
+    adult_m: "charcoal grey frock coat with subtle embroidery, white jabot",
+    adult_f: "forest green velvet gown with gold trim and white lace collar",
+    boy:     "deep burgundy velvet suit with white lace collar",
+    girl:    "royal blue velvet dress with white lace collar",
   },
 ];
 
-// ─── EXPORT ───────────────────────────────────────────────────────────────────
 module.exports = function multiHumanos(numSubjects) {
 
   const n = Math.min(Math.max(numSubjects || 2, 2), 4);
@@ -195,13 +181,3 @@ Natural depth — not all subjects on the same flat plane.
 Generous breathing room on all sides.
 4:5 portrait. 4K. High thinking mode.`;
 };
-```
-
----
-
-**Archivos a subir:**
-```
-styles/renacimiento_humano.js  ← V2.0
-styles/barroco_humano.js       ← V2.0
-styles/realeza_humano.js       ← V2.0
-poses/multi/humanos.js         ← V1.1
