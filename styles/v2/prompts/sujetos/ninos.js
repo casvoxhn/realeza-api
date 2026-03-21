@@ -1,6 +1,7 @@
-// styles/v2/prompts/sujetos/ninos.js — V2.0
+// styles/v2/prompts/sujetos/ninos.js — V2.1
 // V1.0: estructura base
-// V2.0: expression lock — nunca inventa sonrisas ni expresiones
+// V2.0: expression lock — nunca inventa sonrisas
+// V2.1: accessories lock — gafas, accesorios preservados exactamente
 
 module.exports = function sujetoNino(index) {
   const ref = index ? `Person ${index} (child)` : 'The child';
@@ -15,20 +16,26 @@ IDENTITY LOCK — extract and transfer exactly:
 - Exact eye shape, color and natural expression
 - Exact nose shape — proportionally larger relative to face than an adult
 - Exact lip shape and natural resting position
-- Exact hair color, texture, volume and natural fall
+- Exact hair color, texture, style, volume and natural fall
+- Exact eyebrow shape, thickness and color
 - Exact head angle and rotation from the photo — LOCKED
 - Exact head tilt direction and degree — LOCKED
 - The child's natural personality, energy and innocence — preserved exactly
+
+ACCESSORIES — preserve exactly:
+If the child wears glasses in the photo — paint the glasses exactly.
+Same frame color, shape and size — locked from the photo.
+If the child wears a hair accessory — preserve it in period-appropriate form.
+Any distinctive accessory visible in the photo must appear in the painting.
 
 EXPRESSION — CRITICAL — NEVER INVENT:
 Copy the exact expression from the photo — LOCKED.
 If the child is NOT smiling in the photo — do NOT add a smile.
 If the child IS smiling — preserve that exact smile, nothing more.
 If the smile shows teeth — paint exactly those teeth, nothing more.
-If the expression is neutral, curious or serious — paint it exactly that way.
+If the expression is neutral, curious or serious — paint it exactly.
 NEVER add cheerfulness or happiness that is not visible in the photo.
 NEVER replace a child's natural expression with a generic happy face.
-Children's expressions are especially important — they define their personality.
 Inventing an expression is the same as inventing a different child.
 
 BODY AND SCALE:
@@ -53,5 +60,6 @@ NEVER:
 - Give the child adult facial proportions
 - Suppress the child's natural energy or expression
 - Invent a smile or expression not present in the photo
+- Remove glasses or accessories visible in the photo
 - Crop or minimize the child in the composition`;
 };
