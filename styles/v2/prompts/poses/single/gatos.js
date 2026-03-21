@@ -1,8 +1,9 @@
-// poses/single/gatos.js — V2.2
+// poses/single/gatos.js — V2.3
 // Fix: proporciones naturales agregadas a todas las poses
 // Fix P3: eliminados bloques de capa/armiño duplicados (ya están en los estilos)
 // V2.1: "ledge" removido del framing — ya no existe ledge en los estilos
 // V2.2: body anchor fix en P1 y P1B — cuerpo no desaparece bajo capa
+// V2.3: body anchor expandido — cuartos traseros sobre cojín, cojín se hunde bajo el peso
 const { pick } = require('../../../utils/pick');
 
 // Línea universal de proporciones — aplica a todas las poses
@@ -12,6 +13,12 @@ Do NOT exaggerate the body size or roundness.`;
 
 // Línea universal de anclaje — aplica a poses recostadas
 const BODY_ANCHOR = `Chest visibly pressed against the cushion surface — body weight fully anchored.
+The entire body rests fully ON the cushion —
+chest, belly AND hindquarters all in contact with the cushion surface.
+The hindquarters are NOT hanging off the edge or touching the floor.
+The cushion visibly sags and deforms under the cat's full body weight.
+The cat's body spreads naturally across the full width of the cushion.
+The cat looks heavy, settled and completely at ease — not propped up.
 If the cat wears a cape or garment, it drapes OVER a clearly defined body.
 The body mass beneath any clothing is always visible — never hidden or merged with the cushion.`;
 
