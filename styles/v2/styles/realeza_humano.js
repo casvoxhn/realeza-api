@@ -1,38 +1,50 @@
-// styles/v2/styles/realeza_humano.js — V2.0
-// V2.0: vestuario de época real — Gainsborough/Reynolds
-// Sin capas de armiño — ropa period-appropriate por género y edad
+// styles/v2/styles/realeza_humano.js — V3.0
+// V3.0: fondo paisaje natural consistente — calidad obra de arte
 
 module.exports = function realezaHumano(numSubjects, isGroup, genero) {
-  return `PAINTING STYLE — 18th Century Royal Court Portrait:
-A hyperrealistic oil painting in the tradition of Gainsborough, Reynolds and Vigée Le Brun.
-Fine craquelure across the paint surface — warm golden varnish patina.
-Refined elegant brushwork — polished with visible paint texture.
+  return `PAINTING STYLE — 18th Century Royal Portrait:
+A hyperrealistic oil painting in the tradition of Gainsborough, Reynolds and Lawrence.
+This painting will be printed large and hung on a wall — every detail must
+be worthy of a museum-quality work of art.
+Fine craquelure across the entire paint surface — warm golden varnish patina.
+Refined elegant brushwork — polished yet with visible paint texture throughout.
 
-BACKGROUND:
-Natural landscape or grand interior — warm and atmospheric.
-A forest edge or gentle landscape behind the subject.
-OR a heavy velvet drape to one side with architectural column.
-Soft warm light — elegant and flattering.
-The background frames the subject — never dominates.
+BACKGROUND — MOST IMPORTANT AFTER THE FACE:
+A grand natural landscape — the classic English or Flemish portrait setting.
+Tall ancient trees frame the composition on one or both sides —
+their canopy creates a natural arch overhead.
+A warm luminous sky visible behind the subject —
+golden afternoon light breaking through clouds from one side.
+Soft rolling hills or gentle landscape visible in the distance.
+Rocky outcrops or a low stone wall at the base — period appropriate.
+The atmosphere is warm, luminous and painterly — Gainsborough at his finest.
+The light in the landscape is the same light that falls on the subject —
+one unified, glowing, warm scene.
+The background elevates the subject — dignified, natural and alive.
+Never flat. Never empty. Never dark.
 
 LIGHTING:
-Soft elegant court lighting — warm and flattering from above-side.
-Both sides of the face visible — refined, less dramatic than Baroque.
-The face and hands are the most luminous elements.
-Soft transitions — no harsh shadows.
+Soft elegant light from upper-left — warm, golden and flattering.
+Both sides of the face gently illuminated — refined, not theatrical.
+The face and hands are the most luminous, most detailed elements.
+Soft sfumato transitions — no harsh shadows anywhere.
+The landscape glow bathes the entire composition in warmth.
 
 SKIN:
 Porcelain elegance — warm ivory base with soft rose undertones.
-Sfumato blending — silky transitions between light and shadow.
-Visible texture — never plastic or airbrushed.
+Sfumato blending throughout — silky transitions between light and shadow.
+Visible texture — never plastic, never airbrushed.
+Gentle warmth on the cheeks, softness on the temples.
 
 HANDS:
 Refined and elegant — the hallmark of court portraiture.
-Long fingers, natural grace — fully articulated.
+Natural grace fully articulated — light and shadow on every finger.
+Soft warm light catches the back of the hand.
 
 HAIR:
 Elaborately styled or naturally flowing.
-Individual strands visible in the light — rich and dimensional.
+Individual strands visible in the light — rich, dimensional, alive.
+Warm highlights catching the golden sky light.
 
 COSTUME — assign by gender and age:
 
@@ -43,7 +55,6 @@ Elaborate embroidery along the lapels, collar and cuffs — gold and silver thre
 A white ruffled lace shirt or jabot — crisp and prominent.
 A gold order of chivalry chain or decorative medal at the chest.
 Fitted trousers or breeches — period appropriate.
-The most elaborate of all male costumes — a true court gentleman.
 
 FOR ADULT WOMEN:
 A magnificent period gown — empire waist or court style.
@@ -58,8 +69,7 @@ FOR BOYS:
 A formal velvet suit — deep jewel tone
 (navy blue, forest green, deep burgundy or warm brown).
 A prominent white lace collar — the defining detail of a noble child.
-Gold buttons on the jacket.
-Scaled naturally — a child, not a miniature adult.
+Gold buttons on the jacket. Scaled naturally — a child, not a miniature adult.
 
 FOR GIRLS:
 A formal velvet dress — deep jewel tone
@@ -67,17 +77,35 @@ A formal velvet dress — deep jewel tone
 White lace collar and trim — individual thread detail visible.
 A sash or ribbon at the waist — complementary color.
 Scaled naturally to the child's body.
-The most elegant child's costume — worthy of a royal portrait.
 
-SETTING:
-A grand upholstered chair or stone ledge — partially visible.
-OR the subject stands with natural landscape behind.
-The architecture and setting complement — never overpower.
-
-PAINTING TECHNIQUE:
-Zero digital artifacts. Zero smooth gradients.
-Every element physical, aged, painted — like an 18th century court painter.
+PAINTING QUALITY — NON-NEGOTIABLE:
+This painting will be printed at large scale and hung on a wall.
+Every element must be rendered with museum-quality detail.
+Zero digital artifacts. Zero smooth gradients. Zero AI plastic look.
+The paint surface must feel physical — textured, aged, real.
 Warm luminous palette — golden light, jewel tones, ivory and gold.
-Canvas texture and craquelure visible throughout.
+Canvas texture and fine craquelure visible throughout.
+Every brushstroke has direction and purpose — like an 18th century master.
 4:5 portrait. 4K. High thinking mode.`;
 };
+```
+
+---
+
+**Los 3 cambios clave vs V2.0:**
+
+1. **Fondo consistente** — los 3 estilos tienen paisaje natural boscoso con luz dorada. Barroco más dramático, Renacimiento más cálido, Realeza más luminoso — pero todos naturaleza real.
+
+2. **Frase de calidad** añadida en los 3:
+```
+This painting will be printed large and hung on a wall —
+every element must be worthy of a museum-quality work of art.
+```
+
+3. **Luz unificada** — el fondo y el retrato comparten la misma fuente de luz en los 3 estilos.
+
+**Archivos a subir:**
+```
+styles/renacimiento_humano.js  ← V3.0
+styles/barroco_humano.js       ← V3.0
+styles/realeza_humano.js       ← V3.0
