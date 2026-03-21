@@ -159,4 +159,49 @@ module.exports = function multiHumanos(numSubjects) {
 
   const costumes = Array.from({ length: n }, (_, i) => {
     const idx = i + 1;
-    if (i === 0) return `Person ${idx}: ${palette.adult_m}
+    if (i === 0) return `Person ${idx}: ${palette.adult_m}`;
+    if (i === 1) return `Person ${idx}: ${palette.adult_f}`;
+    if (i === 2) return `Person ${idx} (child): ${palette.girl} — scaled naturally to child's size`;
+    return             `Person ${idx} (child): ${palette.boy} — scaled naturally to child's size`;
+  }).join('\n');
+
+  return `STEP 2 — COMPOSITION (${n} people):
+
+${MULTI_RULES}
+
+${scene}
+
+INDIVIDUAL COSTUMES — each person wears their own period-appropriate costume:
+${costumes}
+
+COSTUME DETAILS FOR ALL:
+White lace collars and cuffs — individual thread detail visible.
+Velvet fabric has directional nap — highlight and shadow follow the nap.
+Deep fold shadows in all fabric — real weight and gravity.
+Gold jewelry is aged warm ochre — never bright yellow.
+Children's costumes are scaled naturally — never miniature adult versions.
+
+SETTING:
+Natural landscape — forest edge, rocky outcrop or gentle hillside.
+Warm atmospheric depth behind the subjects.
+Soft golden light from one side — warm and natural.
+The setting feels like a genuine outdoor portrait sitting.
+No artificial studio backgrounds.
+
+FRAMING:
+Wide open composition — all people fully visible.
+All faces prominent, recognizable and clearly visible.
+Natural depth — not all subjects on the same flat plane.
+Generous breathing room on all sides.
+4:5 portrait. 4K. High thinking mode.`;
+};
+```
+
+---
+
+**Archivos a subir:**
+```
+styles/renacimiento_humano.js  ← V2.0
+styles/barroco_humano.js       ← V2.0
+styles/realeza_humano.js       ← V2.0
+poses/multi/humanos.js         ← V1.1
