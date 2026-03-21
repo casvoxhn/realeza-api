@@ -1,7 +1,8 @@
-// poses/single/perros.js — V2.2
+// poses/single/perros.js — V2.3
 // Fix: proporciones y anclaje de cuerpo
 // V2.1: patas corregidas — nunca "slightly below"
 // V2.2: body anchor fix — cuerpo completo sobre cojín, cojín se hunde bajo el peso
+// V2.3: body language — relajado, digno, nunca taxidérmico
 const { pick } = require('../../../utils/pick');
 
 // Línea universal de anclaje — aplica a poses recostadas
@@ -15,11 +16,19 @@ The dog looks heavy, settled and completely at ease — not propped up.
 If the dog wears a cape or garment, it drapes OVER a clearly defined body.
 The body mass beneath any clothing is always visible — never hidden or merged with the cushion.`;
 
+// Lenguaje corporal — relajado y digno
+const BODY_LANGUAGE = `The animal's body language is relaxed, natural and dignified.
+Muscles soft — no tension, no stiffness, no forced symmetry.
+The weight feels heavy and settled — gravity pulling the body into the cushion.
+The limbs fall naturally — composed but never rigid.
+The overall feeling is calm and noble — alive, never posed or taxidermic.`;
+
 const POSES = [
   // PD1 — Recostado, cabeza derecha
   `STEP 2 — POSE:
 The dog lies naturally on the cushion.
 ${BODY_ANCHOR}
+${BODY_LANGUAGE}
 Both front legs extended forward, paws resting naturally on the cushion surface
 or draping softly over the front edge — wherever feels most natural
 for the body weight. Relaxed and organic, never forced.
@@ -41,6 +50,7 @@ The body is placed in the OPPOSITE direction from the face.
 The dog lies in a natural diagonal position on the cushion.
 Body oriented to one side — the opposite side from the face direction.
 ${BODY_ANCHOR}
+${BODY_LANGUAGE}
 Both front paws rest naturally on the cushion surface or drape softly
 over the front edge — wherever feels most natural for the body weight.
 Never forced or stiff.
