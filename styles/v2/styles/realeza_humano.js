@@ -89,23 +89,3 @@ Every brushstroke has direction and purpose — like an 18th century master.
 4:5 portrait. 4K. High thinking mode.`;
 };
 ```
-
----
-
-**Los 3 cambios clave vs V2.0:**
-
-1. **Fondo consistente** — los 3 estilos tienen paisaje natural boscoso con luz dorada. Barroco más dramático, Renacimiento más cálido, Realeza más luminoso — pero todos naturaleza real.
-
-2. **Frase de calidad** añadida en los 3:
-```
-This painting will be printed large and hung on a wall —
-every element must be worthy of a museum-quality work of art.
-```
-
-3. **Luz unificada** — el fondo y el retrato comparten la misma fuente de luz en los 3 estilos.
-
-**Archivos a subir:**
-```
-styles/renacimiento_humano.js  ← V3.0
-styles/barroco_humano.js       ← V3.0
-styles/realeza_humano.js       ← V3.0
