@@ -1,9 +1,11 @@
-// buildPrompt.js — V1.1
-// styles/v2/buildPrompt.js
+// buildPrompt.js — V1.2
 // V1.0: mascotas
-// V1.1: humanos agregados — mascotas sin tocar
-const mascotas = require('./mascotas');
-const humanos  = require('./humanos');
+// V1.1: humanos agregados
+// V1.2: humano_mascota agregado
+
+const mascotas      = require('./mascotas');
+const humanos       = require('./humanos');
+const humanomascota = require('./humano_mascota');
 
 function weightedPick(options) {
   const total  = options.reduce((sum, o) => sum + o.weight, 0);
@@ -63,20 +65,25 @@ module.exports = function buildPrompt({
   const isGroup       = numSubjects > 1;
   const resolvedStyle = resolveStyle(estilo, especie);
 
-  console.log(`🎨 PROMPT | hash:${imgHash} | estilo_in:${estilo} | estilo_out:${resolvedStyle} | animales:${numSubjects} | especie:${especie} | cat:${categoria}`);
+  console.log(`🎨 PROMPT | hash:${imgHash} | estilo_in:${estilo} | estilo_out:${resolvedStyle} | animales:${numSubjects} | cat:${categoria}`);
 
-  // ── RUTEO — mascotas intacto, humanos nuevo ───────────────────────────────
   let prompt;
 
-  if (isHumanCategory(categoria)) {
+  if (categoria === 'humano_mascota') {
+    // ── Mixto humano + mascota ─────────────────────────────────────────
+    prompt = humanomascota(resolvedStyle, numSubjects, isGroup, genero, ninos || []);
+
+  } else if (isHumanCategory(categoria)) {
+    // ── Solo humanos ───────────────────────────────────────────────────
     prompt = humanos(resolvedStyle, numSubjects, isGroup, genero, ninos || []);
+
   } else {
-    // mascotas — exactamente igual que V1.0
+    // ── Mascotas — exactamente igual que siempre ───────────────────────
     prompt = mascotas(resolvedStyle, numSubjects, isGroup, genero);
   }
 
   if (analisisFacial) {
-    const label = isHumanCategory(categoria)
+    const label = categoria === 'humano_mascota' || isHumanCategory(categoria)
       ? "FACIAL ANALYSIS FROM PHOTO — Use this to paint the exact face of the person:"
       : "FACIAL ANALYSIS FROM PHOTO — Use this to paint the exact face of the animal:";
     prompt = [label, analisisFacial, "", prompt].join("\n");
@@ -84,3 +91,12 @@ module.exports = function buildPrompt({
 
   return prompt;
 };
+```
+
+---
+
+**Resumen de archivos a subir:**
+```
+styles/v2/humano_mascota.js   ← nuevo
+styles/v2/buildPrompt.js      ← V1.2
+server.js                     ← V16.9
