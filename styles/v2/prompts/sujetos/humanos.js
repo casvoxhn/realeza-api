@@ -1,6 +1,6 @@
-// styles/v2/prompts/sujetos/humanos.js — V1.0
-// Bloquea la identidad del sujeto adulto antes de construir el cuerpo
-// Aplica a single y multi — un bloque por persona
+// styles/v2/prompts/sujetos/humanos.js — V2.0
+// V1.0: estructura base
+// V2.0: expression lock — nunca inventa sonrisas ni expresiones
 
 module.exports = function sujetoHumano(index) {
   const ref = index ? `Person ${index}` : 'The person';
@@ -14,18 +14,25 @@ IDENTITY LOCK — extract and transfer exactly:
 - Exact skin tone, texture and any visible marks or features
 - Exact eye shape, color, depth and gaze direction
 - Exact nose shape and proportions
-- Exact lip shape and natural expression
+- Exact lip shape and natural resting position
 - Exact hair color, texture, volume and natural fall
 - Exact eyebrow shape, thickness and color
 - Exact head angle and rotation from the photo — LOCKED
 - Exact head tilt direction and degree — LOCKED
 - The person's natural personality and presence — preserved exactly
 
-This person must be immediately recognizable from their photo.
-Do NOT idealize, smooth, or alter any facial feature.
-Do NOT change the ethnicity, age or gender.
-Do NOT reinvent any feature not clearly visible —
-use what IS visible as the reference.
+EXPRESSION — CRITICAL — NEVER INVENT:
+Copy the exact expression from the photo — LOCKED.
+If the person is NOT smiling in the photo — do NOT add a smile.
+If the person IS smiling — preserve that exact smile, nothing more.
+If the smile shows teeth — paint exactly those teeth, nothing more.
+If the expression is neutral or serious — paint it neutral or serious.
+NEVER add warmth, friendliness or happiness that is not in the photo.
+NEVER soften or neutralize a strong expression.
+NEVER replace any expression with a generic pleasant face.
+The expression is part of this person's identity —
+treat it as locked exactly like eye color or skin tone.
+Inventing an expression is the same as inventing a different person.
 
 BODY:
 The body is always built around the face — never the opposite.
@@ -33,5 +40,11 @@ Natural adult proportions — not exaggerated in any direction.
 The posture is dignified and natural — never stiff or theatrical.
 Muscles relaxed — the person feels alive and present.
 Remove any modern clothing visible in the photo —
-replace with the royal costume assigned to this person.`;
+replace with the royal costume assigned to this person.
+
+ANATOMY — CRITICAL:
+Every person has exactly two arms and two hands — never more.
+If a hand touches another person or animal, trace that arm
+back to the correct shoulder — anatomically correct at all times.
+Never generate extra limbs or duplicate arms.`;
 };
