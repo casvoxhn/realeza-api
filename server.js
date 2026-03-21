@@ -205,6 +205,18 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Graceful shutdown — marca jobs activos como error antes de morir
+process.on('SIGTERM', () => {
+  console.log('⚠️ SIGTERM recibido — limpiando jobs activos...');
+  for (const [id, job] of jobs.entries()) {
+    if (job.status === 'pending' || job.status === 'processing') {
+      jobs.set(id, { ...job, status: 'error', error: 'Server restarted. Please try again.' });
+    }
+  }
+  // Dale 2 segundos para que el frontend haga polling y reciba el error
+  setTimeout(() => process.exit(0), 2000);
+});
+
 app.listen(PORT, () => {
   console.log(`🚀 V16.6 | Puerto:${PORT} | Modelo:${MODEL_ID} | Queue: in-memory`);
 });
