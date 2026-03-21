@@ -1,8 +1,27 @@
-// poses/single/otros.js — V2.1
-// Poses para otras especies: conejos, aves, reptiles, caballos, roedores, etc.
-// V2.1: "ledge" removido del framing — ya no existe ledge en los estilos
+// poses/single/otros.js — V2.2
+// V2.1: "ledge" removido del framing
+// V2.2: BODY_ANCHOR + BODY_LANGUAGE agregados a O1, O2, O3
+//       O4 caballo reescrito — recostado sobre cojín (no parado)
 
 const { pick } = require('../../../utils/pick');
+
+// Línea universal de anclaje — aplica a poses recostadas
+const BODY_ANCHOR = `Chest visibly pressed against the cushion surface — body weight fully anchored.
+The entire body rests fully ON the cushion —
+chest, belly AND hindquarters all in contact with the cushion surface.
+The hindquarters are NOT hanging off the edge or touching the floor.
+The cushion visibly sags and deforms under the animal's full body weight.
+The animal's body rests naturally on the cushion — never stretched or compressed to fill it.
+The animal looks settled and completely at ease — not propped up.
+If the animal wears a cape or garment, it drapes OVER a clearly defined body.
+The body mass beneath any clothing is always visible — never hidden or merged with the cushion.`;
+
+// Lenguaje corporal — relajado y digno
+const BODY_LANGUAGE = `The animal's body language is relaxed, natural and dignified.
+Muscles soft — no tension, no stiffness, no forced symmetry.
+The weight feels heavy and settled — gravity pulling the body into the cushion.
+The limbs fall naturally — composed but never rigid.
+The overall feeling is calm and noble — alive, never posed or taxidermic.`;
 
 const POSES = [
 
@@ -13,7 +32,8 @@ This pose works for animals that naturally rest lying down
 (rabbits, reptiles, guinea pigs, hamsters, ferrets, etc.)
 
 The animal rests naturally on the cushion.
-Body settled comfortably — weight on the chest and lower body.
+${BODY_ANCHOR}
+${BODY_LANGUAGE}
 Front limbs extended forward or tucked naturally.
 The pose respects this species' natural anatomy completely.
 The head rises naturally — face exactly as locked in Step 1.
@@ -38,6 +58,8 @@ This pose works for animals that naturally sit upright
 (rabbits, guinea pigs, chinchillas, etc.)
 
 The animal sits upright and dignified on the cushion.
+${BODY_ANCHOR}
+${BODY_LANGUAGE}
 Body facing slightly to one side — not perfectly frontal.
 Front limbs rest naturally at the front of the body.
 The full body is visible — head, torso and lower body.
@@ -66,31 +88,41 @@ Feet grip the cushion surface naturally.
 Tail feathers visible and natural.
 The head is upright — face exactly as locked in Step 1.
 The posture is proud and alert — natural for this bird species.
+${BODY_LANGUAGE}
 
 FRAMING:
 The bird occupies the upper 60% of the canvas.
 The cushion prominent below — full cushion visible with tassel.
 Generous breathing room on all sides.`,
 
-  // O4 — Caballo (composición especial — animal grande)
+  // O4 — Caballo recostado sobre el cojín
   `STEP 2 — POSE:
 Study the animal in Image 1 and identify its species.
 This pose works for horses and large animals.
 
-The horse stands in a dignified 3/4 profile position.
-Body turned slightly — the powerful flank visible to the viewer.
-The head turns naturally to face the viewer —
+The horse lies naturally reclined on the cushion.
+Chest resting on the cushion surface.
+${BODY_ANCHOR}
+${BODY_LANGUAGE}
+Both front legs extended forward, hooves resting naturally
+on the cushion surface or just at the front edge.
+The hindquarters settle naturally to one side behind.
+The body is proportional and natural — never compressed.
+The head rises naturally and turns toward the viewer —
 face direction exactly as locked in Step 1.
-All four legs visible and naturally positioned.
-The tail falls naturally behind.
+The pose feels organic — powerful but completely at ease.
 
-NOTE: For horses the cushion becomes a decorative element
-at the base — the horse stands beside or in front of it.
-The composition is wider to accommodate the full body.
+If the horse wears a cape or mantle, it drapes naturally
+over the back and to one side — the full body mass is
+always visible beneath it.
+
+Paint the tail only if clearly visible in Image 1 —
+same color and fur as the body. If not visible, omit it.
 
 FRAMING:
-Wide horizontal composition — full body visible.
-The horse occupies 70% of the canvas height.
+Wide open composition — full body visible.
+The animal occupies the upper 60% of the canvas.
+The cushion occupies the lower 40%.
 Generous breathing room on all sides.`,
 
 ];
