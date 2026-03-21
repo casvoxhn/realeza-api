@@ -1,6 +1,6 @@
-// poses/multi/mascotas.js — V3.0
-// Composiciones basadas en principios de retrato profesional multi-mascota
-// Investigado: jerarquía natural, profundidad, cuerpos angled, triángulo
+// poses/multi/mascotas.js — V3.1
+// V3.0: composiciones multi-mascota
+// V3.1: BODY_ANCHOR + BODY_LANGUAGE en MULTI_RULES, patas corregidas, cojín se hunde
 
 const { pick } = require('../../../utils/pick');
 
@@ -10,7 +10,13 @@ const MULTI_RULES = `CRITICAL RULES — apply to every animal:
 - For body parts not visible in source photos: use visible fur color as reference
 - Each animal wears its own INDEPENDENT royal costume — never shared
 - All faces must be clearly visible, recognizable and prominent
-- Animals feel naturally at ease together — never forced or stiff`;
+- Animals feel naturally at ease together — never forced or stiff
+- Every animal's chest is visibly pressed against the cushion — fully anchored
+- No paws hang over edges — all limbs rest completely ON the cushion surface
+- The cushion sags and deforms naturally under the combined weight of all animals
+- Every animal's body language is relaxed, natural and dignified — never rigid or taxidermic
+- If any animal wears a cape or garment, it drapes OVER a clearly defined body —
+  the body mass beneath is always visible, never hidden or merged with the cushion`;
 
 // ─── 2 ANIMALES ───────────────────────────────────────────────────────────────
 const SCENES_2 = [
@@ -23,6 +29,8 @@ to one side, head raised and facing the viewer.
 Animal 2 (the smaller) rests in front of Animal 1 —
 nestled naturally at the base, slightly to the opposite side.
 Animal 2's face is fully visible and prominent.
+Both animals' front paws rest completely flat on the cushion surface —
+fully supported, never hanging over the edge.
 The two animals are close but not touching — naturally comfortable.
 The composition creates depth: foreground and background animal.
 Both faces clearly visible at different heights.`,
@@ -34,14 +42,15 @@ Animal 1 on the left, body angled slightly to the RIGHT.
 Animal 2 on the right, body angled slightly to the LEFT.
 Their bodies angle naturally toward each other — warm and connected.
 Both faces turn to look at the viewer — not at each other.
-Front paws extended forward, resting naturally.
+Both animals' front paws rest completely flat on the cushion surface —
+fully supported, never hanging over the edge.
 The composition is balanced and harmonious — like two companions.
 Both faces clearly visible and at a similar height.`,
 
   // Uno recostado al frente, otro sentado detrás como guardián
   `SCENE — Resting and guardian (2 animals):
 Animal 1 lies relaxed in the foreground of the cushion —
-chest down, front paws extended over the cushion edge.
+chest down, front paws resting completely flat on the cushion surface.
 Animal 2 sits upright behind Animal 1, slightly to one side —
 like a guardian watching over the first.
 Animal 2's body is elevated above Animal 1, face fully visible.
@@ -57,11 +66,14 @@ const SCENES_3 = [
   // Triángulo clásico — el más natural y elegante
   `SCENE — Classic triangle composition (3 animals):
 Animal 1 (largest) rests in the center and slightly behind —
-body low on the cushion, face raised and prominent.
+body low on the cushion, chest pressed against the surface,
+face raised and prominent.
 Animal 2 sits or rests to the front LEFT, body angled inward
 toward the center — face visible and turned to the viewer.
 Animal 3 sits or rests to the front RIGHT, body angled inward
 toward the center — face visible and turned to the viewer.
+All three animals' front paws rest completely flat on the cushion —
+fully supported, never hanging over the edge.
 The three animals form a natural triangle —
 the apex (Animal 1) slightly higher and behind,
 the base (Animals 2 and 3) lower and in front.
@@ -71,11 +83,13 @@ All three faces clearly visible at different depths.`,
   // Línea con profundidad — grande al fondo, pequeños al frente
   `SCENE — Depth line composition (3 animals):
 Animal 1 (largest) rests at the back of the cushion —
-body slightly elevated, face prominent above the others.
+body slightly elevated, chest pressed against the cushion,
+face prominent above the others.
 Animal 2 rests in the middle ground — slightly in front of Animal 1,
 offset to one side, face clearly visible.
 Animal 3 (smallest) rests in the foreground —
-closest to the viewer, front paws over the cushion edge.
+closest to the viewer, front paws resting completely flat
+on the cushion surface — fully supported, never hanging.
 The three animals create natural depth from foreground to background.
 Each face is at a different height and depth — all clearly visible.
 The composition feels like a natural family portrait.`,
@@ -88,7 +102,8 @@ const SCENES_4 = [
   // Dos filas con profundidad — lo más natural para 4
   `SCENE — Two rows, natural depth (4 animals):
 FRONT ROW: Animals 1 and 2 rest in the foreground of the cushion —
-both lying with front paws extended forward over the cushion edge.
+both lying with front paws resting completely flat on the cushion surface,
+fully supported, never hanging over the edge.
 Animal 1 on the left, Animal 2 on the right.
 Their bodies angle slightly inward toward each other.
 BACK ROW: Animals 3 and 4 sit upright behind the front pair —
@@ -100,11 +115,13 @@ The cushion is grand and generous to fit all four naturally.`,
   // Pirámide — composición más dinámica
   `SCENE — Pyramid composition (4 animals):
 Animal 1 (largest) rests centered at the back — the apex.
-Body low on the cushion, face prominent and elevated.
+Body low on the cushion, chest pressed against the surface,
+face prominent and elevated.
 Animals 2 and 3 rest on each side in the middle ground —
 offset left and right, angled inward toward Animal 1.
 Animal 4 (smallest) rests in the front center foreground —
-closest to the viewer, front paws over the cushion edge.
+closest to the viewer, front paws resting completely flat
+on the cushion surface — fully supported, never hanging.
 The four animals form a natural pyramid.
 All faces visible at four different depths and heights.
 The grand cushion supports all four with generous space.`,
@@ -158,6 +175,7 @@ Each cape falls ONLY behind its animal — never in front or to the sides.
 CUSHION:
 A grand, generously sized gold ochre velvet cushion —
 wide and plump enough to naturally support all ${n} animals.
+The cushion visibly sags and deforms under the combined weight of all animals.
 Sides billow outward generously.
 Braided rope trim along all edges.
 Single large gold tassel at front center.
