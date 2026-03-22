@@ -1,11 +1,9 @@
-// poses/single/otros.js — V2.2
-// V2.1: "ledge" removido del framing
-// V2.2: BODY_ANCHOR + BODY_LANGUAGE agregados a O1, O2, O3
-//       O4 caballo reescrito — recostado sobre cojín (no parado)
+// poses/single/otros.js — V2.3
+// V2.2: BODY_ANCHOR + BODY_LANGUAGE + caballo reescrito
+// V2.3: underside tastefully obscured — nunca se ve el sexo del animal
 
 const { pick } = require('../../../utils/pick');
 
-// Línea universal de anclaje — aplica a poses recostadas
 const BODY_ANCHOR = `Chest visibly pressed against the cushion surface — body weight fully anchored.
 The entire body rests fully ON the cushion —
 chest, belly AND hindquarters all in contact with the cushion surface.
@@ -14,9 +12,10 @@ The cushion visibly sags and deforms under the animal's full body weight.
 The animal's body rests naturally on the cushion — never stretched or compressed to fill it.
 The animal looks settled and completely at ease — not propped up.
 If the animal wears a cape or garment, it drapes OVER a clearly defined body.
-The body mass beneath any clothing is always visible — never hidden or merged with the cushion.`;
+The body mass beneath any clothing is always visible — never hidden or merged with the cushion.
+The animal's hindquarters and underside are always tastefully obscured —
+by the natural position of the legs, the cape, or the cushion surface.`;
 
-// Lenguaje corporal — relajado y digno
 const BODY_LANGUAGE = `The animal's body language is relaxed, natural and dignified.
 Muscles soft — no tension, no stiffness, no forced symmetry.
 The weight feels heavy and settled — gravity pulling the body into the cushion.
@@ -63,6 +62,8 @@ ${BODY_LANGUAGE}
 Body facing slightly to one side — not perfectly frontal.
 Front limbs rest naturally at the front of the body.
 The full body is visible — head, torso and lower body.
+The animal's hindquarters and underside are always tastefully obscured —
+by the natural position of the legs, the cape, or the cushion surface.
 The posture looks natural for this specific species —
 never forced into a pose unnatural for this animal.
 The head rises naturally — face exactly as locked in Step 1.
