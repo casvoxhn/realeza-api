@@ -1,7 +1,17 @@
-// barroco.js — V4.9 (Museum Masterpiece - Baroque Dramatic)
-// V4.9: Absolute aesthetic elevation — true oil physics, Rembrandt lighting, optical depth
+// barroco.js — V5.0
+// V4.9: Museum Masterpiece - Baroque Dramatic
+// V5.0: anatomical substructure — cuerpo visible bajo capa, volumen de cadera
 
 const { pick } = require('../utils/pick');
+
+const ANATOMIA_CAPA = `CRITICAL ANATOMY: The cape must follow the contours of the animal's physical body.
+The protrusion of the hindquarters and the curve of the spine
+MUST be visible beneath the fabric — the fabric reveals mass and volume.
+The cape does NOT hide the body — it drapes over a clearly defined 3D form.
+Realistic folds form where the fabric passes over the hips and spine —
+these folds confirm the body is beneath them.
+The cape trails onto the cushion ONLY after covering the clearly defined
+rear legs and hips — never replacing them.`;
 
 const VARIANTES = [
 
@@ -30,10 +40,11 @@ ERMINE TECHNIQUE: Baroque fur rendering. A warm, dark base with individual flyaw
 pulled over the surface using thick impasto strokes. The black spots have soft, sfumato edges — melting into the white fur.
 Pink and aged-gold lace trim — rendered with trompe l'oeil precision.
 CAPE: Deep CRIMSON velvet cape draped naturally over the animal's back.
+${ANATOMIA_CAPA}
 Heavy, dramatic folds painted with distinct, confident brushstrokes. The fabric has true gravitational pull.
 The crimson is built up with rich alizarin glazes, glowing subtly in the light.
 TRANSITION: The boundary between ermine and the animal's natural fur is softened with sfumato. Zero harsh digital cut-outs.
-Double gold chain on chest, painted with tiny, sharp specular highlights mimicking real metal reflecting oil-lamp light.`
+Double gold chain on chest, painted with tiny, sharp specular highlights mimicking real metal reflecting oil-lamp light.`,
   },
 
   // ── VARIANTE 2: Dorado + Borgoña oscuro ───────────────────────────────────
@@ -60,10 +71,11 @@ ERMINE TECHNIQUE: Baroque fur rendering. Thick ivory impasto highlights contrast
 thin, cool, translucent shadows in the deep folds. The black spots have soft, painted edges.
 Pink and aged-gold lace trim — individual metallic threads visible.
 CAPE: Deep DARK BURGUNDY velvet cape draped naturally over the animal's back.
+${ANATOMIA_CAPA}
 Heavy, dramatic folds painted with distinct, confident brushstrokes. The fabric feels thick and expensive.
 Deepest folds are pure asphaltum black. No smooth digital transitions.
 TRANSITION: The boundary between ermine and natural fur is softened with sfumato. Zero paste-on effect.
-Double gold chain on chest, catching a single, sharp glint of warm light.`
+Double gold chain on chest, catching a single, sharp glint of warm light.`,
   },
 
   // ── VARIANTE 3: Bronce-Oliva + Azul profundo ──────────────────────────────
@@ -90,10 +102,11 @@ ERMINE TECHNIQUE: Baroque fur rendering. Warm light on top, cool optical shadows
 Textured, physical, painted hair by hair in the light areas using a fine brush.
 Gold and ivory lace trim along the front border — rendered with trompe l'oeil precision.
 CAPE: Deep MIDNIGHT BLUE velvet cape draped naturally over the animal's back.
+${ANATOMIA_CAPA}
 Heavy, wide, dramatic folds — real fabric weight pulling downward.
 Painted using layers of translucent lapis lazuli glazes. Folds shift from deep cobalt in the light to absolute black in the crevices.
 TRANSITION: The boundary between ermine and the animal's fur is blended using sfumato.
-Double aged-gold chain on chest, resting heavily against the fur.`
+Double aged-gold chain on chest, resting heavily against the fur.`,
   },
 
 ];
