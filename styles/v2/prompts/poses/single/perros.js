@@ -1,6 +1,6 @@
-// poses/single/perros.js — V2.6
-// V2.5: BODY_ANCHOR expandido — subestructura anatómica
-// V2.6: underside tastefully obscured — nunca se ve el sexo del animal
+// poses/single/perros.js — V2.7
+// V2.6: underside tastefully obscured
+// V2.7: MANDATORY lying down en PD1 y PD2 — refuerza pose recostada
 
 const { pick } = require('../../../utils/pick');
 
@@ -34,8 +34,12 @@ The limbs fall naturally — composed but never rigid.
 The overall feeling is calm and noble — alive, never posed or taxidermic.`;
 
 const POSES = [
+
   // PD1 — Recostado, cabeza derecha
   `STEP 2 — POSE:
+MANDATORY POSE: The dog is LYING DOWN — reclined, NOT sitting upright.
+The belly and chest rest horizontally ON the cushion surface.
+This is NOT a sitting pose under any circumstances.
 The dog lies naturally on the cushion.
 ${BODY_ANCHOR}
 ${BODY_LANGUAGE}
@@ -55,6 +59,9 @@ Generous breathing room on all sides.`,
 
   // PD2 — Recostado diagonal, cuerpo opuesto a la cara
   `STEP 2 — POSE:
+MANDATORY POSE: The dog is LYING DOWN in a diagonal position — NOT sitting upright.
+The belly and chest rest horizontally ON the cushion surface.
+This is NOT a sitting pose under any circumstances.
 First study the face direction in Image 1.
 The body is placed in the OPPOSITE direction from the face.
 The dog lies in a natural diagonal position on the cushion.
@@ -99,6 +106,7 @@ Generous breathing room on all sides.`,
 
   // PD4 — Recostado lateral, patas completamente sobre el cojín
   `STEP 2 — POSE:
+MANDATORY POSE: The dog is LYING DOWN laterally — NOT sitting upright.
 The dog lies in a natural lateral position on the cushion.
 The body is angled — more to the side than frontal.
 The viewer can clearly see the dog's flank and body depth.
@@ -119,6 +127,17 @@ Wide open composition — full body visible.
 The animal occupies the upper 55% of the canvas.
 The cushion and ledge occupy the lower 45%.
 Generous breathing room on all sides.`,
+
 ];
 
 module.exports = () => pick(POSES);
+```
+
+---
+
+**Archivos a subir:**
+```
+styles/renacimiento.js  ← V4.7
+styles/barroco.js       ← V5.1
+styles/realeza.js       ← V5.1
+poses/single/perros.js  ← V2.7
