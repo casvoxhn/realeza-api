@@ -121,4 +121,53 @@ Drapes over the back and shoulders — animal's chest and paws fully visible.
 ERMINE TECHNIQUE: individual short white fur strands with fine directional
 brushstrokes. Warm ivory where the horizon light catches it, cool in shadow.
 Not smooth — each hair strand has direction, thickness and shadow.
-Black spots: soft painted edges, slightly irregular in size —
+Black spots: soft painted edges, slightly irregular in size — never perfect circles.
+Gold lace trim along the front border with small floral details — threads visible.
+Floral embroidery along the cape: muted roses in dusty rose and gold.
+Individual embroidery stitches clearly visible — raised above the velvet.
+CAPE: Deep BURGUNDY velvet cape — worn BY the animal.
+${ANATOMIA_CAPA}
+The velvet fabric touches the animal's sides naturally where it drapes.
+Heavy dramatic fold shadows — real fabric weight pulling downward.
+TRANSITION: where the ermine meets the animal's fur — blend naturally.
+No hard edge. No paste-on effect.
+Double gold chain with a pendant on the animal's chest.`,
+  },
+
+];
+
+module.exports = function renacimientoStyle(numSubjects, isGroup, genero) {
+
+  const variante = pick(VARIANTES);
+
+  const background = `
+BACKGROUND:
+A dramatic Renaissance sky — dark stormy clouds fill the upper portion.
+Painted in the style of 16th century Flemish portraiture.
+Heavy, turbulent, dark grey-green clouds with deep shadows between the masses.
+CLOUD TECHNIQUE: loose expressive brushstrokes — each cloud mass has visible
+paint direction. The clouds are NOT smooth. Individual brushmarks visible.
+A break of pale golden-cream light on the LEFT horizon — warm and luminous.
+The horizon light comes from below-left — it bathes the animal from that direction.
+A hint of teal-blue sky visible through the cloud break on the right.
+NO solid dark wall. The sky fills the upper 40% of the canvas.`;
+
+  const paintingStyle = `
+PAINTING STYLE:
+16th century Renaissance Flemish oil painting. Do NOT render this digitally.
+Do NOT use smooth AI gradients. Do NOT produce a clean digital illustration.
+FUR TECHNIQUE: paint a dark undertone base layer first.
+Then add individual lighter fur strands on top with short directional brushstrokes
+following the natural direction of hair growth. Fur has depth —
+shadow underneath, individual hairs catching the warm horizon light on top.
+Never smooth fur. Always layered, textured, painterly.
+GOLD: all chains and trim are aged warm ochre — not bright yellow. Metallic but muted.
+Sfumato blending on face transitions — soft edges between light and shadow on the face.
+Visible canvas texture and fine craquelure throughout — most visible in dark areas.
+Warm muted palette unified by a thin golden glaze over the whole composition.
+Loose expressive brushwork for clouds. Directional strokes on all fabric.
+Every element must feel physical, aged, painted — like a Flemish master painting.
+Zero digital artifacts. Zero smooth gradients.`;
+
+  return [background, variante.cushion, variante.costume, paintingStyle].join('\n');
+};
