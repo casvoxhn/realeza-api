@@ -349,17 +349,3 @@ process.on('SIGTERM', () => {
 app.listen(PORT, () => {
   console.log(`🚀 V16.12 | Puerto:${PORT} | Modelo:${MODEL_ID} | Queue: in-memory`);
 });
-```
-
----
-
-**Cambios vs V16.11:**
-- Función `notifyTelegram` — envía resultado + inputs a tu Telegram
-- Se llama al final del job exitoso — fire and forget, nunca bloquea
-- Lee token y chat ID desde variables de entorno
-- Versión bumpeada a V16.12
-
-**Agrega en Railway:**
-```
-TELEGRAM_BOT_TOKEN=8382567016:AAHks1V2BjJdVvFdkP6a05VFJ8QnWLfjezY
-TELEGRAM_CHAT_ID=1091982693
