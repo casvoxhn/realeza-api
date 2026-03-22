@@ -1,18 +1,19 @@
-// barroco.js — V5.1
-// V5.0: anatomical substructure — cuerpo visible bajo capa
+// barroco.js — V5.2
 // V5.1: ANATOMIA_CAPA fix — no fuerza pose sentado
+// V5.2: capa cubre ambos flancos simétricamente
 
 const { pick } = require('../utils/pick');
 
-const ANATOMIA_CAPA = `The cape drapes OVER the animal's clearly defined body — never hides it.
+const ANATOMIA_CAPA = `The cape drapes symmetrically over BOTH sides of the animal's back —
+covering both flanks equally before trailing onto the cushion behind.
+No leg or flank is left completely uncovered on either side.
 The fabric follows the natural contours of whatever pose the animal is in.
-Realistic folds reveal the body mass underneath — spine, shoulders and torso always visible.
+Realistic folds reveal the body mass underneath — never hiding it.
 The cape does NOT replace the body — it drapes over a 3D physical form.
 The animal's full body silhouette remains visible beneath the fabric.`;
 
 const VARIANTES = [
 
-  // ── VARIANTE 1: Dorado + Carmesí ──────────────────────────────────────────
   {
     cushion: `
 CUSHION — paint with museum-grade physical realism:
@@ -44,7 +45,6 @@ TRANSITION: The boundary between ermine and the animal's natural fur is softened
 Double gold chain on chest, painted with tiny, sharp specular highlights mimicking real metal reflecting oil-lamp light.`,
   },
 
-  // ── VARIANTE 2: Dorado + Borgoña oscuro ───────────────────────────────────
   {
     cushion: `
 CUSHION — paint with museum-grade physical realism:
@@ -75,7 +75,6 @@ TRANSITION: The boundary between ermine and natural fur is softened with sfumato
 Double gold chain on chest, catching a single, sharp glint of warm light.`,
   },
 
-  // ── VARIANTE 3: Bronce-Oliva + Azul profundo ──────────────────────────────
   {
     cushion: `
 CUSHION — paint with museum-grade physical realism:
