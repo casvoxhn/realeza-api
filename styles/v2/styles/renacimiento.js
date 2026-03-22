@@ -1,5 +1,6 @@
-// renacimiento.js — V4.9
-// V4.9: Solución de Anatomía y Capa - Envuelve el cuerpo sin dejar patas expuestas
+// renacimiento.js — V5.0
+// V4.9: Solución de Anatomía y Capa
+// V5.0: género aplicado — masculine/feminine cambia colores, bordado y accesorios
 
 const { pick } = require('../utils/pick');
 
@@ -9,6 +10,7 @@ CRITICAL: Do NOT leave random legs, hips, or flanks exposed on the sides.
 The fabric must follow the natural 3D contours of the body mass underneath without hiding the silhouette.
 The cape is a heavy, continuous piece of fabric — no awkward gaps or floating edges.`;
 
+// ── VARIANTES NEUTRAS (sin género) ───────────────────────────────────────────
 const VARIANTES = [
   {
     cushion: `
@@ -121,8 +123,82 @@ Double gold chain with a pendant on the animal's chest.`
   }
 ];
 
+// ── VARIANTE MASCULINE ────────────────────────────────────────────────────────
+const VARIANTE_MASCULINE = {
+  cushion: `
+CUSHION — paint with full detail:
+A large DEEP NAVY velvet cushion — rich dark blue, commanding and dignified.
+SHAPE: nearly square. SIZE: occupies approximately 30-35% of the canvas height. Proportional.
+Heavily stuffed and plump. Top surface bulges upward generously in the center.
+Sides fall naturally with slight outward curve.
+The animal's front paws hang over the FRONT EDGE of the cushion —
+paws drape down over the front lip. They fall over the edge — natural weight.
+VELVET TECHNIQUE: long directional brushstrokes following the nap direction.
+Top surface: deep navy catching warm horizon light.
+Front face and sides: near-black at the bottom edge — dramatic and deep.
+TRIM: Thick twisted gold rope cord along the bottom. One large gold tassel at front center.
+BASE: A thin flat stone parapet edge — muted grey, slightly weathered.`,
+
+  costume: `
+ERMINE MANTLE:
+White fur shoulder mantle, small evenly-distributed black spots.
+Drapes over the back and shoulders — animal's chest and paws fully visible.
+ERMINE TECHNIQUE: individual short white fur strands — warm ivory in light, cool shadow.
+Minimal gold trim along the front border — restrained and dignified.
+Simple geometric embroidery along the cape edge — gold thread, angular motifs.
+CAPE: Deep DARK BURGUNDY velvet cape — worn BY the animal.
+${ANATOMIA_CAPA}
+Heavy, dramatic fold shadows — strong gravitational pull.
+The embroidery is bold and restrained — no floral excess.
+TRANSITION: where the ermine meets the animal's fur — blend naturally.
+CHAIN: Heavy double gold chain — thick links, substantial weight on the chest.
+A bold gemstone pendant — deep sapphire or emerald — strong and commanding.`
+};
+
+// ── VARIANTE FEMININE ─────────────────────────────────────────────────────────
+const VARIANTE_FEMININE = {
+  cushion: `
+CUSHION — paint with full detail:
+A large DEEP ROSE-GOLD velvet cushion — warm crimson with golden undertones, rich and elegant.
+SHAPE: nearly square. SIZE: occupies approximately 30-35% of the canvas height. Proportional.
+Heavily stuffed and plump. Top surface bulges upward generously in the center.
+Sides fall naturally with slight outward curve.
+The animal's front paws hang over the FRONT EDGE of the cushion —
+paws drape down over the front lip. They fall over the edge — natural weight.
+VELVET TECHNIQUE: long directional brushstrokes following the nap direction.
+Top surface: warm rose-gold catching the horizon light — luminous and soft.
+Front face and sides: deep warm shadow — never cold.
+TRIM: Delicate twisted gold rope cord along the bottom. One ornate gold tassel at front center.
+BASE: A thin flat stone parapet edge — muted warm grey, slightly weathered.`,
+
+  costume: `
+ERMINE MANTLE:
+White fur shoulder mantle, small evenly-distributed black spots.
+Drapes gracefully over the back and shoulders — animal's chest and paws fully visible.
+ERMINE TECHNIQUE: individual short white fur strands — warm ivory in light, soft grey in shadow.
+Prominent ornate lace trim along the front border — delicate individual thread detail visible.
+Elaborate floral embroidery along the cape edge: roses, peonies and vine motifs
+in blush pink, cream and gold thread — the defining feature of this style.
+Individual embroidery stitches raised and visible — intricate and beautiful.
+CAPE: Deep CRIMSON velvet cape — warm ruby red, rich and luminous — worn BY the animal.
+${ANATOMIA_CAPA}
+Elegant fold shadows — fabric flows gracefully.
+The floral embroidery is dense and elaborate along the visible cape edge.
+TRANSITION: where the ermine meets the animal's fur — blend naturally and softly.
+CHAIN: Delicate single gold chain — elegant and refined on the chest.
+A prominent gemstone pendant — ruby or rose tourmaline — warm and beautiful.`
+};
+
 module.exports = function renacimientoStyle(numSubjects, isGroup, genero) {
-  const variante = pick(VARIANTES);
+
+  let variante;
+  if (genero === 'masculine') {
+    variante = VARIANTE_MASCULINE;
+  } else if (genero === 'feminine') {
+    variante = VARIANTE_FEMININE;
+  } else {
+    variante = pick(VARIANTES);
+  }
 
   const background = `
 BACKGROUND:
