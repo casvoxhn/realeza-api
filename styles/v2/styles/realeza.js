@@ -1,7 +1,17 @@
-// realeza.js — V4.9 (Masterpiece Visual Upgrade)
+// realeza.js — V5.0
 // V4.9: Aesthetic elevation - Baroque painting techniques, true oil texture, museum aging
+// V5.0: anatomical substructure — cuerpo visible bajo capa, volumen de cadera
 
 const { pick } = require('../utils/pick');
+
+const ANATOMIA_CAPA = `CRITICAL ANATOMY: The cape must follow the contours of the animal's physical body.
+The protrusion of the hindquarters and the curve of the spine
+MUST be visible beneath the fabric — the fabric reveals mass and volume.
+The cape does NOT hide the body — it drapes over a clearly defined 3D form.
+Realistic folds form where the fabric passes over the hips and spine —
+these folds confirm the body is beneath them.
+The cape trails onto the cushion ONLY after covering the clearly defined
+rear legs and hips — never replacing them.`;
 
 const VARIANTES = [
 
@@ -32,6 +42,7 @@ const VARIANTES = [
       "The fur catches warm, golden oil-lamp light on top, with cool, thin blue-grey glazes in the deep folds.",
       "Rich pink and gold lace trim — rendered with trompe l'oeil precision.",
       "CAPE: Deep BURGUNDY-CRIMSON velvet cape draped naturally over the animal's back.",
+      ANATOMIA_CAPA,
       "Heavy, dramatic folds painted with distinct, confident brushstrokes. No blending.",
       "GOLD ARABESQUE EMBROIDERY: Scrolling botanical motifs.",
       "Executed in thick, raised impasto using lead-tin yellow tones to catch specular highlights, mimicking real metallic thread.",
@@ -66,6 +77,7 @@ const VARIANTES = [
       "Warm ivory impasto in the highlights, thin translucent cool glazes in the shadows.",
       "Ornate gold lace trim — rendered with trompe l'oeil precision.",
       "CAPE: Deep BURGUNDY velvet cape draped naturally over the animal's back.",
+      ANATOMIA_CAPA,
       "Heavy, dramatic folds painted with distinct, confident brushstrokes.",
       "GOLD ARABESQUE EMBROIDERY: Matching motifs.",
       "Executed in thick, raised impasto to catch specular highlights, mimicking real metallic thread.",
@@ -100,6 +112,7 @@ const VARIANTES = [
       "The white fur reflects the surrounding warmth in the light, and cool blue tones in the shadow.",
       "The most ornate gold lace trim, individual threads painted with meticulous attention.",
       "CAPE: ROYAL BLUE velvet cape draped naturally over the animal's back.",
+      ANATOMIA_CAPA,
       "Heavy, dramatic folds painted with distinct, confident brushstrokes.",
       "GOLD EMBROIDERY: Fleurs-de-lis and star motifs along the cape edge.",
       "Executed in thick, raised impasto using warm ochre and yellow to mimic real metallic thread.",
@@ -135,7 +148,7 @@ module.exports = function realezaStyle(numSubjects, isGroup, genero) {
     "Lighting is dramatic chiaroscuro from the upper left, casting deep, solid shadows.",
     "The entire piece is unified by a subtle, aged damar varnish finish — giving the painting",
     "that characteristic warm, golden-brown museum glow and fine, authentic craquelure in the thickest dark areas.",
-    "The final image must look indistinguishable from a high-resolution macro photograph of a 400-year-old masterpiece hanging in the Louvre."
+    "The final image must look indistinguishable from a high-resolution macro photograph of a 400-year-old masterpiece hanging in the Louvre.",
   ].join("\n");
 
   return [background, variante.cushion, variante.costume, paintingStyle].join("\n\n");
