@@ -1,7 +1,7 @@
-// styles/v2/humanos.js — V1.1
-// Assembler para retratos de humanos — adultos, niños, grupos
+// styles/v2/humanos.js — V1.2
 // V1.0: estructura base
-// V1.1: usa estilos humanos separados — sin cojín, setting correcto
+// V1.1: estilos humanos separados — sin cojín
+// V1.2: PAINTING_FROM_SCRATCH — no fotomontajes, fondo reemplazado
 
 const faceCheck    = require('./prompts/core/face_check');
 const sujetoHumano = require('./prompts/sujetos/humanos');
@@ -28,7 +28,17 @@ const styleMap = {
   intelligent:          barrocoHumano,
 };
 
-// Detecta si un índice corresponde a un niño
+const PAINTING_FROM_SCRATCH = `CRITICAL — PAINT FROM SCRATCH:
+Paint a completely NEW original oil painting from scratch.
+Do NOT composite, layer or combine the source photos in any way.
+Do NOT preserve any background from any photo — replace completely.
+Do NOT photocopy or trace any photo element — paint everything.
+The background must be the natural landscape described in the style.
+Every element — people, clothing, background — must be painted.
+This is one unified oil painting. Nothing photographic survives.
+Modern clothing is replaced by period costume.
+Modern backgrounds are replaced by the natural landscape setting.`;
+
 function esNino(index, ninos) {
   return Array.isArray(ninos) && ninos.includes(index);
 }
@@ -42,14 +52,24 @@ module.exports = function humanos(estilo, numSujetos, isGroup, genero, ninos = [
   // ── UN SOLO SUJETO ──────────────────────────────────────────────────────
   if (numSubjects === 1) {
     const esNinoSolo = esNino(1, ninos);
-    const sujeto     = esNinoSolo ? sujetoNino()   : sujetoHumano();
-    const poseBlock  = esNinoSolo ? posaNino()      : posaHumano();
+    const sujeto     = esNinoSolo ? sujetoNino()  : sujetoHumano();
+    const poseBlock  = esNinoSolo ? posaNino()     : posaHumano();
 
-    const faceFirst = `STEP 1 — IDENTITY FIRST — MOST CRITICAL:
+    const faceFirst = `${PAINTING_FROM_SCRATCH}
+
+STEP 1 — IDENTITY FIRST — MOST CRITICAL:
 Study Image 1 carefully before painting anything.
 ${sujeto}`;
 
-    return [faceFirst, poseBlock, styleBlock, faceCheck].join('\n\n');
+    const faceCheckCustom = `STEP 3 — IDENTITY AND QUALITY CHECK:
+Compare the painted face against Image 1 — must be immediately recognizable.
+Correct any drift.
+${esNinoSolo ? 'The child must still look like a child — not aged up.' : ''}
+Confirm: is this a unified oil painting? No photographic elements should remain.
+Modern clothing and backgrounds must be fully replaced.
+4:5 portrait. 4K. High thinking mode.`;
+
+    return [faceFirst, poseBlock, styleBlock, faceCheckCustom].join('\n\n');
   }
 
   // ── MÚLTIPLES SUJETOS ───────────────────────────────────────────────────
@@ -58,7 +78,9 @@ ${sujeto}`;
     return esNino(idx, ninos) ? sujetoNino(idx) : sujetoHumano(idx);
   }).join('\n\n');
 
-  const multiFaceFirst = `Paint ${numSubjects} people from the photos in one unified oil painting.
+  const multiFaceFirst = `${PAINTING_FROM_SCRATCH}
+
+Paint ${numSubjects} people from the photos in one unified oil painting.
 Not composited. Not layered. One single painting.
 
 STEP 1 — IDENTITY FIRST — MOST CRITICAL:
@@ -69,10 +91,12 @@ ${identityBlocks}`;
 
   const multiPoseBlock = poseMulti(numSubjects);
 
-  const multiFaceCheck = `STEP 3 — IDENTITY CHECK:
+  const multiFaceCheck = `STEP 3 — IDENTITY AND QUALITY CHECK:
 Compare each painted face against its source photo.
 Every person must be immediately recognizable. Correct any drift.
 Children must still look like children — not aged up.
+Confirm: is this a unified oil painting? No photographic elements should remain.
+Modern clothing and backgrounds must be fully replaced.
 4:5 portrait. 4K. High thinking mode.`;
 
   return [multiFaceFirst, multiPoseBlock, styleBlock, multiFaceCheck].join('\n\n');
