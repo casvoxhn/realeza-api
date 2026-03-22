@@ -1,8 +1,14 @@
-// renacimiento.js — V4.6
-// V4.5: cape fix — prenda sobre el animal, no cortina de fondo
-// V4.6: anatomical substructure — cuerpo visible bajo capa, volumen de cadera
+// renacimiento.js — V4.7
+// V4.6: anatomical substructure — cuerpo visible bajo capa
+// V4.7: ANATOMIA_CAPA fix — no fuerza pose sentado
 
 const { pick } = require('../utils/pick');
+
+const ANATOMIA_CAPA = `The cape drapes OVER the animal's clearly defined body — never hides it.
+The fabric follows the natural contours of whatever pose the animal is in.
+Realistic folds reveal the body mass underneath — spine, shoulders and torso always visible.
+The cape does NOT replace the body — it drapes over a 3D physical form.
+The animal's full body silhouette remains visible beneath the fabric.`;
 
 const VARIANTES = [
 
@@ -39,14 +45,7 @@ Elaborate floral embroidery along the cape edge: rose and vine motifs
 in terracotta, cream and gold thread — key feature of this style.
 Individual embroidery stitches visible — raised slightly above the fabric.
 CAPE: Deep DARK BURGUNDY-BROWN velvet cape — worn BY the animal.
-CRITICAL ANATOMY: The cape must follow the contours of the animal's physical body.
-The protrusion of the hindquarters and the curve of the spine
-MUST be visible beneath the fabric — the fabric reveals mass and volume.
-The cape does NOT hide the body — it drapes over a clearly defined 3D form.
-Realistic folds form where the fabric passes over the hips and spine —
-these folds confirm the body is beneath them.
-The cape trails onto the cushion ONLY after covering the clearly defined
-rear legs and hips — never replacing them.
+${ANATOMIA_CAPA}
 The velvet fabric touches the animal's sides naturally where it drapes.
 Heavy dramatic fold shadows — real fabric weight pulling downward.
 The floral embroidery continues onto the visible cape edge.
@@ -87,14 +86,7 @@ Silver and gold lace trim along the front border — individual threads visible.
 Elaborate floral embroidery: botanical motifs in sage green, cream and gold.
 Individual stitches slightly raised — tactile and real.
 CAPE: Deep FOREST GREEN velvet cape — worn BY the animal.
-CRITICAL ANATOMY: The cape must follow the contours of the animal's physical body.
-The protrusion of the hindquarters and the curve of the spine
-MUST be visible beneath the fabric — the fabric reveals mass and volume.
-The cape does NOT hide the body — it drapes over a clearly defined 3D form.
-Realistic folds form where the fabric passes over the hips and spine —
-these folds confirm the body is beneath them.
-The cape trails onto the cushion ONLY after covering the clearly defined
-rear legs and hips — never replacing them.
+${ANATOMIA_CAPA}
 The velvet fabric touches the animal's sides naturally where it drapes.
 Heavy dramatic fold shadows — real fabric weight pulling downward.
 Green embroidery continues onto the visible cape edge.
@@ -135,14 +127,7 @@ Gold lace trim along the front border with small floral details — threads visi
 Floral embroidery along the cape: muted roses in dusty rose and gold.
 Individual embroidery stitches clearly visible — raised above the velvet.
 CAPE: Deep BURGUNDY velvet cape — worn BY the animal.
-CRITICAL ANATOMY: The cape must follow the contours of the animal's physical body.
-The protrusion of the hindquarters and the curve of the spine
-MUST be visible beneath the fabric — the fabric reveals mass and volume.
-The cape does NOT hide the body — it drapes over a clearly defined 3D form.
-Realistic folds form where the fabric passes over the hips and spine —
-these folds confirm the body is beneath them.
-The cape trails onto the cushion ONLY after covering the clearly defined
-rear legs and hips — never replacing them.
+${ANATOMIA_CAPA}
 The velvet fabric touches the animal's sides naturally where it drapes.
 Heavy dramatic fold shadows — real fabric weight pulling downward.
 TRANSITION: where the ermine meets the animal's fur — blend naturally.
