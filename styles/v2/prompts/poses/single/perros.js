@@ -1,5 +1,6 @@
-// poses/single/perros.js — V2.5
-// V2.5: BODY_ANCHOR expandido — subestructura anatómica, cuerpo nunca desaparece bajo capa
+// poses/single/perros.js — V2.6
+// V2.5: BODY_ANCHOR expandido — subestructura anatómica
+// V2.6: underside tastefully obscured — nunca se ve el sexo del animal
 
 const { pick } = require('../../../utils/pick');
 
@@ -22,7 +23,9 @@ chest, belly AND hindquarters all in contact with the cushion surface.
 The hindquarters are NOT hanging off the edge or touching the floor.
 The dog looks heavy, settled and completely at ease — not propped up.
 If the dog wears a cape or garment, it drapes OVER a clearly defined body.
-The body mass beneath any clothing is always visible — never hidden or merged with the cushion.`;
+The body mass beneath any clothing is always visible — never hidden or merged with the cushion.
+The animal's hindquarters and underside are always tastefully obscured —
+by the natural position of the legs, the cape, or the cushion surface.`;
 
 const BODY_LANGUAGE = `The animal's body language is relaxed, natural and dignified.
 Muscles soft — no tension, no stiffness, no forced symmetry.
@@ -82,6 +85,8 @@ Both front paws rest naturally on the cushion surface,
 side by side, pointing forward — composed and natural.
 The hindquarters are settled beneath the body.
 The full body is visible — chest, front legs and lower body.
+The animal's hindquarters and underside are always tastefully obscured —
+by the natural position of the legs, the cape, or the cushion surface.
 The posture is dignified and natural — never stiff or forced.
 The head rises naturally — face exactly as locked in Step 1.
 Paint the tail only if clearly visible in Image 1 —
