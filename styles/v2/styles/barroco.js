@@ -4,13 +4,11 @@
 
 const { pick } = require('../utils/pick');
 
-const ANATOMIA_CAPA = `The cape drapes symmetrically over BOTH sides of the animal's back —
-covering both flanks equally before trailing onto the cushion behind.
-No leg or flank is left completely uncovered on either side.
-The fabric follows the natural contours of whatever pose the animal is in.
-Realistic folds reveal the body mass underneath — never hiding it.
-The cape does NOT replace the body — it drapes over a 3D physical form.
-The animal's full body silhouette remains visible beneath the fabric.`;
+const ANATOMIA_CAPA = `The cape envelops the animal's body naturally, responding to gravity and pose.
+It drapes heavily over the flanks, completely covering the back and sides before pooling onto the cushion.
+CRITICAL: Do NOT leave random legs, hips, or flanks exposed on the sides.
+The fabric must follow the natural 3D contours of the body mass underneath without hiding the silhouette.
+The cape is a heavy, continuous piece of fabric — no awkward gaps or floating edges.`;
 
 const VARIANTES = [
 
