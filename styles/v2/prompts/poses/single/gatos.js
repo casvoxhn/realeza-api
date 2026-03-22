@@ -1,6 +1,6 @@
-// poses/single/gatos.js — V2.6
-// V2.5: anti-compresión — PROPORTIONS al inicio, framing ajustado
-// V2.6: anatomical substructure — cuerpo visible bajo capa, volumen de cadera
+// poses/single/gatos.js — V2.7
+// V2.6: anatomical substructure — cuerpo visible bajo capa
+// V2.7: underside tastefully obscured — nunca se ve el sexo del animal
 
 const { pick } = require('../../../utils/pick');
 
@@ -32,7 +32,9 @@ The entire body rests fully ON the cushion —
 chest, belly AND hindquarters all in contact with the cushion surface.
 The hindquarters are NOT hanging off the edge or touching the floor.
 The cat's body rests naturally on the cushion — never stretched or compressed to fill it.
-The cat looks settled and completely at ease — not propped up.`;
+The cat looks settled and completely at ease — not propped up.
+The animal's hindquarters and underside are always tastefully obscured —
+by the natural position of the legs, the cape, or the cushion surface.`;
 
 const BODY_LANGUAGE = `The animal's body language is relaxed, natural and dignified.
 Muscles soft — no tension, no stiffness, no forced symmetry.
@@ -95,6 +97,8 @@ Both front paws rest side by side on the cushion surface,
 pointing forward — neat and composed.
 Hindquarters settled beneath the body.
 Full body visible — chest, front legs and lower body seen.
+The animal's hindquarters and underside are always tastefully obscured —
+by the natural position of the legs, the cape, or the cushion surface.
 The posture is elegant and composed — never stiff.
 Paint the tail only if clearly visible in Image 1 —
 same color and fur as the body. If not visible, omit it.
