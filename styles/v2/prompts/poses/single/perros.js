@@ -131,13 +131,3 @@ Generous breathing room on all sides.`,
 ];
 
 module.exports = () => pick(POSES);
-```
-
----
-
-**Archivos a subir:**
-```
-styles/renacimiento.js  ← V4.7
-styles/barroco.js       ← V5.1
-styles/realeza.js       ← V5.1
-poses/single/perros.js  ← V2.7
