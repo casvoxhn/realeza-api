@@ -1,23 +1,29 @@
-// poses/single/perros.js — V2.4
-// Fix: proporciones y anclaje de cuerpo
-// V2.1: patas corregidas — nunca "slightly below"
-// V2.2: body anchor fix — cuerpo completo sobre cojín, cojín se hunde bajo el peso
-// V2.3: body language — relajado, digno, nunca taxidérmico
-// V2.4: PD4 agregado — lateral, patas completamente sobre el cojín
+// poses/single/perros.js — V2.5
+// V2.5: BODY_ANCHOR expandido — subestructura anatómica, cuerpo nunca desaparece bajo capa
+
 const { pick } = require('../../../utils/pick');
 
-// Línea universal de anclaje — aplica a poses recostadas
-const BODY_ANCHOR = `Chest visibly pressed against the cushion surface — body weight fully anchored.
+const BODY_ANCHOR = `ANATOMICAL SUBSTRUCTURE — CRITICAL:
+The dog's entire skeletal and muscular frame must be established first.
+Even when covered by a cape or garment, the volume of the ribcage,
+the curve of the lower back, and the bulk of the hindquarters
+MUST be clearly discernible beneath the fabric.
+The animal is NOT a floating head on a pile of fabric.
+The body has 3D depth and occupies real physical space on the cushion.
+The hindquarters are firmly planted ON the cushion surface —
+creating a clear silhouette of hips and rear legs.
+The cushion visibly sags and deforms specifically under the weight
+of the hips and rear legs — this confirms they are there.
+The body mass is ALWAYS visible —
+clothing must drape OVER the body, never replace it.
+Chest visibly pressed against the cushion surface — body weight fully anchored.
 The entire body rests fully ON the cushion —
 chest, belly AND hindquarters all in contact with the cushion surface.
 The hindquarters are NOT hanging off the edge or touching the floor.
-The cushion visibly sags and deforms under the dog's full body weight.
-The dog's body spreads naturally across the full width of the cushion.
 The dog looks heavy, settled and completely at ease — not propped up.
 If the dog wears a cape or garment, it drapes OVER a clearly defined body.
 The body mass beneath any clothing is always visible — never hidden or merged with the cushion.`;
 
-// Lenguaje corporal — relajado y digno
 const BODY_LANGUAGE = `The animal's body language is relaxed, natural and dignified.
 Muscles soft — no tension, no stiffness, no forced symmetry.
 The weight feels heavy and settled — gravity pulling the body into the cushion.
