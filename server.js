@@ -1,4 +1,4 @@
-// server.js — V16.10
+// server.js — V16.11
 // Fix: timeout 180s + referencias eliminadas
 // Fix V16.5: deduplicación, timeout Express, keep-alive
 // Fix V16.6: in-memory job queue — soporta usuarios simultáneos sin Redis
@@ -6,6 +6,7 @@
 // Fix V16.8: detección automática de sujetos
 // Fix V16.9: detección mejorada — niños nunca clasificados como animales
 // Fix V16.10: subjects pasado a buildPrompt — orden dinámico humano/mascota
+// Fix V16.11: detección de múltiples sujetos por foto — 2 personas + perro en 1 foto
 
 const express = require('express');
 const cors = require('cors');
@@ -63,16 +64,23 @@ async function detectSubjects(images, model) {
         }
       })),
       { text: `Analyze these ${images.length} photos carefully.
-For each photo identify the main subject.
+Each photo may contain ONE OR MORE subjects.
+List ALL subjects visible in each photo — do not skip anyone.
 
 CRITICAL: Humans — including babies, toddlers, children and teenagers —
 are ALWAYS "human_adult" or "human_child". NEVER classify a human as an animal.
 A child is any person under approximately 12 years old.
 
 Respond with ONLY a valid JSON array — no explanation, no markdown, no extra text.
-One object per photo, in the same order as the photos.
+One object per photo, each with a "subjects" array listing ALL subjects in that photo.
 Valid types: "dog", "cat", "other_animal", "human_adult", "human_child"
-Example for 2 photos: [{"type":"human_child"},{"type":"cat"}]
+
+Example for 1 photo with 2 adults and 1 dog:
+[{"photo":1,"subjects":[{"type":"human_adult"},{"type":"human_adult"},{"type":"dog"}]}]
+
+Example for 2 photos (1 child, 1 dog):
+[{"photo":1,"subjects":[{"type":"human_child"}]},{"photo":2,"subjects":[{"type":"dog"}]}]
+
 ONLY the JSON array. Nothing else.` }
     ];
 
@@ -85,7 +93,17 @@ ONLY the JSON array. Nothing else.` }
       .find(p => p.text)?.text?.trim();
 
     const clean = text.replace(/```json|```/g, '').trim();
-    return JSON.parse(clean);
+    const parsed = JSON.parse(clean);
+
+    // Aplanar todos los sujetos de todas las fotos en un array plano
+    const allSubjects = [];
+    for (const photoResult of parsed) {
+      for (const subject of photoResult.subjects) {
+        allSubjects.push(subject);
+      }
+    }
+
+    return allSubjects;
 
   } catch (err) {
     console.error(`⚠️ detectSubjects failed: ${err.message} — fallback to mascotas`);
@@ -108,22 +126,22 @@ function resolveCategory(subjects) {
     .filter(Boolean);
 
   if (!hasHuman && hasAnimal)
-    return { categoria: 'mascotas', ninos: [] };
+    return { categoria: 'mascotas', ninos: [], totalSubjects: subjects.length };
 
   if (hasHuman && !hasAnimal) {
     if (humanCount === 1 && hasHumanChild && !hasHumanAdult)
-      return { categoria: 'ninos',    ninos: childIndices };
+      return { categoria: 'ninos',    ninos: childIndices, totalSubjects: humanCount };
     if (humanCount === 1)
-      return { categoria: 'retratos', ninos: [] };
+      return { categoria: 'retratos', ninos: [],           totalSubjects: humanCount };
     if (humanCount === 2)
-      return { categoria: 'parejas',  ninos: childIndices };
-    return   { categoria: 'familia',  ninos: childIndices };
+      return { categoria: 'parejas',  ninos: childIndices, totalSubjects: humanCount };
+    return   { categoria: 'familia',  ninos: childIndices, totalSubjects: humanCount };
   }
 
   if (hasHuman && hasAnimal)
-    return { categoria: 'humano_mascota', ninos: childIndices };
+    return { categoria: 'humano_mascota', ninos: childIndices, totalSubjects: subjects.length };
 
-  return { categoria: 'mascotas', ninos: [] };
+  return { categoria: 'mascotas', ninos: [], totalSubjects: subjects.length };
 }
 
 // ── WORKER ────────────────────────────────────────────────────────────────────
@@ -134,12 +152,12 @@ async function processJob(jobId, { images, style, category, gender }) {
   jobs.set(jobId, { ...jobs.get(jobId), status: 'processing' });
 
   try {
-    const numSubjects = images.length;
-    const isGroup     = numSubjects > 1;
+    const numImages   = images.length;
+    const isGroup     = numImages > 1;
     const hasGender   = gender && (gender === 'masculine' || gender === 'feminine');
 
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`🚀 V16.10 START | job:${jobId} | hash:${imgHash} | style:${style} | sujetos:${numSubjects}`);
+    console.log(`🚀 V16.11 START | job:${jobId} | hash:${imgHash} | style:${style} | fotos:${numImages}`);
 
     // ── Subir originales ────────────────────────────────────────────────
     const originalUrls = await Promise.all(
@@ -155,22 +173,24 @@ async function processJob(jobId, { images, style, category, gender }) {
     const subjects = await detectSubjects(images, model);
     const detected = resolveCategory(subjects);
 
-    const finalCategory = category && category !== 'mascota' && category !== 'mascotas'
+    const finalCategory   = category && category !== 'mascota' && category !== 'mascotas'
       ? category
       : detected.categoria;
-    const finalNinos = detected.ninos;
+    const finalNinos      = detected.ninos;
+    // Usar el total de sujetos detectados (no número de fotos)
+    const finalNumSujetos = detected.totalSubjects || numImages;
 
-    console.log(`🔍 DETECT | ${JSON.stringify(subjects)} → cat:${finalCategory} | ninos:[${finalNinos}] | ${Date.now() - tDetect}ms`);
+    console.log(`🔍 DETECT | ${JSON.stringify(subjects)} → cat:${finalCategory} | sujetos:${finalNumSujetos} | ninos:[${finalNinos}] | ${Date.now() - tDetect}ms`);
 
     // ── Build prompt ────────────────────────────────────────────────────
     const promptText = buildPrompt({
       estilo:      style || 'intelligent',
-      numAnimales: numSubjects,
+      numAnimales: finalNumSujetos,
       especie:     '',
       genero:      hasGender ? gender : null,
       categoria:   finalCategory,
       ninos:       finalNinos,
-      subjects:    subjects,        // ← orden dinámico para humano_mascota
+      subjects:    subjects,
       imgHash,
     });
 
@@ -202,11 +222,11 @@ async function processJob(jobId, { images, style, category, gender }) {
     if (!imagePart) throw new Error("Gemini no devolvió imagen.");
 
     const imageBuffer = Buffer.from(imagePart.inlineData.data, 'base64');
-    const prefix      = `V1610_${finalCategory.toUpperCase()}_${(style || 'intelligent').toUpperCase().replace(/\s+/g, '_')}${hasGender ? `_${gender.toUpperCase()}` : ''}`;
+    const prefix      = `V1611_${finalCategory.toUpperCase()}_${(style || 'intelligent').toUpperCase().replace(/\s+/g, '_')}${hasGender ? `_${gender.toUpperCase()}` : ''}`;
     const finalUrl    = await uploadBufferToSupabase(imageBuffer, prefix);
 
     const totalMs = Date.now() - startTotal;
-    console.log(`✅ V16.10 OK | job:${jobId} | hash:${imgHash} | gemini:${geminiMs}ms | total:${totalMs}ms`);
+    console.log(`✅ V16.11 OK | job:${jobId} | hash:${imgHash} | gemini:${geminiMs}ms | total:${totalMs}ms`);
     console.log(`🖼️  RESULT  | ${finalUrl}`);
     originalUrls.forEach((url, i) => console.log(`📸 INPUT ${i+1}  | ${url}`));
     console.log(`${'='.repeat(60)}\n`);
@@ -220,7 +240,7 @@ async function processJob(jobId, { images, style, category, gender }) {
 
   } catch (error) {
     const totalMs = Date.now() - startTotal;
-    console.error(`❌ V16.10 ERROR | job:${jobId} | ${totalMs}ms | ${error.message}`);
+    console.error(`❌ V16.11 ERROR | job:${jobId} | ${totalMs}ms | ${error.message}`);
     jobs.set(jobId, { ...jobs.get(jobId), status: 'error', error: error.message });
   }
 }
@@ -271,7 +291,7 @@ app.get('/status/:jobId', (req, res) => {
 app.get('/health', (req, res) => {
   res.json({
     status:     'ok',
-    version:    'V16.10',
+    version:    'V16.11',
     model:      MODEL_ID,
     uptime:     process.uptime(),
     activeJobs: [...jobs.values()].filter(j => j.status === 'processing').length,
@@ -291,5 +311,5 @@ process.on('SIGTERM', () => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 V16.10 | Puerto:${PORT} | Modelo:${MODEL_ID} | Queue: in-memory`);
+  console.log(`🚀 V16.11 | Puerto:${PORT} | Modelo:${MODEL_ID} | Queue: in-memory`);
 });
