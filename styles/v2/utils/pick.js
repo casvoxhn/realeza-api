@@ -1,4 +1,4 @@
-// ARCHIVO: utils/pick.js
+// ARCHIVO: utils/pick.js 
 // Funciones de selección aleatoria compartidas
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
