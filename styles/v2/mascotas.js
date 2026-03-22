@@ -1,5 +1,5 @@
 // poses/multi/mascotas.js — V3.3 
-// V3.0: composiciones multi-mascota
+// V3.0: composiciones multi-mascotas
 // V3.1: BODY_ANCHOR + BODY_LANGUAGE en MULTI_RULES, patas corregidas, cojín se hunde
 // V3.2: underside tastefully obscured + anatomical substructure
 // V3.3: gaze composition — variedad natural de miradas, no todos mirando directo
