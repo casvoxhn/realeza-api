@@ -1,5 +1,6 @@
-// renacimiento.js — V4.5
+// renacimiento.js — V4.6
 // V4.5: cape fix — prenda sobre el animal, no cortina de fondo
+// V4.6: anatomical substructure — cuerpo visible bajo capa, volumen de cadera
 
 const { pick } = require('../utils/pick');
 
@@ -37,10 +38,15 @@ Cream-gold lace trim along the front border — individual thread detail visible
 Elaborate floral embroidery along the cape edge: rose and vine motifs
 in terracotta, cream and gold thread — key feature of this style.
 Individual embroidery stitches visible — raised slightly above the fabric.
-CAPE: Deep DARK BURGUNDY-BROWN velvet cape — worn by the animal, draped over its back.
-Attached to the ermine mantle at the shoulders.
-Flows naturally down from the animal's back and trails onto the cushion behind it.
-The cape is ON the animal — not a background curtain, not a wall hanging.
+CAPE: Deep DARK BURGUNDY-BROWN velvet cape — worn BY the animal.
+CRITICAL ANATOMY: The cape must follow the contours of the animal's physical body.
+The protrusion of the hindquarters and the curve of the spine
+MUST be visible beneath the fabric — the fabric reveals mass and volume.
+The cape does NOT hide the body — it drapes over a clearly defined 3D form.
+Realistic folds form where the fabric passes over the hips and spine —
+these folds confirm the body is beneath them.
+The cape trails onto the cushion ONLY after covering the clearly defined
+rear legs and hips — never replacing them.
 The velvet fabric touches the animal's sides naturally where it drapes.
 Heavy dramatic fold shadows — real fabric weight pulling downward.
 The floral embroidery continues onto the visible cape edge.
@@ -76,19 +82,24 @@ Drapes over the back and shoulders — animal's chest and paws fully visible.
 ERMINE TECHNIQUE: individual short white fur strands painted with fine
 directional brushstrokes. Cool white in light, blue-grey in shadow.
 Not smooth — textured, physical, painted hair by hair in the light areas.
-The black spots are soft-edged and slightly irregular — naturally painted.
+The black spots are soft-edged and slightly irregular in size — naturally painted.
 Silver and gold lace trim along the front border — individual threads visible.
 Elaborate floral embroidery: botanical motifs in sage green, cream and gold.
 Individual stitches slightly raised — tactile and real.
-CAPE: Deep FOREST GREEN velvet cape — worn by the animal, draped over its back.
-Attached to the ermine mantle at the shoulders.
-Flows naturally down from the animal's back and trails onto the cushion behind it.
-The cape is ON the animal — not a background curtain, not a wall hanging.
+CAPE: Deep FOREST GREEN velvet cape — worn BY the animal.
+CRITICAL ANATOMY: The cape must follow the contours of the animal's physical body.
+The protrusion of the hindquarters and the curve of the spine
+MUST be visible beneath the fabric — the fabric reveals mass and volume.
+The cape does NOT hide the body — it drapes over a clearly defined 3D form.
+Realistic folds form where the fabric passes over the hips and spine —
+these folds confirm the body is beneath them.
+The cape trails onto the cushion ONLY after covering the clearly defined
+rear legs and hips — never replacing them.
 The velvet fabric touches the animal's sides naturally where it drapes.
 Heavy dramatic fold shadows — real fabric weight pulling downward.
 Green embroidery continues onto the visible cape edge.
-TRANSITION: where the ermine meets the animal's fur — paint both materials
-blending naturally at the boundary. No hard edge. No paste-on effect.
+TRANSITION: where the ermine meets the animal's fur — blend naturally.
+No hard edge. No paste-on effect.
 Double gold chain with a pendant on the animal's chest.`,
   },
 
@@ -123,14 +134,19 @@ Black spots: soft painted edges, slightly irregular in size — never perfect ci
 Gold lace trim along the front border with small floral details — threads visible.
 Floral embroidery along the cape: muted roses in dusty rose and gold.
 Individual embroidery stitches clearly visible — raised above the velvet.
-CAPE: Deep BURGUNDY velvet cape — worn by the animal, draped over its back.
-Attached to the ermine mantle at the shoulders.
-Flows naturally down from the animal's back and trails onto the cushion behind it.
-The cape is ON the animal — not a background curtain, not a wall hanging.
+CAPE: Deep BURGUNDY velvet cape — worn BY the animal.
+CRITICAL ANATOMY: The cape must follow the contours of the animal's physical body.
+The protrusion of the hindquarters and the curve of the spine
+MUST be visible beneath the fabric — the fabric reveals mass and volume.
+The cape does NOT hide the body — it drapes over a clearly defined 3D form.
+Realistic folds form where the fabric passes over the hips and spine —
+these folds confirm the body is beneath them.
+The cape trails onto the cushion ONLY after covering the clearly defined
+rear legs and hips — never replacing them.
 The velvet fabric touches the animal's sides naturally where it drapes.
 Heavy dramatic fold shadows — real fabric weight pulling downward.
-TRANSITION: where the ermine meets the animal's fur — paint both materials
-blending naturally at the boundary. No hard edge. No paste-on effect.
+TRANSITION: where the ermine meets the animal's fur — blend naturally.
+No hard edge. No paste-on effect.
 Double gold chain with a pendant on the animal's chest.`,
   },
 
