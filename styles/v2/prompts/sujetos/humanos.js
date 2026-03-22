@@ -1,6 +1,7 @@
-// styles/v2/prompts/sujetos/humanos.js — V2.0
+// styles/v2/prompts/sujetos/humanos.js — V2.1
 // V1.0: estructura base
-// V2.0: expression lock — nunca inventa sonrisas ni expresiones
+// V2.0: expression lock — nunca inventa sonrisas
+// V2.1: accessories lock + anatomy fix + painting from scratch
 
 module.exports = function sujetoHumano(index) {
   const ref = index ? `Person ${index}` : 'The person';
@@ -20,6 +21,12 @@ IDENTITY LOCK — extract and transfer exactly:
 - Exact head angle and rotation from the photo — LOCKED
 - Exact head tilt direction and degree — LOCKED
 - The person's natural personality and presence — preserved exactly
+
+ACCESSORIES — preserve exactly:
+If the person wears glasses in the photo — paint the glasses exactly.
+Same frame color, shape and size — locked from the photo.
+Any distinctive accessory visible in the photo must appear in the painting
+translated into period-appropriate form where necessary.
 
 EXPRESSION — CRITICAL — NEVER INVENT:
 Copy the exact expression from the photo — LOCKED.
