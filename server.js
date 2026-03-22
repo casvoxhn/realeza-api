@@ -1,4 +1,4 @@
-// server.js — V16.11
+// server.js — V16.12
 // Fix: timeout 180s + referencias eliminadas
 // Fix V16.5: deduplicación, timeout Express, keep-alive
 // Fix V16.6: in-memory job queue — soporta usuarios simultáneos sin Redis
@@ -7,6 +7,7 @@
 // Fix V16.9: detección mejorada — niños nunca clasificados como animales
 // Fix V16.10: subjects pasado a buildPrompt — orden dinámico humano/mascota
 // Fix V16.11: detección de múltiples sujetos por foto — 2 personas + perro en 1 foto
+// Fix V16.12: notificaciones Telegram — resultado + inputs después de cada generación
 
 const express = require('express');
 const cors = require('cors');
@@ -26,6 +27,44 @@ app.use(express.json({ limit: '100mb' }));
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 const genAI    = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const MODEL_ID = "gemini-3.1-flash-image-preview";
+
+// ── TELEGRAM ──────────────────────────────────────────────────────────────────
+const TELEGRAM_TOKEN   = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
+async function notifyTelegram(finalUrl, originalUrls, categoria, geminiMs, totalMs) {
+  if (!TELEGRAM_TOKEN || !TELEGRAM_CHAT_ID) return;
+  try {
+    const base = `https://api.telegram.org/bot${TELEGRAM_TOKEN}`;
+
+    // 1. Resultado generado
+    await fetch(`${base}/sendPhoto`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        photo:   finalUrl,
+        caption: `🎨 *Nueva generación*\nCat: \`${categoria}\`\nGemini: ${geminiMs}ms | Total: ${totalMs}ms`,
+        parse_mode: 'Markdown',
+      })
+    });
+
+    // 2. Inputs — uno por uno
+    for (let i = 0; i < originalUrls.length; i++) {
+      await fetch(`${base}/sendPhoto`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          photo:   originalUrls[i],
+          caption: `📸 Input ${i + 1}`,
+        })
+      });
+    }
+  } catch (err) {
+    console.error(`⚠️ Telegram failed: ${err.message}`);
+  }
+}
 
 // ── JOB QUEUE ─────────────────────────────────────────────────────────────────
 const jobs = new Map();
@@ -95,7 +134,6 @@ ONLY the JSON array. Nothing else.` }
     const clean = text.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(clean);
 
-    // Aplanar todos los sujetos de todas las fotos en un array plano
     const allSubjects = [];
     for (const photoResult of parsed) {
       for (const subject of photoResult.subjects) {
@@ -111,7 +149,7 @@ ONLY the JSON array. Nothing else.` }
   }
 }
 
-// ── RESUELVE CATEGORÍA A PARTIR DE LOS SUJETOS DETECTADOS ────────────────────
+// ── RESUELVE CATEGORÍA ────────────────────────────────────────────────────────
 function resolveCategory(subjects) {
   const types = subjects.map(s => s.type);
 
@@ -157,9 +195,8 @@ async function processJob(jobId, { images, style, category, gender }) {
     const hasGender   = gender && (gender === 'masculine' || gender === 'feminine');
 
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`🚀 V16.11 START | job:${jobId} | hash:${imgHash} | style:${style} | fotos:${numImages}`);
+    console.log(`🚀 V16.12 START | job:${jobId} | hash:${imgHash} | style:${style} | fotos:${numImages}`);
 
-    // ── Subir originales ────────────────────────────────────────────────
     const originalUrls = await Promise.all(
       images.map(async (img, i) => {
         const buffer = Buffer.from(img.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -167,7 +204,6 @@ async function processJob(jobId, { images, style, category, gender }) {
       })
     );
 
-    // ── Detección automática ────────────────────────────────────────────
     const model    = genAI.getGenerativeModel({ model: MODEL_ID }, { timeout: 180000 });
     const tDetect  = Date.now();
     const subjects = await detectSubjects(images, model);
@@ -177,12 +213,10 @@ async function processJob(jobId, { images, style, category, gender }) {
       ? category
       : detected.categoria;
     const finalNinos      = detected.ninos;
-    // Usar el total de sujetos detectados (no número de fotos)
     const finalNumSujetos = detected.totalSubjects || numImages;
 
     console.log(`🔍 DETECT | ${JSON.stringify(subjects)} → cat:${finalCategory} | sujetos:${finalNumSujetos} | ninos:[${finalNinos}] | ${Date.now() - tDetect}ms`);
 
-    // ── Build prompt ────────────────────────────────────────────────────
     const promptText = buildPrompt({
       estilo:      style || 'intelligent',
       numAnimales: finalNumSujetos,
@@ -196,7 +230,6 @@ async function processJob(jobId, { images, style, category, gender }) {
 
     console.log(`\n📝 PROMPT | hash:${imgHash}\n${'─'.repeat(40)}\n${promptText}\n${'─'.repeat(40)}\n`);
 
-    // ── Generar imagen ──────────────────────────────────────────────────
     const parts = [
       ...images.map(img => ({
         inlineData: { data: img.replace(/^data:image\/\w+;base64,/, ""), mimeType: "image/jpeg" }
@@ -222,11 +255,11 @@ async function processJob(jobId, { images, style, category, gender }) {
     if (!imagePart) throw new Error("Gemini no devolvió imagen.");
 
     const imageBuffer = Buffer.from(imagePart.inlineData.data, 'base64');
-    const prefix      = `V1611_${finalCategory.toUpperCase()}_${(style || 'intelligent').toUpperCase().replace(/\s+/g, '_')}${hasGender ? `_${gender.toUpperCase()}` : ''}`;
+    const prefix      = `V1612_${finalCategory.toUpperCase()}_${(style || 'intelligent').toUpperCase().replace(/\s+/g, '_')}${hasGender ? `_${gender.toUpperCase()}` : ''}`;
     const finalUrl    = await uploadBufferToSupabase(imageBuffer, prefix);
 
     const totalMs = Date.now() - startTotal;
-    console.log(`✅ V16.11 OK | job:${jobId} | hash:${imgHash} | gemini:${geminiMs}ms | total:${totalMs}ms`);
+    console.log(`✅ V16.12 OK | job:${jobId} | hash:${imgHash} | gemini:${geminiMs}ms | total:${totalMs}ms`);
     console.log(`🖼️  RESULT  | ${finalUrl}`);
     originalUrls.forEach((url, i) => console.log(`📸 INPUT ${i+1}  | ${url}`));
     console.log(`${'='.repeat(60)}\n`);
@@ -238,9 +271,12 @@ async function processJob(jobId, { images, style, category, gender }) {
       originalUrls: originalUrls,
     });
 
+    // ── Telegram — fire and forget ──────────────────────────────────────
+    notifyTelegram(finalUrl, originalUrls, finalCategory, geminiMs, totalMs);
+
   } catch (error) {
     const totalMs = Date.now() - startTotal;
-    console.error(`❌ V16.11 ERROR | job:${jobId} | ${totalMs}ms | ${error.message}`);
+    console.error(`❌ V16.12 ERROR | job:${jobId} | ${totalMs}ms | ${error.message}`);
     jobs.set(jobId, { ...jobs.get(jobId), status: 'error', error: error.message });
   }
 }
@@ -291,7 +327,7 @@ app.get('/status/:jobId', (req, res) => {
 app.get('/health', (req, res) => {
   res.json({
     status:     'ok',
-    version:    'V16.11',
+    version:    'V16.12',
     model:      MODEL_ID,
     uptime:     process.uptime(),
     activeJobs: [...jobs.values()].filter(j => j.status === 'processing').length,
@@ -311,5 +347,19 @@ process.on('SIGTERM', () => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 V16.11 | Puerto:${PORT} | Modelo:${MODEL_ID} | Queue: in-memory`);
+  console.log(`🚀 V16.12 | Puerto:${PORT} | Modelo:${MODEL_ID} | Queue: in-memory`);
 });
+```
+
+---
+
+**Cambios vs V16.11:**
+- Función `notifyTelegram` — envía resultado + inputs a tu Telegram
+- Se llama al final del job exitoso — fire and forget, nunca bloquea
+- Lee token y chat ID desde variables de entorno
+- Versión bumpeada a V16.12
+
+**Agrega en Railway:**
+```
+TELEGRAM_BOT_TOKEN=8382567016:AAHks1V2BjJdVvFdkP6a05VFJ8QnWLfjezY
+TELEGRAM_CHAT_ID=1091982693
