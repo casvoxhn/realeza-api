@@ -1,17 +1,14 @@
-// realeza.js — V5.0
-// V4.9: Aesthetic elevation - Baroque painting techniques, true oil texture, museum aging
-// V5.0: anatomical substructure — cuerpo visible bajo capa, volumen de cadera
+// realeza.js — V5.1
+// V5.0: anatomical substructure — cuerpo visible bajo capa
+// V5.1: ANATOMIA_CAPA fix — no fuerza pose sentado
 
 const { pick } = require('../utils/pick');
 
-const ANATOMIA_CAPA = `CRITICAL ANATOMY: The cape must follow the contours of the animal's physical body.
-The protrusion of the hindquarters and the curve of the spine
-MUST be visible beneath the fabric — the fabric reveals mass and volume.
-The cape does NOT hide the body — it drapes over a clearly defined 3D form.
-Realistic folds form where the fabric passes over the hips and spine —
-these folds confirm the body is beneath them.
-The cape trails onto the cushion ONLY after covering the clearly defined
-rear legs and hips — never replacing them.`;
+const ANATOMIA_CAPA = `The cape drapes OVER the animal's clearly defined body — never hides it.
+The fabric follows the natural contours of whatever pose the animal is in.
+Realistic folds reveal the body mass underneath — spine, shoulders and torso always visible.
+The cape does NOT replace the body — it drapes over a 3D physical form.
+The animal's full body silhouette remains visible beneath the fabric.`;
 
 const VARIANTES = [
 
