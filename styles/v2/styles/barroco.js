@@ -1,6 +1,6 @@
-// barroco.js — V5.2
-// V5.1: ANATOMIA_CAPA fix — no fuerza pose sentado
+// barroco.js — V5.3
 // V5.2: capa cubre ambos flancos simétricamente
+// V5.3: género aplicado — masculine/feminine cambia colores, bordado y accesorios
 
 const { pick } = require('../utils/pick');
 
@@ -10,6 +10,7 @@ CRITICAL: Do NOT leave random legs, hips, or flanks exposed on the sides.
 The fabric must follow the natural 3D contours of the body mass underneath without hiding the silhouette.
 The cape is a heavy, continuous piece of fabric — no awkward gaps or floating edges.`;
 
+// ── VARIANTES NEUTRAS ─────────────────────────────────────────────────────────
 const VARIANTES = [
 
   {
@@ -105,9 +106,84 @@ Double aged-gold chain on chest, resting heavily against the fur.`,
 
 ];
 
+// ── VARIANTE MASCULINE ────────────────────────────────────────────────────────
+const VARIANTE_MASCULINE = {
+  cushion: `
+CUSHION — paint with museum-grade physical realism:
+A large BRONZE-OLIVE velvet cushion — deep warm khaki-gold, like aged bronze in dramatic candlelight.
+SHAPE: nearly square. Heavily stuffed, conveying real mass and gravity.
+SIZE: occupies approximately 30-35% of the canvas height. Proportional.
+Top surface bulges upward generously.
+The animal's front paws hang naturally over the FRONT EDGE.
+VELVET TECHNIQUE: Optically mixed using raw umber and verdigris glazes — dark and austere.
+Top surface catches minimal warm amber light. Sides fall into profound brown-black shadow.
+TRIM: Dark gold rope cord, painted with sharp restrained highlights.
+One large commanding gold tassel at front center.
+BASE: A simple, flat, dark stone surface — austere and dignified.
+Barely visible, painted with thin dark washes.`,
+
+  costume: `
+ERMINE MANTLE:
+White fur shoulder mantle, small organically-distributed black spots.
+Drapes with immense physical weight over the back and shoulders.
+ERMINE TECHNIQUE: Baroque fur rendering — dark underbase, individual flyaway white hairs on top.
+Cool ivory impasto in light areas, deep cool shadows in the folds.
+Minimal gold trim along the front border — restrained and masculine.
+CAPE: Deep MIDNIGHT BLUE velvet cape — worn BY the animal.
+${ANATOMIA_CAPA}
+Heavy, wide, dramatic folds — real fabric weight pulling powerfully downward.
+Painted using deep lapis lazuli and ultramarine glazes — folds shift from deep cobalt to absolute black.
+GEOMETRIC EMBROIDERY: Bold interlocking geometric and spiral motifs along the cape edge.
+Executed in thick raised impasto — dark gold and ochre, angular and commanding.
+TRANSITION: The boundary between ermine and fur is softened with cool sfumato.
+CHAIN: Heavy double aged-gold chain — thick substantial links resting powerfully on the chest.
+A bold dark sapphire pendant — cold, deep and commanding.`,
+};
+
+// ── VARIANTE FEMININE ─────────────────────────────────────────────────────────
+const VARIANTE_FEMININE = {
+  cushion: `
+CUSHION — paint with museum-grade physical realism:
+A large GOLD OCHRE velvet cushion — warm golden amber, luminous and rich.
+SHAPE: nearly square. Heavily stuffed, conveying real mass and warmth.
+SIZE: occupies approximately 30-35% of the canvas height. Proportional.
+Top surface bulges upward generously under warm tension.
+The animal's front paws hang naturally over the FRONT EDGE.
+VELVET TECHNIQUE: Rendered using translucent yellow ochre and raw sienna glazes — warm and glowing.
+Masterful light absorption — the nap exhibits a rich warm 'bloom' where light strikes directly.
+Deep warm shadows — never cold. No smooth digital gradients.
+TRIM: Delicate twisted gold rope cord, fine impasto highlights.
+One ornate gold tassel at front center — individual threads articulated with fine brushwork.
+BASE: A simple warm dark surface grounding the cushion — intimate and elegant.`,
+
+  costume: `
+ERMINE MANTLE:
+Thick voluminous white fur mantle with small, asymmetrical black spots.
+Drapes gracefully with immense physical weight over the back and shoulders.
+ERMINE TECHNIQUE: Baroque fur rendering — warm ivory impasto in the highlights,
+thin warm translucent glazes in the deep folds. Individual hairs catch golden candlelight.
+Prominent ornate gold lace trim — trompe l'oeil precision, delicate and beautiful.
+CAPE: Deep CRIMSON velvet cape — rich alizarin red, warm and luminous — worn BY the animal.
+${ANATOMIA_CAPA}
+Elegant dramatic folds — fabric flows with graceful gravitational weight.
+Rich alizarin glazes build up the crimson — glowing warmly in the candlelight.
+BAROQUE FLORAL EMBROIDERY: Elaborate roses, scrolling volutas and botanical forms along the cape edge.
+Executed in thick warm gold impasto — intricate, ornate and beautiful.
+TRANSITION: The boundary between ermine and fur is softened gently with warm sfumato.
+CHAIN: Delicate single gold chain — refined and elegant on the chest.
+A warm glowing ruby pendant — rich, warm and luminous.`,
+};
+
 module.exports = function barrocoStyle(numSubjects, isGroup, genero) {
 
-  const variante = pick(VARIANTES);
+  let variante;
+  if (genero === 'masculine') {
+    variante = VARIANTE_MASCULINE;
+  } else if (genero === 'feminine') {
+    variante = VARIANTE_FEMININE;
+  } else {
+    variante = pick(VARIANTES);
+  }
 
   const background = `
 BACKGROUND:
