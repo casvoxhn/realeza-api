@@ -1,4 +1,4 @@
-// server.js — V16.12
+// server.js — V16.13
 // Fix: timeout 180s + referencias eliminadas
 // Fix V16.5: deduplicación, timeout Express, keep-alive
 // Fix V16.6: in-memory job queue — soporta usuarios simultáneos sin Redis
@@ -7,7 +7,8 @@
 // Fix V16.9: detección mejorada — niños nunca clasificados como animales
 // Fix V16.10: subjects pasado a buildPrompt — orden dinámico humano/mascota
 // Fix V16.11: detección de múltiples sujetos por foto — 2 personas + perro en 1 foto
-// Fix V16.12: notificaciones Telegram — resultado + inputs después de cada generación
+// Fix V16.12: notificaciones Telegram
+// Fix V16.13: detección solo sujetos principales — ignora fondos y figuras parciales
 
 const express = require('express');
 const cors = require('cors');
@@ -36,20 +37,16 @@ async function notifyTelegram(finalUrl, originalUrls, categoria, geminiMs, total
   if (!TELEGRAM_TOKEN || !TELEGRAM_CHAT_ID) return;
   try {
     const base = `https://api.telegram.org/bot${TELEGRAM_TOKEN}`;
-
-    // 1. Resultado generado
     await fetch(`${base}/sendPhoto`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        photo:   finalUrl,
-        caption: `🎨 *Nueva generación*\nCat: \`${categoria}\`\nGemini: ${geminiMs}ms | Total: ${totalMs}ms`,
+        chat_id:    TELEGRAM_CHAT_ID,
+        photo:      finalUrl,
+        caption:    `🎨 *Nueva generación*\nCat: \`${categoria}\`\nGemini: ${geminiMs}ms | Total: ${totalMs}ms`,
         parse_mode: 'Markdown',
       })
     });
-
-    // 2. Inputs — uno por uno
     for (let i = 0; i < originalUrls.length; i++) {
       await fetch(`${base}/sendPhoto`, {
         method: 'POST',
@@ -103,21 +100,30 @@ async function detectSubjects(images, model) {
         }
       })),
       { text: `Analyze these ${images.length} photos carefully.
-Each photo may contain ONE OR MORE subjects.
-List ALL subjects visible in each photo — do not skip anyone.
+For each photo identify ONLY the main subjects — the primary focus of the photo.
 
-CRITICAL: Humans — including babies, toddlers, children and teenagers —
-are ALWAYS "human_adult" or "human_child". NEVER classify a human as an animal.
-A child is any person under approximately 12 years old.
+CRITICAL RULES:
+- Humans including babies, toddlers, children and teenagers are ALWAYS
+  "human_adult" or "human_child". NEVER classify a human as an animal.
+- A child is any person under approximately 12 years old.
+- ONLY count subjects that are clearly visible, in focus, and the main focus of the image.
+- IGNORE people or animals visible in the background.
+- IGNORE partially visible figures at the edges of the frame.
+- IGNORE blurry or out-of-focus figures in the background.
+- If a photo shows a dog clearly in focus with a person blurred in the background,
+  count ONLY the dog.
 
 Respond with ONLY a valid JSON array — no explanation, no markdown, no extra text.
-One object per photo, each with a "subjects" array listing ALL subjects in that photo.
+One object per photo, each with a "subjects" array listing ONLY the main subjects.
 Valid types: "dog", "cat", "other_animal", "human_adult", "human_child"
 
-Example for 1 photo with 2 adults and 1 dog:
+Example for 1 photo with a dog clearly in focus:
+[{"photo":1,"subjects":[{"type":"dog"}]}]
+
+Example for 1 photo with 2 adults and 1 dog all clearly visible and in focus:
 [{"photo":1,"subjects":[{"type":"human_adult"},{"type":"human_adult"},{"type":"dog"}]}]
 
-Example for 2 photos (1 child, 1 dog):
+Example for 2 separate photos (1 child, 1 dog):
 [{"photo":1,"subjects":[{"type":"human_child"}]},{"photo":2,"subjects":[{"type":"dog"}]}]
 
 ONLY the JSON array. Nothing else.` }
@@ -195,7 +201,7 @@ async function processJob(jobId, { images, style, category, gender }) {
     const hasGender   = gender && (gender === 'masculine' || gender === 'feminine');
 
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`🚀 V16.12 START | job:${jobId} | hash:${imgHash} | style:${style} | fotos:${numImages}`);
+    console.log(`🚀 V16.13 START | job:${jobId} | hash:${imgHash} | style:${style} | fotos:${numImages}`);
 
     const originalUrls = await Promise.all(
       images.map(async (img, i) => {
@@ -255,11 +261,11 @@ async function processJob(jobId, { images, style, category, gender }) {
     if (!imagePart) throw new Error("Gemini no devolvió imagen.");
 
     const imageBuffer = Buffer.from(imagePart.inlineData.data, 'base64');
-    const prefix      = `V1612_${finalCategory.toUpperCase()}_${(style || 'intelligent').toUpperCase().replace(/\s+/g, '_')}${hasGender ? `_${gender.toUpperCase()}` : ''}`;
+    const prefix      = `V1613_${finalCategory.toUpperCase()}_${(style || 'intelligent').toUpperCase().replace(/\s+/g, '_')}${hasGender ? `_${gender.toUpperCase()}` : ''}`;
     const finalUrl    = await uploadBufferToSupabase(imageBuffer, prefix);
 
     const totalMs = Date.now() - startTotal;
-    console.log(`✅ V16.12 OK | job:${jobId} | hash:${imgHash} | gemini:${geminiMs}ms | total:${totalMs}ms`);
+    console.log(`✅ V16.13 OK | job:${jobId} | hash:${imgHash} | gemini:${geminiMs}ms | total:${totalMs}ms`);
     console.log(`🖼️  RESULT  | ${finalUrl}`);
     originalUrls.forEach((url, i) => console.log(`📸 INPUT ${i+1}  | ${url}`));
     console.log(`${'='.repeat(60)}\n`);
@@ -271,12 +277,11 @@ async function processJob(jobId, { images, style, category, gender }) {
       originalUrls: originalUrls,
     });
 
-    // ── Telegram — fire and forget ──────────────────────────────────────
     notifyTelegram(finalUrl, originalUrls, finalCategory, geminiMs, totalMs);
 
   } catch (error) {
     const totalMs = Date.now() - startTotal;
-    console.error(`❌ V16.12 ERROR | job:${jobId} | ${totalMs}ms | ${error.message}`);
+    console.error(`❌ V16.13 ERROR | job:${jobId} | ${totalMs}ms | ${error.message}`);
     jobs.set(jobId, { ...jobs.get(jobId), status: 'error', error: error.message });
   }
 }
@@ -327,7 +332,7 @@ app.get('/status/:jobId', (req, res) => {
 app.get('/health', (req, res) => {
   res.json({
     status:     'ok',
-    version:    'V16.12',
+    version:    'V16.13',
     model:      MODEL_ID,
     uptime:     process.uptime(),
     activeJobs: [...jobs.values()].filter(j => j.status === 'processing').length,
@@ -347,5 +352,5 @@ process.on('SIGTERM', () => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 V16.12 | Puerto:${PORT} | Modelo:${MODEL_ID} | Queue: in-memory`);
+  console.log(`🚀 V16.13 | Puerto:${PORT} | Modelo:${MODEL_ID} | Queue: in-memory`);
 });
