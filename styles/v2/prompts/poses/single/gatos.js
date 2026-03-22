@@ -1,6 +1,6 @@
-// poses/single/gatos.js — V2.7
-// V2.6: anatomical substructure — cuerpo visible bajo capa
-// V2.7: underside tastefully obscured — nunca se ve el sexo del animal
+// poses/single/gatos.js — V2.8
+// V2.7: underside tastefully obscured
+// V2.8: BODY_ANCHOR fix — no fuerza pose sentado, fabric sigue la pose natural
 
 const { pick } = require('../../../utils/pick');
 
@@ -23,10 +23,9 @@ of the hips and rear legs — this confirms they are there.
 The body mass is ALWAYS visible —
 clothing must drape OVER the body, never replace it.
 If the cat wears a cape or garment, it drapes OVER a clearly defined body.
-The protrusion of the hindquarters and the curve of the spine
-MUST be visible beneath the fabric — the fabric reveals mass and volume.
-Realistic folds form where the fabric passes over the hips and spine —
-these folds confirm the body is beneath them.
+The fabric follows the natural contours of whatever pose the cat is in.
+Realistic folds reveal the body mass underneath — never hiding it.
+The cat's full body silhouette remains visible beneath the fabric.
 Chest visibly pressed against the cushion surface — body weight fully anchored.
 The entire body rests fully ON the cushion —
 chest, belly AND hindquarters all in contact with the cushion surface.
@@ -47,6 +46,8 @@ const POSES = [
   // P1 — Recostado 3/4 diagonal izquierda
   `STEP 2 — POSE:
 ${PROPORTIONS}
+MANDATORY POSE: The cat is LYING DOWN — reclined, NOT sitting upright.
+The belly and chest rest horizontally ON the cushion surface.
 The cat rests in a natural diagonal position on the cushion.
 Body weight on lower chest and elbows.
 ${BODY_ANCHOR}
@@ -66,6 +67,8 @@ Generous breathing room on all sides.`,
   // P1B — Cuerpo opuesto a la dirección de la cara
   `STEP 2 — POSE:
 ${PROPORTIONS}
+MANDATORY POSE: The cat is LYING DOWN in a diagonal position — NOT sitting upright.
+The belly and chest rest horizontally ON the cushion surface.
 First study the face direction in Image 1.
 Identify which direction the face is looking.
 Then place the body in the OPPOSITE direction.
@@ -131,6 +134,7 @@ Do NOT compress the composition.`,
   // P4 — Recostado lateral, patas completamente sobre el cojín
   `STEP 2 — POSE:
 ${PROPORTIONS}
+MANDATORY POSE: The cat is LYING DOWN laterally — NOT sitting upright.
 The cat lies in a natural lateral position on the cushion.
 The body is angled — more to the side than frontal.
 The viewer can clearly see the cat's flank and body depth.
