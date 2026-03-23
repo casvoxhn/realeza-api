@@ -1,6 +1,7 @@
-// buildPrompt.js — V1.3
+// buildPrompt.js — V1.4
 // V1.2: humano_mascota agregado
 // V1.3: subjects pasado a humanomascota para orden dinámico
+// V1.4: subjects pasado a mascotas para detección de especie sin XML tags
 
 const mascotas      = require('./mascotas');
 const humanos       = require('./humanos');
@@ -67,13 +68,12 @@ module.exports = function buildPrompt({
   console.log(`🎨 PROMPT | hash:${imgHash} | estilo_in:${estilo} | estilo_out:${resolvedStyle} | animales:${numSubjects} | cat:${categoria}`);
 
   let prompt;
-
   if (categoria === 'humano_mascota') {
     prompt = humanomascota(resolvedStyle, numSubjects, isGroup, genero, ninos || [], subjects || []);
   } else if (isHumanCategory(categoria)) {
     prompt = humanos(resolvedStyle, numSubjects, isGroup, genero, ninos || []);
   } else {
-    prompt = mascotas(resolvedStyle, numSubjects, isGroup, genero);
+    prompt = mascotas(resolvedStyle, numSubjects, isGroup, genero, subjects || []);
   }
 
   if (analisisFacial) {
