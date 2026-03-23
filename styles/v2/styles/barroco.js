@@ -1,12 +1,13 @@
-// barroco.js — V5.3
-// V5.2: capa cubre ambos flancos simétricamente
+// barroco.js — V5.4
 // V5.3: género aplicado — masculine/feminine cambia colores, bordado y accesorios
+// V5.4: Competitor-style "Open Chest" — pecho descubierto y conexión con cadenas delicadas.
 
 const { pick } = require('../utils/pick');
 
 const ANATOMIA_CAPA = `The cape envelops the animal's body naturally, responding to gravity and pose.
 It drapes heavily over the flanks, completely covering the back and sides before pooling onto the cushion.
-CRITICAL: Do NOT leave random legs, hips, or flanks exposed on the sides.
+CRITICAL FRONT VIEW: The chest area MUST remain OPEN and completely visible, proudly displaying the animal's natural fur.
+CRITICAL SIDE/BACK VIEW: Do NOT leave random legs, hips, or flanks exposed on the sides.
 The fabric must follow the natural 3D contours of the body mass underneath without hiding the silhouette.
 The cape is a heavy, continuous piece of fabric — no awkward gaps or floating edges.`;
 
@@ -32,16 +33,16 @@ Painted with subtle dry-brush scumbling, barely lighter than the background void
     costume: `
 ERMINE MANTLE:
 White fur shoulder mantle, small organically-distributed black spots.
-Drapes with immense physical weight over the back and shoulders.
+OPEN CHEST STYLE: The mantle rests heavily on the outer shoulders and back, pulled wide open at the front to fully reveal the pet's natural chest and neck fur.
 ERMINE TECHNIQUE: Baroque fur rendering. A warm, dark base with individual flyaway white hairs
 pulled over the surface using thick impasto strokes. The black spots have soft, sfumato edges — melting into the white fur.
-Pink and aged-gold lace trim — rendered with trompe l'oeil precision.
+Pink and aged-gold lace trim — rendered with trompe l'oeil precision, framing the open chest in a graceful 'V' shape.
 CAPE: Deep CRIMSON velvet cape draped naturally over the animal's back.
 ${ANATOMIA_CAPA}
 Heavy, dramatic folds painted with distinct, confident brushstrokes. The fabric has true gravitational pull.
 The crimson is built up with rich alizarin glazes, glowing subtly in the light.
 TRANSITION: The boundary between ermine and the animal's natural fur is softened with sfumato. Zero harsh digital cut-outs.
-Double gold chain on chest, painted with tiny, sharp specular highlights mimicking real metal reflecting oil-lamp light.`,
+CHAIN FASTENING: Two delicate, fine-linked gold chains connect the left and right edges of the mantle across the exposed chest. Painted with tiny, sharp specular highlights mimicking real metal reflecting oil-lamp light.`,
   },
 
   {
@@ -62,7 +63,7 @@ Painted with subtle scumbling, melting into the shadows.`,
     costume: `
 ERMINE MANTLE:
 White fur shoulder mantle, small organically-distributed black spots.
-Drapes with immense physical weight over the back and shoulders.
+OPEN CHEST STYLE: The garment is pulled back to expose the pet's natural chest fur completely.
 ERMINE TECHNIQUE: Baroque fur rendering. Thick ivory impasto highlights contrasted with
 thin, cool, translucent shadows in the deep folds. The black spots have soft, painted edges.
 Pink and aged-gold lace trim — individual metallic threads visible.
@@ -71,7 +72,7 @@ ${ANATOMIA_CAPA}
 Heavy, dramatic folds painted with distinct, confident brushstrokes. The fabric feels thick and expensive.
 Deepest folds are pure asphaltum black. No smooth digital transitions.
 TRANSITION: The boundary between ermine and natural fur is softened with sfumato. Zero paste-on effect.
-Double gold chain on chest, catching a single, sharp glint of warm light.`,
+CHAIN FASTENING: A single, extremely delicate gold chain with a central sapphire brooch connects the mantle edges over the bare chest, catching a single, sharp glint of warm light.`,
   },
 
   {
@@ -92,7 +93,7 @@ Barely visible, painted with thin, dark washes.`,
     costume: `
 ERMINE MANTLE:
 White fur shoulder mantle, small organically-distributed black spots.
-Drapes with immense physical weight over the back and shoulders.
+OPEN CHEST STYLE: Framing the chest naturally without covering the center, leaving the pet's neck and chest fur fully visible.
 ERMINE TECHNIQUE: Baroque fur rendering. Warm light on top, cool optical shadows underneath.
 Textured, physical, painted hair by hair in the light areas using a fine brush.
 Gold and ivory lace trim along the front border — rendered with trompe l'oeil precision.
@@ -101,7 +102,7 @@ ${ANATOMIA_CAPA}
 Heavy, wide, dramatic folds — real fabric weight pulling downward.
 Painted using layers of translucent lapis lazuli glazes. Folds shift from deep cobalt in the light to absolute black in the crevices.
 TRANSITION: The boundary between ermine and the animal's fur is blended using sfumato.
-Double aged-gold chain on chest, resting heavily against the fur.`,
+CHAIN FASTENING: Double aged-gold chains, very fine links, spanning the open chest to hold the heavy cape together. Resting gracefully against the animal's natural fur.`,
   },
 
 ];
@@ -125,7 +126,7 @@ Barely visible, painted with thin dark washes.`,
   costume: `
 ERMINE MANTLE:
 White fur shoulder mantle, small organically-distributed black spots.
-Drapes with immense physical weight over the back and shoulders.
+OPEN CHEST STYLE: Wide masculine opening. The heavy garment sits strictly on the outer shoulders to proudly display the chest and torso fur.
 ERMINE TECHNIQUE: Baroque fur rendering — dark underbase, individual flyaway white hairs on top.
 Cool ivory impasto in light areas, deep cool shadows in the folds.
 Minimal gold trim along the front border — restrained and masculine.
@@ -136,8 +137,7 @@ Painted using deep lapis lazuli and ultramarine glazes — folds shift from deep
 GEOMETRIC EMBROIDERY: Bold interlocking geometric and spiral motifs along the cape edge.
 Executed in thick raised impasto — dark gold and ochre, angular and commanding.
 TRANSITION: The boundary between ermine and fur is softened with cool sfumato.
-CHAIN: Heavy double aged-gold chain — thick substantial links resting powerfully on the chest.
-A bold dark sapphire pendant — cold, deep and commanding.`,
+CHAIN FASTENING: A heavy but fine-linked double aged-gold chain spans the open chest, structurally connecting the two sides of the heavy mantle. A bold dark sapphire pendant connects the chains at the center — cold, deep and commanding.`,
 };
 
 // ── VARIANTE FEMININE ─────────────────────────────────────────────────────────
@@ -159,10 +159,10 @@ BASE: A simple warm dark surface grounding the cushion — intimate and elegant.
   costume: `
 ERMINE MANTLE:
 Thick voluminous white fur mantle with small, asymmetrical black spots.
-Drapes gracefully with immense physical weight over the back and shoulders.
+OPEN CHEST STYLE: Elegant "V" opening, pushed gracefully over the shoulders to proudly reveal the pet's natural chest fur.
 ERMINE TECHNIQUE: Baroque fur rendering — warm ivory impasto in the highlights,
 thin warm translucent glazes in the deep folds. Individual hairs catch golden candlelight.
-Prominent ornate gold lace trim — trompe l'oeil precision, delicate and beautiful.
+Prominent ornate gold lace trim — trompe l'oeil precision, delicate and beautiful, framing the open chest.
 CAPE: Deep CRIMSON velvet cape — rich alizarin red, warm and luminous — worn BY the animal.
 ${ANATOMIA_CAPA}
 Elegant dramatic folds — fabric flows with graceful gravitational weight.
@@ -170,8 +170,7 @@ Rich alizarin glazes build up the crimson — glowing warmly in the candlelight.
 BAROQUE FLORAL EMBROIDERY: Elaborate roses, scrolling volutas and botanical forms along the cape edge.
 Executed in thick warm gold impasto — intricate, ornate and beautiful.
 TRANSITION: The boundary between ermine and fur is softened gently with warm sfumato.
-CHAIN: Delicate single gold chain — refined and elegant on the chest.
-A warm glowing ruby pendant — rich, warm and luminous.`,
+CHAIN FASTENING: A very thin, refined single gold chain gracefully connects the two sides of the open mantle across the exposed chest. A warm glowing ruby pendant rests on the natural fur — rich, warm and luminous.`,
 };
 
 module.exports = function barrocoStyle(numSubjects, isGroup, genero) {
